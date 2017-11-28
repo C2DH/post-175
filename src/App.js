@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './state'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import Home from './pages/Home'
+import MapPage from './pages/MapPage'
 
-export default App;
+const App = () => (
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/map' exact component={MapPage} />
+      </Switch>
+    </Router>
+  </Provider>
+)
+
+export default App
