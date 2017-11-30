@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
 import { Motion, spring, presets } from 'react-motion'
 
 class Home extends PureComponent {
@@ -6,6 +7,7 @@ class Home extends PureComponent {
     return (
       <div>
         <div className='p-2'>
+          <Link to='/about'>About</Link>
           <button className='btn btn-primary'>BUTTON</button>
         </div>
         <Motion defaultStyle={{ top: -60 }} style={{ top: spring(100, presets.wobbly) }}>

@@ -1,6 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { AnimatedRoute } from 'react-router-transition'
 import store from './state'
 
 import Home from './pages/Home'
@@ -15,7 +16,15 @@ const App = () => (
         <Route path='/' exact component={Home} />
         <Route path='/map' exact component={MapPage} />
         <Route path='/timeline' exact component={Timeline} />
-        <Route path='/about' exact component={About} />
+        <AnimatedRoute
+          path='/about'
+          exact
+          component={About}
+          atEnter={{ opacity: 0 }}
+          atLeave={{ opacity: 0 }}
+          atActive={{ opacity: 1 }}
+          mapStyles={(styles) => ({  opacity: styles.opacity })}
+        />
       </Switch>
     </Router>
   </Provider>
