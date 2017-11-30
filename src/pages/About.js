@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react'
 
-class MapPage extends PureComponent {
+class About extends PureComponent {
   render() {
     return (
       <div>
-        <h1>MAP</h1>
+        <h1>About</h1>
       </div>
     )
   }
 }
 
-export default MapPage
+export default About

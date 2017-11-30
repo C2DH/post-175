@@ -5,6 +5,8 @@ import store from './state'
 
 import Home from './pages/Home'
 import MapPage from './pages/MapPage'
+import Timeline from './pages/Timeline'
+import About from './pages/About'
 
 const App = () => (
   <Provider store={store}>
@@ -12,6 +14,8 @@ const App = () => (
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/map' exact component={MapPage} />
+        <Route path='/timeline' exact component={Timeline} />
+        <Route path='/about' exact component={About} />
       </Switch>
     </Router>
   </Provider>
