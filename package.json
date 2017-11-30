@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://miller.inmagik.com",
   "dependencies": {
+    "bootstrap": "4.0.0-beta.2",
     "lodash": "^4.17.4",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
