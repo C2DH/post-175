@@ -1,0 +1,1 @@
+python manage.py task bulk_import_public_gs_as_documents --gsid 2PACX-1vSWIDF8nUCe-P6_4T4f0fwQPz__v5cmQCVnGbAihA4iueD3gUTE9uaO1D1vDPuKtIgoe_o7VvPDD5dm  --gid=0
