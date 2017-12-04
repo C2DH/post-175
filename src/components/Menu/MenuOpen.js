@@ -6,11 +6,9 @@ import { getMakeLangUrl, getLangs, getSelectedLang } from '../../state/selectors
 class MenuOpen extends PureComponent {
 
   changeLang = (langParam) => {
-    const { pathname } = this.props.location
-    const splitter = pathname.split('/')
-    const commonPathname = splitter.length > 1 ? splitter.slice(2).join('/') : ''
-    const newPathname = `/${langParam}/` + commonPathname
-    this.props.history.push(newPathname)
+    const { url, location } = this.props
+    const currentUrl = location.pathname + location.search
+    this.props.history.push(url(currentUrl, langParam))
   }
 
   render() {
@@ -22,7 +20,7 @@ class MenuOpen extends PureComponent {
         className='position-fixed fixed-top fixed-bottom bg-dark w-25 text-light p-3'>
 
         <button onClick={onRequestClose} className="bg-dark text-light">x</button>
-        <Link to={url()} onClick={onRequestClose}><h1>175 <br /> Joer Post</h1></Link>
+        <Link to={url('/')} onClick={onRequestClose}><h1>175 <br /> Joer Post</h1></Link>
 
         <p>A long history of comunication, technologies, services and people.</p>
 

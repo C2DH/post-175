@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import qs from 'query-string'
 import { find } from 'lodash'
 
 export const getLangs = state => state.lang.list
@@ -13,5 +14,10 @@ export const getSelectedLang = createSelector(
 
 export const getMakeLangUrl = createSelector(
   getSelectedLang,
-  getSelectedLang => (url = '') => `/${getSelectedLang.param}${url}`
+  currentLang => (url = '', lang) => {
+    const newLangParam = typeof lang === 'undefined' ? currentLang.param : lang
+    const qsAsObject = qs.parse(qs.extract(url))
+    const newQs = qs.stringify({ ...qsAsObject, lang: newLangParam })
+    return url.split('?')[0] + '?' + newQs
+  }
 )

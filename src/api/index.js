@@ -18,3 +18,11 @@ export const getEvents = (params = {}) => getDocuments({
     data__type: 'event',
   },
 })
+
+export const getPeriods = (params = {}) => getDocuments({
+  ...params,
+  filters: {
+    ...params.filters,
+    data__type: 'period',
+  },
+})
