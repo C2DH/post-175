@@ -10,3 +10,11 @@ export const getDocuments = (params = {}) =>
   request.get(`${API_URL}/document/`)
     .query(params)
     .then(extractBody)
+
+export const getEvents = (params = {}) => getDocuments({
+  ...params,
+  filters: {
+    ...params.filters,
+    data__type: 'event',
+  },
+})

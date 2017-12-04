@@ -3,7 +3,7 @@ import { find } from 'lodash'
 
 export const getLangs = state => state.lang.list
 
-const getSelectedLangCode = state => state.lang.selected
+export const getSelectedLangCode = state => state.lang.selected
 
 export const getSelectedLang = createSelector(
   getLangs,
