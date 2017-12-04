@@ -3,7 +3,28 @@ import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './saga'
 
-const preloadedState = undefined
+const preloadedState = {
+  lang: {
+    // All available langs
+    list: [
+      {
+        // code: The miller swag code
+        code: 'de_DE',
+        // param: Used to match in location
+        param: 'de',
+        // label: Beautiful UI display
+        label: 'DE',
+      },
+      {
+        code: 'fr_FR',
+        param: 'fr',
+        label: 'FR',
+      },
+    ],
+    // Default selected lang code
+    selected: 'de_DE',
+  }
+}
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(
   rootReducer,
