@@ -5,7 +5,7 @@ import { AnimatedRoute } from 'react-router-transition'
 import Menu from './components/Menu'
 import Home from './pages/Home'
 import MapPage from './pages/MapPage'
-import Timeline from './pages/Timeline'
+import TimelinePage from './pages/TimelinePage'
 import About from './pages/About'
 
 const Root = () => (
@@ -14,7 +14,7 @@ const Root = () => (
     <Switch>
       <Route path='/' exact component={Home} />
       <Route path='/map' exact component={MapPage} />
-      <Route path='/timeline' exact component={Timeline} />
+      <Route path='/timeline' exact component={TimelinePage} />
       <AnimatedRoute
         path='/about'
         exact
