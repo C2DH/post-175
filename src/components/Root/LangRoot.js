@@ -6,7 +6,7 @@ import { getLangs } from '../../state/selectors'
 import { setLang } from '../../state/actions'
 import Home from '../../pages/Home'
 import MapPage from '../../pages/MapPage'
-import Timeline from '../../pages/Timeline'
+import TimelinePage from '../../pages/TimelinePage'
 import About from '../../pages/About'
 
 class LangRoot extends PureComponent {
@@ -42,7 +42,7 @@ class LangRoot extends PureComponent {
       <Switch>
         <Route path={`${match.url}`} exact component={Home} />
         <Route path={`${match.url}/map`} exact component={MapPage} />
-        <Route path={`${match.url}/timeline`} exact component={Timeline} />
+        <Route path={`${match.url}/timeline`} exact component={TimelinePage} />
         <Route path={`${match.url}/about`} exact component={About} />
       </Switch>
     )

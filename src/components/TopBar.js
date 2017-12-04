@@ -9,8 +9,8 @@ class TopBar extends PureComponent {
       <div className='w-100 bg-dark text-light d-flex'>
 
         <div className='d-flex'>
-          <button className='btn' onClick={openMenu}>-</button>
-          <h3>{title}</h3>
+          <button className='btn text-light bg-dark' onClick={openMenu}>☰</button>
+          <h6 className="pb-0 mb-0 align-self-center">{title}</h6>
         </div>
       </div>
     )
