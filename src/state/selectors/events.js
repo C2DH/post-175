@@ -25,3 +25,12 @@ export const getEvents = createSelector(
     ? null
     : ids.map(id => translateDoc(data[id], langCode))
 )
+
+export const getPeriods = createSelector(
+  state => state.periods.ids,
+  state => state.periods.data,
+  getSelectedLangCode,
+  (ids, data, langCode) => ids === null
+    ? null
+    : ids.map(id => translateDoc(data[id], langCode))
+)

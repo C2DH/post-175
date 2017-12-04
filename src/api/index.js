@@ -6,9 +6,23 @@ const API_URL = '/api'
 // headers and so on are useless
 const extractBody = ({ body }) => body
 
+const buildMillerParams = (params) => {
+  let newParams = params
+
+  if (newParams.filters && typeof newParams.filters !== 'string') {
+    newParams = { ...newParams, filters: JSON.stringify(newParams.filters) }
+  }
+
+  if (newParams.exclude && typeof newParams.exclude !== 'string') {
+    newParams = { ...newParams, exclude: JSON.stringify(newParams.exclude) }
+  }
+
+  return newParams
+}
+
 export const getDocuments = (params = {}) =>
   request.get(`${API_URL}/document/`)
-    .query(params)
+    .query(buildMillerParams(params))
     .then(extractBody)
 
 export const getEvents = (params = {}) => getDocuments({
