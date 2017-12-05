@@ -28,6 +28,7 @@ button:focus {
   background-size: cover!important;
 }
 
+
 .font-9 {
   font-size: 9px;
 }
@@ -43,4 +44,31 @@ button:focus {
 .bg-overlay {
   opacity: 0.7;
   background-color: #313030;
+}
+
+.timeline-nav-tick {
+  fill: #fff;
+  text-anchor: middle;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.timeline-event-date {
+  fill: #fff;
+  text-anchor: start;
+  font-size: 10px;
+  font-weight: 100;
+}
+
+.timeline-event-category {
+  fill: #ed6505;
+  text-anchor: start;
+  font-size: 10px;
+  font-weight: 100;
+}
+
+.timeline-event-title {
+  fill: #fff;
+  text-anchor: start;
+  font-size: 18px;
 }
