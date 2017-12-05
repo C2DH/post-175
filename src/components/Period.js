@@ -40,7 +40,6 @@ class Period extends PureComponent {
 
   render () {
     const { period, nextPeriod, prevPeriod, cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbzF-Q2hYQg5ypy4TPq2sRrkAZz0VD95vfC8lV7JeW1KT8mlXU" } = this.props
-    console.log(period)
     return (
       <div className="col-md-3 bg-info d-flex flex-column">
         <TopBar title={'TIMELINE'} />
@@ -48,7 +47,7 @@ class Period extends PureComponent {
           <div className="p-2 mb-3 text-light">
             <small>PERIODE</small>
             <h2 className="mb-3">{period.startDate.getFullYear()}{' - '}{period.endDate.getFullYear() + 1}</h2>
-            <p>Donec sollicitudin molestie malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Proin eget tortor risus.</p>
+            <p>{period.data.description || '....'}</p>
           </div>
           <div className="w-100 h-100px d-flex flex-row-reverse">
             <ArrowsButtons

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { uniq } from 'lodash'
 import {
   loadEvents,
   unloadEvents,
