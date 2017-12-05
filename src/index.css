@@ -16,10 +16,31 @@ button:focus {
   height: 100px;
 }
 
+.h-350px {
+  height: 350px;
+}
+
 .flex-1 {
   flex:1;
 }
 
 .cover {
   background-size: cover!important;
+}
+
+.font-9 {
+  font-size: 9px;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+
+.bg-overlay {
+  opacity: 0.7;
+  background-color: #313030;
 }

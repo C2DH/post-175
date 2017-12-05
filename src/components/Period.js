@@ -3,8 +3,12 @@ import TopBar from './TopBar'
 
 const ArrowsButtons = () => (
   <div className="d-flex flex-column">
-    <button className="btn btn-light flex-1 rounded-0 border border-dark">{'<-'}</button>
-    <button className="btn btn-light flex-1 rounded-0 border border-dark">{'->'}</button>
+    <button className="btn btn-light flex-1 rounded-0">
+      <i className="material-icons">arrow_back</i>
+    </button>
+    <button className="btn btn-secondary flex-1 rounded-0">
+      <i className="material-icons">arrow_forward</i>
+    </button>
   </div>
 )
 
