@@ -40,7 +40,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
   onDrag = (e, data) => {
     const { scale, currentDate, setDateTimeline, extent } = this.props
     const x = scale(currentDate)
-    const newX = x + data.deltaX
+    const newX = x - data.deltaX
     const newDate = scale.invert(newX)
     if (newDate < extent[0] || newDate > extent[1]) { return }
     setDateTimeline(newDate)
