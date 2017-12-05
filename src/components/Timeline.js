@@ -65,7 +65,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
           { years.map(year => (
             <g key={year.year} >
               <text className="timeline-nav-tick" x={scale(year.date)} y={32}>{year.year}</text>
-              { year.events.map(event => {
+              { year.events.map((event, eventIndex) => {
 
                 let eventHeight = 0
                 if(event.snapshot){
@@ -74,7 +74,16 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
                   eventHeight = thumbnailHeight * EVENT_WIDTH / thumbnailWidth
                 }
 
-                const y2 = eventHeight ? height / 2 + eventHeight / 2 : height / 2
+                const numEvents = year.events.length
+                let y2
+                if(numEvents === 1){
+                  y2 = eventHeight ? height / 2 + eventHeight / 2 : height / 2
+                } else {
+                  const k = eventIndex % 3 + 1
+                  y2 = eventHeight ? height / 3 * k + eventHeight / 3 * k : height / 3 * k
+                }
+
+
                 const color = getEventColor(event)
 
 
