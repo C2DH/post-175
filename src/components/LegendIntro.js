@@ -23,7 +23,7 @@ class LegendIntro extends PureComponent {
     return (
       <div className="d-flex flex-column flex-1">
         <div className="w-100 p-3 bg-light">
-          <h3>Expolore the map of Post offices of Luxembourg</h3>
+          <h3>Expolore the map of the Post offices of Luxembourg</h3>
         </div>
         <div className="w-100 flex-1 p-3 bg-white font-14">
           <p>Nulla porttitor accumsan tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;

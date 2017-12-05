@@ -16,8 +16,8 @@ button:focus {
   height: 100px;
 }
 
-.h-350px {
-  height: 350px;
+.overflow-auto {
+  overflow: auto;
 }
 
 .flex-1 {
@@ -27,7 +27,6 @@ button:focus {
 .cover {
   background-size: cover!important;
 }
-
 
 .font-9 {
   font-size: 9px;
@@ -42,8 +41,7 @@ button:focus {
 }
 
 .bg-overlay {
-  opacity: 0.7;
-  background-color: #313030;
+  background-color: rgba(49,48,48,0.7);
 }
 
 .timeline-nav-tick {
@@ -71,4 +69,13 @@ button:focus {
   fill: #fff;
   text-anchor: start;
   font-size: 18px;
+}
+
+.legend-detail-image {
+  min-height: 350px;
+}
+
+.legend-close-btn {
+  left: 100%;
+  padding-top: 36px;
 }

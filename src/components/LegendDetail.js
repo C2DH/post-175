@@ -2,9 +2,10 @@ import React, { PureComponent } from 'react'
 import TopBar from './TopBar'
 
 const fakeCover = "https://i2-prod.gazettelive.co.uk/incoming/article10966617.ece/ALTERNATES/s615/JS83871260.jpg"
-const fakeHoverText = "Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula"
+const fakeHoverText = "Donec velit neque, auctor sit amet aliquam vel"
 const fakeOffice = "Bureau de poste Fake"
 const fakeAddress = "8, fake road, Paperopoli"
+const fakeImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-rZJAA176o4Y27qZ8tQQqu7hYZpyhNJ7OY17DjBhEC6bNytaD8A"
 
 const PostOfficeInfo = ({ office = fakeOffice, address = fakeAddress }) => (
   <div className="w-100 p-3 bg-light" style={{minHeight: 250}}>
@@ -16,15 +17,26 @@ const PostOfficeInfo = ({ office = fakeOffice, address = fakeAddress }) => (
   </div>
 )
 
+const CoversButtons = () => (
+  <div className="d-flex flex-row align-self-end bg-white" style={{height: 36}}>
+    <button className="btn btn-light flex-1 rounded-0 d-flex justify-content-center">
+      <i className="material-icons font-14">arrow_back</i>
+    </button>
+    <button className="btn btn-light flex-1 rounded-0 d-flex justify-content-center">
+      <i className="material-icons font-14">arrow_forward</i>
+    </button>
+  </div>
+)
 
 class LegendDetail extends PureComponent {
   render () {
-    const { cover = fakeCover, hoverText = fakeHoverText } = this.props
+    const { cover = fakeCover, hoverText = fakeHoverText, image = fakeImage } = this.props
     return (
-      <div className="d-flex flex-column flex-1">
-        <div className="w-100 p-0 cover h-350px d-flex flex-column justify-content-end" style={{background:`url(${cover})`}}>
-          <div className="w-100 bg-overlay text-white p-2">
-            <div className="font-12 ml-3 mr-3">{hoverText}</div>
+      <div className="d-flex flex-column h-100 overflow-auto">
+        <div className="w-100 p-0 cover legend-detail-image d-flex flex-column justify-content-end" style={{background:`url(${cover})`}}>
+          <div className="w-100 bg-overlay text-white d-flex flex-row">
+            <div className="font-12 m-3">{hoverText}</div>
+            <CoversButtons />
           </div>
         </div>
         <PostOfficeInfo />
@@ -34,6 +46,7 @@ class LegendDetail extends PureComponent {
             Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus.
             Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae</p>
         </div>
+        <div className="w-100 p-0 cover legend-detail-image" style={{background:`url(${image})`}} />
       </div>
     )
   }
