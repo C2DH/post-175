@@ -13,6 +13,7 @@ import { Motion, spring } from 'react-motion'
 import MultiText from '../components/MultiText'
 import { DraggableCore } from 'react-draggable'
 import { setDateTimeline } from '../state/actions'
+import { getEventColor } from '../utils'
 
 const TIMELINE_PADDING = 30
 const EVENT_WIDTH = 200
@@ -74,16 +75,17 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
                 }
 
                 const y2 = eventHeight ? height / 2 + eventHeight / 2 : height / 2
+                const color = getEventColor(event)
 
 
                 return (<g key={event.id}>
-                  <line  x1={scale(event.startDate)} x2={scale(event.startDate)} y1={0} y2={y2} stroke={'#fff'}></line>
-                  <circle cx={scale(event.startDate)} cy={y2} fill={'#fff'} fillOpacity={0.4} r={8}></circle>
-                  <circle cx={scale(event.startDate)} cy={y2} stroke={'#fff'} fill={'#fff'} r={4}></circle>
+                  <line  x1={scale(event.startDate)} x2={scale(event.startDate)} y1={0} y2={y2} stroke={color}></line>
+                  <circle cx={scale(event.startDate)} cy={y2} fill={color} fillOpacity={0.4} r={8}></circle>
+                  <circle cx={scale(event.startDate)} cy={y2} stroke={color} fill={color} r={4}></circle>
 
                   <g transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
                     <text className="timeline-event-date">{event.data.start_date}</text>
-                    <text dy={20} className="timeline-event-category">{event.data.category}</text>
+                    <text dy={20} fill={color} className="timeline-event-category">{event.data.category}</text>
                     <MultiText y={40} className="timeline-event-title" text={event.data.title} maxLen={20}></MultiText>
                   </g>
 

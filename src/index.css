@@ -59,7 +59,7 @@ button:focus {
 }
 
 .timeline-event-category {
-  fill: #ed6505;
+  /*fill: #ed6505;*/
   text-anchor: start;
   font-size: 10px;
   font-weight: 100;

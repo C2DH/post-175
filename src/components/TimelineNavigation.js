@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { getEvents, getEventsExtent, getTimelineCurrentDate } from '../state/selectors'
 import { setDateTimeline } from '../state/actions'
+import { getEventColor } from '../utils'
 import { scaleTime } from 'd3-scale'
 import { timeYear } from 'd3-time'
 import { DraggableCore } from 'react-draggable'
@@ -84,7 +85,7 @@ class TimelineNavigation extends PureComponent {
         <div className="d-inline-flex flex-1 w-100">
           <svg className="w-100 h-100" style={{backgroundColor:'#383838'}}>
             { events.map(event => (
-              <circle key={event.id} cx={scale(event.startDate)} r={5} cy={height/4}></circle>
+              <circle fill={getEventColor(event)} key={event.id} cx={scale(event.startDate)} r={5} cy={height/4}></circle>
             ))}
           </svg>
         </div>
