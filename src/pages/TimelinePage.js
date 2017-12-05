@@ -7,7 +7,7 @@ import {
   unloadPeriods,
   unloadTimeline,
 } from '../state/actions'
-import { getEvents, getPeriods, getEventsExtent } from '../state/selectors'
+import { getEvents, getPeriods } from '../state/selectors'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
@@ -25,14 +25,13 @@ class TimelinePage extends PureComponent {
   }
 
   render() {
-    const { events, periods, extent } = this.props
-    console.log(events, periods, extent)
+    const { events, periods } = this.props
     return (
       <div className='h-100vh d-flex flex-column'>
         <div className='row no-gutters flex-1'>
 
-          <Period />
-          { extent && <Timeline /> }
+          {periods && events && <Period />}
+          {events && <Timeline />}
         </div>
       </div>
     )
@@ -41,7 +40,6 @@ class TimelinePage extends PureComponent {
 
 const mapStateToProps = state => ({
   events: getEvents(state),
-  extent: getEventsExtent(state),
   periods: getPeriods(state),
 })
 export default connect(mapStateToProps, {

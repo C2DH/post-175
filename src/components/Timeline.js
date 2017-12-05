@@ -8,7 +8,6 @@ import {
   getEventsExtent,
 } from '../state/selectors'
 import TimelineNavigation from './TimelineNavigation'
-import { scaleTime } from 'd3-scale'
 import { last, get } from 'lodash'
 import { Motion, spring } from 'react-motion'
 import MultiText from '../components/MultiText'
@@ -105,17 +104,12 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
 
 export default class Timeline extends PureComponent {
   render() {
-
     return (
       <div className='col-md-9 d-flex flex-column'>
-
         {/* top timeline */}
         <div className="align-self-stretch flex-1  w-100 " style={{height:52, overflow:'hidden', backgroundColor:'#222'}}>
-
           <TimelineEvents/>
         </div>
-
-
 
         {/* bottom timeline */}
         <TimelineNavigation />

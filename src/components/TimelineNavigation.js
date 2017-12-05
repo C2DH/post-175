@@ -8,28 +8,17 @@ import { timeYear } from 'd3-time'
 import { DraggableCore } from 'react-draggable'
 import { Motion, spring, presets } from 'react-motion'
 
-const years = ['1810', '1820', '1830', '1840', '1850', '1860', '1870', '1880', '1890', '1900', '1910', '1920', '1930']
-
 const NAVIGATION_PADDING = 30
 const CURSOR_WITH = NAVIGATION_PADDING / 2
 
 
-const cursorStateToProps = state => ({
+const cursorMapStateToProps = state => ({
   currentDate: getTimelineCurrentDate(state),
   extent: getEventsExtent(state),
 })
 
-const TimelineCursor = connect(cursorStateToProps, { setDateTimeline })(class extends PureComponent {
-
-
-  handleDrag = (e, data) => {
-    const { scale } = this.props
-    const newDate = scale.invert(data.x + CURSOR_WITH / 2)
-    this.props.setDateTimeline(newDate)
-  }
-
+const TimelineCursor = connect(cursorMapStateToProps, { setDateTimeline })(class extends PureComponent {
   onDrag = (e, data) => {
-    console.log("xxxxxx")
     const { scale, currentDate, setDateTimeline, extent } = this.props
     const x = scale(currentDate)
     const newX = x + data.deltaX
@@ -45,10 +34,7 @@ const TimelineCursor = connect(cursorStateToProps, { setDateTimeline })(class ex
       // <Motion defaultStyle={{x: 0}} style={{x: spring(x, presets.stiff)}}>
       // { ({x})=>(
         <DraggableCore
-          // axis="x"
           handle=".handle"
-          // bounds={{left:scale.range()[0]- CURSOR_WITH / 2, right:scale.range()[1] - CURSOR_WITH / 2}}
-          // position={{x: x, y:0}}
           onDrag={this.onDrag}
           >
             <svg height={height + CURSOR_WITH / 2 }
@@ -81,7 +67,6 @@ class TimelineNavigation extends PureComponent {
   }
 
   render() {
-
     const { width, height } = this.state
     const { extent, events } = this.props
 
@@ -97,9 +82,6 @@ class TimelineNavigation extends PureComponent {
         className="align-self-end bg-dark w-100 d-flex flex-column"
         style={{height:100}}>
         <div className="d-inline-flex flex-1 w-100">
-          {/* {years.map((year, i)=> (
-            <span key={i} className="text-light ml-3 mr-3">.</span>
-          ))} */}
           <svg className="w-100 h-100" style={{backgroundColor:'#383838'}}>
             { events.map(event => (
               <circle key={event.id} cx={scale(event.startDate)} r={5} cy={height/4}></circle>
@@ -128,6 +110,4 @@ const mapStateToProps = state => ({
   events: getEvents(state),
   extent: getEventsExtent(state),
 })
-export default connect(mapStateToProps, {
-
-})(TimelineNavigation)
+export default connect(mapStateToProps)(TimelineNavigation)
