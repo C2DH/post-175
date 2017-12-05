@@ -29,7 +29,7 @@ class TimelinePage extends PureComponent {
       <div className='h-100vh d-flex flex-column'>
         <div className='row no-gutters flex-1'>
           <Period />
-          <Timeline />
+          { extent && <Timeline /> }
         </div>
       </div>
     )
