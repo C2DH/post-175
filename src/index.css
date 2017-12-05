@@ -15,3 +15,11 @@ body {
 .cover {
   background-size: cover!important;
 }
+
+
+.timeline-nav-tick {
+  fill: #fff;
+  text-anchor: middle;
+  font-size: 14px;
+  font-weight: 100;
+}

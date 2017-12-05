@@ -45,6 +45,7 @@ export const getTimelineCurrentDate = createSelector(
   getEventsExtent,
   state => state.timeline.currentDate,
   (extent, date) => {
+    console.log("11", extent,date)
     if (extent === null) {
       return null
     }
