@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { mapValues, isPlainObject } from 'lodash'
+import { range, groupBy, mapValues, isPlainObject } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 
@@ -45,7 +45,6 @@ export const getTimelineCurrentDate = createSelector(
   getEventsExtent,
   state => state.timeline.currentDate,
   (extent, date) => {
-    console.log("11", extent,date)
     if (extent === null) {
       return null
     }
@@ -53,6 +52,25 @@ export const getTimelineCurrentDate = createSelector(
       return extent[0]
     }
     return new Date(date)
+  }
+)
+
+export const getTimelineYearsWithEvents = createSelector(
+  getEventsExtent,
+  getEvents,
+  (extent, events) => {
+    if (extent === null) {
+      return null
+    }
+
+    const yearsRange = range(extent[0].getFullYear(), extent[1].getFullYear())
+    const eventsByYear = groupBy(events, e => e.startDate.getFullYear())
+
+    return yearsRange.map(year => ({
+      year,
+      hasEvents: !!eventsByYear[year],
+      events: eventsByYear[year] || [],
+    }))
   }
 )
 

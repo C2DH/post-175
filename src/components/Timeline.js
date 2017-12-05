@@ -1,8 +1,14 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import {
+  getTimelineYearsWithEvents,
+} from '../state/selectors'
 import TimelineNavigation from './TimelineNavigation'
 
 class Timeline extends PureComponent {
   render() {
+    const { years } = this.props
+    console.log('~~', years)
     return (
       <div className='col-md-9 bg-light d-flex flex-column'>
 
@@ -27,4 +33,7 @@ class Timeline extends PureComponent {
   }
 }
 
-export default Timeline
+const mapStateToProps = state => ({
+  years: getTimelineYearsWithEvents(state),
+})
+export default connect(mapStateToProps)(Timeline)
