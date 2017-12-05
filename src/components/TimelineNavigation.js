@@ -22,6 +22,7 @@ const TimelineCursor = connect(cursorMapStateToProps, { setDateTimeline })(class
   onDrag = (e, data) => {
     const { scale, currentDate, setDateTimeline, extent } = this.props
     const x = scale(currentDate)
+
     const newX = x + data.deltaX
     const newDate = scale.invert(newX)
     if (newDate < extent[0] || newDate > extent[1]) { return }
@@ -32,8 +33,8 @@ const TimelineCursor = connect(cursorMapStateToProps, { setDateTimeline })(class
     const { currentDate, scale, height } = this.props
     const x = scale(currentDate) - CURSOR_RADIUS
     return (
-      // <Motion defaultStyle={{x: 0}} style={{x: spring(x, presets.stiff)}}>
-      // { ({x})=>(
+      <Motion defaultStyle={{x: x}} style={{x: spring(x, { precision: 0.01, stiffness:580, damping:40})}}>
+      { ({x})=>(
         <DraggableCore
           handle=".timeline-handle"
           onDrag={this.onDrag}
@@ -46,8 +47,8 @@ const TimelineCursor = connect(cursorMapStateToProps, { setDateTimeline })(class
               <circle className="timeline-handle" r={CURSOR_RADIUS/2} cx={CURSOR_RADIUS} cy={CURSOR_RADIUS} fill="white"></circle>
             </svg>
         </DraggableCore>
-      // )}
-      // </Motion>
+      )}
+      </Motion>
     )
 
   }
