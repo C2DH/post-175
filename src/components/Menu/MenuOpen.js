@@ -17,28 +17,43 @@ class MenuOpen extends PureComponent {
     return (
       <div
         style={style}
-        className='position-fixed fixed-top fixed-bottom bg-dark w-25 text-light p-3'>
+        className='position-fixed fixed-top fixed-bottom bg-dark w-25 text-light p-3 d-flex flex-column'>
 
-        <button onClick={onRequestClose} className="bg-dark text-light">x</button>
-        <Link to={url('/')} onClick={onRequestClose}><h1>175 <br /> Joer Post</h1></Link>
+        <div><button onClick={onRequestClose} className="btn btn-dark border-0">x</button></div>
+        <Link to={url('/')} onClick={onRequestClose}><h1 className="display-4 text-light">175 <br /> Joer Post</h1></Link>
 
-        <p>A long history of comunication, technologies, services and people.</p>
+        <p className="text-muted">A long history of comunication, technologies, services and people.</p>
+        <div className="flex-1 d-flex flex-column justify-content-center">
+          <div>
+            <div>
+              <Link to={url('/map')} onClick={onRequestClose}>
+                <h3 className="text-light font-weight-light"><u>Map</u></h3>
+              </Link>
+            </div>
+            <div>
+              <Link to={url('/timeline')} onClick={onRequestClose}>
+                <h3 className="text-light font-weight-light"><u>Timeline</u></h3>
+              </Link>
+            </div>
+            <div>
+              <Link to={url('/about')} onClick={onRequestClose}>
+              <h3 className="text-light font-weight-light"><u>About</u></h3>
+            </Link>
+          </div>
+          </div>
 
-        <div>
-          <div><Link to={url('/map')} onClick={onRequestClose}>Map</Link></div>
-          <div><Link to={url('/timeline')} onClick={onRequestClose}>Timeline</Link></div>
-          <div><Link to={url('/about')} onClick={onRequestClose}>About</Link></div>
+          <div>
+            {langs.map(lang => (
+              <button
+                onClick={() => this.changeLang(lang.param)}
+                style={{ backgroundColor: lang.code === selectedLang.code ? 'red' : undefined }}
+                key={lang.code}>{lang.label}</button>
+            ))}
+          </div>
         </div>
+        <div className="bg-light position-fixed w-100 fixed-bottom h-100px">
 
-        <div>
-          {langs.map(lang => (
-            <button
-              onClick={() => this.changeLang(lang.param)}
-              style={{ backgroundColor: lang.code === selectedLang.code ? 'red' : undefined }}
-              key={lang.code}>{lang.label}</button>
-          ))}
         </div>
-
       </div>
     )
   }
