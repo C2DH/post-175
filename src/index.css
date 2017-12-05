@@ -44,6 +44,10 @@ button:focus {
   background-color: rgba(49,48,48,0.7);
 }
 
+.timeline-nav {
+  user-select: none;
+}
+
 .timeline-nav-tick {
   fill: #fff;
   text-anchor: middle;
@@ -69,6 +73,10 @@ button:focus {
   fill: #fff;
   text-anchor: start;
   font-size: 18px;
+}
+
+.timeline-handle {
+  cursor: pointer;
 }
 
 .legend-detail-image {

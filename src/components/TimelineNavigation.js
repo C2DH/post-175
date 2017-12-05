@@ -10,7 +10,7 @@ import { DraggableCore } from 'react-draggable'
 import { Motion, spring, presets } from 'react-motion'
 
 const NAVIGATION_PADDING = 30
-const CURSOR_WITH = NAVIGATION_PADDING / 2
+const CURSOR_RADIUS = NAVIGATION_PADDING / 2
 
 
 const cursorMapStateToProps = state => ({
@@ -30,19 +30,20 @@ const TimelineCursor = connect(cursorMapStateToProps, { setDateTimeline })(class
 
   render(){
     const { currentDate, scale, height } = this.props
-    const x = scale(currentDate) - CURSOR_WITH / 2
+    const x = scale(currentDate) - CURSOR_RADIUS
     return (
       // <Motion defaultStyle={{x: 0}} style={{x: spring(x, presets.stiff)}}>
       // { ({x})=>(
         <DraggableCore
-          handle=".handle"
+          handle=".timeline-handle"
           onDrag={this.onDrag}
           >
-            <svg height={height + CURSOR_WITH / 2 }
+            <svg height={height + CURSOR_RADIUS }
               transform={`translate(${x},0)`}
-              width={CURSOR_WITH} style={{marginTop: -CURSOR_WITH/2}}>
-              <line x1={CURSOR_WITH/2} y1={CURSOR_WITH/2} x2={CURSOR_WITH/2} y2={height + CURSOR_WITH / 2} stroke="red"></line>
-              <circle className="handle"  r={CURSOR_WITH/2} cx={CURSOR_WITH/2} cy={CURSOR_WITH/2} fill="red"></circle>
+              width={CURSOR_RADIUS*2} style={{marginTop: -CURSOR_RADIUS}}>
+              <line x1={CURSOR_RADIUS} y1={CURSOR_RADIUS} x2={CURSOR_RADIUS} y2={height + CURSOR_RADIUS} stroke="white"></line>
+              <circle className="timeline-handle" r={CURSOR_RADIUS} cx={CURSOR_RADIUS} cy={CURSOR_RADIUS} fill="white" fillOpacity={0.4}></circle>
+              <circle className="timeline-handle" r={CURSOR_RADIUS/2} cx={CURSOR_RADIUS} cy={CURSOR_RADIUS} fill="white"></circle>
             </svg>
         </DraggableCore>
       // )}
@@ -80,7 +81,7 @@ class TimelineNavigation extends PureComponent {
 
     return (
       <div
-        className="align-self-end bg-dark w-100 d-flex flex-column"
+        className="timeline-nav align-self-end bg-dark w-100 d-flex flex-column"
         style={{height:100}}>
         <div className="d-inline-flex flex-1 w-100">
           <svg className="w-100 h-100" style={{backgroundColor:'#383838'}}>
