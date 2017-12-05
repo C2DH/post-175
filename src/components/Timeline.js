@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react'
 import TimelineNavigation from './TimelineNavigation'
 
+const WIDTH_WITH_EVENTS = 300
+const WIDTH_NO_EVENTS = 100
+
 class Timeline extends PureComponent {
   render() {
     return (
@@ -14,7 +17,7 @@ class Timeline extends PureComponent {
 
         <div className="bg-secondary align-self-stretch flex-1 position-relative" style={{overflow:'hidden'}}>
 
-          <div className="position-absolute bg-primary" style={{width:30000, height:100, transform:'translate(100px, 0)'}}>
+          <div className="position-absolute bg-primary" style={{width:30000, height:100}}>
 
           </div>
 
