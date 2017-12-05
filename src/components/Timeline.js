@@ -5,12 +5,15 @@ import {
   getTimelineYearsWithEvents,
   getTimelineTopScale,
   getTimelineCurrentDate,
+  getEventsExtent,
 } from '../state/selectors'
 import TimelineNavigation from './TimelineNavigation'
 import { scaleTime } from 'd3-scale'
 import { last, get } from 'lodash'
 import { Motion, spring } from 'react-motion'
 import MultiText from '../components/MultiText'
+import { DraggableCore } from 'react-draggable'
+import { setDateTimeline } from '../state/actions'
 
 const TIMELINE_PADDING = 30
 const EVENT_WIDTH = 200
@@ -19,9 +22,10 @@ const mapStateToProps = state => ({
   years: getTimelineYearsWithEvents(state),
   scale: getTimelineTopScale(state),
   currentDate: getTimelineCurrentDate(state),
+  extent: getEventsExtent(state),
 })
 
-const TimelineEvents = connect(mapStateToProps)(class extends PureComponent {
+const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class extends PureComponent {
 
   state = {
     height: 0,
@@ -31,7 +35,15 @@ const TimelineEvents = connect(mapStateToProps)(class extends PureComponent {
     const node = ReactDOM.findDOMNode(this)
     const height = node.offsetHeight
     this.setState({height})
-    console.log("height", height, node)
+  }
+
+  onDrag = (e, data) => {
+    const { scale, currentDate, setDateTimeline, extent } = this.props
+    const x = scale(currentDate)
+    const newX = x + data.deltaX
+    const newDate = scale.invert(newX)
+    if (newDate < extent[0] || newDate > extent[1]) { return }
+    setDateTimeline(newDate)
   }
 
   render(){
@@ -44,7 +56,11 @@ const TimelineEvents = connect(mapStateToProps)(class extends PureComponent {
       <div className="h-100">
       <Motion defaultStyle={{x: 0}} style={{x: spring(x)}}>
       {({x})=>(
-        <svg className="h-100" width={width} style={{transform:`translate(${x}px,0)`}}>
+        <DraggableCore
+          handle=".handle"
+          onDrag={this.onDrag}
+        >
+        <svg className="h-100 handle" width={width} style={{transform:`translate(${x}px,0)`}}>
           <g transform={`translate(${TIMELINE_PADDING},0)`}>
           { years.map(year => (
             <g key={year.year} >
@@ -69,7 +85,7 @@ const TimelineEvents = connect(mapStateToProps)(class extends PureComponent {
                   <g transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
                     <text className="timeline-event-date">{event.data.start_date}</text>
                     <text dy={20} className="timeline-event-category">{event.data.category}</text>
-                    <MultiText y={40} className="timeline-event-title" text={event.data.title} maxLen={20} numItems={4}></MultiText>
+                    <MultiText y={40} className="timeline-event-title" text={event.data.title} maxLen={20}></MultiText>
                   </g>
 
                 </g>)
@@ -79,6 +95,7 @@ const TimelineEvents = connect(mapStateToProps)(class extends PureComponent {
           )) }
           </g>
         </svg>
+        </DraggableCore>
       )}
       </Motion>
       </div>

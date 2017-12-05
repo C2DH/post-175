@@ -53,7 +53,7 @@ export const getTimelineCurrentDate = createSelector(
       return null
     }
     if (date === null) {
-      return new Date(1924,0,1)
+      // return new Date(1924,0,1)
       return extent[0]
     }
     return new Date(date)

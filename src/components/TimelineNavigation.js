@@ -5,7 +5,8 @@ import { getEvents, getEventsExtent, getTimelineCurrentDate } from '../state/sel
 import { setDateTimeline } from '../state/actions'
 import { scaleTime } from 'd3-scale'
 import { timeYear } from 'd3-time'
-import Draggable from 'react-draggable'
+import { DraggableCore } from 'react-draggable'
+import { Motion, spring, presets } from 'react-motion'
 
 const years = ['1810', '1820', '1830', '1840', '1850', '1860', '1870', '1880', '1890', '1900', '1910', '1920', '1930']
 
@@ -27,22 +28,38 @@ const TimelineCursor = connect(cursorStateToProps, { setDateTimeline })(class ex
     this.props.setDateTimeline(newDate)
   }
 
+  onDrag = (e, data) => {
+    console.log("xxxxxx")
+    const { scale, currentDate, setDateTimeline, extent } = this.props
+    const x = scale(currentDate)
+    const newX = x + data.deltaX
+    const newDate = scale.invert(newX)
+    if (newDate < extent[0] || newDate > extent[1]) { return }
+    setDateTimeline(newDate)
+  }
+
   render(){
     const { currentDate, scale, height } = this.props
     const x = scale(currentDate) - CURSOR_WITH / 2
     return (
-      <Draggable
-        axis="x"
-        handle=".handle"
-        bounds={{left:scale.range()[0]- CURSOR_WITH / 2, right:scale.range()[1] - CURSOR_WITH / 2}}
-        position={{x: x, y:0}}
-        onDrag={this.handleDrag}
-        >
-        <svg height={height + CURSOR_WITH / 2 } width={CURSOR_WITH} style={{marginTop: -CURSOR_WITH/2}}>
-          <line x1={CURSOR_WITH/2} y1={CURSOR_WITH/2} x2={CURSOR_WITH/2} y2={height + CURSOR_WITH / 2} stroke="red"></line>
-          <circle className="handle"  r={CURSOR_WITH/2} cx={CURSOR_WITH/2} cy={CURSOR_WITH/2} fill="red"></circle>
-        </svg>
-      </Draggable>
+      // <Motion defaultStyle={{x: 0}} style={{x: spring(x, presets.stiff)}}>
+      // { ({x})=>(
+        <DraggableCore
+          // axis="x"
+          handle=".handle"
+          // bounds={{left:scale.range()[0]- CURSOR_WITH / 2, right:scale.range()[1] - CURSOR_WITH / 2}}
+          // position={{x: x, y:0}}
+          onDrag={this.onDrag}
+          >
+            <svg height={height + CURSOR_WITH / 2 }
+              transform={`translate(${x},0)`}
+              width={CURSOR_WITH} style={{marginTop: -CURSOR_WITH/2}}>
+              <line x1={CURSOR_WITH/2} y1={CURSOR_WITH/2} x2={CURSOR_WITH/2} y2={height + CURSOR_WITH / 2} stroke="red"></line>
+              <circle className="handle"  r={CURSOR_WITH/2} cx={CURSOR_WITH/2} cy={CURSOR_WITH/2} fill="red"></circle>
+            </svg>
+        </DraggableCore>
+      // )}
+      // </Motion>
     )
 
   }
