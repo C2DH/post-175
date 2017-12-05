@@ -40,6 +40,30 @@ export const getEvents = createSelector(
   }))
 )
 
+export const getRawPeriods = createSelector(
+  state => state.periods.ids,
+  state => state.periods.data,
+  getSelectedLangCode,
+  (ids, data, langCode) => ids === null
+    ? null
+    : ids.map(id => translateDoc(data[id], langCode))
+)
+
+export const getPeriods = createSelector(
+  getRawPeriods,
+  periods => periods === null ? null : periods
+  .map(period => ({
+    ...period,
+    startDate: period.data.start_date === null ? null : new Date(period.data.start_date),
+    endDate: period.data.end_date === null ? null : new Date(period.data.end_date),
+  }))
+  .filter(p =>
+    p.startDate !== null && p.endDate !== null &&
+    !isNaN(p.startDate.getFullYear()) && !isNaN(p.endDate.getFullYear())
+  )
+  .sort((a, b) => a.startDate - b.endDate)
+)
+
 export const getEventsExtent = createSelector(
   getEvents,
   events => events === null ? null : extent(events, e => e.startDate)
@@ -102,17 +126,53 @@ export const getTimelineTopScale = createSelector(
     //   scaleRange.push(lastRange)
     // })
 
-    console.log("d", domain, scaleRange)
-
     return scaleTime().domain(domain).range(scaleRange)
   }
 )
 
-export const getPeriods = createSelector(
-  state => state.periods.ids,
-  state => state.periods.data,
-  getSelectedLangCode,
-  (ids, data, langCode) => ids === null
-    ? null
-    : ids.map(id => translateDoc(data[id], langCode))
+export const getTimelineCurrentPeriod = createSelector(
+  getPeriods,
+  getTimelineCurrentDate,
+  (periods, currentDate) => {
+    if (periods === null || currentDate === null) {
+      return null
+    }
+    for (let i = 0; i < periods.length; i++) {
+      const period = periods[i]
+      if (currentDate >= period.startDate && currentDate <= period.endDate) {
+        return period
+      }
+    }
+    return null
+  }
+)
+
+export const getTimelinePrevPeriod = createSelector(
+  getPeriods,
+  getTimelineCurrentPeriod,
+  (periods, period) => {
+    if (period === null) {
+      return null
+    }
+    const index = periods.indexOf(period)
+    if (index > 0) {
+      return periods[index - 1]
+    }
+    return null
+  }
+)
+
+export const getTimelineNextPeriod = createSelector(
+  getPeriods,
+  getTimelineCurrentPeriod,
+  (periods, period) => {
+    if (period === null) {
+      return null
+    }
+    const index = periods.indexOf(period)
+    if (index < periods.length - 1) {
+      return periods[index + 1]
+    }
+    return null
+  }
 )
