@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { range, groupBy, mapValues, isPlainObject } from 'lodash'
+import { range, groupBy, mapValues, isPlainObject, last } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
@@ -53,6 +53,7 @@ export const getTimelineCurrentDate = createSelector(
       return null
     }
     if (date === null) {
+      return new Date(1924,0,1)
       return extent[0]
     }
     return new Date(date)
@@ -80,17 +81,30 @@ export const getTimelineYearsWithEvents = createSelector(
 )
 
 export const getTimelineTopScale = createSelector(
+  getEventsExtent,
   getTimelineYearsWithEvents,
-  (years) => {
-    const range = [0]
+  (extent, years) => {
+    const scaleRange = [0]
+    const maxYear = Math.round((extent[1].getFullYear()+1) / 10) * 10
+
     let domain = years.map(year => year.date)
     years.forEach((year, i) => {
       if(i < years.length - 1){
         const delta = years[i].hasEvents ? WIDTH_WITH_EVENTS : WIDTH_NO_EVENTS
-        range.push(delta + range[i])
+        scaleRange.push(delta + scaleRange[i])
       }
     })
-    return scaleTime().domain(domain).range(range)
+
+    // const lastRange = last(scaleRange)
+    //
+    // range(last(years+1), maxYear+1).forEach(year => {
+    //   domain.push(year)
+    //   scaleRange.push(lastRange)
+    // })
+
+    console.log("d", domain, scaleRange)
+
+    return scaleTime().domain(domain).range(scaleRange)
   }
 )
 

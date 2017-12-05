@@ -31,3 +31,23 @@ button:focus {
   font-size: 14px;
   font-weight: 100;
 }
+
+.timeline-event-date {
+  fill: #fff;
+  text-anchor: start;
+  font-size: 10px;
+  font-weight: 100;
+}
+
+.timeline-event-category {
+  fill: #ed6505;
+  text-anchor: start;
+  font-size: 10px;
+  font-weight: 100;
+}
+
+.timeline-event-title {
+  fill: #fff;
+  text-anchor: start;
+  font-size: 18px;
+}
