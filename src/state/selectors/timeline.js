@@ -2,6 +2,10 @@ import { createSelector } from 'reselect'
 import { range, groupBy, mapValues, isPlainObject } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
+import { scaleTime } from 'd3-scale'
+
+export const WIDTH_WITH_EVENTS = 300
+export const WIDTH_NO_EVENTS = 100
 
 // TODO: Move in such as common
 const translateDoc = (doc, langCode) => {
@@ -63,14 +67,30 @@ export const getTimelineYearsWithEvents = createSelector(
       return null
     }
 
-    const yearsRange = range(extent[0].getFullYear(), extent[1].getFullYear())
+    const yearsRange = range(extent[0].getFullYear(), extent[1].getFullYear()+1)
     const eventsByYear = groupBy(events, e => e.startDate.getFullYear())
 
     return yearsRange.map(year => ({
       year,
+      date: new Date(year, 0, 1),
       hasEvents: !!eventsByYear[year],
       events: eventsByYear[year] || [],
     }))
+  }
+)
+
+export const getTimelineTopScale = createSelector(
+  getTimelineYearsWithEvents,
+  (years) => {
+    const range = [0]
+    let domain = years.map(year => year.date)
+    years.forEach((year, i) => {
+      if(i < years.length - 1){
+        const delta = years[i].hasEvents ? WIDTH_WITH_EVENTS : WIDTH_NO_EVENTS
+        range.push(delta + range[i])
+      }
+    })
+    return scaleTime().domain(domain).range(range)
   }
 )
 
