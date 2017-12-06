@@ -3,6 +3,7 @@ import makeDocumentsListSaga from './hos/documents'
 import {
   GET_EVENTS,
   GET_PERIODS,
+  GET_PLACES,
 } from '../actions'
 import * as api from '../../api'
 
@@ -15,6 +16,11 @@ export default function* rootSaga() {
   yield fork(makeDocumentsListSaga(
     GET_PERIODS,
     api.getPeriods,
+    state => state.periods,
+  ))
+  yield fork(makeDocumentsListSaga(
+    GET_PLACES,
+    api.getPlaces,
     state => state.periods,
   ))
 }

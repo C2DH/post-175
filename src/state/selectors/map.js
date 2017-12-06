@@ -1,0 +1,43 @@
+import { createSelector } from 'reselect'
+import { extent } from 'd3-array'
+import { scaleTime } from 'd3-scale'
+import { range, groupBy, mapValues, isPlainObject, last } from 'lodash'
+import { getSelectedLangCode } from './lang'
+import { translateDoc } from './common'
+
+export const getRawPlaces = createSelector(
+  state => state.places.ids,
+  state => state.places.data,
+  getSelectedLangCode,
+  (ids, data, langCode) => ids === null
+    ? null
+    : ids.map(id => translateDoc(data[id], langCode))
+)
+
+export const getPlaces = createSelector(
+  getRawPlaces,
+  places => places === null ? null : places.map(place => ({
+    ...place,
+    startDate: place.data.start_date === null ? null : new Date(place.data.start_date),
+    endDate: place.data.end_date === null ? null : new Date(place.data.end_date),
+  }))
+)
+
+export const getPlacesExtent = createSelector(
+  getPlaces,
+  places => places === null ? null : extent(places, p => p.startDate)
+)
+
+export const getMapTimelineCurrentDate = createSelector(
+  getPlacesExtent,
+  state => state.map.currentDate,
+  (extent, date) => {
+    if (extent === null) {
+      return null
+    }
+    if (date === null) {
+      return extent[0]
+    }
+    return new Date(date)
+  }
+)

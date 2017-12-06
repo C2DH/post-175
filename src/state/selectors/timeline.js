@@ -1,26 +1,12 @@
 import { createSelector } from 'reselect'
-import { range, groupBy, mapValues, isPlainObject, last } from 'lodash'
+import { range, groupBy, last } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
+import { translateDoc } from './common'
 
 export const WIDTH_WITH_EVENTS = 300
 export const WIDTH_NO_EVENTS = 100
-
-// TODO: Move in such as common
-const translateDoc = (doc, langCode) => {
-  const transObj = (obj, key, sourceObj) => {
-    if (isPlainObject(obj)) {
-      if (typeof obj[langCode] !== 'undefined') {
-        return obj[langCode]
-      }
-      return mapValues(obj, transObj)
-    }
-    return obj
-  }
-
-  return mapValues(doc, transObj)
-}
 
 export const getRawEvents = createSelector(
   state => state.events.ids,

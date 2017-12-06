@@ -4,7 +4,7 @@ import LegendIntro from './LegendIntro'
 import LegendDetail from './LegendDetail'
 
 const CloseLegendDetailBtn = ({onclick}) => (
-  <div className="position-absolute legend-close-btn">
+  <div className="position-absolute legend-close-btn" style={{ zIndex: 0 }}>
     <button className="btn btn-light rounded-0 d-flex justify-content-center" onClick={onclick}>
       <i className="material-icons font-14">close</i>
     </button>

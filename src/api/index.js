@@ -40,3 +40,11 @@ export const getPeriods = (params = {}) => getDocuments({
     data__type: 'period',
   },
 })
+
+export const getPlaces = (params = {}) => getDocuments({
+  ...params,
+  filters: {
+    ...params.filters,
+    data__type: 'place',
+  },
+})
