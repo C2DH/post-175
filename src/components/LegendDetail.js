@@ -1,12 +1,6 @@
 import React, { PureComponent } from 'react'
 import TopBar from './TopBar'
 
-const fakeCover = "https://i2-prod.gazettelive.co.uk/incoming/article10966617.ece/ALTERNATES/s615/JS83871260.jpg"
-const fakeHoverText = "Donec velit neque, auctor sit amet aliquam vel"
-const fakeOffice = "Bureau de poste Fake"
-const fakeAddress = "8, fake road, Paperopoli"
-const fakeImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-rZJAA176o4Y27qZ8tQQqu7hYZpyhNJ7OY17DjBhEC6bNytaD8A"
-
 const PostOfficeInfo = ({ office = fakeOffice, address = fakeAddress }) => (
   <div className="w-100 p-3 bg-light" style={{minHeight: 250}}>
     <p className="font-12 mb-0">Office</p>
@@ -30,7 +24,7 @@ const CoversButtons = () => (
 
 class LegendDetail extends PureComponent {
   render () {
-    const { cover = fakeCover, hoverText = fakeHoverText, image = fakeImage } = this.props
+    const { place } = this.props
     return (
       <div className="d-flex flex-column h-100 overflow-auto">
         <div className="w-100 p-0 cover legend-detail-image d-flex flex-column justify-content-end" style={{background:`url(${cover})`}}>

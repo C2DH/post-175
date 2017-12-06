@@ -53,7 +53,7 @@ export class TimelineTicks extends PureComponent {
     return (
       <svg className="w-100 h-100 bg-darkgrey">
         {ticks.map(tick=> (
-          <text key={tick} x={scale(tick)} y={y} className="timeline-nav-tick">{tick.getFullYear()}</text>
+          <text key={tick} x={scale(tick)} y={y} className="timeline-nav-tick fill-white">{tick.getFullYear()}</text>
         ))}
       </svg>
     )

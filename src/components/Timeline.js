@@ -64,7 +64,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
           <g transform={`translate(${TIMELINE_PADDING},0)`}>
           { years.map(year => (
             <g key={year.year} >
-              <text className="timeline-nav-tick" x={scale(year.date)} y={32}>{year.year}</text>
+              <text className="timeline-nav-tick fill-grey" x={scale(year.date)} y={32}>{year.year}</text>
               { year.events.map((event, eventIndex) => {
 
                 let eventHeight = 0

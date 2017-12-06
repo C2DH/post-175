@@ -32,7 +32,7 @@ class Home extends PureComponent {
           <div className="d-flex h-100 flex-1 flex-column">
             <p className="lead-24">Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh.
               Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
-              <a href="#"><u>Read more</u></a>
+              <a href="#" className="text-white"><u>Read more</u></a>
           </div>
           <div className="d-flex h-100 justify-content-end" style={{flex: 1.5}}>
             <div className="d-flex flex-column">
