@@ -18,11 +18,16 @@ export default (prevState = defaultState, { type, payload }) => {
         ...prevState,
         currentDate: payload,
       }
-    case MAP_SET_OVER_PLACE:
+    case MAP_SET_OVER_PLACE: {
+      // Prevent to over a selected shit
+      if (prevState.selectedPlace && prevState.selectedPlace.id === payload.id) {
+        return prevState
+      }
       return {
         ...prevState,
         overPlace: payload,
       }
+    }
     case MAP_CLEAR_OVER_PLACE:
       return {
         ...prevState,

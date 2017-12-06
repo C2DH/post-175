@@ -49,6 +49,21 @@ class MapPage extends PureComponent {
     this.props.unloadMap()
   }
 
+  selectPlace = place => {
+    this.props.setSelectedPlace(place)
+    this.setState({
+      center: place.coordinates,
+      zoom: [13],
+    })
+  }
+
+  closePlaceDetail = () => {
+    this.props.clearSelectedPlace()
+    this.setState({
+      zoom: [11],
+    })
+  }
+
   render() {
     const { center, zoom } = this.state
     const {
@@ -67,7 +82,7 @@ class MapPage extends PureComponent {
         <div className='row no-gutters flex-1'>
           <Legend
             selectedPlace={selectedPlace}
-            onClose={clearSelectedPlace}
+            onClose={this.closePlaceDetail}
           />
           <div className='d-flex flex-1 w-100 flex-column'>
             <div className={classNames('d-flex w-100 flex-1', { 'map-with-over-place': overPlace !== null })}>
@@ -82,21 +97,27 @@ class MapPage extends PureComponent {
               >
                 {currentDate  && <CurrentYear year={currentDate.getFullYear()} />}
                 <ZoomControl position="top-right" />
-                {places && places.map(place => (
-                  <Marker
-                    key={place.id}
-                    coordinates={place.coordinates}
-                    onClick={() => setSelectedPlace(place)}
-                  >
-                    <svg
-                      width={10}
-                      height={10}
-                      onMouseEnter={() => setOverPlace(place)}
-                      onMouseOut={clearOverPlace}>
-                      <circle cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
-                    </svg>
-                  </Marker>
-                ))}
+                {places && places.map(place => {
+                  const isSelected = selectedPlace ? place.id === selectedPlace.id : false
+                  // FIXME: Not intended as a solution '-.- only a way to test selected shit
+                  // highlighted...
+                  const mul = isSelected ? 2 : 1
+                  return (
+                    <Marker
+                      key={place.id}
+                      coordinates={place.coordinates}
+                      onClick={() => this.selectPlace(place)}
+                    >
+                      <svg
+                        width={10 * mul}
+                        height={10 * mul}
+                        onMouseEnter={() => setOverPlace(place)}
+                        onMouseOut={clearOverPlace}>
+                        <circle cx={5 * mul} cy={5 * mul} r={5 * mul} fill={place.open ? '#13d436' : '#fdd00c'} />
+                      </svg>
+                    </Marker>
+                  )
+                })}
                 {overPlace && (
                   <Popup
                     coordinates={overPlace.coordinates}
