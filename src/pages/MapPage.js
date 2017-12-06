@@ -19,8 +19,14 @@ import {
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
 
+// TODO: Style that bitch
 const MapTooltip = ({ place }) => (
   <div>{place.title}</div>
+)
+
+// TODO: Style that bitch
+const CurrentYear = ({ year }) => (
+  <h1 style={{ position: 'absolute', top: 0 }}>{year}</h1>
 )
 
 const Map = ReactMapboxGl({
@@ -71,6 +77,7 @@ class MapPage extends PureComponent {
                 center={center}
                 zoom={zoom}
               >
+                <CurrentYear year={2017} />
                 <ZoomControl position="top-right" />
                 {places && places.map(place => (
                   <Marker
