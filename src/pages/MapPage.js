@@ -16,6 +16,7 @@ import {
   getPlacesInDate,
   getMapOverPlace,
   getMapSelectedPlace,
+  getMapTimelineCurrentDate,
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
 
@@ -58,6 +59,7 @@ class MapPage extends PureComponent {
       clearSelectedPlace,
       setOverPlace,
       clearOverPlace,
+      currentDate,
     } = this.props
 
     return (
@@ -78,7 +80,7 @@ class MapPage extends PureComponent {
                 center={center}
                 zoom={zoom}
               >
-                <CurrentYear year={2017} />
+                {currentDate  && <CurrentYear year={currentDate.getFullYear()} />}
                 <ZoomControl position="top-right" />
                 {places && places.map(place => (
                   <Marker
@@ -117,6 +119,7 @@ const mapStateToProps = state => ({
   places: getPlacesInDate(state),
   overPlace: getMapOverPlace(state),
   selectedPlace: getMapSelectedPlace(state),
+  currentDate: getMapTimelineCurrentDate(state),
 })
 export default connect(mapStateToProps, {
   loadPlaces,
