@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl'
+import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
 import Legend from '../components/Legend'
 import {
   loadPlaces,
   unloadPlaces,
 } from '../state/actions'
 import {
-  getPlaces,
+  getPlacesInDate,
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
 
@@ -16,6 +16,11 @@ const Map = ReactMapboxGl({
 })
 
 class MapPage extends PureComponent {
+  state = {
+    center: [6.087, 49.667],
+    zoom: [8],
+  }
+
   componentDidMount() {
     this.props.loadPlaces()
   }
@@ -25,7 +30,9 @@ class MapPage extends PureComponent {
   }
 
   render() {
+    const { center, zoom } = this.state
     const { places } = this.props
+
     return (
       <div className="h-100vh d-flex flex-column">
         <div className='row no-gutters flex-1'>
@@ -34,9 +41,26 @@ class MapPage extends PureComponent {
             <Map
               style="mapbox://styles/mapbox/streets-v9"
               className="w-100 flex-1"
-            />
+              keyboard={false}
+              dragRotate={false}
+              touchZoomRotate={false}
+              center={center}
+              zoom={zoom}
+            >
+              <div>
+                {places && places.map(place => (
+                  <Marker
+                    key={place.id}
+                    coordinates={place.coordinates}
+                  >
+                    <svg width={10} height={10}>
+                      <circle cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
+                    </svg>
+                  </Marker>
+                ))}
+              </div>
+            </Map>
             {places && <TimelineNavigationMap />}
-            {/* <div style={{ height: 50 }} className='bg-dark w-100'></div> */}
           </div>
         </div>
       </div>
@@ -45,7 +69,7 @@ class MapPage extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  places: getPlaces(state),
+  places: getPlacesInDate(state),
 })
 export default connect(mapStateToProps, {
   loadPlaces,

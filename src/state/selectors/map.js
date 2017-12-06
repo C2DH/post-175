@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
-import { range, groupBy, mapValues, isPlainObject, last } from 'lodash'
+import { get, range } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
 
@@ -20,6 +20,8 @@ export const getPlaces = createSelector(
     ...place,
     startDate: place.data.start_date === null ? null : new Date(place.data.start_date),
     endDate: place.data.end_date === null ? null : new Date(place.data.end_date),
+    coordinates: get(place, 'data.coordinates.geometry.coordinates', [])
+      .slice(0, 2).map(x => +x).reverse(),
   }))
 )
 
@@ -39,5 +41,21 @@ export const getMapTimelineCurrentDate = createSelector(
       return extent[0]
     }
     return new Date(date)
+  }
+)
+
+export const getPlacesInDate = createSelector(
+  getMapTimelineCurrentDate,
+  getPlaces,
+  (currentDate, places) => {
+    if (currentDate === null || places === null) {
+      return null
+    }
+    return places
+      .filter(place => place.startDate <= currentDate)
+      .map(place => ({
+        ...place,
+        open: place.endDate === null || place.endDate > currentDate,
+      }))
   }
 )
