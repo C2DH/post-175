@@ -1,15 +1,27 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
+import ReactMapboxGl, { Marker, Popup } from 'react-mapbox-gl'
+import classNames from 'classnames'
 import Legend from '../components/Legend'
 import {
   loadPlaces,
   unloadPlaces,
+  unloadMap,
+  setSelectedPlace,
+  clearSelectedPlace,
+  setOverPlace,
+  clearOverPlace,
 } from '../state/actions'
 import {
   getPlacesInDate,
+  getMapOverPlace,
+  getMapSelectedPlace,
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
+
+const MapTooltip = ({ place }) => (
+  <div>{place.title}</div>
+)
 
 const Map = ReactMapboxGl({
   accessToken: 'pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw'
@@ -27,39 +39,65 @@ class MapPage extends PureComponent {
 
   componentWillUnmount() {
     this.props.unloadPlaces()
+    this.props.unloadMap()
   }
 
   render() {
     const { center, zoom } = this.state
-    const { places } = this.props
+    const {
+      places,
+      overPlace,
+      selectedPlace,
+      setSelectedPlace,
+      setOverPlace,
+      clearOverPlace,
+    } = this.props
 
     return (
       <div className="h-100vh d-flex flex-column">
         <div className='row no-gutters flex-1'>
-          <Legend />
+          <Legend
+            selectedPlace={selectedPlace}
+            onClose={clearSelectedPlace}
+          />
           <div className='d-flex flex-1 w-100 flex-column'>
-            <Map
-              style="mapbox://styles/mapbox/streets-v9"
-              className="w-100 flex-1"
-              keyboard={false}
-              dragRotate={false}
-              touchZoomRotate={false}
-              center={center}
-              zoom={zoom}
-            >
-              <div>
-                {places && places.map(place => (
-                  <Marker
-                    key={place.id}
-                    coordinates={place.coordinates}
-                  >
-                    <svg width={10} height={10}>
-                      <circle cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
-                    </svg>
-                  </Marker>
-                ))}
-              </div>
-            </Map>
+            <div className={classNames('d-flex w-100 flex-1', { 'map-with-over-place': overPlace !== null })}>
+              <Map
+                style="mapbox://styles/mapbox/streets-v9"
+                className="w-100 flex-1"
+                keyboard={false}
+                dragRotate={false}
+                touchZoomRotate={false}
+                center={center}
+                zoom={zoom}
+              >
+                <div>
+                  {places && places.map(place => (
+                    <Marker
+                      key={place.id}
+                      coordinates={place.coordinates}
+                      onClick={() => setSelectedPlace(place)}
+                    >
+                      <svg
+                        width={10}
+                        height={10}
+                        onMouseEnter={() => setOverPlace(place)}
+                        onMouseOut={clearOverPlace}>
+                        <circle cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
+                      </svg>
+                    </Marker>
+                  ))}
+                  {overPlace && (
+                    <Popup
+                      coordinates={overPlace.coordinates}
+                      offset={{ bottom: [0, -15] }}
+                      anchor='bottom'>
+                      <MapTooltip place={overPlace} />
+                    </Popup>
+                  )}
+                </div>
+              </Map>
+            </div>
             {places && <TimelineNavigationMap />}
           </div>
         </div>
@@ -70,8 +108,15 @@ class MapPage extends PureComponent {
 
 const mapStateToProps = state => ({
   places: getPlacesInDate(state),
+  overPlace: getMapOverPlace(state),
+  selectedPlace: getMapSelectedPlace(state),
 })
 export default connect(mapStateToProps, {
   loadPlaces,
   unloadPlaces,
+  unloadMap,
+  setSelectedPlace,
+  clearSelectedPlace,
+  setOverPlace,
+  clearOverPlace,
 })(MapPage)

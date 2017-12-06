@@ -59,3 +59,6 @@ export const getPlacesInDate = createSelector(
       }))
   }
 )
+
+export const getMapOverPlace = state => state.map.overPlace
+export const getMapSelectedPlace = state => state.map.selectedPlace

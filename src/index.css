@@ -123,3 +123,7 @@ a:-webkit-any-link {
   left: 100%;
   padding-top: 36px;
 }
+
+.map-with-over-place {
+  opacity: 0.2;
+}

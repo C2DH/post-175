@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { getPlacesExtent, getMapTimelineCurrentDate } from '../state/selectors'
 import { setDateTimelineMap } from '../state/actions'
