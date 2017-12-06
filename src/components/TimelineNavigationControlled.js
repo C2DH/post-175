@@ -51,7 +51,7 @@ export class TimelineTicks extends PureComponent {
   render() {
     const { ticks, scale, y } = this.props
     return (
-      <svg className="w-100 h-100" style={{ backgroundColor:'#383838' }}>
+      <svg className="w-100 h-100 bg-darkgrey">
         {ticks.map(tick=> (
           <text key={tick} x={scale(tick)} y={y} className="timeline-nav-tick">{tick.getFullYear()}</text>
         ))}
@@ -64,7 +64,7 @@ export class TimelineEvents extends PureComponent {
   render() {
     const { events, scale, cy } = this.props
     return (
-      <svg className="w-100 h-100" style={{ backgroundColor:'#383838' }}>
+      <svg className="w-100 h-100 bg-darkgrey">
         {events.map(event => (
           <circle fill={getEventColor(event)} key={event.id} cx={scale(event.startDate)} r={5} cy={cy}></circle>
         ))}
