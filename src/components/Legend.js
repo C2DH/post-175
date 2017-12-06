@@ -20,7 +20,7 @@ class Legend extends PureComponent {
         <TopBar title={'MAP'} />
         {selectedPlace &&
           <CloseLegendDetailBtn onclick={onClose} />}
-        {selectedPlace ? <LegendDetail /> : <LegendIntro />}
+        {selectedPlace ? <LegendDetail place={selectedPlace} /> : <LegendIntro />}
       </div>
 
     )
