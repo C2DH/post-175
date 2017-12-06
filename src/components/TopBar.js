@@ -6,10 +6,11 @@ class TopBar extends PureComponent {
   render() {
     const { title, openMenu } = this.props
     return (
-      <div className='w-100 bg-dark text-light d-flex'>
-
+      <div className='w-100 bg-opaque-black d-flex' style={{height: 57}}>
         <div className='d-flex'>
-          <button className='btn text-light bg-dark' onClick={openMenu}>☰</button>
+          <button className='btn bg-opaque-black pt-2' onClick={openMenu}>
+            <i className="material-icons pt-1">menu</i>
+          </button>
           <h6 className="pb-0 mb-0 align-self-center">{title}</h6>
         </div>
       </div>

@@ -118,7 +118,7 @@ export default class Timeline extends PureComponent {
     return (
       <div className='col-md-9 d-flex flex-column'>
         {/* top timeline */}
-        <div className="align-self-stretch flex-1  w-100 " style={{height:52, overflow:'hidden', backgroundColor:'#222'}}>
+        <div className="align-self-stretch flex-1 w-100 bg-black" style={{height:52, overflow:'hidden'}}>
           <TimelineEvents/>
         </div>
 

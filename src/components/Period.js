@@ -46,7 +46,7 @@ class Period extends PureComponent {
         <div className="d-flex flex-column flex-1 justify-content-end cover" style={{background:`url(${cover})`}}>
           <div className="p-2 mb-3 text-light">
             <small>PERIODE</small>
-            <h2 className="mb-3">{period.startDate.getFullYear()}{' - '}{period.endDate.getFullYear() + 1}</h2>
+            <h1 className="mb-3 lead-48">{period.startDate.getFullYear()}{' - '}{period.endDate.getFullYear() + 1}</h1>
             <p>{period.data.description || '....'}</p>
           </div>
           <div className="w-100 h-100px d-flex flex-row-reverse">

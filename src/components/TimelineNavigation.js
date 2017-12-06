@@ -85,7 +85,7 @@ class TimelineNavigation extends PureComponent {
         className="timeline-nav align-self-end bg-dark w-100 d-flex flex-column"
         style={{height:100}}>
         <div className="d-inline-flex flex-1 w-100">
-          <svg className="w-100 h-100" style={{backgroundColor:'#383838'}}>
+          <svg className="w-100 h-100 bg-darkgrey">
             { events.map(event => (
               <circle fill={getEventColor(event)} key={event.id} cx={scale(event.startDate)} r={5} cy={height/4}></circle>
             ))}

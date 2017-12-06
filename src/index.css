@@ -16,6 +16,7 @@ a:-webkit-any-link {
   text-decoration: none;
 }
 
+/* general utilities */
 .h-100vh {
   height: 100vh;
 }
@@ -36,28 +37,55 @@ a:-webkit-any-link {
   background-size: cover!important;
 }
 
-.font-9 {
-  font-size: 9px;
+ /*fonts & text utilities */
+ .font-9 {
+   font-size: 9px;
+ }
+
+ .font-12 {
+   font-size: 12px;
+ }
+
+ .font-14 {
+   font-size: 14px;
+ }
+
+.lead-24 {
+  font-size: 24px;
+  font-weight: 300;
 }
 
-.font-12 {
-  font-size: 12px;
+.lead-48 {
+  font-size: 48px;
+  font-weight: 300;
 }
 
-.font-14 {
-  font-size: 14px;
+/* custom background styles */
+.bg-black {
+  background-color: #131313;
+  color: #fff;
+}
+
+.bg-opaque-black {
+  background-color: #1d1d1d;
+  color: #fff;
+}
+
+.bg-darkgrey {
+  background-color: #383838;
 }
 
 .bg-overlay {
   background-color: rgba(49,48,48,0.7);
 }
 
+/* custom components styles */
 .timeline-nav {
   user-select: none;
 }
 
 .timeline-nav-tick {
-  fill: #fff;
+  fill: #828282;
   text-anchor: middle;
   font-size: 14px;
   font-weight: 100;
@@ -94,14 +122,4 @@ a:-webkit-any-link {
 .legend-close-btn {
   left: 100%;
   padding-top: 36px;
-}
-
-.bg-black {
-  background-color: #131313;
-  color: #fff;
-}
-
-.bg-opaque-black {
-  background-color: #1d1d1d;
-  color: #fff;
 }
