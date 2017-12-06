@@ -8,6 +8,14 @@ button:focus {
   outline: 0px;
 }
 
+p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Work Sans', sans-serif;
+}
+
+a:-webkit-any-link {
+  text-decoration: none;
+}
+
 .h-100vh {
   height: 100vh;
 }
@@ -86,4 +94,14 @@ button:focus {
 .legend-close-btn {
   left: 100%;
   padding-top: 36px;
+}
+
+.bg-black {
+  background-color: #131313;
+  color: #fff;
+}
+
+.bg-opaque-black {
+  background-color: #1d1d1d;
+  color: #fff;
 }
