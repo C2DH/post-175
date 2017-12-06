@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import ReactMapboxGl, { Marker, Popup } from 'react-mapbox-gl'
+import ReactMapboxGl, { Marker, Popup, ZoomControl } from 'react-mapbox-gl'
 import classNames from 'classnames'
 import Legend from '../components/Legend'
 import {
@@ -71,31 +71,30 @@ class MapPage extends PureComponent {
                 center={center}
                 zoom={zoom}
               >
-                <div>
-                  {places && places.map(place => (
-                    <Marker
-                      key={place.id}
-                      coordinates={place.coordinates}
-                      onClick={() => setSelectedPlace(place)}
-                    >
-                      <svg
-                        width={10}
-                        height={10}
-                        onMouseEnter={() => setOverPlace(place)}
-                        onMouseOut={clearOverPlace}>
-                        <circle cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
-                      </svg>
-                    </Marker>
-                  ))}
-                  {overPlace && (
-                    <Popup
-                      coordinates={overPlace.coordinates}
-                      offset={{ bottom: [0, -15] }}
-                      anchor='bottom'>
-                      <MapTooltip place={overPlace} />
-                    </Popup>
-                  )}
-                </div>
+                <ZoomControl position="top-right" />
+                {places && places.map(place => (
+                  <Marker
+                    key={place.id}
+                    coordinates={place.coordinates}
+                    onClick={() => setSelectedPlace(place)}
+                  >
+                    <svg
+                      width={10}
+                      height={10}
+                      onMouseEnter={() => setOverPlace(place)}
+                      onMouseOut={clearOverPlace}>
+                      <circle cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
+                    </svg>
+                  </Marker>
+                ))}
+                {overPlace && (
+                  <Popup
+                    coordinates={overPlace.coordinates}
+                    offset={{ bottom: [0, -15] }}
+                    anchor='bottom'>
+                    <MapTooltip place={overPlace} />
+                  </Popup>
+                )}
               </Map>
             </div>
             {places && <TimelineNavigationMap />}

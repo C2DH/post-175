@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux'
 import { uniq } from 'lodash'
 import { normalizeCollection } from '../../utils'
 

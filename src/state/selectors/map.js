@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 import { extent } from 'd3-array'
-import { scaleTime } from 'd3-scale'
-import { get, range } from 'lodash'
+import { get } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
 

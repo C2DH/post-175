@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import qs from 'query-string'
 import { find, get } from 'lodash'
 import { getLangs } from '../../state/selectors'
