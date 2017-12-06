@@ -55,6 +55,7 @@ class MapPage extends PureComponent {
       overPlace,
       selectedPlace,
       setSelectedPlace,
+      clearSelectedPlace,
       setOverPlace,
       clearOverPlace,
     } = this.props
