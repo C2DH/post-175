@@ -17,12 +17,16 @@ class MenuOpen extends PureComponent {
     return (
       <div
         style={style}
-        className='position-fixed fixed-top fixed-bottom bg-dark w-25 text-light p-3 d-flex flex-column'>
+        className='position-fixed fixed-top fixed-bottom w-25 bg-black p-3 d-flex flex-column'>
 
-        <div><button onClick={onRequestClose} className="btn btn-dark border-0">x</button></div>
+        <div>
+          <button onClick={onRequestClose} className="btn bg-black border-0">
+            <i className="material-icons">close</i>
+          </button>
+        </div>
         <Link to={url('/')} onClick={onRequestClose}><h1 className="display-4 text-light">175 <br /> Joer Post</h1></Link>
 
-        <p className="text-muted">A long history of comunication, technologies, services and people.</p>
+        <p className="text-grey" style={{fontSize: 18}}>A long history of comunication, technologies, services and people.</p>
         <div className="flex-1 d-flex flex-column justify-content-center">
           <div>
             <div>

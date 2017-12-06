@@ -12,23 +12,15 @@ const CloseLegendDetailBtn = ({onclick}) => (
 )
 
 class Legend extends PureComponent {
-  state = {
-    showDetail: true
-  }
-
-  toggleShowDetail = () => {
-    this.setState({
-      showDetail: !this.state.showDetail
-    })
-  }
 
   render () {
+    const { selectedPlace, onClose } = this.props
     return (
       <div className="col-md-3 bg-info d-flex flex-column">
         <TopBar title={'MAP'} />
-        {this.state.showDetail &&
-          <CloseLegendDetailBtn onclick={this.toggleShowDetail} />}
-        {this.state.showDetail ? <LegendDetail /> : <LegendIntro />}
+        {selectedPlace &&
+          <CloseLegendDetailBtn onclick={onClose} />}
+        {selectedPlace ? <LegendDetail place={selectedPlace} /> : <LegendIntro />}
       </div>
 
     )

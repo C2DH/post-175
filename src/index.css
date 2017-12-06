@@ -53,11 +53,16 @@ a:-webkit-any-link {
 .lead-24 {
   font-size: 24px;
   font-weight: 300;
+  line-height: 1.33;
 }
 
 .lead-48 {
   font-size: 48px;
   font-weight: 300;
+}
+
+.text-grey {
+  color: #9b9b9b;
 }
 
 /* custom background styles */
@@ -85,10 +90,17 @@ a:-webkit-any-link {
 }
 
 .timeline-nav-tick {
-  fill: #828282;
   text-anchor: middle;
   font-size: 14px;
   font-weight: 100;
+}
+
+.fill-grey {
+  fill: #828282;
+}
+
+.fill-white {
+  fill: #fff;
 }
 
 .timeline-event-date {
