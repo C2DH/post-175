@@ -28,7 +28,7 @@ class LegendDetail extends PureComponent {
     return (
       <div className="d-flex flex-column h-100 overflow-auto">
         <div className="w-100 p-0 cover legend-detail-image d-flex flex-column justify-content-end" >
-          <div className="w-100 bg-overlay text-white d-flex flex-row">
+          <div className="w-100 bg-overlay text-white d-flex flex-row justify-content-between">
             <div className="font-12 m-3">{place.title}</div>
             <CoversButtons />
           </div>

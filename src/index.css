@@ -133,9 +133,14 @@ a:-webkit-any-link {
 
 .legend-close-btn {
   left: 100%;
-  padding-top: 36px;
+  padding-top: 56px;
 }
 
 .map-with-over-place {
   opacity: 0.2;
+}
+
+.map-tooltip {
+  width: 100%;
+  height: 300px;
 }

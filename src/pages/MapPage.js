@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import ReactMapboxGl, { Marker, Popup, ZoomControl, Layer } from 'react-mapbox-gl'
+import ReactMapboxGl, { Marker, Popup, ZoomControl } from 'react-mapbox-gl'
 import classNames from 'classnames'
 import Legend from '../components/Legend'
 import {
@@ -19,11 +19,12 @@ import {
   getMapTimelineCurrentDate,
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
+import MapTooltip from '../components/MapTooltip'
 
 // TODO: Style that bitch
-const MapTooltip = ({ place }) => (
-  <div>{place.title}</div>
-)
+// const MapTooltip = ({ place }) => (
+//   <div>{place.title}</div>
+// )
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => (
@@ -33,8 +34,6 @@ const CurrentYear = ({ year }) => (
 const Map = ReactMapboxGl({
   accessToken: 'pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw'
 })
-
-
 
 class MapPage extends PureComponent {
   state = {
@@ -49,21 +48,6 @@ class MapPage extends PureComponent {
   componentWillUnmount() {
     this.props.unloadPlaces()
     this.props.unloadMap()
-  }
-
-  selectPlace = place => {
-    this.props.setSelectedPlace(place)
-    this.setState({
-      center: place.coordinates,
-      zoom: [13],
-    })
-  }
-
-  closePlaceDetail = () => {
-    this.props.clearSelectedPlace()
-    this.setState({
-      zoom: [11],
-    })
   }
 
   render() {
@@ -84,10 +68,10 @@ class MapPage extends PureComponent {
         <div className='row no-gutters flex-1'>
           <Legend
             selectedPlace={selectedPlace}
-            onClose={this.closePlaceDetail}
+            onClose={clearSelectedPlace}
           />
           <div className='d-flex flex-1 w-100 flex-column'>
-            <div className={classNames('d-flex w-100 flex-1', { 'xmap-with-over-place': overPlace !== null })}>
+            <div className={classNames('d-flex w-100 flex-1', { 'map-with-over-place': overPlace !== null })}>
               <Map
                 style="mapbox://styles/mapbox/streets-v9"
                 className="w-100 flex-1"
@@ -99,38 +83,28 @@ class MapPage extends PureComponent {
               >
                 {currentDate  && <CurrentYear year={currentDate.getFullYear()} />}
                 <ZoomControl position="top-right" />
-                {places && places.map(place => {
-                  const isSelected = selectedPlace ? place.id === selectedPlace.id : false
-                  // FIXME: Not intended as a solution '-.- only a way to test selected shit
-                  // highlighted...
-                  const mul = isSelected ? 2 : 1
-                  return (
-                    <Marker
-                      key={place.id}
-                      coordinates={place.coordinates}
-                      onClick={() => this.selectPlace(place)}
-                    >
-                      <svg
-                        width={10 * mul}
-                        height={10 * mul}
-                        onMouseEnter={() => setOverPlace(place)}
-                        onMouseOut={clearOverPlace}>
-                        <circle cx={5 * mul} cy={5 * mul} r={5 * mul} fill={place.open ? '#13d436' : '#fdd00c'} />
-                      </svg>
-                    </Marker>
-                  )
-                })}
+                {places && places.map(place => (
+                  <Marker
+                    key={place.id}
+                    coordinates={place.coordinates}
+                    onClick={() => setSelectedPlace(place)}
+                  >
+                    <svg
+                      width={10}
+                      height={10}
+                      onMouseEnter={() => setOverPlace(place)}
+                      onMouseOut={clearOverPlace}>
+                      <circle cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
+                    </svg>
+                  </Marker>
+                ))}
                 {overPlace && (
-                  <div>
-                    <Layer  type="background" paint={{'background-color':'black'}} before={null} />
-                    <Popup
-                      coordinates={overPlace.coordinates}
-                      offset={{ bottom: [0, -15] }}
-                      anchor='bottom'>
-
-                      <MapTooltip place={overPlace} />
-                    </Popup>
-                  </div>
+                  <Popup
+                    coordinates={overPlace.coordinates}
+                    offset={{ bottom: [0, -15] }}
+                    anchor='bottom'>
+                    <MapTooltip place={overPlace} />
+                  </Popup>
                 )}
               </Map>
             </div>
