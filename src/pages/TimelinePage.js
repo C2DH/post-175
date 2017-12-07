@@ -8,8 +8,15 @@ import {
   unloadPeriods,
   unloadTimeline,
   clearSelectedEvent,
+  selectEvent,
 } from '../state/actions'
-import { getEvents, getPeriods, getSelectedEvent } from '../state/selectors'
+import {
+  getEvents,
+  getPeriods,
+  getSelectedEvent,
+  getTimelinePrevEvent,
+  getTimelineNextEvent,
+} from '../state/selectors'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
@@ -28,13 +35,26 @@ class TimelinePage extends PureComponent {
     this.props.unloadTimeline()
   }
 
+  goNext = () => {
+    const { selectEvent, nextEvent } = this.props
+    selectEvent(nextEvent)
+  }
+
+  goPrev = () => {
+    const { selectEvent, prevEvent } = this.props
+    selectEvent(prevEvent)
+  }
+
   render() {
-    const { events, periods, selectedEvent, clearSelectedEvent } = this.props
-    console.log(selectedEvent)
+    const { events, periods, selectedEvent, nextEvent, prevEvent, clearSelectedEvent } = this.props
     return (
       <div className='h-100vh d-flex flex-column'>
         <div className='row no-gutters flex-1'>
           {selectedEvent && <EventModal
+            hasNext={nextEvent !== null}
+            prevEvent={prevEvent !== null}
+            goNext={this.goNext}
+            goPrev={this.goPrev}
             event={selectedEvent}
             onClose={clearSelectedEvent}
            />}
@@ -50,6 +70,8 @@ const mapStateToProps = state => ({
   events: getEvents(state),
   periods: getPeriods(state),
   selectedEvent: getSelectedEvent(state),
+  nextEvent: getTimelineNextEvent(state),
+  prevEvent: getTimelinePrevEvent(state),
 })
 export default connect(mapStateToProps, {
   loadEvents,
@@ -58,4 +80,5 @@ export default connect(mapStateToProps, {
   unloadPeriods,
   unloadTimeline,
   clearSelectedEvent,
+  selectEvent,
 })(TimelinePage)
