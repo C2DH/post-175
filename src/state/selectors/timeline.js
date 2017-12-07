@@ -183,3 +183,19 @@ export const getTimelineNextPeriod = createSelector(
     return null
   }
 )
+
+export const getSelectedEvent = createSelector(
+  state => state.selectedEvent,
+  ({ event, eventDetail }) => {
+    if (event === null) {
+      return null
+    }
+    if (eventDetail !== null) {
+      return eventDetail
+    }
+    return {
+      ...event,
+      documents: [],
+    }
+  }
+)
