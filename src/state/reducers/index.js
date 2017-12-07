@@ -3,6 +3,7 @@ import menuOpen from './menuOpen'
 import lang from './lang'
 import makeDocumentsList from './hor/documents'
 import timeline from './timeline'
+import selectedEvent from './selectedEvent'
 import map from './map'
 
 import {
@@ -16,6 +17,7 @@ export default combineReducers({
   lang,
   timeline,
   map,
+  selectedEvent,
   events: makeDocumentsList(GET_EVENTS),
   periods: makeDocumentsList(GET_PERIODS),
   places: makeDocumentsList(GET_PLACES),

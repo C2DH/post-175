@@ -12,7 +12,7 @@ import { last, get } from 'lodash'
 import { Motion, spring } from 'react-motion'
 import MultiText from '../components/MultiText'
 import { DraggableCore } from 'react-draggable'
-import { setDateTimeline } from '../state/actions'
+import { setDateTimeline, selectEvent } from '../state/actions'
 import { getEventColor } from '../utils'
 
 const TIMELINE_PADDING = 30
@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
   extent: getEventsExtent(state),
 })
 
-const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class extends PureComponent {
+const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent })(class extends PureComponent {
 
   state = {
     height: 0,
@@ -47,7 +47,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
   }
 
   render(){
-    const { years, scale, currentDate } = this.props
+    const { years, scale, currentDate, selectEvent } = this.props
     const { height=0 } = this.state
     const width = last(scale.range()) + TIMELINE_PADDING * 2
     const x = -scale(currentDate)
@@ -90,9 +90,9 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
 
 
                 return (<g key={event.id}>
-                  <line  x1={scale(event.startDate)} x2={scale(event.startDate)} y1={0} y2={y2} stroke={color}></line>
+                  <line x1={scale(event.startDate)} x2={scale(event.startDate)} y1={0} y2={y2} stroke={color}></line>
                   <circle cx={scale(event.startDate)} cy={y2} fill={color} fillOpacity={0.4} r={8}></circle>
-                  <circle cx={scale(event.startDate)} cy={y2} stroke={color} fill={color} r={4}></circle>
+                  <circle onClick={() => selectEvent(event)} cx={scale(event.startDate)} cy={y2} stroke={color} fill={color} r={4}></circle>
 
                   <g transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
                     <text className="timeline-event-date">{event.data.start_date}</text>

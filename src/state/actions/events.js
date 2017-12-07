@@ -21,3 +21,18 @@ export const loadPeriods = (params = {}) => ({
 export const unloadPeriods = () => ({
   type: GET_PERIODS_UNLOAD,
 })
+
+export const SELECT_EVENT = 'SELECT_EVENT'
+export const selectEvent = event => ({
+  type: SELECT_EVENT,
+  payload: event,
+})
+
+export const CLEAR_SELECTED_EVENT = 'CLEAR_SELECTED_EVENT'
+export const clearSelectedEvent = () => ({
+  type: CLEAR_SELECTED_EVENT,
+})
+
+export const GET_EVENT_LOADING = 'GET_EVENT_LOADING'
+export const GET_EVENT_FAILURE = 'GET_EVENT_FAILURE'
+export const GET_EVENT_SUCCESS = 'GET_EVENT_SUCCESS'
