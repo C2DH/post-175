@@ -9,6 +9,7 @@ import Home from '../../pages/Home'
 import MapPage from '../../pages/MapPage'
 import TimelinePage from '../../pages/TimelinePage'
 import About from '../../pages/About'
+import { AnimatedSwitch } from 'react-router-transition';
 
 class LangRoot extends PureComponent {
   componentWillMount() {
@@ -36,12 +37,20 @@ class LangRoot extends PureComponent {
 
   render() {
     return (
+      // <AnimatedSwitch
+      //   atEnter={{ opacity: 1 }}
+      //   atLeave={{ opacity: 0 }}
+      //   atActive={{ opacity: 1 }}
+      //   className="switch-wrapper"
+      //   runOnMount={true}
+      // >
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/map' exact component={MapPage} />
         <Route path='/timeline' exact component={TimelinePage} />
         <Route path='/about' exact component={About} />
       </Switch>
+      // </AnimatedSwitch>
     )
   }
 }

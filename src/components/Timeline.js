@@ -130,8 +130,9 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
 
 export default class Timeline extends PureComponent {
   render() {
+    const { style } = this.props
     return (
-      <div className='col-md-9 d-flex flex-column'>
+      <div className='col-md-9 d-flex flex-column' style={style}>
         {/* top timeline */}
         <div className="align-self-stretch flex-1 w-100 bg-black" style={{height:52, overflow:'hidden'}}>
           <TimelineEvents/>

@@ -12,6 +12,7 @@ import { getEvents, getPeriods } from '../state/selectors'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
+import { Motion, spring } from 'react-motion'
 
 class TimelinePage extends PureComponent {
   componentDidMount() {
@@ -30,9 +31,17 @@ class TimelinePage extends PureComponent {
     return (
       <div className='h-100vh d-flex flex-column'>
         <div className='row no-gutters flex-1'>
+          {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
+            {({o}) => (
+              <Period style={{opacity:o}}/>
+            )}
+          </Motion> }
+          {events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
+            {({o}) => (
+              <Timeline style={{opacity:o}} />
+            )}
+          </Motion> }
 
-          {periods && events && <Period />}
-          {events && <Timeline />}
         </div>
       </div>
     )
