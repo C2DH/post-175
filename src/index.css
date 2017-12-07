@@ -142,11 +142,15 @@ a:-webkit-any-link {
 
 
 .mapboxgl-popup-content {
-  pointer-events: none;
+  /*pointer-events: none;*/
 }
 
 .map-tooltip {
   width: 100%;
   height: 300px;
-  
+
+}
+
+.mapboxgl-popup {
+  z-index: 99999;
 }
