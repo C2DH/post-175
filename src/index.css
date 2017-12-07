@@ -147,3 +147,7 @@ a:-webkit-any-link {
 .mapboxgl-popup-content {
   pointer-events: none;
 }
+
+.event-modal-control:hover {
+  color: grey;
+}
