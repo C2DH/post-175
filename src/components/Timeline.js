@@ -75,12 +75,14 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
                 }
 
                 const numEvents = year.events.length
-                let y2
-                if(numEvents === 1){
+                let y2 = 10
+
+                if(!event.displacementIndex){
                   y2 = eventHeight ? height / 2 + eventHeight / 2 : height / 2
                 } else {
-                  const k = eventIndex % 3 + 1
-                  y2 = eventHeight ? height / 3 * k + eventHeight / 3 * k : height / 3 * k
+                  const k = event.displacementIndex % 2 === 0 ? 1 : 3
+                  y2 = eventHeight ? height / 4 * k + eventHeight / 4 * k : height / 4 * k
+                  // y2 -= height / 10
                 }
 
 
@@ -95,7 +97,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline })(class exte
                   <g transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
                     <text className="timeline-event-date">{event.data.start_date}</text>
                     <text dy={20} fill={color} className="timeline-event-category">{event.data.category}</text>
-                    <MultiText y={40} className="timeline-event-title" text={event.data.title} maxLen={20}></MultiText>
+                    <MultiText y={40} className="timeline-event-title" text={event.data.title} maxLen={30}></MultiText>
                   </g>
 
                 </g>)

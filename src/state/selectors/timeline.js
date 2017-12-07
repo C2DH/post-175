@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { range, groupBy, last } from 'lodash'
+import { range, groupBy, last, sortBy } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
@@ -25,6 +25,27 @@ export const getEvents = createSelector(
     endDate: event.data.end_date === null ? null : new Date(event.data.end_date),
   }))
 )
+
+export const getAnnotatedEvents = createSelector(
+  getEvents,
+  events => {
+    if(events == null ) { return null }
+    let sortedEvents = sortBy(events, 'startDate')
+    sortedEvents.forEach((event, i) => {
+      if(i > 0){
+        console.log(event.startDate.getTime() - sortedEvents[i-1].startDate.getTime())
+        if( event.startDate.getTime() - sortedEvents[i-1].startDate.getTime() < (86400000 * 60)){
+          if(!sortedEvents[i-1].displacementIndex){
+            sortedEvents[i-1].displacementIndex = 1
+          }
+          event.displacementIndex = sortedEvents[i-1].displacementIndex + 1
+        }
+      }
+    })
+    return sortedEvents
+  }
+)
+
 
 export const getRawPeriods = createSelector(
   state => state.periods.ids,
@@ -72,7 +93,7 @@ export const getTimelineCurrentDate = createSelector(
 
 export const getTimelineYearsWithEvents = createSelector(
   getEventsExtent,
-  getEvents,
+  getAnnotatedEvents,
   (extent, events) => {
     if (extent === null) {
       return null
