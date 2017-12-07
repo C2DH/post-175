@@ -7,11 +7,14 @@ import {
   loadPeriods,
   unloadPeriods,
   unloadTimeline,
+  clearSelectedEvent,
 } from '../state/actions'
 import { getEvents, getPeriods, getSelectedEvent } from '../state/selectors'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
+import EventModal from '../components/EventModal'
+
 
 class TimelinePage extends PureComponent {
   componentDidMount() {
@@ -26,12 +29,15 @@ class TimelinePage extends PureComponent {
   }
 
   render() {
-    const { events, periods, selectedEvent } = this.props
+    const { events, periods, selectedEvent, clearSelectedEvent } = this.props
     console.log(selectedEvent)
     return (
       <div className='h-100vh d-flex flex-column'>
         <div className='row no-gutters flex-1'>
-
+          {selectedEvent && <EventModal
+            event={selectedEvent}
+            onClose={clearSelectedEvent}
+           />}
           {periods && events && <Period />}
           {events && <Timeline />}
         </div>
@@ -51,4 +57,5 @@ export default connect(mapStateToProps, {
   loadPeriods,
   unloadPeriods,
   unloadTimeline,
+  clearSelectedEvent,
 })(TimelinePage)

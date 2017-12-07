@@ -186,12 +186,13 @@ export const getTimelineNextPeriod = createSelector(
 
 export const getSelectedEvent = createSelector(
   state => state.selectedEvent,
-  ({ event, eventDetail }) => {
+  getSelectedLangCode,
+  ({ event, eventDetail }, langCode) => {
     if (event === null) {
       return null
     }
     if (eventDetail !== null) {
-      return eventDetail
+      return translateDoc(eventDetail, langCode)
     }
     return {
       ...event,
