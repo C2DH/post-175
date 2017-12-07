@@ -19,11 +19,8 @@ import {
   getMapTimelineCurrentDate,
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
+import MapTooltip from '../components/MapTooltip'
 
-// TODO: Style that bitch
-const MapTooltip = ({ place }) => (
-  <div>{place.title}</div>
-)
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => (
@@ -121,6 +118,7 @@ class MapPage extends PureComponent {
                         longitude={place.coordinates[0]}
                         latitude={place.coordinates[1]}
                       >
+                        <div>
                         <svg width={10 * mul} height={10 * mul}>
                           <circle
                             onClick={() => this.selectPlace(place)}
@@ -129,6 +127,7 @@ class MapPage extends PureComponent {
                             cx={5 * mul} cy={5 * mul} r={5 * mul} fill={place.open ? '#13d436' : '#fdd00c'} />
 
                         </svg>
+                        </div>
                       </Marker>
                     )
                   })}
@@ -142,7 +141,10 @@ class MapPage extends PureComponent {
                   { overPlace &&
                     <Popup latitude={overPlace.coordinates[1]} longitude={overPlace.coordinates[0]}
                         closeOnClick={false} anchor="top" closeButton={false}  offsetTop={15}>
-                      <div style={{background:'white', padding:10}}>You are here</div>
+                        {/* <div style={{width: 250, pointerEvents:'none', height:100, backgroundColor:'red'}}>
+                          xxxxx
+                        </div> */}
+                      <MapTooltip place={overPlace}/>
                     </Popup>
                   }
 

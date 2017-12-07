@@ -133,7 +133,7 @@ a:-webkit-any-link {
 
 .legend-close-btn {
   left: 100%;
-  padding-top: 36px;
+  padding-top: 56px;
 }
 
 .map-with-over-place {
@@ -143,4 +143,10 @@ a:-webkit-any-link {
 
 .mapboxgl-popup-content {
   pointer-events: none;
+}
+
+.map-tooltip {
+  width: 100%;
+  height: 300px;
+  
 }
