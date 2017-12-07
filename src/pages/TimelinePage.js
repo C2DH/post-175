@@ -52,7 +52,7 @@ class TimelinePage extends PureComponent {
         <div className='row no-gutters flex-1'>
           {selectedEvent && <EventModal
             hasNext={nextEvent !== null}
-            prevEvent={prevEvent !== null}
+            hasPrev={prevEvent !== null}
             goNext={this.goNext}
             goPrev={this.goPrev}
             event={selectedEvent}
