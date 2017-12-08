@@ -49,14 +49,14 @@ class Period extends PureComponent {
 
   getDefaultStyles = () => {
     return [{
-      key: this.props.period.id.toString(),
+      key: this.props.period ? this.props.period.id.toString() : '',
       style: { x: 1000 }
     }]
   }
 
   getStyles = () => {
     return [{
-      key: this.props.period.id.toString(),
+      key: this.props.period ? this.props.period.id.toString() : '',
       style: { x: spring(0) }
     }]
   }

@@ -7,12 +7,21 @@ import {
   loadPeriods,
   unloadPeriods,
   unloadTimeline,
+  clearSelectedEvent,
+  selectEvent,
 } from '../state/actions'
-import { getEvents, getPeriods } from '../state/selectors'
+import {
+  getEvents,
+  getPeriods,
+  getSelectedEvent,
+  getTimelinePrevEvent,
+  getTimelineNextEvent,
+} from '../state/selectors'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
 import { Motion, spring } from 'react-motion'
+import EventModal from '../components/EventModal'
 
 class TimelinePage extends PureComponent {
   componentDidMount() {
@@ -26,8 +35,18 @@ class TimelinePage extends PureComponent {
     this.props.unloadTimeline()
   }
 
+  goNext = () => {
+    const { selectEvent, nextEvent } = this.props
+    selectEvent(nextEvent)
+  }
+
+  goPrev = () => {
+    const { selectEvent, prevEvent } = this.props
+    selectEvent(prevEvent)
+  }
+
   render() {
-    const { events, periods } = this.props
+    const { events, periods, selectedEvent, nextEvent, prevEvent, clearSelectedEvent } = this.props
     return (
       <div className='h-100vh d-flex flex-column'>
         <div className='row no-gutters flex-1'>
@@ -41,6 +60,14 @@ class TimelinePage extends PureComponent {
               <Timeline style={{opacity:o}} />
             )}
           </Motion> }
+          {selectedEvent && <EventModal
+            hasNext={nextEvent !== null}
+            prevEvent={prevEvent !== null}
+            goNext={this.goNext}
+            goPrev={this.goPrev}
+            event={selectedEvent}
+            onClose={clearSelectedEvent}
+           />}
 
         </div>
       </div>
@@ -51,6 +78,9 @@ class TimelinePage extends PureComponent {
 const mapStateToProps = state => ({
   events: getEvents(state),
   periods: getPeriods(state),
+  selectedEvent: getSelectedEvent(state),
+  nextEvent: getTimelineNextEvent(state),
+  prevEvent: getTimelinePrevEvent(state),
 })
 export default connect(mapStateToProps, {
   loadEvents,
@@ -58,4 +88,6 @@ export default connect(mapStateToProps, {
   loadPeriods,
   unloadPeriods,
   unloadTimeline,
+  clearSelectedEvent,
+  selectEvent,
 })(TimelinePage)

@@ -141,6 +141,9 @@ a:-webkit-any-link {
   opacity: 0.2;
 }
 
+.mapboxgl-popup {
+  z-index: 99999;
+}
 
 .mapboxgl-popup-content {
   pointer-events: none;
@@ -151,7 +154,7 @@ a:-webkit-any-link {
   height: 300px;
 
 }
-.switch-wrapper {
-  /*position: relative;
-  top: 0;*/
+
+.event-modal-control:hover {
+  color: grey;
 }

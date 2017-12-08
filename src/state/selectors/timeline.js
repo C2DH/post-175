@@ -33,7 +33,7 @@ export const getAnnotatedEvents = createSelector(
     let sortedEvents = sortBy(events, 'startDate')
     sortedEvents.forEach((event, i) => {
       if(i > 0){
-        console.log(event.startDate.getTime() - sortedEvents[i-1].startDate.getTime())
+        // console.log(event.startDate.getTime() - sortedEvents[i-1].startDate.getTime())
         if( event.startDate.getTime() - sortedEvents[i-1].startDate.getTime() < (86400000 * 60)){
           if(!sortedEvents[i-1].displacementIndex){
             sortedEvents[i-1].displacementIndex = 1
@@ -179,6 +179,53 @@ export const getTimelineNextPeriod = createSelector(
     const index = periods.indexOf(period)
     if (index < periods.length - 1) {
       return periods[index + 1]
+    }
+    return null
+  }
+)
+
+export const getSelectedEvent = createSelector(
+  state => state.selectedEvent,
+  getSelectedLangCode,
+  ({ event, eventDetail }, langCode) => {
+    if (event === null) {
+      return null
+    }
+    if (eventDetail !== null) {
+      return translateDoc(eventDetail, langCode)
+    }
+    return {
+      ...event,
+      documents: [],
+    }
+  }
+)
+
+export const getTimelinePrevEvent = createSelector(
+  state => state.selectedEvent.event,
+  getAnnotatedEvents,
+  (event, events) => {
+    if (event === null) {
+      return null
+    }
+    const index = events.indexOf(event)
+    if (index > 0) {
+      return events[index - 1]
+    }
+    return null
+  }
+)
+
+export const getTimelineNextEvent = createSelector(
+  state => state.selectedEvent.event,
+  getAnnotatedEvents,
+  (event, events) => {
+    if (event === null) {
+      return null
+    }
+    const index = events.indexOf(event)
+    if (index < events.length - 1) {
+      return events[index + 1]
     }
     return null
   }

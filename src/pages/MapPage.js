@@ -123,7 +123,8 @@ class MapPage extends PureComponent {
                           <circle
                             onClick={() => this.selectPlace(place)}
                             onMouseEnter={() => setOverPlace(place)}
-                            onMouseOut={clearOverPlace}
+                            // onMouseOut={clearOverPlace}
+                            onMouseOut={() => console.log('OUT FROM CIRCLE!')}
                             cx={5 * mul} cy={5 * mul} r={5 * mul} fill={place.open ? '#13d436' : '#fdd00c'} />
 
                         </svg>
@@ -134,19 +135,21 @@ class MapPage extends PureComponent {
 
                   { overPlace &&
                     <HTMLOverlay redraw={()=>(
-                      <div style={{position: 'absolute', width:width, height:height, background:'rgba(0,0,0,.8)', pointerEvents:'none'}}/>
+                      <div style={{position: 'absolute', zIndex: 9, width:width, height:height, background:'rgba(0,0,0,.8)', pointerEvents:'none'}}/>
                     )}/>
                   }
 
                   { overPlace &&
                     <Popup latitude={overPlace.coordinates[1]} longitude={overPlace.coordinates[0]}
-                        closeOnClick={false} anchor="top" closeButton={false}  offsetTop={15}>
+                        closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
                         {/* <div style={{width: 250, pointerEvents:'none', height:100, backgroundColor:'red'}}>
                           xxxxx
                         </div> */}
                       <MapTooltip place={overPlace}/>
                     </Popup>
                   }
+
+
 
                 </ReactMapGL>
 
