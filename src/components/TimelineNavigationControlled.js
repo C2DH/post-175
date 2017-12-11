@@ -15,10 +15,10 @@ class TimelineCursor extends PureComponent {
   onDrag = (e, data) => {
     const { scale, currentDate, onDateChange, extent } = this.props
     const x = scale(currentDate)
-
     const newX = x + data.deltaX
     const newDate = scale.invert(newX)
-    if (newDate < extent[0] || newDate > extent[1]) { return }
+    const scaleDomain = scale.domain()
+    if (newDate < scaleDomain[0] || newDate > extent[1]) { return }
     onDateChange(newDate)
   }
 

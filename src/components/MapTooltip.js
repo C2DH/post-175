@@ -2,16 +2,14 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { clearOverPlace } from '../state/actions'
 
-
 class MapTooltip extends PureComponent {
   render() {
-    const { place } = this.props
+    const { place, onClick } = this.props
     return (
-      <div style={{width: 250, height:350 }}
+      <div style={{width: 250, height:350, cursor: 'pointer' }}
         className='bg-warning d-flex flex-column'
-        onMouseEnter={() => console.log('ENTER POPUP')}
-        onMouseOut={() => this.props.clearOverPlace()}
-        // onMouseOut={() => console.log('OUTPOPUP')}
+        onClick={onClick}
+        onMouseLeave={() => this.props.clearOverPlace()}
         >
         <div className="w-100 cover bg-info" style={{background: `url(${place.img}) no-repeat`, flex: 2.5}}/>
         <div className="w-100 bg-black p-2">

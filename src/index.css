@@ -149,12 +149,17 @@ a:-webkit-any-link {
   opacity: 0.2;
 }
 
-.mapboxgl-popup {
+/*.mapboxgl-popup {
   z-index: 99999;
 }
 
 .mapboxgl-popup-content {
   pointer-events: none;
+}*/
+
+.mapboxgl-popup-content {
+  border: 0;
+  padding: 0;
 }
 
 .map-tooltip {
