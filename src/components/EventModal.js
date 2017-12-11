@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
-import { find, get } from 'lodash'
+import { find } from 'lodash'
+import { getEventColor } from '../utils'
 
 const CloseBtn = ({onClose}) => (
   <div className="position-fixed pt-3 pr-3" style={{top: 0, right:0}}>
@@ -9,12 +10,12 @@ const CloseBtn = ({onClose}) => (
   </div>
 )
 
-const EventType = ({eventColor, eventType}) => (
+const EventType = ({eventType, event}) => (
   <div className="d-inline-flex">
-    <svg width={30} height={25}>
-      <circle cx="10" cy="10" r={9} fill={eventColor} />
+    <svg width={20} height={20}>
+      <circle cx="10" cy="10" r={8} fill={getEventColor(eventType)} />
     </svg>
-    <span className="font-12 text-capitalize" style={{color: eventColor}}>{eventType}</span>
+    <span className="font-12 text-capitalize" style={{color: getEventColor(eventType), paddingTop: 2}}>{event}</span>
   </div>
 )
 
@@ -56,14 +57,14 @@ class EventModal extends PureComponent {
 
   render() {
     const { event, onClose, hasPrev, hasNext, goNext, goPrev } = this.props
-    const displayDocs = [ event ].concat(event.documents.map((doc) => doc))
+    const displayDocs = [ event ].concat(event.documents.map((doc) => doc).reverse())
     const selectedDocument = this.state.selectedDocument ? this.state.selectedDocument : event
     return (
       <div className="bg-black p-3 fixed-top fixed-bottom">
         <div className="container h-100 d-flex text-dark">
           <div className="flex-1 h-100 bg-white d-flex flex-column">
             <div className="flex-1 bg-light p-1">
-              <EventType eventColor="green" eventType={event.data.category} />
+              <EventType eventType={event} event={event.data.category} />
               <div className="w-100 pl-3 pr-3">
                 <h2 style={{fontSize: 28}}>{event.data.title}</h2>
                 <p className="font-12">{event.data.start_date}</p>
@@ -88,11 +89,11 @@ class EventModal extends PureComponent {
               </div>
             </div>
             <div className="w-100 flex-1 d-flex">
-              <div className="h-100 p-3 d-flex justify-content-center flex-column" style={{flex: 4.5}}>
-                <img className="img-fluid max-h-100" src={selectedDocument.attachment} />
+              <div className="h-100 p-3 d-flex justify-content-center flex-column overflow-auto" style={{flex: 4.5}}>
+                <img className="img-fluid pt-3" src={selectedDocument.attachment} />
               </div>
               <div className="flex-1 h-100 p-1 pr-3 flex-column overflow-auto">
-                {displayDocs && displayDocs.reverse().map((doc, i) => (
+                {displayDocs && displayDocs.map((doc, i) => (
                   <img
                     key={doc.id}
                     src={doc.snapshot}
