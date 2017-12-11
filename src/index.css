@@ -149,6 +149,11 @@ a:-webkit-any-link {
   pointer-events: none;
 }*/
 
+.mapboxgl-popup-content {
+  border: 0;
+  padding: 0;
+}
+
 .map-tooltip {
   width: 100%;
   height: 300px;

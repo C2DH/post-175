@@ -28,8 +28,11 @@ const CurrentYear = ({ year }) => (
 
 class MapPage extends PureComponent {
   state = {
-    center: [6.087, 49.667],
-    zoom: [8],
+    viewport: {
+      longitude: 6.087,
+      latitude: 49.667,
+      zoom: 8,
+    },
     width: 0,
     height: 0,
   }
@@ -46,26 +49,31 @@ class MapPage extends PureComponent {
 
   selectPlace = place => {
     this.props.setSelectedPlace(place)
-    this.setState({
-      center: place.coordinates,
-      zoom: [13],
+    this.updateViewport({
+      latitude: place.coordinates[1],
+      longitude: place.coordinates[0],
+      zoom: 13,
+      // transitionInterpolator: new LinearInterpolator(),
+      // transitionDuration: 2000
     })
   }
 
   closePlaceDetail = () => {
     this.props.clearSelectedPlace()
-    this.setState({
-      zoom: [11],
-    })
+    this.updateViewport({ zoom: 11 })
   }
 
   updateViewport = (viewport) => {
-    const {width, height, latitude, longitude, zoom} = viewport;
-    this.setState({center:[longitude, latitude], zoom:[zoom]})
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        ...viewport,
+      }
+    })
   }
 
   render() {
-    const { center, zoom, width, height } = this.state
+    const { width, height, viewport } = this.state
     const {
       places,
       overPlace,
@@ -88,14 +96,12 @@ class MapPage extends PureComponent {
 
               { width > 0 && (
                 <ReactMapGL
+                  {...viewport}
                   mapboxApiAccessToken='pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw'
                   mapStyle="mapbox://styles/mapbox/streets-v9"
                   className="w-100 flex-1"
                   height={height}
                   width={width}
-                  latitude={center[1]}
-                  longitude={center[0]}
-                  zoom={zoom[0]}
                   onViewportChange={this.updateViewport}
                 >
                   <div style={{ position: 'absolute',right: 5, top: 5 }}>
@@ -133,6 +139,7 @@ class MapPage extends PureComponent {
 
                   { overPlace &&
                     <Popup latitude={overPlace.coordinates[1]} longitude={overPlace.coordinates[0]}
+                      tipSize={0}
                         closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
                       <MapTooltip place={overPlace} onClick={() => this.selectPlace(overPlace)} />
                     </Popup>
