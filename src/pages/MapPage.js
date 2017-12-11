@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import ReactMapGL, { Marker, HTMLOverlay, Popup } from 'react-map-gl'
+import ReactMapGL, { NavigationControl, Marker, HTMLOverlay, Popup } from 'react-map-gl'
 import Legend from '../components/Legend'
 import {
   loadPlaces,
@@ -59,6 +59,11 @@ class MapPage extends PureComponent {
     })
   }
 
+  updateViewport = (viewport) => {
+    const {width, height, latitude, longitude, zoom} = viewport;
+    this.setState({center:[longitude, latitude], zoom:[zoom]})
+  }
+
   render() {
     const { center, zoom, width, height } = this.state
     const {
@@ -91,12 +96,11 @@ class MapPage extends PureComponent {
                   latitude={center[1]}
                   longitude={center[0]}
                   zoom={zoom[0]}
-                  onViewportChange={(viewport) => {
-                    const {width, height, latitude, longitude, zoom} = viewport;
-                    this.setState({center:[longitude, latitude], zoom:[zoom]})
-                  }}
+                  onViewportChange={this.updateViewport}
                 >
-
+                  <div style={{ position: 'absolute',right: 5, top: 5 }}>
+                    <NavigationControl onViewportChange={this.updateViewport} />
+                  </div>
                   {currentDate  && <CurrentYear year={currentDate.getFullYear()} />}
                   {places && places.map(place => {
                     const isSelected = selectedPlace ? place.id === selectedPlace.id : false
