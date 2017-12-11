@@ -133,21 +133,19 @@ class MapPage extends PureComponent {
                     )
                   })}
 
-                  { overPlace &&
+                  {/* { overPlace &&
                     <HTMLOverlay redraw={()=>(
                       <div style={{position: 'absolute', zIndex: 9, width:width, height:height, background:'rgba(0,0,0,.8)', pointerEvents:'none'}}/>
                     )}/>
-                  }
+                  } */}
 
-                  { overPlace &&
+
+                  {/* { overPlace &&
                     <Popup latitude={overPlace.coordinates[1]} longitude={overPlace.coordinates[0]}
                         closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
-                        {/* <div style={{width: 250, pointerEvents:'none', height:100, backgroundColor:'red'}}>
-                          xxxxx
-                        </div> */}
                       <MapTooltip place={overPlace}/>
                     </Popup>
-                  }
+                  } */}
 
 
 

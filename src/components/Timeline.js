@@ -6,6 +6,7 @@ import {
   getTimelineTopScale,
   getTimelineCurrentDate,
   getEventsExtent,
+  WIDTH_WITH_EVENTS,
 } from '../state/selectors'
 import TimelineNavigation from './TimelineNavigation'
 import { last, get } from 'lodash'
@@ -50,7 +51,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
   render(){
     const { years, scale, currentDate, selectEvent } = this.props
     const { height=0 } = this.state
-    const width = last(scale.range()) + TIMELINE_PADDING * 2
+    const width = last(scale.range()) + TIMELINE_PADDING * 2 + WIDTH_WITH_EVENTS
     const x = -scale(currentDate)
 
     return (
