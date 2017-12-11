@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { find, get } from 'lodash'
 
 const CloseBtn = ({onClose}) => (
   <div className="position-fixed pt-3 pr-3" style={{top: 0, right:0}}>
@@ -39,9 +40,24 @@ const EventsControl = ({hasPrev, hasNext, goNext, goPrev}) => (
 )
 
 class EventModal extends PureComponent {
+  state = {
+    selectedDocument : null,
+  }
+
+  componentWillReceiveProps(nextProps)  {
+    if (this.props.event !== nextProps.event) {
+      this.setState({ selectedDocument: null })
+    }
+  }
+
+  handleSelectDocument = (selectedDocument)=> () => {
+    this.setState({selectedDocument})
+  }
+
   render() {
     const { event, onClose, hasPrev, hasNext, goNext, goPrev } = this.props
-    console.log({ event, onClose, hasPrev, hasNext, goNext, goPrev })
+    const displayDocs = [ event ].concat(event.documents.map((doc) => doc))
+    const selectedDocument = this.state.selectedDocument ? this.state.selectedDocument : event
     return (
       <div className="bg-black p-3 fixed-top fixed-bottom">
         <div className="container h-100 d-flex text-dark">
@@ -56,16 +72,6 @@ class EventModal extends PureComponent {
             <div className="p-3 mt-3 overflow-auto" style={{flex: 2}}>
               <p>{event.data.description}</p>
             </div>
-            {/* <div className="culo w-100 d-inline-flex justify-content-between">
-              <div className="pl-1 pb-1 d-inline-flex">
-                <i className="material-icons">arrow_back</i>
-                <span className="pb-2 ml-2">Previous event</span>
-              </div>
-              <div className="pr-1 pb-1 d-inline-flex">
-                <span className="pb-2 mr-2">Next event</span>
-                <i className="material-icons">arrow_forward</i>
-              </div>
-            </div> */}
             <EventsControl
               hasNext={hasNext}
               hasPrev={hasPrev}
@@ -74,14 +80,27 @@ class EventModal extends PureComponent {
             />
           </div>
           <div className="h-100 flex-column d-flex" style={{flex: 2.55, backgroundColor: '#313030'}}>
-            <div className="w-100 bg-info" style={{height: 57}}>
-            </div>
-            <div className="w-100 bg-warning flex-1 d-flex">
-              <div className="bg-warning h-100" style={{flex: 4.5}}>
-
+            <div className="w-100 text-white pl-3 pr-3 d-flex align-items-center" style={{height: 60}}>
+              <div style={{lineHeight: 1}}>
+                <span className="text-muted font-12">MEDIA</span><br />
+                <span className="text-white font-12">{selectedDocument.title}</span><br/>
+                <span style={{fontSize: 10}} className="text-white"></span>
               </div>
-              <div className="flex-1 bg-success h-100">
-
+            </div>
+            <div className="w-100 flex-1 d-flex">
+              <div className="h-100 p-3 d-flex justify-content-center flex-column" style={{flex: 4.5}}>
+                <img className="img-fluid max-h-100" src={selectedDocument.attachment} />
+              </div>
+              <div className="flex-1 h-100 p-1 pr-3 flex-column overflow-auto">
+                {displayDocs && displayDocs.reverse().map((doc, i) => (
+                  <img
+                    key={doc.id}
+                    src={doc.snapshot}
+                    className="img-fluid mt-1 mb-1 grayscale"
+                    onClick={this.handleSelectDocument(doc)}
+                    style={(doc.id === selectedDocument.id) ? {border: '1px solid red', filter: 'none'} : null}
+                   />
+                ))}
               </div>
             </div>
           </div>
