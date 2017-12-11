@@ -38,6 +38,10 @@ a:-webkit-any-link {
   background-size: cover!important;
 }
 
+.max-h-100 {
+  max-height: 100%!important;
+}
+
  /*fonts & text utilities */
  .font-9 {
    font-size: 9px;
@@ -83,6 +87,10 @@ a:-webkit-any-link {
 
 .bg-overlay {
   background-color: rgba(49,48,48,0.7);
+}
+
+.grayscale {
+  filter:grayscale(100%);
 }
 
 /* custom components styles */
