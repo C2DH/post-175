@@ -142,7 +142,7 @@ a:-webkit-any-link {
 
 .legend-close-btn {
   left: 100%;
-  padding-top: 56px;
+  padding-top: 57px;
 }
 
 .map-with-over-place {
@@ -170,4 +170,28 @@ a:-webkit-any-link {
 
 .event-modal-control:hover {
   color: grey;
+}
+
+.opening-timeline-line {
+  stroke: #b3b3b3;
+  stroke-width: 2;
+}
+.opening-timeline-openline {
+  stroke: #fdd00c;
+  stroke-width: 2;
+}
+.opening-timeline-text {
+  font-size: 11px;
+  fill: #4a4a4a;
+  font-family: 'WorkSans';
+  line-height: 2.2;
+}
+.opening-timeline-start {
+  stroke: #fdd00c;
+  fill: #fdd00c;
+}
+.opening-timeline-end {
+  stroke-width: 2;
+  stroke: #fdd00c;
+  fill: #fdd00c;
 }
