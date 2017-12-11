@@ -141,13 +141,13 @@ a:-webkit-any-link {
   opacity: 0.2;
 }
 
-.mapboxgl-popup {
+/*.mapboxgl-popup {
   z-index: 99999;
 }
 
 .mapboxgl-popup-content {
   pointer-events: none;
-}
+}*/
 
 .map-tooltip {
   width: 100%;
