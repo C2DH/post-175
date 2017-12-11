@@ -62,7 +62,7 @@ class TimelinePage extends PureComponent {
           </Motion> }
           {selectedEvent && <EventModal
             hasNext={nextEvent !== null}
-            prevEvent={prevEvent !== null}
+            hasPrev={prevEvent !== null}
             goNext={this.goNext}
             goPrev={this.goPrev}
             event={selectedEvent}

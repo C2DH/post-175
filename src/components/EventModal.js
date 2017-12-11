@@ -22,7 +22,7 @@ const EventsControl = ({hasPrev, hasNext, goNext, goPrev}) => (
     <div
       className="p1 d-inline-flex event-modal-control"
       onClick={goPrev}
-      style={!hasPrev ? {poiterEvents: 'none', color: '#fff'} : undefined}
+      style={!hasPrev ? {pointerEvents: 'none', opacity: 0.8} : undefined}
       >
       <i className="material-icons">arrow_back</i>
       <span className="pb-2 ml-2">Previous event</span>
@@ -30,7 +30,7 @@ const EventsControl = ({hasPrev, hasNext, goNext, goPrev}) => (
     <div
       className="p1 d-inline-flex event-modal-control"
       onClick={goNext}
-      style={!hasNext ? {poiterEvents: 'none', color: '#fff'} : undefined}
+      style={!hasNext ? {pointerEvents: 'none', opacity: 0.8} : undefined}
       >
       <span className="pb-2 mr-2">Next event</span>
       <i className="material-icons">arrow_forward</i>
@@ -41,6 +41,7 @@ const EventsControl = ({hasPrev, hasNext, goNext, goPrev}) => (
 class EventModal extends PureComponent {
   render() {
     const { event, onClose, hasPrev, hasNext, goNext, goPrev } = this.props
+    console.log({ event, onClose, hasPrev, hasNext, goNext, goPrev })
     return (
       <div className="bg-black p-3 fixed-top fixed-bottom">
         <div className="container h-100 d-flex text-dark">
