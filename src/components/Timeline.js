@@ -70,9 +70,11 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
               { year.events.map((event, eventIndex) => {
 
                 let eventHeight = 0
-                if(event.snapshot){
-                  const thumbnailHeight = get(event, 'data.thumbnail_height', 0)
-                  const thumbnailWidth = get(event, 'data.thumbnail_width', 0)
+                const snapshot = get(event, 'documents[0].snapshot')
+
+                if(snapshot){
+                  const thumbnailHeight = get(event, 'documents[0].data.thumbnail_height', 0)
+                  const thumbnailWidth = get(event, 'documents[0].data.thumbnail_width', 0)
                   eventHeight = thumbnailHeight * EVENT_WIDTH / thumbnailWidth
                 }
 
@@ -101,7 +103,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
                           <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category}</text>
                           <MultiText y={40+eventHeight} className="timeline-event-title" text={event.data.title} maxLen={30}></MultiText>
                       </g>
-                      <image href={event.snapshot} x="1" y={EVENT_RADIUS}  width={EVENT_WIDTH}/>
+                      <image href={snapshot} x="1" y={EVENT_RADIUS}  width={EVENT_WIDTH}/>
                     </g>
 
                   )}
