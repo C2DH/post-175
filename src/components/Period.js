@@ -64,8 +64,7 @@ class Period extends PureComponent {
 
   render () {
     const { period, nextPeriod, prevPeriod, style } = this.props
-    // TODO: Replace snapshot \w attachment when images become more big...
-    const cover = get(period, 'documents[0].snapshot')
+    const cover = get(period, 'documents[0].attachment')
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
