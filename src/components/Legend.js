@@ -16,7 +16,7 @@ class Legend extends PureComponent {
   render () {
     const { selectedPlace, onClose } = this.props
     return (
-      <div className="col-md-3 bg-info d-flex flex-column">
+      <div className="col-md-3 d-flex flex-column">
         <TopBar title={'MAP'} />
         {selectedPlace &&
           <CloseLegendDetailBtn onclick={onClose} />}
