@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Motion, spring, presets } from 'react-motion'
 import { getMakeLangUrl } from '../state/selectors'
+import HomePics from '../components/HomePics'
 
 class Home extends PureComponent {
   render() {
@@ -23,7 +24,7 @@ class Home extends PureComponent {
           )}
         </Motion> */}
         <div className='row no-gutters flex-1 w-100 bg-info'>
-          <h1 className="display-2">Images container</h1>
+          <HomePics/>
         </div>
         <div className='row no-gutters flex-1 w-100 d-flex p-3 bg-black'>
           <div className="d-flex h-100 flex-1">
