@@ -5,6 +5,10 @@ import { setDateTimeline } from '../state/actions'
 import TimelineNavigationControlled, { TimelineTicks, TimelineEvents } from './TimelineNavigationControlled'
 
 class TimelineNavigation extends PureComponent {
+  onEventClicked = (event) => {
+    this.props.setDateTimeline(event.startDate)
+  }
+
   render() {
     const { extent, events, currentDate, setDateTimeline } = this.props
 
@@ -18,7 +22,12 @@ class TimelineNavigation extends PureComponent {
         {({ width, height, scale, ticks }) => (
           <Fragment>
             <div className="d-inline-flex flex-1 w-100">
-              <TimelineEvents events={events} cy={height / 4} scale={scale} />
+              <TimelineEvents
+                events={events}
+                cy={height / 4}
+                scale={scale}
+                onClick={this.onEventClicked}
+              />
             </div>
             <div className="d-inline-flex flex-1 w-100">
               <TimelineTicks ticks={ticks} y={height / 4} scale={scale} />

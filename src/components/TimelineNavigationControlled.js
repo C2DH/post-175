@@ -62,11 +62,19 @@ export class TimelineTicks extends PureComponent {
 
 export class TimelineEvents extends PureComponent {
   render() {
-    const { events, scale, cy } = this.props
+    const { events, scale, cy, onClick } = this.props
     return (
       <svg className="w-100 h-100 bg-darkgrey">
         {events.map(event => (
-          <circle fill={getEventColor(event)} key={event.id} cx={scale(event.startDate)} r={5} cy={cy}></circle>
+          <circle
+            className='pointer'
+            onClick={() => onClick(event)}
+            fill={getEventColor(event)}
+            key={event.id}
+            cx={scale(event.startDate)}
+            r={5}
+            cy={cy}
+          />
         ))}
       </svg>
     )

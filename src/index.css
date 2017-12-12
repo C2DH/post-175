@@ -42,6 +42,10 @@ a:-webkit-any-link {
   max-height: 100%!important;
 }
 
+.pointer {
+  cursor: pointer;;
+}
+
  /*fonts & text utilities */
  .font-9 {
    font-size: 9px;
