@@ -184,25 +184,10 @@ export const getTimelineNextPeriod = createSelector(
   }
 )
 
-export const getSelectedEvent = createSelector(
-  state => state.selectedEvent,
-  getSelectedLangCode,
-  ({ event, eventDetail }, langCode) => {
-    if (event === null) {
-      return null
-    }
-    if (eventDetail !== null) {
-      return translateDoc(eventDetail, langCode)
-    }
-    return {
-      ...event,
-      documents: [],
-    }
-  }
-)
+export const getSelectedEvent = state => state.selectedEvent
 
 export const getTimelinePrevEvent = createSelector(
-  state => state.selectedEvent.event,
+  getSelectedEvent,
   getAnnotatedEvents,
   (event, events) => {
     if (event === null) {
@@ -217,7 +202,7 @@ export const getTimelinePrevEvent = createSelector(
 )
 
 export const getTimelineNextEvent = createSelector(
-  state => state.selectedEvent.event,
+  getSelectedEvent,
   getAnnotatedEvents,
   (event, events) => {
     if (event === null) {

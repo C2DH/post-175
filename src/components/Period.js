@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import {
   getTimelineCurrentPeriod,
@@ -62,10 +63,11 @@ class Period extends PureComponent {
   }
 
   render () {
-    const { period, nextPeriod, prevPeriod, style,
-      cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbzF-Q2hYQg5ypy4TPq2sRrkAZz0VD95vfC8lV7JeW1KT8mlXU" } = this.props
+    const { period, nextPeriod, prevPeriod, style } = this.props
+    // TODO: Replace snapshot \w attachment when images become more big...
+    const cover = get(period, 'documents[0].snapshot')
     return (
-      <div className="col-md-3 bg-info d-flex flex-column" style={style}>
+      <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
         <div className="d-flex flex-column flex-1 justify-content-end cover" style={{background:`url(${cover})`}}>
           <div className="p-2 mb-3 text-light">

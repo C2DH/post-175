@@ -100,7 +100,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
                     <g transform={`translate(${scale(event.startDate)}, ${y2-eventHeight- EVENT_RADIUS*3})`}>
                       <g transform={'translate(10, 0)'}>
                           <text className="timeline-event-date">{event.data.start_date}</text>
-                          <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category}</text>
+                          <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category_label}</text>
                           <MultiText y={40+eventHeight} className="timeline-event-title" text={event.data.title} maxLen={30}></MultiText>
                       </g>
                       <image href={snapshot} x="1" y={EVENT_RADIUS}  width={EVENT_WIDTH}/>
@@ -111,7 +111,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
                   { !eventHeight && (
                     <g transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
                       <text className="timeline-event-date">{event.data.start_date}</text>
-                      <text dy={20} fill={color} className="timeline-event-category">{event.data.category}</text>
+                      <text dy={20} fill={color} className="timeline-event-category">{event.data.category_label}</text>
                       <MultiText y={40} className="timeline-event-title" text={event.data.title} maxLen={30}></MultiText>
                     </g>
                   ) }
