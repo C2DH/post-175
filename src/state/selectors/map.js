@@ -37,7 +37,7 @@ export const getMapTimelineCurrentDate = createSelector(
       return null
     }
     if (date === null) {
-      return extent[0]
+      return extent[1]
     }
     return new Date(date)
   }
