@@ -39,12 +39,18 @@ class MapPage extends PureComponent {
 
   componentDidMount() {
     this.props.loadPlaces()
+    this.setMapSize()
+    window.addEventListener('resize', this.setMapSize, false)
+  }
+
+  setMapSize = () => {
     this.setState({width: this.mapContainer.offsetWidth, height: this.mapContainer.offsetHeight - 50})
   }
 
   componentWillUnmount() {
     this.props.unloadPlaces()
     this.props.unloadMap()
+    window.removeEventListener('resize', this.setMapSize)
   }
 
   selectPlace = place => {
@@ -92,14 +98,12 @@ class MapPage extends PureComponent {
             selectedPlace={selectedPlace}
             onClose={this.closePlaceDetail}
           />
-          <div className='d-flex flex-1 w-100 flex-column' ref={(node)=>this.mapContainer = node}>
-
+          <div className='d-flex flex-1 w-100 flex-column' style={{ overflow: 'hidden' }} ref={(node)=>this.mapContainer = node}>
               { width > 0 && (
                 <ReactMapGL
                   {...viewport}
                   mapboxApiAccessToken='pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw'
                   mapStyle="mapbox://styles/mapbox/streets-v9"
-                  className="w-100 flex-1"
                   height={height}
                   width={width}
                   onViewportChange={this.updateViewport}

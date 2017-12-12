@@ -98,6 +98,15 @@ class TimelineNavigationControlled extends PureComponent {
   }
 
   componentDidMount() {
+    this.getDimensions()
+    window.addEventListener('resize', this.getDimensions, false)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.getDimensions)
+  }
+
+  getDimensions = () => {
     // Get dimensions of current container
     const node = ReactDOM.findDOMNode(this)
     const width = node.offsetWidth
