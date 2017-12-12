@@ -42,6 +42,7 @@ export const getPeriods = (params = {}) => getDocuments({
   filters: {
     ...params.filters,
     data__type: 'period',
+    type: 'entity',
   },
 })
 
