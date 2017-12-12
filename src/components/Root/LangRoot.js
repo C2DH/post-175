@@ -31,7 +31,7 @@ class LangRoot extends PureComponent {
   }
 
   getLangFromSearch = (search) => {
-    const langParam = get(qs.parse(search), 'lang', 'de')
+    const langParam = get(qs.parse(search), 'lang', 'fr')
     return find(this.props.langs, { param: langParam })
   }
 

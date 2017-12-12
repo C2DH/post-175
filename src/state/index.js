@@ -22,7 +22,7 @@ const preloadedState = {
       },
     ],
     // Default selected lang code
-    selected: 'de_DE',
+    selected: 'fr_FR',
   }
 }
 const sagaMiddleware = createSagaMiddleware()
