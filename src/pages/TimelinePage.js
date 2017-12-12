@@ -9,6 +9,7 @@ import {
   unloadTimeline,
   clearSelectedEvent,
   selectEvent,
+  setDateTimeline,
 } from '../state/actions'
 import {
   getEvents,
@@ -36,12 +37,14 @@ class TimelinePage extends PureComponent {
   }
 
   goNext = () => {
-    const { selectEvent, nextEvent } = this.props
+    const { selectEvent, setDateTimeline, nextEvent } = this.props
+    setDateTimeline(nextEvent.startDate)
     selectEvent(nextEvent)
   }
 
   goPrev = () => {
-    const { selectEvent, prevEvent } = this.props
+    const { selectEvent, setDateTimeline, prevEvent } = this.props
+    setDateTimeline(prevEvent.startDate)
     selectEvent(prevEvent)
   }
 
@@ -88,6 +91,7 @@ export default connect(mapStateToProps, {
   loadPeriods,
   unloadPeriods,
   unloadTimeline,
+  setDateTimeline,
   clearSelectedEvent,
   selectEvent,
 })(TimelinePage)
