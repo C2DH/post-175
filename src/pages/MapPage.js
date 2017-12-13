@@ -114,9 +114,6 @@ class MapPage extends PureComponent {
                   {currentDate  && <CurrentYear year={currentDate.getFullYear()} />}
                   {places && places.map(place => {
                     const isSelected = selectedPlace ? place.id === selectedPlace.id : false
-                    // FIXME: Not intended as a solution '-.- only a way to test selected shit
-                    // highlighted...
-                    const mul = isSelected ? 2 : 1
                     return (
                       <Marker
                         key={place.id}
@@ -124,11 +121,20 @@ class MapPage extends PureComponent {
                         latitude={place.coordinates[1]}
                       >
                         <div>
-                        <svg width={10 * mul} height={10 * mul}>
+                        {!isSelected && <svg width={10} height={10}>
                           <circle
                             onMouseEnter={() => setOverPlace(place)}
-                            cx={5 * mul} cy={5 * mul} r={5 * mul} fill={place.open ? '#13d436' : '#fdd00c'} />
-                        </svg>
+                            stroke='black'
+                            cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
+                        </svg>}
+                        {isSelected && <svg width={40} height={40}>
+                          <circle
+                            stroke='black'
+                            cx={20} cy={20} r={10} fill={place.open ? '#13d436' : '#fdd00c'} />
+                          <circle
+                            cx={20} cy={20} r={20} fill='transparent'
+                            stroke={place.open ? '#13d436' : '#fdd00c'} />
+                        </svg>}
                         </div>
                       </Marker>
                     )
