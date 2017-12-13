@@ -92,7 +92,7 @@ class MapPage extends PureComponent {
     } = this.props
 
     return (
-      <div className="h-100vh d-flex flex-column">
+      <div className="h-100 d-flex flex-column">
         <div className='row no-gutters flex-1'>
           <Legend
             selectedPlace={selectedPlace}
