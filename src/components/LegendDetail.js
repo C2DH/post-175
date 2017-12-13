@@ -1,7 +1,41 @@
 import React, { PureComponent } from 'react'
+import ReactDOM from 'react-dom'
 import { get, head } from 'lodash'
 import { TransitionMotion, spring } from 'react-motion'
+import { StaticMap } from 'react-map-gl'
 import PlaceOpeningTimeline from './PlaceOpeningTimeline'
+
+class StaticPlaceMap extends PureComponent {
+  state = {
+    width: 0,
+    height: 0,
+  }
+
+  componentDidMount() {
+    const node = ReactDOM.findDOMNode(this)
+    const width = node.offsetWidth
+    const height = node.offsetHeight
+    this.setState({ width, height })
+  }
+
+  render() {
+    const { place } = this.props
+    const { width, height } = this.state
+    return (
+      <div className="w-100 p-0 cover legend-detail-image">
+        <StaticMap
+          mapboxApiAccessToken='pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw'
+          mapStyle="mapbox://styles/mapbox/satellite-v8"
+          height={height}
+          width={width}
+          latitude={place.coordinates[1]}
+          longitude={place.coordinates[0]}
+          zoom={18}
+        />
+      </div>
+    )
+  }
+}
 
 const PostOfficeInfo = ({ office , address, openDate, closeDate  }) => (
   <div className="w-100 p-3 bg-light" style={{minHeight: 250}}>
@@ -107,7 +141,7 @@ class LegendDetail extends PureComponent {
         <div className="w-100 flex-1 p-3 bg-white font-14">
           <p>{place.data.description}</p>
         </div>
-        <div className="w-100 p-0 cover legend-detail-image" />
+        <StaticPlaceMap place={place} />
       </div>
     )
   }

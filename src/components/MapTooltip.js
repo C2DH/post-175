@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { clearOverPlace } from '../state/actions'
 
@@ -7,11 +8,11 @@ class MapTooltip extends PureComponent {
     const { place, onClick } = this.props
     return (
       <div style={{width: 250, height:350, cursor: 'pointer' }}
-        className='bg-warning d-flex flex-column'
+        className='d-flex flex-column'
         onClick={onClick}
         onMouseLeave={() => this.props.clearOverPlace()}
         >
-        <div className="w-100 cover bg-info" style={{background: `url(${place.img}) no-repeat`, flex: 2.5}}/>
+        <div className="w-100 cover" style={{background: `url(${get(place, 'documents[0].snapshot')}) no-repeat`, flex: 2.5}}/>
         <div className="w-100 bg-black p-2">
           {place.open
             ? <p className="m-0 font-12" style={{color: '#13d436'}}>Open</p>
