@@ -29,6 +29,14 @@ export const getEvent = (id) =>
   request.get(`${API_URL}/document/${id}`)
     .then(extractBody)
 
+export const getHomeDocuments = (params = {}) => getDocuments({
+  ...params,
+  filters: {
+    ...params.filters,
+    type: 'image',
+  },
+})
+
 export const getEvents = (params = {}) => getDocuments({
   ...params,
   filters: {

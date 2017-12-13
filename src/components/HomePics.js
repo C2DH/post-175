@@ -45,9 +45,8 @@ export default class HomePics extends React.PureComponent {
     this.setState({x: null})
   }
 
-
-  render(){
-
+  render() {
+    const { docs } = this.props
     const { width, x } = this.state
     const itemWidth = width ? width / NUM_PICS : 0
     // Bender Brother
@@ -55,20 +54,20 @@ export default class HomePics extends React.PureComponent {
 
     return (
       <StaggeredMotion
-        defaultStyles={range(NUM_PICS).map(i => ({ f: flexo(i) }))}
+        defaultStyles={docs.map((_, i) => ({ f: flexo(i) }))}
         styles={prevInterpolatedStyles => prevInterpolatedStyles.map((_, i) =>
           ({f: spring(flexo(i))})
         )}>
         {interpolatingStyles =>
           <div className="w-100 h-100 d-flex flex-row"
-                  onMouseOut={this.handleMouseOut}
-                  onMouseMove={this.handleMouseMove}>
+              onMouseOut={this.handleMouseOut}
+              onMouseMove={this.handleMouseMove}>
             {interpolatingStyles.map((style, i) =>
               <div className="h-100"
                 key={i}
                 style={{
                   flex: style.f,
-                  backgroundImage:this.getImage(i),
+                  backgroundImage: `url(${docs[i].snapshot})`,
                   backgroundSize: 'cover',
 
                 }}/>

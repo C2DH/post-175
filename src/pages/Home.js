@@ -3,14 +3,29 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getMakeLangUrl } from '../state/selectors'
 import HomePics from '../components/HomePics'
+import {
+  loadHomeDocs,
+  unloadHomeDocs,
+} from '../state/actions'
+import {
+  getHomeDocs,
+} from '../state/selectors'
 
 class Home extends PureComponent {
+  componentWillMount() {
+    this.props.loadHomeDocs()
+  }
+
+  componentWillUnmount() {
+    this.props.unloadHomeDocs()
+  }
+
   render() {
-    const { url } = this.props
+    const { url, docs } = this.props
     return (
       <div className="h-100 d-flex flex-column bg-dark">
         <div className='row no-gutters flex-1 w-100 bg-info'>
-          <HomePics/>
+          {docs && <HomePics docs={docs} />}
         </div>
         <div className='row no-gutters flex-1 w-100 d-flex p-3 bg-black'>
           <div className="d-flex h-100 flex-1">
@@ -53,5 +68,9 @@ class Home extends PureComponent {
 
 const mapStateToProps = state => ({
   url: getMakeLangUrl(state),
+  docs: getHomeDocs(state),
 })
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps, {
+  loadHomeDocs,
+  unloadHomeDocs,
+})(Home)
