@@ -176,26 +176,22 @@ a:-webkit-any-link {
   color: grey;
 }
 
-.opening-timeline-line {
+.opening-timeline-bgline {
   stroke: #b3b3b3;
   stroke-width: 2;
 }
-.opening-timeline-openline {
+.opening-timeline-open {
+  fill: #13d436;
+  stroke: #13d436;
+  stroke-width: 2;
+}
+.opening-timeline-closed {
+  fill: #fdd00c;
   stroke: #fdd00c;
   stroke-width: 2;
 }
 .opening-timeline-text {
-  font-size: 11px;
+  font-size: 10px;
   fill: #4a4a4a;
-  font-family: 'WorkSans';
   line-height: 2.2;
-}
-.opening-timeline-start {
-  stroke: #fdd00c;
-  fill: #fdd00c;
-}
-.opening-timeline-end {
-  stroke-width: 2;
-  stroke: #fdd00c;
-  fill: #fdd00c;
 }

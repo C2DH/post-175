@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { extent } from 'd3-array'
-import { get } from 'lodash'
+import { get, flatten } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
 
@@ -24,9 +24,17 @@ export const getPlaces = createSelector(
   }))
 )
 
-export const getPlacesExtent = createSelector(
+export const getPlacesRealExtent = createSelector(
   getPlaces,
-  places => places === null ? null : extent(places, p => p.startDate)
+  places => places === null
+    ? null
+    : extent(flatten(places.map(p => [p.startDate, p.endDate])))
+)
+
+//
+export const getPlacesExtent = createSelector(
+  getPlacesRealExtent,
+  extent => extent === null ? null : [extent[0], new Date(`${extent[1].getFullYear()}`)]
 )
 
 export const getMapTimelineCurrentDate = createSelector(
