@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Motion, spring, presets } from 'react-motion'
 import { getMakeLangUrl } from '../state/selectors'
 import HomePics from '../components/HomePics'
 
@@ -10,19 +9,6 @@ class Home extends PureComponent {
     const { url } = this.props
     return (
       <div className="h-100vh d-flex flex-column bg-dark">
-        {/* <Motion defaultStyle={{ top: -60 }} style={{ top: spring(100, presets.wobbly) }}>
-          {({ top }) => (
-            <div style={{ marginTop: top }} className="pl-3">
-              <h1 className="display-3">175 Joer Post</h1>
-              <h3>A long history of communication,<br />technologies, services and people</h3>
-              <div className="d-inline-flex">
-                <div className="mr-2 p-2 border"><Link to={url('/timeline')}>Discover the Timeline -></Link></div>
-                <div className="ml-2 p-2 border"><Link to={url('/map')}>Explore the Map -></Link></div>
-              </div>
-              <div className="mt-3"><Link to={url('/about')}>About</Link></div>
-            </div>
-          )}
-        </Motion> */}
         <div className='row no-gutters flex-1 w-100 bg-info'>
           <HomePics/>
         </div>

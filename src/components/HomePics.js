@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { range } from 'lodash'
-import { Motion, spring } from 'react-motion'
+import { StaggeredMotion, Motion, spring } from 'react-motion'
 import { scaleLinear } from 'd3-scale'
 const NUM_PICS = 50
 
@@ -32,10 +32,10 @@ export default class HomePics extends React.PureComponent {
   }
 
   handleMouseMove = (e) => {
-    console.log(e.clientX)
+    // console.log(e.clientX)
     const { width } = this.state
     const itemWidth = width ? width / NUM_PICS : 0
-    console.log(e.clientX / itemWidth)
+    // console.log(e.clientX / itemWidth)
     const index = Math.round(e.clientX / itemWidth)
     this.setState({x: e.clientX / itemWidth})
 
@@ -50,29 +50,56 @@ export default class HomePics extends React.PureComponent {
 
     const { width, x } = this.state
     const itemWidth = width ? width / NUM_PICS : 0
+    // Bender Brother
+    const flexo = i => x ? this.flexScale(Math.abs(x - i)) : 1
 
-    return (<div className="w-100 h-100 d-flex flex-row"
-        onMouseOut={this.handleMouseOut}
-        onMouseMove={this.handleMouseMove}>
-      {itemWidth > 0 && range(NUM_PICS).map(i =>{
-        const flex = x ? this.flexScale(Math.abs(x - i)) : 1
-        return ( <Motion key={i} defaultStyle={{flex:1}} style={{flex:spring(flex)}}>
-          {({flex}) => (
-            <div className="h-100"
-              style={{
-                flex,
-                // background:this.getColor(i),
-                backgroundImage:this.getImage(i),
-                backgroundSize: 'cover',
+    return (
+      <StaggeredMotion
+        defaultStyles={range(NUM_PICS).map(i => ({ f: flexo(i) }))}
+        styles={prevInterpolatedStyles => prevInterpolatedStyles.map((_, i) =>
+          ({f: spring(flexo(i))})
+        )}>
+        {interpolatingStyles =>
+          <div className="w-100 h-100 d-flex flex-row"
+                  onMouseOut={this.handleMouseOut}
+                  onMouseMove={this.handleMouseMove}>
+            {interpolatingStyles.map((style, i) =>
+              <div className="h-100"
+                key={i}
+                style={{
+                  flex: style.f,
+                  backgroundImage:this.getImage(i),
+                  backgroundSize: 'cover',
 
-              }}>
-            </div>
-          )}
-        </Motion>
-        )
-      })}
+                }}/>
+            )}
+          </div>
+        }
+      </StaggeredMotion>
+    )
 
-    </div>)
+    // return (<div className="w-100 h-100 d-flex flex-row"
+    //     onMouseOut={this.handleMouseOut}
+    //     onMouseMove={this.handleMouseMove}>
+    //   {itemWidth > 0 && range(NUM_PICS).map(i =>{
+    //     const flex = x ? this.flexScale(Math.abs(x - i)) : 1
+    //     return ( <Motion key={i} defaultStyle={{flex:1}} style={{flex:spring(flex)}}>
+    //       {({flex}) => (
+    //         <div className="h-100"
+    //           style={{
+    //             flex,
+    //             // background:this.getColor(i),
+    //             backgroundImage:this.getImage(i),
+    //             backgroundSize: 'cover',
+    //
+    //           }}>
+    //         </div>
+    //       )}
+    //     </Motion>
+    //     )
+    //   })}
+    //
+    // </div>)
 
 
   }
