@@ -51,7 +51,7 @@ class TimelinePage extends PureComponent {
   render() {
     const { events, periods, selectedEvent, nextEvent, prevEvent, clearSelectedEvent } = this.props
     return (
-      <div className='h-100vh d-flex flex-column'>
+      <div className='h-100 d-flex flex-column'>
         <div className='row no-gutters flex-1'>
           {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (

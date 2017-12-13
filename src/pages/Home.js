@@ -8,7 +8,7 @@ class Home extends PureComponent {
   render() {
     const { url } = this.props
     return (
-      <div className="h-100vh d-flex flex-column bg-dark">
+      <div className="h-100 d-flex flex-column bg-dark">
         <div className='row no-gutters flex-1 w-100 bg-info'>
           <HomePics/>
         </div>
