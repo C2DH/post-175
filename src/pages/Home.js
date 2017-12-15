@@ -23,22 +23,22 @@ class Home extends PureComponent {
   render() {
     const { url, docs } = this.props
     return (
-      <div className="h-100 d-flex flex-column bg-dark">
+      <div className="h-100 d-flex flex-column bg-black">
         <div className='row no-gutters flex-1 w-100 '>
           {docs && <HomePics docs={docs} />}
         </div>
         <div className='row no-gutters flex-1 w-100 d-flex p-3 bg-black'>
           <div className="d-flex h-100 flex-1">
-            <h5 style={{fontSize: 28}}><b>175</b> Joer Post</h5>
+            <h5 style={{fontSize: 28}}>175 <span style={{fontWeight: 300}}>Joer Post</span></h5>
           </div>
           <div className="d-flex h-100 flex-1 flex-column">
             <p className="lead-24">Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh.
               Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
-              <a href="#" className="text-white"><u>Read more</u></a>
+            <Link to={url('/about')} className="text-white">Read more</Link>
           </div>
           <div className="d-flex h-100 justify-content-end" style={{flex: 1.5}}>
             <div className="d-flex flex-column">
-              <div className="p-3 border mb-1">
+              <div className="home-button p-3 border mb-1">
                 <Link to={url('/timeline')}>
                   <span className="text-light d-flex d-inline-flex justify-content-between align-items-center w-100 lead-24">
                     <span className="ml-3">Discover the Timeline</span>
@@ -46,7 +46,7 @@ class Home extends PureComponent {
                   </span>
                 </Link>
               </div>
-              <div className="p-3 border mt-1">
+              <div className="home-button p-3 border mt-1">
                 <Link to={url('/map')}>
                   <span className="text-light d-flex d-inline-flex justify-content-between align-items-center w-100 lead-24">
                     <span className="ml-3">Explore the Map</span>

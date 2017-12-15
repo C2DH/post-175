@@ -5,7 +5,7 @@ import { StaggeredMotion, Motion, spring } from 'react-motion'
 import { scaleLinear } from 'd3-scale'
 
 const NUM_PICS = 50
-const MAX_DELTA = 100
+const MAX_DELTA = 150
 
 class HomePicture extends React.PureComponent {
   render() {
@@ -123,7 +123,7 @@ export default class HomePics extends React.PureComponent {
           width: spring(pos[1] - pos[0]),
         }))}>
           {(styles) => (
-            <div className="w-100 h-100" style={{ position: 'relative' }}
+            <div id="pics-container" className="w-100 h-100" style={{ position: 'relative' }}
               onMouseOut={this.handleMouseOut}
               onMouseMove={this.handleMouseMove}
               >
