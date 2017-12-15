@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import ReactMapGL, { NavigationControl, Marker, HTMLOverlay, Popup } from 'react-map-gl'
+import ReactMapGL, { NavigationControl, Marker, HTMLOverlay, Popup, FlyToInterpolator } from 'react-map-gl'
 import Legend from '../components/Legend'
 import {
   loadPlaces,
@@ -102,6 +102,8 @@ class MapPage extends PureComponent {
           <div className='d-flex flex-1 w-100 flex-column' style={{ overflow: 'hidden' }} ref={(node)=>this.mapContainer = node}>
               { width > 0 && (
                 <ReactMapGL
+                  transitionDuration={1000}
+                  transitionInterpolator={new FlyToInterpolator()}
                   {...viewport}
                   mapboxApiAccessToken='pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw'
                   mapStyle="mapbox://styles/mapbox/streets-v9"
