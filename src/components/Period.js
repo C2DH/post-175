@@ -30,6 +30,10 @@ const ArrowsButtons = ({ hasNext, hasPrev, onNext, onPrev }) => (
 )
 
 class Period extends PureComponent {
+
+  state = {
+    imageLoaded: false,
+  }
   goNext = () => {
     const { setDateTimeline, nextPeriod } = this.props
     setDateTimeline(nextPeriod.startDate)
@@ -74,9 +78,34 @@ class Period extends PureComponent {
     }]
   }
 
+  imagesMap = {}
+
+  componentDidMount(){
+    this.preloadImage(this.props.period)
+  }
+
+  preloadImage = period => {
+    if(this.imagesMap[period.id] && this.imagesMap[period.id].complete){
+      return
+    }
+    this.setState({imageLoaded: false})
+    const img = new Image()
+    img.onload = () => {
+      this.setState({imageLoaded: true })
+      this.imagesMap[period.id] = img
+    }
+    img.src = get(period, 'documents[0].attachment')
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.period && nextProps.period !== this.props.period) {
+      this.preloadImage(nextProps.period)
+    }
+  }
+
   render () {
     const { period, nextPeriod, prevPeriod, style } = this.props
-    const cover = get(period, 'documents[0].attachment')
+    const cover = this.state.imageLoaded ? get(period, 'documents[0].attachment') : get(period, 'documents[0].snapshot')
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
@@ -134,7 +163,7 @@ class Period extends PureComponent {
               </TransitionMotion>
           </div>
 
-          <div className="w-100 h-100px d-flex flex-row-reverse">
+          <div className="w-100 h-100px d-flex flex-row-reverse" style={{zIndex:10}}>
             <ArrowsButtons
               onNext={this.goNext}
               onPrev={this.goPrev}
