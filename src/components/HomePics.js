@@ -19,7 +19,7 @@ class HomePicture extends React.PureComponent {
         left,
         width,
       }}>
-        {selected && width > 40 && (
+        {selected && width > MAX_DELTA / 2  && (
           <Motion defaultStyle={{ y: 700 }} style={{ y: spring(0) }}>
             {({ y }) => (
               <div style={{ position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden', pointerEvents: 'none' }}>
