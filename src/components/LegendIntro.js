@@ -21,7 +21,7 @@ const MapPointsLegend = () => (
 class LegendIntro extends PureComponent {
   render () {
     return (
-      <div className="d-flex flex-column flex-1 overflow-auto">
+      <div className="d-flex flex-column overflow-auto" style={{ zIndex: 1, position: 'absolute', top: 0, bottom: 0 }}>
         <div className="w-100 p-3 bg-light">
           <h3>Expolore the map of the Post offices of Luxembourg</h3>
         </div>

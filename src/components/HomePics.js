@@ -1,17 +1,48 @@
 import React from 'react'
+import { findIndex } from 'lodash'
 import ReactDOM from 'react-dom'
 import { StaggeredMotion, Motion, spring } from 'react-motion'
 import { scaleLinear } from 'd3-scale'
 
 const NUM_PICS = 50
-const MAX_DELTA = 100
+const MAX_DELTA = 150
+
+class HomePicture extends React.PureComponent {
+  render() {
+    const { left, width, image, selected, text } = this.props
+    return (
+      <div className='h-100' style={{
+        position: 'absolute',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundImage: `url(${image})`,
+        left,
+        width,
+      }}>
+        {selected && width > MAX_DELTA / 2  && (
+          <Motion defaultStyle={{ y: 700 }} style={{ y: spring(0) }}>
+            {({ y }) => (
+              <div style={{ position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+                <div
+                  style={{ transform: `translateY(${y}px)` }}
+                  className="w-100 bg-overlay text-white d-flex flex-row justify-content-between">
+                  <div className="font-12 m-3">{text}</div>
+                </div>
+              </div>
+            )}
+          </Motion>
+        )}
+      </div>
+    )
+  }
+}
 
 export default class HomePics extends React.PureComponent {
 
   constructor(props) {
     super(props)
     this.state = {
-      x: null,
+      selectedIndex: null,
       positions: [],
       initialPositions: props.docs.map(_ => [0, 0]),
       width: 0,
@@ -61,18 +92,24 @@ export default class HomePics extends React.PureComponent {
       return newPos
     })
 
-    this.setState({ positions: newPositions })
+    const selectedIndex = findIndex(initialPositions, (pos) => {
+      return e.clientX >= pos[0] && e.clientX <= pos[1]
+    })
+
+
+    this.setState({ positions: newPositions, selectedIndex })
   }
 
   handleMouseOut = (e) => {
     this.setState({
       x: null,
       positions: this.state.initialPositions,
+      selectedIndex: null,
     })
   }
 
   render() {
-    const { positions, initialPositions } = this.state
+    const { positions, initialPositions, selectedIndex } = this.state
     const { docs } = this.props
 
     return (
@@ -86,19 +123,19 @@ export default class HomePics extends React.PureComponent {
           width: spring(pos[1] - pos[0]),
         }))}>
           {(styles) => (
-            <div className="w-100 h-100" style={{ position: 'relative' }}
+            <div id="pics-container" className="w-100 h-100" style={{ position: 'relative' }}
               onMouseOut={this.handleMouseOut}
               onMouseMove={this.handleMouseMove}
               >
               {styles.map(({ left, width }, i) => (
-                <div key={i} className='h-100' style={{
-                  position: 'absolute',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center center',
-                  backgroundImage: `url(${docs[i].snapshot})`,
-                  left,
-                  width,
-                }} />
+                <HomePicture
+                  selected={i === selectedIndex}
+                  key={i}
+                  left={left}
+                  width={width}
+                  image={docs[i].snapshot}
+                  text={docs[i].data.title}
+                />
               ))}
             </div>
           )}

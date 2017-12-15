@@ -92,12 +92,14 @@ class LegendDetail extends PureComponent {
   }
 
   render () {
-    const { place } = this.props
+    const { place, style } = this.props
     const { onImage } = this.state
     const selectedDocument = this.getSelectedDocument()
     const image = get(selectedDocument, 'attachment')
+
     return (
-      <div className="d-flex flex-column h-100 overflow-auto">
+      <div className="d-flex flex-column h-100 overflow-auto w-100"
+        style={{ ...style, zIndex: 2, position: 'absolute', top: 0, backgroundColor: 'white' }}>
         <div
           onMouseEnter={() => this.setState({ onImage: true })}
           onMouseLeave={() => this.setState({ onImage: false })}
