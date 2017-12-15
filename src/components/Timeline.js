@@ -17,7 +17,7 @@ import { setDateTimeline, selectEvent } from '../state/actions'
 import { getEventColor } from '../utils'
 
 const TIMELINE_PADDING = 30
-const EVENT_WIDTH = 100
+const EVENT_WIDTH = 150
 const EVENT_RADIUS = 8
 
 const mapStateToProps = state => ({
@@ -91,10 +91,10 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
 
                 const color = getEventColor(event)
 
-                return (<g key={event.id}>
+                return (<g key={event.id} onClick={() => selectEvent(event)}>
                   <line  x1={scale(event.startDate)} x2={scale(event.startDate)} y1={0} y2={y2} stroke={color}></line>
                   <circle cx={scale(event.startDate)} cy={y2} fill={color} fillOpacity={0.4} r={EVENT_RADIUS}></circle>
-                  <circle onClick={() => selectEvent(event)} cx={scale(event.startDate)} cy={y2} stroke={color} fill={color} r={EVENT_RADIUS/2}></circle>
+                  <circle  cx={scale(event.startDate)} cy={y2} stroke={color} fill={color} r={EVENT_RADIUS/2}></circle>
 
                   { eventHeight && (
                     <g transform={`translate(${scale(event.startDate)}, ${y2-eventHeight- EVENT_RADIUS*3})`}>
@@ -103,7 +103,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
                           <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category_label}</text>
                           <MultiText y={40+eventHeight} className="timeline-event-title" text={event.data.title} maxLen={30}></MultiText>
                       </g>
-                      <image href={snapshot} x="1" y={EVENT_RADIUS}  width={EVENT_WIDTH}/>
+                      <image href={snapshot} x="1" y={EVENT_RADIUS}  width={EVENT_WIDTH} height={eventHeight}/>
                     </g>
 
                   )}

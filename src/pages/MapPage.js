@@ -122,13 +122,15 @@ class MapPage extends PureComponent {
                         key={place.id}
                         longitude={place.coordinates[0]}
                         latitude={place.coordinates[1]}
+
                       >
-                        <div>
-                        {!isSelected && <svg width={10} height={10}>
+                        <div onClick={() => this.selectPlace(place)}>
+                        {!isSelected && <svg width={12} height={12}>
                           <circle
                             onMouseEnter={() => setOverPlace(place)}
+                            onMouseLeave={() => clearOverPlace()}
                             stroke='black'
-                            cx={5} cy={5} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
+                            cx={6} cy={6} r={5} fill={place.open ? '#13d436' : '#fdd00c'} />
                         </svg>}
                         {isSelected && <svg width={40} height={40}>
                           <circle
@@ -190,12 +192,11 @@ class MapPage extends PureComponent {
                           )}/>
                           <Popup latitude={config.data.overPlace.coordinates[1]} longitude={config.data.overPlace.coordinates[0]}
                             tipSize={0}
-                              closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
+                              closeOnClick={false} anchor="top" closeButton={false}  offsetTop={15}>
 
                               <MapTooltip
                                 style={{ opacity: config.style.o }}
                                 place={config.data.overPlace}
-                                onClick={() => this.selectPlace(config.data.overPlace)}
                               />
                           </Popup>
                         </div>

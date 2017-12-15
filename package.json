@@ -14,7 +14,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-draggable": "^3.0.4",
-    "react-map-gl": "3.2.0-alpha.x",
+    "react-map-gl": "3.2.0-alpha.3",
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
