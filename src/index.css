@@ -8,6 +8,10 @@ body {
   background-color: #000;
   height: 100%;
   overflow: hidden;
+  font-family: 'Work Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 #root {
@@ -18,8 +22,9 @@ button:focus {
   outline: 0px;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
 }
 
 a:-webkit-any-link {
@@ -54,6 +59,30 @@ a:-webkit-any-link {
 .pointer {
   cursor: pointer;;
 }
+
+/* home */
+.home-button,
+.home-button .text-light{
+  transition: all 0.3s;
+}
+
+.home-button:hover{
+  background-color: white;
+}
+
+.home-button:hover .text-light{
+  color: black!important;
+}
+
+#pics-container:after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to top, #131313, rgba(19, 19, 19, 0));
+}
+
+
 
  /*fonts & text utilities */
  .font-9 {
