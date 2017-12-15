@@ -24,7 +24,7 @@ class Home extends PureComponent {
     const { url, docs } = this.props
     return (
       <div className="h-100 d-flex flex-column bg-dark">
-        <div className='row no-gutters flex-1 w-100 bg-info'>
+        <div className='row no-gutters flex-1 w-100 '>
           {docs && <HomePics docs={docs} />}
         </div>
         <div className='row no-gutters flex-1 w-100 d-flex p-3 bg-black'>

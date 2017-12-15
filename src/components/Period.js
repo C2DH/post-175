@@ -80,7 +80,7 @@ class Period extends PureComponent {
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
-        <div className="d-flex flex-column flex-1 cover bg-info" style={{background:`url(${cover})`}}>
+        <div className="d-flex flex-column flex-1 cover" style={{background:`url(${cover})`}}>
 
           <div className='flex-1 d-flex flex-column justify-content-end p-2'>
 
@@ -96,7 +96,7 @@ class Period extends PureComponent {
               >
 
               {(styles)=><div style={{position:'relative'}}>{styles.map(config => (
-                <div key={config.key} className="w-100"
+                <div key={config.key} className="w-100 period-years p-2"
                   // style={{transform:`translate(${config.style.x}px,0)`}}
                   style={{position:'absolute', bottom: 0, left:`${config.style.x}px`}}
                   >
@@ -120,10 +120,9 @@ class Period extends PureComponent {
 
               >
               {(styles)=><div style={{position:'relative'}}>{styles.map(config => {
-                console.log(config)
                 return (
                   <div style={{ position: 'absolute', top: 0, opacity: config.style.o }} key={config.key}>
-                    <p>{period.data.description}</p>
+                    <p className="period-description p-2">{period.data.description}</p>
                   </div>
                 )
               }

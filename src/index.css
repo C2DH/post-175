@@ -205,3 +205,17 @@ a:-webkit-any-link {
   fill: #4a4a4a;
   line-height: 2.2;
 }
+
+
+.period-title{
+  color: #fff;
+   text-shadow: 1px 1px #222;
+}
+.period-description {
+  color: #fff;
+   text-shadow: 1px 1px #222;
+}
+.period-years{
+  color: #fff;
+  text-shadow: 1px 1px #222;
+}
