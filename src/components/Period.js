@@ -80,7 +80,7 @@ class Period extends PureComponent {
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
-        <div className="d-flex flex-column flex-1 cover bg-info" style={{backgrounx:`url(${cover})`}}>
+        <div className="d-flex flex-column flex-1 cover " style={{backgrounx:`url(${cover})`}}>
 
           <div className='flex-1 d-flex flex-column justify-content-end p-2'>
 
