@@ -24,7 +24,7 @@ class StaticPlaceMap extends PureComponent {
     return (
       <div className="w-100 p-0 cover legend-detail-image">
         <StaticMap
-          mapboxApiAccessToken='pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw'
+          mapboxApiAccessToken='pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg'
           mapStyle="mapbox://styles/mapbox/satellite-v8"
           height={height}
           width={width}
