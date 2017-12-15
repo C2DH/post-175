@@ -19,6 +19,7 @@ import {
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
 import MapTooltip from '../components/MapTooltip'
+import { Motion, TransitionMotion, spring, presets } from 'react-motion'
 
 
 // TODO: Style that bitch
@@ -147,13 +148,56 @@ class MapPage extends PureComponent {
                   }
 
 
-                  { overPlace &&
+                  {/* { overPlace &&
                     <Popup latitude={overPlace.coordinates[1]} longitude={overPlace.coordinates[0]}
                       tipSize={0}
                         closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
-                      <MapTooltip place={overPlace} onClick={() => this.selectPlace(overPlace)} />
+                      <Motion defaultStyle={{ o: 0 }} style={{ o: spring(1) }}>
+                        {({ o }) => (
+                          <MapTooltip
+                            style={{ opacity: o }}
+                            place={overPlace}
+                            onClick={() => this.selectPlace(overPlace)}
+                          />
+                        )}
+                      </Motion>
                     </Popup>
-                  }
+                  } */}
+
+                  <TransitionMotion
+                    defaultStyles={overPlace ? [{
+                      key: 'popup',
+                      data: { overPlace },
+                      style: { o: 0 },
+                    }] : []}
+                    styles={overPlace ? [{
+                      key: 'popup',
+                      data: { overPlace },
+                      style: { o: spring(1) },
+                    }] : []}
+                    willLeave={() => ({ o: spring(0) })}
+                    willEnter={() => ({ o: 0 })}
+                  >
+                    {interpolatedStyles =>
+                      <div>
+                        {interpolatedStyles.map(config => {
+                          return (
+                          <Popup key={config.key} latitude={config.data.overPlace.coordinates[1]} longitude={config.data.overPlace.coordinates[0]}
+                            tipSize={0}
+                              closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
+
+                              <MapTooltip
+                                style={{ opacity: config.style.o }}
+                                place={config.data.overPlace}
+                                onClick={() => this.selectPlace(config.data.overPlace)}
+                              />
+                          </Popup>
+                        )
+                      })}
+                      </div>
+                    }
+                  </TransitionMotion>
+
 
 
 

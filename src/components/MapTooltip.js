@@ -5,9 +5,9 @@ import { clearOverPlace } from '../state/actions'
 
 class MapTooltip extends PureComponent {
   render() {
-    const { place, onClick } = this.props
+    const { place, onClick, style } = this.props
     return (
-      <div style={{width: 250, height:350, cursor: 'pointer' }}
+      <div style={{width: 250, height:350, cursor: 'pointer', ...style }}
         className='d-flex flex-column'
         onClick={onClick}
         onMouseLeave={() => this.props.clearOverPlace()}

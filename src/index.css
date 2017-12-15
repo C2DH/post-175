@@ -171,6 +171,7 @@ a:-webkit-any-link {
 }*/
 
 .mapboxgl-popup-content {
+  background: transparent;
   border: 0;
   padding: 0;
 }
