@@ -199,6 +199,9 @@ a:-webkit-any-link {
   pointer-events: none;
 }*/
 
+.mapboxgl-ctrl-attrib {
+  pointer-events: none;
+}
 .mapboxgl-popup-content {
   background: transparent;
   border: 0;
