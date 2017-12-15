@@ -42,14 +42,14 @@ class Period extends PureComponent {
 
   periodWillEnter = () => {
     return {
-      // x: 1000,
+      x: 1000,
       o: 0
     }
   }
 
   periodWillLeave = () => {
     return {
-      // x: spring(-1000),
+      x: spring(-1000),
       o: spring(0, presets.stiff)
     }
   }
@@ -58,7 +58,7 @@ class Period extends PureComponent {
     return [{
       key: this.props.period ? this.props.period.id.toString() : '',
       style: {
-        // x: 1000,
+        x: 1000,
         o: 0
       }
     }]
@@ -68,7 +68,7 @@ class Period extends PureComponent {
     return [{
       key: this.props.period ? this.props.period.id.toString() : '',
       style: {
-        // x: spring(0),
+        x: spring(0),
         o: spring(1, presets.stiff)
       }
     }]
@@ -80,13 +80,14 @@ class Period extends PureComponent {
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
-        <div className="d-flex flex-column flex-1 cover " style={{backgrounx:`url(${cover})`}}>
+        <div className="d-flex flex-column flex-1 cover" style={{background:`url(${cover})`}}>
 
           <div className='flex-1 d-flex flex-column justify-content-end p-2'>
 
 
+            {/* <small>PERIODE</small> */}
             <h1 className="mb-3 lead-48" style={{ position:'relative' }}>
-            {/* <TransitionMotion
+            <TransitionMotion
               defaultStyles={this.getDefaultStyles()}
               styles={this.getStyles()}
               willLeave={this.periodWillLeave}
@@ -105,7 +106,7 @@ class Period extends PureComponent {
 
             )}</div>}
 
-            </TransitionMotion> */}
+            </TransitionMotion>
             </h1>
 
           </div>
