@@ -3,17 +3,17 @@ import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { clearOverPlace } from '../state/actions'
 
-class MapTooltip extends PureComponent {
+export default class MapTooltip extends PureComponent {
   render() {
-    const { place, onClick, style } = this.props
+    const { place, style } = this.props
     return (
-      <div style={{width: 250, height:350, cursor: 'pointer', ...style }}
-        className='d-flex flex-column'
-        onClick={onClick}
-        onMouseLeave={() => this.props.clearOverPlace()}
+      <div style={{...style}}
+        className='d-flex flex-row'
         >
-        <div className="w-100 cover" style={{background: `url(${get(place, 'documents[0].snapshot')}) no-repeat`, flex: 2.5}}/>
-        <div className="w-100 bg-black p-2">
+        <div className="cover"
+          style={{background: `url(${get(place, 'documents[0].snapshot')}) no-repeat`, width: 100}}
+        />
+        <div className="h-100 bg-black p-2">
           {place.open
             ? <p className="m-0 font-12" style={{color: '#13d436'}}>Open</p>
             : <p className="m-0 font-12" style={{color: '#fdd00c'}}>Closed</p>}
@@ -31,7 +31,3 @@ class MapTooltip extends PureComponent {
     )
   }
 }
-
-export default connect(undefined, {
-  clearOverPlace,
-})(MapTooltip)
