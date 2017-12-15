@@ -80,13 +80,15 @@ class Period extends PureComponent {
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
-        <div className="d-flex flex-column flex-1 cover" style={{background:`url(${cover})`}}>
+        <div
+          className="d-flex flex-column flex-1 cover"
+          style={{backgroundImage:`linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(29,29,29,1) 90%),url(${cover})`}}
+          >
 
-          <div className='flex-1 d-flex flex-column justify-content-end p-2'>
+          <div className='flex-1 d-flex flex-column justify-content-end p-4'>
 
 
             {/* <small>PERIODE</small> */}
-            <h1 className="mb-3 lead-48" style={{ position:'relative' }}>
             <TransitionMotion
               defaultStyles={this.getDefaultStyles()}
               styles={this.getStyles()}
@@ -96,18 +98,19 @@ class Period extends PureComponent {
               >
 
               {(styles)=><div style={{position:'relative'}}>{styles.map(config => (
-                <div key={config.key} className="w-100 period-years p-2"
+                <div key={config.key} className="w-100 period-years p-0"
                   // style={{transform:`translate(${config.style.x}px,0)`}}
                   style={{position:'absolute', bottom: 0, left:`${config.style.x}px`}}
                   >
+                  <h1 className="mb-3 lead-48" style={{ position:'relative' }}>
                   {period.startDate.getFullYear()}{' - '}{period.endDate.getFullYear() + 1}
+                  </h1>
                 </div>
               )
 
             )}</div>}
 
             </TransitionMotion>
-            </h1>
 
           </div>
           <div className='flex-1' style={{ position: 'relative' }}>
@@ -122,7 +125,7 @@ class Period extends PureComponent {
               {(styles)=><div style={{position:'relative'}}>{styles.map(config => {
                 return (
                   <div style={{ position: 'absolute', top: 0, opacity: config.style.o }} key={config.key}>
-                    <p className="period-description p-2">{period.data.description}</p>
+                    <p className="period-description p-4">{period.data.description}</p>
                   </div>
                 )
               }
