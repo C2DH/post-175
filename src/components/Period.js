@@ -117,7 +117,7 @@ class Period extends PureComponent {
           <div className='flex-1 d-flex flex-column justify-content-end p-4'>
 
 
-            {/* <small>PERIODE</small> */}
+            <small className='period-label'>PERIODE</small>
             <TransitionMotion
               defaultStyles={this.getDefaultStyles()}
               styles={this.getStyles()}
@@ -126,7 +126,7 @@ class Period extends PureComponent {
 
               >
 
-              {(styles)=><div style={{position:'relative'}}>{styles.map(config => (
+              {(styles)=><div style={{position:'relative', height: 60}}>{styles.map(config => (
                 <div key={config.key} className="w-100 period-years p-0"
                   // style={{transform:`translate(${config.style.x}px,0)`}}
                   style={{position:'absolute', bottom: 0, left:`${config.style.x}px`}}

@@ -250,3 +250,7 @@ a:-webkit-any-link {
 .period-years{
   color: #fff;
 }
+.period-label{
+  margin-bottom: 20px;
+  color: #fff;
+}
