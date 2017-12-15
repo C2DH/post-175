@@ -141,11 +141,11 @@ class MapPage extends PureComponent {
                     )
                   })}
 
-                  { overPlace &&
+                  {/* { overPlace &&
                     <HTMLOverlay redraw={()=>(
                       <div style={{position: 'absolute', width:width, height:height, background:'rgba(0,0,0,.8)', pointerEvents:'none'}}/>
                     )}/>
-                  }
+                  } */}
 
 
                   {/* { overPlace &&
@@ -182,7 +182,11 @@ class MapPage extends PureComponent {
                       <div>
                         {interpolatedStyles.map(config => {
                           return (
-                          <Popup key={config.key} latitude={config.data.overPlace.coordinates[1]} longitude={config.data.overPlace.coordinates[0]}
+                            <div key={config.key}>
+                          <HTMLOverlay redraw={()=>(
+                            <div style={{ opacity: config.style.o, position: 'absolute', width:width, height:height, background:'rgba(0,0,0,.8)', pointerEvents:'none'}}/>
+                          )}/>
+                          <Popup latitude={config.data.overPlace.coordinates[1]} longitude={config.data.overPlace.coordinates[0]}
                             tipSize={0}
                               closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
 
@@ -192,6 +196,7 @@ class MapPage extends PureComponent {
                                 onClick={() => this.selectPlace(config.data.overPlace)}
                               />
                           </Popup>
+                        </div>
                         )
                       })}
                       </div>
