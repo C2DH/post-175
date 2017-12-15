@@ -84,10 +84,14 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
                 if(!event.displacementIndex){
                   y2 = eventHeight ? height / 2 + eventHeight / 2 : height / 2
                 } else {
-                  const k = event.displacementIndex % 2 === 0 ? 1 : 3
-                  y2 = eventHeight ? height / 4 * k + eventHeight / 4 * k : height / 4 * k
-                  // y2 -= height / 10
+                  const k = event.displacementIndex % 2 === 0 ? 2 : 5
+                  y2 = eventHeight ? height / 8 * k + eventHeight / 8 * k : height / 8 * k
+                  if((y2 - eventHeight) < 0){
+                    y2 += Math.abs(y2 - eventHeight) + 80
+                  }
+                  console.log(event.data.title, y2, eventHeight)
                 }
+
 
                 const color = getEventColor(event)
 
@@ -101,7 +105,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
                       <g transform={'translate(10, 0)'}>
                           <text className="timeline-event-date">{event.data.start_date}</text>
                           <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category_label}</text>
-                          <MultiText spacing={20} y={40+eventHeight} className="timeline-event-title" text={event.data.title} maxLen={30}></MultiText>
+                          <MultiText spacing={20} y={40+eventHeight} className="timeline-event-title" text={event.data.title} maxLen={25}></MultiText>
                       </g>
                       <image href={snapshot} x="1" y={EVENT_RADIUS}  width={EVENT_WIDTH} height={eventHeight}/>
                     </g>
@@ -112,7 +116,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
                     <g transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
                       <text className="timeline-event-date">{event.data.start_date}</text>
                       <text dy={20} fill={color} className="timeline-event-category">{event.data.category_label}</text>
-                      <MultiText spacing={20} y={40} className="timeline-event-title" text={event.data.title} maxLen={30}></MultiText>
+                      <MultiText spacing={20} y={40} className="timeline-event-title" text={event.data.title} maxLen={25}></MultiText>
                     </g>
                   ) }
 

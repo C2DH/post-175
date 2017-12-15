@@ -7,6 +7,7 @@ import { translateDoc } from './common'
 
 export const WIDTH_WITH_EVENTS = 300
 export const WIDTH_NO_EVENTS = 100
+const DAY_DURATION = 86400000
 
 export const getRawEvents = createSelector(
   state => state.events.ids,
@@ -34,7 +35,7 @@ export const getAnnotatedEvents = createSelector(
     sortedEvents.forEach((event, i) => {
       if(i > 0){
         // console.log(event.startDate.getTime() - sortedEvents[i-1].startDate.getTime())
-        if( event.startDate.getTime() - sortedEvents[i-1].startDate.getTime() < (86400000 * 60)){
+        if( event.startDate.getTime() - sortedEvents[i-1].startDate.getTime() < (DAY_DURATION * 180)){
           if(!sortedEvents[i-1].displacementIndex){
             sortedEvents[i-1].displacementIndex = 1
           }
