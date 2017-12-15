@@ -192,7 +192,7 @@ class MapPage extends PureComponent {
                           )}/>
                           <Popup latitude={config.data.overPlace.coordinates[1]} longitude={config.data.overPlace.coordinates[0]}
                             tipSize={0}
-                              closeOnClick={false} anchor="top" closeButton={false}  offsetTop={15}>
+                              closeOnClick={false} anchor="bottom" closeButton={false}  offsetBottom={15}>
 
                               <MapTooltip
                                 style={{ opacity: config.style.o }}
