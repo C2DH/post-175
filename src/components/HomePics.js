@@ -5,7 +5,7 @@ import { StaggeredMotion, Motion, spring } from 'react-motion'
 import { scaleLinear } from 'd3-scale'
 
 const NUM_PICS = 50
-const MAX_DELTA = 100
+const MAX_DELTA = 150
 
 class HomePicture extends React.PureComponent {
   render() {

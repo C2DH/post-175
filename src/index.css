@@ -79,7 +79,7 @@ a:-webkit-any-link {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to top, #131313, rgba(19, 19, 19, 0));
+  /*background-image: linear-gradient(to top, #131313, rgba(19, 19, 19, 0));*/
 }
 
 
