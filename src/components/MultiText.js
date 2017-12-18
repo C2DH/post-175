@@ -55,8 +55,9 @@ export default class MultiText extends React.PureComponent {
   }
 
   componentDidMount() {
+    const { width } = this.textNode.getBoundingClientRect()
     this.setState({
-      bgWidth: this.textNode.clientWidth,
+      bgWidth: width,
     })
   }
 
