@@ -60,7 +60,7 @@ class EventItem extends PureComponent {
                 <text className="timeline-event-date">{event.data.start_date}</text>
                 <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category_label}</text>
             </g>
-            <image href={snapshot} x="1" y={EVENT_RADIUS}  width={EVENT_WIDTH} height={eventHeight}/>
+            <image xlinkHref={snapshot} x={1} y={EVENT_RADIUS}  width={EVENT_WIDTH} height={eventHeight}/>
           </g>
         )}
 
@@ -94,7 +94,7 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
     overEvent: null,
   }
 
-  enterEvent = event => this.setState({ overEvent: event })
+  enterEvent = event => this.setState({ overEvent: null })
 
   leaveEvent = event => this.setState({ overEvent: null })
 
