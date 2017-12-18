@@ -47,14 +47,12 @@ class Period extends PureComponent {
   periodWillEnter = () => {
     return {
       x: 1000,
-      o: 0
     }
   }
 
   periodWillLeave = () => {
     return {
       x: spring(-1000),
-      o: spring(0, presets.stiff)
     }
   }
 
@@ -63,7 +61,9 @@ class Period extends PureComponent {
       key: this.props.period ? this.props.period.id.toString() : '',
       style: {
         x: 1000,
-        o: 0
+      },
+      data: {
+        period: this.props.period,
       }
     }]
   }
@@ -73,32 +73,42 @@ class Period extends PureComponent {
       key: this.props.period ? this.props.period.id.toString() : '',
       style: {
         x: spring(0),
-        o: spring(1, presets.stiff)
+      },
+      data: {
+        period: this.props.period,
       }
     }]
   }
 
   imagesMap = {}
 
-  componentDidMount(){
+  componentDidMount() {
     this.preloadImage(this.props.period)
+    this.mounted = true
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
   }
 
   preloadImage = period => {
-    if(this.imagesMap[period.id] && this.imagesMap[period.id].complete){
+    if (this.imagesMap[period.id] && this.imagesMap[period.id].complete) {
       return
     }
     this.setState({imageLoaded: false})
     const img = new Image()
     img.onload = () => {
-      this.setState({imageLoaded: true })
+      // Can sleep at night
+      if (this.mounted) {
+        this.setState({ imageLoaded: true })
+      }
       this.imagesMap[period.id] = img
     }
     img.src = get(period, 'documents[0].attachment')
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.period && nextProps.period !== this.props.period) {
+    if (nextProps.period && nextProps.period !== this.props.period) {
       this.preloadImage(nextProps.period)
     }
   }
@@ -114,7 +124,7 @@ class Period extends PureComponent {
           style={{backgroundImage:`linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(29,29,29,1) 90%),url(${cover})`}}
           >
 
-          <div className='flex-1 d-flex flex-column justify-content-end p-4'>
+          <div className='flex-1 d-flex flex-column justify-content-end px-4'>
 
 
             <small className='period-label'>PERIODE</small>
@@ -126,13 +136,12 @@ class Period extends PureComponent {
 
               >
 
-              {(styles)=><div style={{position:'relative', height: 60}}>{styles.map(config => (
+              {(styles)=><div style={{position:'relative',height:60}}>{styles.map(config => (
                 <div key={config.key} className="w-100 period-years p-0"
-                  // style={{transform:`translate(${config.style.x}px,0)`}}
                   style={{position:'absolute', bottom: 0, left:`${config.style.x}px`}}
                   >
-                  <h1 className="mb-3 lead-48" style={{ position:'relative' }}>
-                  {period.startDate.getFullYear()}{' - '}{period.endDate.getFullYear() + 1}
+                  <h1 className="lead-48" style={{ position:'relative' }}>
+                  {config.data.period.startDate.getFullYear()}{' - '}{config.data.period.endDate.getFullYear() + 1}
                   </h1>
                 </div>
               )
@@ -142,25 +151,9 @@ class Period extends PureComponent {
             </TransitionMotion>
 
           </div>
-          <div className='flex-1' style={{ position: 'relative' }}>
+          <div className='flex-1 px-4 overflow-auto' style={{ minHeight: 300 }}>
 
-            <TransitionMotion
-              defaultStyles={this.getDefaultStyles()}
-              styles={this.getStyles()}
-              willLeave={this.periodWillLeave}
-              willEnter={this.periodWillEnter}
-
-              >
-              {(styles)=><div style={{position:'relative'}}>{styles.map(config => {
-                return (
-                  <div style={{ position: 'absolute', top: 0, opacity: config.style.o }} key={config.key}>
-                    <p className="period-description p-4">{period.data.description}</p>
-                  </div>
-                )
-              }
-
-            )}</div>}
-              </TransitionMotion>
+            <p className="period-description">{period.data.description}</p>
           </div>
 
           <div className="w-100 h-100px d-flex flex-row-reverse" style={{zIndex:10}}>
@@ -172,30 +165,7 @@ class Period extends PureComponent {
             />
           </div>
 
-          {/* <div className="p-2 mb-3 text-light">
-            <small>PERIODE</small>
-
-            <h1 className="mb-3 lead-48">
-
-            </h1>
-
-
-
-
-            <div style={{ height: 300, overflowY: 'scroll' }}>
-              <p>{period.data.description}</p>
-            </div>
-          </div>
-          <div className="w-100 h-100px d-flex flex-row-reverse">
-            <ArrowsButtons
-              onNext={this.goNext}
-              onPrev={this.goPrev}
-              hasNext={nextPeriod !== null}
-              hasPrev={prevPeriod !== null}
-            />
-          </div> */}
         </div>
-
 
       </div>
     )
