@@ -94,11 +94,20 @@ const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent 
     overEvent: null,
   }
 
-  enterEvent = event => this.setState({ overEvent: null })
+  enterEvent = event => this.setState({ overEvent: event })
 
   leaveEvent = event => this.setState({ overEvent: null })
 
-  componentDidMount(){
+  componentDidMount() {
+    this.setHeight()
+    window.addEventListener('resize', this.setHeight, false)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setHeight)
+  }
+
+  setHeight = () => {
     const node = ReactDOM.findDOMNode(this)
     const height = node.offsetHeight
     this.setState({height})
