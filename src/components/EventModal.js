@@ -96,16 +96,20 @@ class EventModal extends PureComponent {
                 <span style={{fontSize: 10}} className="text-white"></span>
               </div>
             </div>
-            <div className="w-100 flex-1 d-flex">
-              <div className="h-100 p-3 d-flex justify-content-center flex-column overflow-auto" style={{flex: 4.5}}>
-                {selectedDocument && <img className="img-fluid pt-3" src={selectedDocument.attachment} />}
+            <div className="w-100 flex-1 d-flex" style={{ minHeight: 0 }}>
+
+              <div className="h-100 d-flex justify-content-center flex-column" style={{flex: 4.5}}>
+                <div className='h-100 overflow-auto m-3'>
+                  {selectedDocument && <img className="img-fluid" src={selectedDocument.attachment} />}
+                </div>
               </div>
-              <div className="flex-1 h-100 p-1 pr-3 flex-column overflow-auto">
+
+              <div className="flex-1 h-100 pr-3 mt-3 flex-column overflow-auto">
                 {displayDocs && displayDocs.map((doc, i) => (
                   <img
                     key={doc.id}
                     src={doc.snapshot}
-                    className="img-fluid mt-1 mb-1 grayscale pointer"
+                    className="img-fluid mb-1 grayscale pointer"
                     onClick={this.handleSelectDocument(doc)}
                     style={(doc.id === selectedDocument.id) ? {border: '1px solid red', filter: 'none'} : null}
                    />
