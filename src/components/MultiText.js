@@ -1,6 +1,7 @@
 import React from 'react'
 import { sum } from 'lodash'
 
+const RECT_PADDING = 5
 const CHAR_W = {
     A:7,a:7,B:8,b:7,C:8,c:6,D:9,d:7,E:7,e:7,F:7,f:4,G:9,g:7,H:9,h:7,I:3,i:3,J:5,j:3,K:8,k:6,L:7,l:3,M:11,
     m:11,N:9,n:7,O:9,o:7,P:8,p:7,Q:9,q:7,R:8,r:4,S:8,s:6,T:7,t:4,U:9,u:7,V:7,v:6,W:11,w:9,X:7,x:6,Y:7,y:6,Z:7,z:5,
@@ -48,15 +49,36 @@ function textWrap(line, maxCharactersPerLine, minCharactersPerLine, monospace) {
 
 
 export default class MultiText extends React.PureComponent {
+
+  state = {
+    bgWidth: 0,
+  }
+
+  componentDidMount() {
+    this.setState({
+      bgWidth: this.textNode.clientWidth,
+    })
+  }
+
   render() {
     const { x, y, text, maxLen=20, minLen, monospace, spacing=15, ...rest } = this.props
+    const { bgWidth } = this.state
     const wrapped = textWrap(text, maxLen, minLen, monospace)
     return (
-      <text x={x} y={y} {...rest}>{
-        wrapped.map((line, i) => (
-          <tspan x={0} dx="0" y={y + i * spacing} key={i}>{line}</tspan>
-        ))
-      }</text>
+      <g>
+        <rect
+          x={-RECT_PADDING}
+          y={y - spacing + Math.round(spacing / 3) - RECT_PADDING}
+          fill='#131313'
+          height={wrapped.length * spacing + RECT_PADDING * 2}
+          width={bgWidth + RECT_PADDING * 2}
+        />
+        <text x={x} y={y} {...rest} ref={r => this.textNode = r}>{
+          wrapped.map((line, i) => (
+            <tspan x={0} dx="0" y={y + i * spacing} key={i}>{line}</tspan>
+          ))
+        }</text>
+      </g>
     )
   }
 }
