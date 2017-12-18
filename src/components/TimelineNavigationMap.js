@@ -16,9 +16,7 @@ class TimelineNavigationMap extends PureComponent {
         style={{ height: 50 }}
       >
         {({ width, height, scale, ticks }) => (
-          <div className="d-inline-flex flex-1 w-100">
-            <TimelineTicks ticks={ticks} y={height / 2} scale={scale} />
-          </div>
+          <TimelineTicks ticks={ticks} y={height / 2} scale={scale} />
         )}
       </TimelineNavigationControlled>
     )

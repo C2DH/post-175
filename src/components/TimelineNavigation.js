@@ -21,17 +21,13 @@ class TimelineNavigation extends PureComponent {
       >
         {({ width, height, scale, ticks }) => (
           <Fragment>
-            <div className="d-inline-flex flex-1 w-100">
-              <TimelineEvents
-                events={events}
-                cy={height / 4}
-                scale={scale}
-                onClick={this.onEventClicked}
-              />
-            </div>
-            <div className="d-inline-flex flex-1 w-100">
-              <TimelineTicks ticks={ticks} y={height / 4} scale={scale} />
-            </div>
+            <TimelineEvents
+              events={events}
+              cy={height / 4}
+              scale={scale}
+              onClick={this.onEventClicked}
+            />
+            <TimelineTicks ticks={ticks} y={height / 4} scale={scale} />
           </Fragment>
         )}
       </TimelineNavigationControlled>
