@@ -59,7 +59,7 @@ class EventModal extends PureComponent {
   }
 
   render() {
-    const { event, onClose, hasPrev, hasNext, goNext, goPrev } = this.props
+    const { event, onClose, hasPrev, hasNext, goNext, goPrev, style } = this.props
 
     // Take only docs \w snapshot
     const displayDocs = event.documents.filter(d => d.snapshot)
@@ -68,7 +68,7 @@ class EventModal extends PureComponent {
       : head(displayDocs)
 
     return (
-      <div className="bg-black p-3 fixed-top fixed-bottom">
+      <div className="bg-black p-3 fixed-top fixed-bottom" style={style}>
         <div className="container h-100 d-flex text-dark">
           <div className="flex-1 h-100 bg-white d-flex flex-column">
             <div className="flex-1 bg-light p-1">

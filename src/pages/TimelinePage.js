@@ -21,7 +21,7 @@ import {
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
-import { Motion, spring } from 'react-motion'
+import { TransitionMotion, Motion, spring } from 'react-motion'
 import EventModal from '../components/EventModal'
 
 class TimelinePage extends PureComponent {
@@ -63,14 +63,40 @@ class TimelinePage extends PureComponent {
               <Timeline style={{opacity:o}} />
             )}
           </Motion> }
-          {selectedEvent && <EventModal
-            hasNext={nextEvent !== null}
-            hasPrev={prevEvent !== null}
-            goNext={this.goNext}
-            goPrev={this.goPrev}
-            event={selectedEvent}
-            onClose={clearSelectedEvent}
-           />}
+
+          <TransitionMotion
+            defaultStyles={selectedEvent ? [{
+              key: 'eventModal',
+              data: { selectedEvent, nextEvent, prevEvent },
+              style: { o: 0 },
+            }] : []}
+            styles={selectedEvent ? [{
+              key: 'eventModal',
+              data: { selectedEvent, nextEvent, prevEvent },
+              style: { o: spring(1) },
+            }] : []}
+            willLeave={() => ({ o: spring(0) })}
+            willEnter={() => ({ o: 0 })}
+          >
+          {interpolatedStyles =>
+            <div>
+              {interpolatedStyles.map(config => {
+                return (
+                  <EventModal
+                    style={{ opacity: config.style.o }}
+                    key={config.key}
+                    hasNext={config.data.nextEvent !== null}
+                    hasPrev={config.data.prevEvent !== null}
+                    goNext={this.goNext}
+                    goPrev={this.goPrev}
+                    event={config.data.selectedEvent}
+                    onClose={clearSelectedEvent}
+                   />
+              )
+            })}
+            </div>
+          }
+          </TransitionMotion>
 
         </div>
       </div>
