@@ -32,9 +32,9 @@ class TimelineCursor extends PureComponent {
           handle=".timeline-handle"
           onDrag={this.onDrag}
           >
-            <svg height={height + cursorRadius }
-              transform={`translate(${x},0)`}
-              width={cursorRadius*2} style={{marginTop: -cursorRadius}}>
+            <svg height={height + cursorRadius}
+              width={cursorRadius*2}
+              style={{marginTop: -cursorRadius, transform: `translate(${x}px, 0px)`}}>
               <line x1={cursorRadius} y1={cursorRadius} x2={cursorRadius} y2={height + cursorRadius} stroke="white"></line>
               <circle className="timeline-handle" r={cursorRadius} cx={cursorRadius} cy={cursorRadius} fill="white" fillOpacity={0.4}></circle>
               <circle className="timeline-handle" r={cursorRadius/2} cx={cursorRadius} cy={cursorRadius} fill="white"></circle>
