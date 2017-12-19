@@ -36,7 +36,6 @@ class Home extends PureComponent {
 
   render() {
     const { url, docs, langs, selectedLang, story } = this.props
-    console.log(story)
     return (
       <div className="h-100 d-flex flex-column bg-black">
         <div className='row no-gutters flex-1 w-100 '>

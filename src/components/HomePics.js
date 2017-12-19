@@ -100,7 +100,7 @@ export default class HomePics extends React.PureComponent {
     this.setState({ positions: newPositions, selectedIndex })
   }
 
-  handleMouseOut = (e) => {
+  handleMouseLeave = (e) => {
     this.setState({
       x: null,
       positions: this.state.initialPositions,
@@ -124,7 +124,7 @@ export default class HomePics extends React.PureComponent {
         }))}>
           {(styles) => (
             <div id="pics-container" className="w-100 h-100" style={{ position: 'relative' }}
-              onMouseOut={this.handleMouseOut}
+              onMouseLeave={this.handleMouseLeave}
               onMouseMove={this.handleMouseMove}
               >
               {styles.map(({ left, width }, i) => (
@@ -133,7 +133,7 @@ export default class HomePics extends React.PureComponent {
                   key={i}
                   left={left}
                   width={width}
-                  image={docs[i].snapshot}
+                  image={docs[i].attachment}
                   text={docs[i].data.title}
                 />
               ))}
