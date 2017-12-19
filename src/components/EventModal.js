@@ -68,7 +68,7 @@ class EventModal extends PureComponent {
       : head(displayDocs)
 
     return (
-      <div className="bg-black p-3 fixed-top fixed-bottom" style={style}>
+      <div className="bg-modal p-3 fixed-top fixed-bottom" style={style}>
         <div className="container h-100 text-dark">
           <div className='row no-gutters h-100 justify-content-center'>
             <div className={`col-${displayDocs.length > 0 ? 12 : 10} d-flex`}>
