@@ -219,4 +219,5 @@ export default connect(mapStateToProps, {
   setOverPlace,
   clearOverPlace,
   loadStory,
+  unloadStory,
 })(MapPage)
