@@ -69,52 +69,59 @@ class EventModal extends PureComponent {
 
     return (
       <div className="bg-black p-3 fixed-top fixed-bottom" style={style}>
-        <div className="container h-100 d-flex text-dark">
-          <div className="flex-1 h-100 bg-white d-flex flex-column">
-            <div className="flex-1 bg-light p-1">
-              <EventType event={event} />
-              <div className="w-100 pl-3 pr-3">
-                <h2 style={{fontSize: 28}}>{event.data.title}</h2>
-                <p className="font-12">{event.data.start_date}</p>
-              </div>
-            </div>
-            <div className="p-3 mt-3 overflow-auto" style={{flex: 2}}>
-              <p>{event.data.description}</p>
-            </div>
-            <EventsControl
-              hasNext={hasNext}
-              hasPrev={hasPrev}
-              goNext={goNext}
-              goPrev={goPrev}
-            />
-          </div>
-          <div className="h-100 flex-column d-flex" style={{flex: 2.55, backgroundColor: '#313030'}}>
-            <div className="w-100 text-white pl-3 pr-3 d-flex align-items-center" style={{height: 60}}>
-              <div style={{lineHeight: 1}}>
-                <span className="text-muted font-12">MEDIA</span><br />
-                <span className="text-white font-12">{get(selectedDocument, 'title')}</span><br/>
-                <span style={{fontSize: 10}} className="text-white"></span>
-              </div>
-            </div>
-            <div className="w-100 flex-1 d-flex" style={{ minHeight: 0 }}>
+        <div className="container h-100 text-dark">
+          <div className='row no-gutters h-100 justify-content-center'>
+            <div className={`col-${displayDocs.length > 0 ? 12 : 10} d-flex`}>
 
-              <div className="h-100 d-flex justify-content-center flex-column" style={{flex: 4.5}}>
-                <div className='h-100 overflow-auto m-3'>
-                  {selectedDocument && <img className="img-fluid" src={selectedDocument.attachment} />}
+              <div className="flex-1 h-100 bg-white d-flex flex-column">
+                <div className="flex-1 bg-light p-1">
+                  <EventType event={event} />
+                  <div className="w-100 pl-3 pr-3">
+                    <h2 style={{fontSize: 28}}>{event.data.title}</h2>
+                    <p className="font-12">{event.data.start_date}</p>
+                  </div>
                 </div>
+                <div className="p-3 mt-3 overflow-auto" style={{flex: 2}}>
+                  <p>{event.data.description}</p>
+                </div>
+                <EventsControl
+                  hasNext={hasNext}
+                  hasPrev={hasPrev}
+                  goNext={goNext}
+                  goPrev={goPrev}
+                />
               </div>
 
-              <div className="flex-1 h-100 pr-3 mt-3 flex-column overflow-auto">
-                {displayDocs && displayDocs.map((doc, i) => (
-                  <img
-                    key={doc.id}
-                    src={doc.snapshot}
-                    className="img-fluid mb-1 grayscale pointer"
-                    onClick={this.handleSelectDocument(doc)}
-                    style={(doc.id === selectedDocument.id) ? {border: '1px solid red', filter: 'none'} : null}
-                   />
-                ))}
-              </div>
+              {displayDocs.length > 0 && <div className="h-100 flex-column d-flex" style={{flex: 2.55, backgroundColor: '#313030'}}>
+                <div className="w-100 text-white pl-3 pr-3 d-flex align-items-center" style={{height: 60}}>
+                  <div style={{lineHeight: 1}}>
+                    <span className="text-muted font-12">MEDIA</span><br />
+                    <span className="text-white font-12">{get(selectedDocument, 'title')}</span><br/>
+                    <span style={{fontSize: 10}} className="text-white"></span>
+                  </div>
+                </div>
+                <div className="w-100 flex-1 d-flex" style={{ minHeight: 0 }}>
+
+                  <div className="h-100 d-flex justify-content-center flex-column" style={{flex: 4.5}}>
+                    <div className='h-100 overflow-auto m-3'>
+                      {selectedDocument && <img className="img-fluid" src={selectedDocument.attachment} />}
+                    </div>
+                  </div>
+
+                  {displayDocs.length > 1 && <div className="flex-1 h-100 pr-3 mt-3 flex-column overflow-auto">
+                    {displayDocs && displayDocs.map((doc, i) => (
+                      <img
+                        key={doc.id}
+                        src={doc.snapshot}
+                        className="img-fluid mb-1 grayscale pointer"
+                        onClick={this.handleSelectDocument(doc)}
+                        style={(doc.id === selectedDocument.id) ? {border: '1px solid red', filter: 'none'} : null}
+                       />
+                    ))}
+                  </div>}
+                </div>
+              </div>}
+
             </div>
           </div>
         </div>

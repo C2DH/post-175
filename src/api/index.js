@@ -33,7 +33,7 @@ export const getHomeDocuments = (params = {}) => getDocuments({
   ...params,
   filters: {
     ...params.filters,
-    type: 'image',
+    data__type: 'home',
   },
 })
 
