@@ -18,6 +18,7 @@ import {
   getMapTimelineCurrentDate,
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
+import MobileAlert from '../components/MobileAlert'
 import MapTooltip from '../components/MapTooltip'
 import { Motion, TransitionMotion, spring, presets } from 'react-motion'
 
@@ -94,6 +95,7 @@ class MapPage extends PureComponent {
 
     return (
       <div className="h-100 d-flex flex-column">
+        <MobileAlert />
         <div className='row no-gutters flex-1'>
           <Legend
             selectedPlace={selectedPlace}

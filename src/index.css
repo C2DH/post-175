@@ -254,3 +254,15 @@ a:-webkit-any-link {
   margin-bottom: 10px;
   color: #fff;
 }
+
+.mobile-alert {
+  position: fixed;
+  top: 0;
+  text-align: center;
+  font-size: 15pt;
+  left: 0;
+  right: 0;
+  /* color: #fffafa; */
+  background-color: #eeee00;
+  z-index: 99999;
+}

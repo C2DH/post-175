@@ -18,6 +18,7 @@ import {
   getTimelinePrevEvent,
   getTimelineNextEvent,
 } from '../state/selectors'
+import MobileAlert from '../components/MobileAlert'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
@@ -52,6 +53,7 @@ class TimelinePage extends PureComponent {
     const { events, periods, selectedEvent, nextEvent, prevEvent, clearSelectedEvent } = this.props
     return (
       <div className='h-100 d-flex flex-column'>
+        <MobileAlert />
         <div className='row no-gutters flex-1'>
           {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (
@@ -97,7 +99,6 @@ class TimelinePage extends PureComponent {
             </div>
           }
           </TransitionMotion>
-
         </div>
       </div>
     )
