@@ -18,7 +18,7 @@ import {
 } from '../state/selectors'
 
 class Home extends PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadHomeDocs()
     this.props.loadStory('home')
   }
