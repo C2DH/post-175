@@ -6,6 +6,7 @@ import { scaleLinear } from 'd3-scale'
 
 const NUM_PICS = 50
 const MAX_DELTA = 150
+const MIN_DELTA = 50
 
 class HomePicture extends React.PureComponent {
   render() {
@@ -72,12 +73,27 @@ export default class HomePics extends React.PureComponent {
 
   handleMouseMove = (e) => {
     const { width, initialPositions } = this.state
-    const leftScale = scaleLinear().domain([0, e.clientX]).range([MAX_DELTA, 0])
-    const rightScale = scaleLinear().domain([0, width - e.clientX]).range([MAX_DELTA, 0])
+
+    let leftRange = MAX_DELTA
+    let rightRange = MAX_DELTA
+
+    if (e.clientX < MAX_DELTA) {
+      leftRange = Math.max(e.clientX - MIN_DELTA, 0)
+      rightRange += Math.min(width - e.clientX, MAX_DELTA - leftRange)
+    }
+
+    if (width - e.clientX < MAX_DELTA) {
+      rightRange = Math.max(width - e.clientX - MIN_DELTA, 0)
+      leftRange += Math.min(e.clientX, MAX_DELTA - rightRange)
+    }
+
+    const leftScale = scaleLinear().domain([0, e.clientX]).range([leftRange, 0])
+    const rightScale = scaleLinear().domain([0, width - e.clientX]).range([rightRange, 0])
 
     const newPositions = initialPositions.map((pos, i) => {
       let newPos = []
-      if (pos[0] < e.clientX) {
+
+      if (pos[0] <= e.clientX) {
         newPos[0] = pos[0] - leftScale(e.clientX - pos[0])
       } else {
         newPos[0] = pos[0] + rightScale(pos[0] - e.clientX)
