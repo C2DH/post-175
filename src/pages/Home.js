@@ -41,8 +41,8 @@ class Home extends PureComponent {
         <div className='row no-gutters flex-1 w-100 '>
           {docs && <HomePics docs={docs} />}
         </div>
-        <div className='row no-gutters flex-1 w-100 d-flex mb-4 p-3 bg-black'>
-          <div className="d-flex h-100 flex-1 flex-column">
+        <div className='home-info-container row no-gutters flex-1 w-100 d-flex mb-4 p-3 bg-black flex-wrap flex-md-nowrap'>
+          <div className="d-flex h-100 home-flex-1 flex-column">
             <div>
               <h1>
                 175 <span style={{fontWeight: 300}}>Joer Post</span>
@@ -64,7 +64,7 @@ class Home extends PureComponent {
               ))}
             </div>
           </div>
-          <div className="d-flex h-100 flex-1 flex-column">
+          <div className="d-flex home-h-100 home-flex-1 flex-column">
             <p className="lead-24">
               {story?story.data.abstract:''}
           </p>
