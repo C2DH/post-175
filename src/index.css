@@ -47,6 +47,9 @@ a:-webkit-any-link {
 .flex-1 {
   flex:1;
 }
+.flex-2 {
+  flex:2;
+}
 
 .cover {
   background-size: cover!important;
