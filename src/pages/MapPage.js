@@ -28,7 +28,7 @@ import { Motion, TransitionMotion, spring, presets } from 'react-motion'
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => (
-  <h1 style={{ position: 'absolute', top: 0 }}>{year}</h1>
+  <h1 className="map-year">{year}</h1>
 )
 
 class MapPage extends PureComponent {
@@ -105,6 +105,7 @@ class MapPage extends PureComponent {
         <MobileAlert />
         <div className='row no-gutters flex-1'>
           <Legend
+            story={story}
             selectedPlace={selectedPlace}
             onClose={this.closePlaceDetail}
           />

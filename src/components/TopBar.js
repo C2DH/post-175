@@ -8,7 +8,7 @@ class TopBar extends PureComponent {
     return (
       <div className='w-100 bg-opaque-black d-flex' style={{minHeight: 57}}>
         <div className='d-flex'>
-          <button className='btn bg-opaque-black pt-2' onClick={openMenu}>
+          <button className='btn bg-opaque-black pt-2 topbar-button' onClick={openMenu}>
             <i className="material-icons pt-1">menu</i>
           </button>
           <h6 className="pb-0 mb-0 align-self-center">{title}</h6>

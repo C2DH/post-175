@@ -6,7 +6,7 @@ import { Motion, TransitionMotion, spring } from 'react-motion'
 
 const CloseLegendDetailBtn = ({onclick}) => (
   <div className="position-absolute legend-close-btn" style={{ zIndex: 999 }}>
-    <button className="btn btn-light rounded-0 d-flex justify-content-center" onClick={onclick}>
+    <button className="btn btn-light legend-close rounded-0 d-flex justify-content-center" onClick={onclick}>
       <i className="material-icons font-14">close</i>
     </button>
   </div>
@@ -15,7 +15,7 @@ const CloseLegendDetailBtn = ({onclick}) => (
 class Legend extends PureComponent {
 
   render () {
-    const { selectedPlace, onClose } = this.props
+    const { story, selectedPlace, onClose } = this.props
     return (
       <div className="col-md-3 d-flex flex-column" style={{ backgroundColor: 'white' }}>
         <TopBar title={'MAP'} />
@@ -24,7 +24,7 @@ class Legend extends PureComponent {
           <CloseLegendDetailBtn onclick={onClose} />}
 
         <div className='flex-1' style={{ position: 'relative' }}>
-          <LegendIntro />
+          <LegendIntro story={story} />
 
           <TransitionMotion
             defaultStyles={selectedPlace ? [{ key: 'place', data: { selectedPlace }, style: { x: -500 }}] : []}

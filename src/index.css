@@ -211,6 +211,11 @@ a:-webkit-any-link {
   padding-top: 57px;
 }
 
+.legend-close{
+  width: 43px;
+  height: 43px;
+}
+
 .map-with-over-place {
   opacity: 0.2;
 }
@@ -225,6 +230,7 @@ a:-webkit-any-link {
 
 .mapboxgl-ctrl-attrib {
   pointer-events: none;
+  display: none;
 }
 .mapboxgl-popup-content {
   background: transparent;
@@ -233,6 +239,14 @@ a:-webkit-any-link {
   pointer-events: none;
 }
 
+.map-year{
+  position: absolute;
+  top:0px;
+  left:18px;
+  font-weight: 300;
+  color: white;
+  font-size: 3rem;
+}
 .map-tooltip {
   width: 100%;
   height: 300px;
@@ -282,6 +296,18 @@ a:-webkit-any-link {
 .period-label{
   margin-bottom: 10px;
   color: #fff;
+}
+
+.topbar-button{
+  cursor: pointer;
+}
+
+.menu-link{
+  color: white;
+}
+
+.menu-link:hover{
+  color: white;
 }
 
 .mobile-alert {
