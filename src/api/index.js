@@ -20,6 +20,10 @@ const buildMillerParams = (params) => {
   return newParams
 }
 
+export const getStory = (idOrSlug) =>
+  request.get(`${API_URL}/story/${idOrSlug}/`)
+    .then(extractBody)
+
 export const getDocuments = (params = {}) =>
   request.get(`${API_URL}/document/`)
     .query(buildMillerParams(params))

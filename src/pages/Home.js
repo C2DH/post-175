@@ -5,21 +5,26 @@ import HomePics from '../components/HomePics'
 import {
   loadHomeDocs,
   unloadHomeDocs,
+  loadStory,
+  unloadStory,
 } from '../state/actions'
 import {
   getHomeDocs,
   getMakeLangUrl,
   getLangs,
-  getSelectedLang
+  getSelectedLang,
+  getStory,
 } from '../state/selectors'
 
 class Home extends PureComponent {
   componentWillMount() {
     this.props.loadHomeDocs()
+    this.props.loadStory('home')
   }
 
   componentWillUnmount() {
     this.props.unloadHomeDocs()
+    this.props.unloadStory()
   }
 
   changeLang = (langParam) => {
@@ -29,7 +34,8 @@ class Home extends PureComponent {
   }
 
   render() {
-    const { url, docs, langs, selectedLang } = this.props
+    const { url, docs, langs, selectedLang, story } = this.props
+    console.log(story)
     return (
       <div className="h-100 d-flex flex-column bg-black">
         <div className='row no-gutters flex-1 w-100 '>
@@ -83,6 +89,7 @@ class Home extends PureComponent {
 
 
 const mapStateToProps = state => ({
+  story: getStory(state),
   url: getMakeLangUrl(state),
   docs: getHomeDocs(state),
   langs: getLangs(state),
@@ -91,4 +98,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   loadHomeDocs,
   unloadHomeDocs,
+  loadStory,
+  unloadStory,
 })(Home)
