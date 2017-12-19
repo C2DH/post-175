@@ -20,12 +20,12 @@ export default (prevState = defaultState, { type, payload }) => {
       }
     case MAP_SET_OVER_PLACE: {
       // Prevent to over a selected shit
-      if (prevState.selectedPlace && prevState.selectedPlace.id === payload.id) {
+      if (prevState.selectedPlace && prevState.selectedPlace === payload.id) {
         return prevState
       }
       return {
         ...prevState,
-        overPlace: payload,
+        overPlace: payload.id,
       }
     }
     case MAP_CLEAR_OVER_PLACE:
@@ -37,7 +37,7 @@ export default (prevState = defaultState, { type, payload }) => {
       return {
         ...prevState,
         overPlace: null,
-        selectedPlace: payload,
+        selectedPlace: payload.id,
       }
     case MAP_CLEAR_SELECTED_PLACE:
       return {

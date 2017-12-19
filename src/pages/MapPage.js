@@ -98,7 +98,7 @@ class MapPage extends PureComponent {
       currentDate,
       story,
     } = this.props
-    console.log(story)
+    console.log('--->', overPlace)
 
     return (
       <div className="h-100 d-flex flex-column">

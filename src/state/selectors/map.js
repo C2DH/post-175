@@ -13,15 +13,17 @@ export const getRawPlaces = createSelector(
     : ids.map(id => translateDoc(data[id], langCode))
 )
 
+const mapPlace = place => ({
+  ...place,
+  startDate: place.data.start_date === null ? null : new Date(place.data.start_date),
+  endDate: place.data.end_date === null ? null : new Date(place.data.end_date),
+  coordinates: get(place, 'data.coordinates.geometry.coordinates', [])
+    .slice(0, 2).map(x => +x).reverse(),
+})
+
 export const getPlaces = createSelector(
   getRawPlaces,
-  places => places === null ? null : places.map(place => ({
-    ...place,
-    startDate: place.data.start_date === null ? null : new Date(place.data.start_date),
-    endDate: place.data.end_date === null ? null : new Date(place.data.end_date),
-    coordinates: get(place, 'data.coordinates.geometry.coordinates', [])
-      .slice(0, 2).map(x => +x).reverse(),
-  }))
+  places => places === null ? null : places.map(mapPlace)
 )
 
 export const getPlacesRealExtent = createSelector(
@@ -67,5 +69,26 @@ export const getPlacesInDate = createSelector(
   }
 )
 
-export const getMapOverPlace = state => state.map.overPlace
-export const getMapSelectedPlace = state => state.map.selectedPlace
+export const getMapOverPlace = createSelector(
+  state => state.map.overPlace,
+  state => state.places.data,
+  getSelectedLangCode,
+  (id, data, langCode) => {
+    if (id === null) {
+      return null
+    }
+    return mapPlace(translateDoc(data[id], langCode))
+  }
+)
+
+export const getMapSelectedPlace = createSelector(
+  state => state.map.selectedPlace,
+  state => state.places.data,
+  getSelectedLangCode,
+  (id, data, langCode) => {
+    if (id === null) {
+      return null
+    }
+    return mapPlace(translateDoc(data[id], langCode))
+  }
+)
