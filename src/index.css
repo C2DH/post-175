@@ -298,6 +298,10 @@ a:-webkit-any-link {
   color: #fff;
 }
 
+.topbar-button{
+  cursor: pointer;
+}
+
 .mobile-alert {
   position: fixed;
   top: 0;

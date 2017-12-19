@@ -23,7 +23,7 @@ class MenuOpen extends PureComponent {
 
         <div className='p-3'>
           <div>
-            <button onClick={onRequestClose} className="btn bg-black border-0">
+            <button onClick={onRequestClose} className="btn bg-black border-0 topbar-button">
               <i className="material-icons">close</i>
             </button>
           </div>
