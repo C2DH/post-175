@@ -10,12 +10,15 @@ import {
   clearSelectedPlace,
   setOverPlace,
   clearOverPlace,
+  loadStory,
+  unloadStory,
 } from '../state/actions'
 import {
   getPlacesInDate,
   getMapOverPlace,
   getMapSelectedPlace,
   getMapTimelineCurrentDate,
+  getStory,
 } from '../state/selectors'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
 import MobileAlert from '../components/MobileAlert'
@@ -40,6 +43,7 @@ class MapPage extends PureComponent {
   }
 
   componentDidMount() {
+    this.props.loadStory('map')
     this.props.loadPlaces()
     this.setMapSize()
     window.addEventListener('resize', this.setMapSize, false)
@@ -50,6 +54,7 @@ class MapPage extends PureComponent {
   }
 
   componentWillUnmount() {
+    this.props.unloadStory()
     this.props.unloadPlaces()
     this.props.unloadMap()
     window.removeEventListener('resize', this.setMapSize)
@@ -91,7 +96,9 @@ class MapPage extends PureComponent {
       setOverPlace,
       clearOverPlace,
       currentDate,
+      story,
     } = this.props
+    console.log(story)
 
     return (
       <div className="h-100 d-flex flex-column">
@@ -147,29 +154,6 @@ class MapPage extends PureComponent {
                     )
                   })}
 
-                  {/* { overPlace &&
-                    <HTMLOverlay redraw={()=>(
-                      <div style={{position: 'absolute', width:width, height:height, background:'rgba(0,0,0,.8)', pointerEvents:'none'}}/>
-                    )}/>
-                  } */}
-
-
-                  {/* { overPlace &&
-                    <Popup latitude={overPlace.coordinates[1]} longitude={overPlace.coordinates[0]}
-                      tipSize={0}
-                        closeOnClick={false} anchor="top" closeButton={false}  offsetTop={-15}>
-                      <Motion defaultStyle={{ o: 0 }} style={{ o: spring(1) }}>
-                        {({ o }) => (
-                          <MapTooltip
-                            style={{ opacity: o }}
-                            place={overPlace}
-                            onClick={() => this.selectPlace(overPlace)}
-                          />
-                        )}
-                      </Motion>
-                    </Popup>
-                  } */}
-
                   <TransitionMotion
                     defaultStyles={overPlace ? [{
                       key: 'popup',
@@ -208,11 +192,7 @@ class MapPage extends PureComponent {
                     }
                   </TransitionMotion>
 
-
-
-
                 </ReactMapGL>
-
               )}
 
             {places && <TimelineNavigationMap />}
@@ -224,6 +204,7 @@ class MapPage extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  story: getStory(state),
   places: getPlacesInDate(state),
   overPlace: getMapOverPlace(state),
   selectedPlace: getMapSelectedPlace(state),
@@ -237,4 +218,5 @@ export default connect(mapStateToProps, {
   clearSelectedPlace,
   setOverPlace,
   clearOverPlace,
+  loadStory,
 })(MapPage)
