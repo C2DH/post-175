@@ -13,12 +13,12 @@ const preloadedState = {
         // param: Used to match in location
         param: 'de',
         // label: Beautiful UI display
-        label: 'DE',
+        label: 'Deutsch',
       },
       {
         code: 'fr_FR',
         param: 'fr',
-        label: 'FR',
+        label: 'Français',
       },
     ],
     // Default selected lang code

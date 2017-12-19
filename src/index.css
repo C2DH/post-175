@@ -57,7 +57,7 @@ a:-webkit-any-link {
 }
 
 .pointer {
-  cursor: pointer;;
+  cursor: pointer;
 }
 
 /* home */
@@ -265,4 +265,8 @@ a:-webkit-any-link {
   /* color: #fffafa; */
   background-color: #eeee00;
   z-index: 99999;
+}
+
+.text-underlined {
+  text-decoration: underline;
 }
