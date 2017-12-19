@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getMakeLangUrl } from '../state/selectors'
 import HomePics from '../components/HomePics'
 import {
   loadHomeDocs,
@@ -9,6 +8,9 @@ import {
 } from '../state/actions'
 import {
   getHomeDocs,
+  getMakeLangUrl,
+  getLangs,
+  getSelectedLang
 } from '../state/selectors'
 
 class Home extends PureComponent {
@@ -20,16 +22,30 @@ class Home extends PureComponent {
     this.props.unloadHomeDocs()
   }
 
+  changeLang = (langParam) => {
+    const { url, location } = this.props
+    const currentUrl = location.pathname + location.search
+    this.props.history.push(url(currentUrl, langParam))
+  }
+
   render() {
-    const { url, docs } = this.props
+    const { url, docs, langs, selectedLang } = this.props
     return (
       <div className="h-100 d-flex flex-column bg-black">
         <div className='row no-gutters flex-1 w-100 '>
           {docs && <HomePics docs={docs} />}
         </div>
         <div className='row no-gutters flex-1 w-100 d-flex p-3 bg-black'>
-          <div className="d-flex h-100 flex-1">
-            <h5 style={{fontSize: 28}}>175 <span style={{fontWeight: 300}}>Joer Post</span></h5>
+          <div className="d-flex h-100 flex-1 flex-column">
+            <div><h5 style={{fontSize: 28}}>175 <span style={{fontWeight: 300}}>Joer Post</span></h5></div>
+            <div>
+              {langs.map(lang => (
+                <button
+                  onClick={() => this.changeLang(lang.param)}
+                  style={{ backgroundColor: lang.code === selectedLang.code ? 'red' : undefined }}
+                  key={lang.code}>{lang.label}</button>
+              ))}
+            </div>
           </div>
           <div className="d-flex h-100 flex-1 flex-column">
             <p className="lead-24">Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh.
@@ -69,6 +85,8 @@ class Home extends PureComponent {
 const mapStateToProps = state => ({
   url: getMakeLangUrl(state),
   docs: getHomeDocs(state),
+  langs: getLangs(state),
+  selectedLang: getSelectedLang(state),
 })
 export default connect(mapStateToProps, {
   loadHomeDocs,
