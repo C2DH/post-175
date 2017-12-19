@@ -302,6 +302,14 @@ a:-webkit-any-link {
   cursor: pointer;
 }
 
+.menu-link{
+  color: white;
+}
+
+.menu-link:hover{
+  color: white;
+}
+
 .mobile-alert {
   position: fixed;
   top: 0;

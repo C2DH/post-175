@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { getMakeLangUrl, getLangs, getSelectedLang } from '../../state/selectors'
+import { getMakeLangUrl, getLangs, getSelectedLang} from '../../state/selectors'
 
 class MenuOpen extends PureComponent {
 
@@ -16,6 +16,11 @@ class MenuOpen extends PureComponent {
     const { location, onRequestClose, url, langs, selectedLang, style } = this.props
     const { pathname } = location
 
+    const subDict = {
+      'fr_FR':'Connecter le Luxembourg',
+      'de_DE':'Luxemburg verbinden'
+    }
+
     return (
       <div
         style={style}
@@ -23,13 +28,15 @@ class MenuOpen extends PureComponent {
 
         <div className='p-3'>
           <div>
-            <button onClick={onRequestClose} className="btn bg-black border-0 topbar-button">
+            <button onClick={onRequestClose} className="btn bg-black border-0 p-0 topbar-button">
               <i className="material-icons">close</i>
             </button>
           </div>
-          <Link to={url('/')} onClick={onRequestClose}><h1 className="display-4 text-light">175 <br /> Joer Post</h1></Link>
+          <Link to={url('/')} className="menu-link" onClick={onRequestClose}>
+            <h1 className="display-4 text-light">175 <br /> Joer Post</h1>
+          </Link>
 
-          <p className="text-grey" style={{fontSize: 18}}>A long history of comunication, technologies, services and people.</p>
+          <p className="text-grey" style={{fontSize: 18}}>{subDict[selectedLang.code]}</p>
         </div>
 
         <div className='flex-1 d-flex flex-column'>
@@ -37,28 +44,28 @@ class MenuOpen extends PureComponent {
 
             <div>
               <div className='pb-2'>
-                <Link to={url('/')} onClick={onRequestClose}>
+                <Link to={url('/')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/',
                   })}>Home</h3>
                 </Link>
               </div>
               <div className='pb-2'>
-                <Link to={url('/map')} onClick={onRequestClose}>
+                <Link to={url('/map')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/map',
                   })}>Map</h3>
                 </Link>
               </div>
               <div className='pb-2'>
-                <Link to={url('/timeline')} onClick={onRequestClose}>
+                <Link to={url('/timeline')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/timeline',
                   })}>Timeline</h3>
                 </Link>
               </div>
               <div>
-                <Link to={url('/about')} onClick={onRequestClose}>
+                <Link to={url('/about')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/about',
                   })}>About</h3>
