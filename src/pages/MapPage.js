@@ -101,7 +101,7 @@ class MapPage extends PureComponent {
             selectedPlace={selectedPlace}
             onClose={this.closePlaceDetail}
           />
-          <div className='d-flex flex-1 w-100 flex-column' style={{ overflow: 'hidden' }} ref={(node)=>this.mapContainer = node}>
+          <div className='d-flex flex-1 w-100 flex-column bg-darkgrey' style={{ overflow: 'hidden' }} ref={(node)=>this.mapContainer = node}>
               { width > 0 && (
                 <ReactMapGL
                   transitionDuration={1000}
