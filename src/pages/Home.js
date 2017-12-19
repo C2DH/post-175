@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import HomePics from '../components/HomePics'
+import classNames from 'classnames'
 import {
   loadHomeDocs,
   unloadHomeDocs,
@@ -41,21 +42,33 @@ class Home extends PureComponent {
         <div className='row no-gutters flex-1 w-100 '>
           {docs && <HomePics docs={docs} />}
         </div>
-        <div className='row no-gutters flex-1 w-100 d-flex p-3 bg-black'>
+        <div className='row no-gutters flex-1 w-100 d-flex mb-4 p-3 bg-black'>
           <div className="d-flex h-100 flex-1 flex-column">
-            <div><h5 style={{fontSize: 28}}>175 <span style={{fontWeight: 300}}>Joer Post</span></h5></div>
             <div>
+              <h1>
+                175 <span style={{fontWeight: 300}}>Joer Post</span>
+            </h1>
+              <p className="home-subtitle">
+                {story?story.data.subtitle:''}
+              </p>
+            </div>
+            <div className="mt-auto mb-5">
               {langs.map(lang => (
-                <button
+                <h5
                   onClick={() => this.changeLang(lang.param)}
-                  style={{ backgroundColor: lang.code === selectedLang.code ? 'red' : undefined }}
-                  key={lang.code}>{lang.label}</button>
+                  key={lang.code}
+                  className={classNames("text-light font-weight-light p-0 m-0 pointer", {
+                    'text-underlined': lang.code === selectedLang.code,
+                  })}>
+                  {lang.label}
+                </h5>
               ))}
             </div>
           </div>
           <div className="d-flex h-100 flex-1 flex-column">
-            <p className="lead-24">Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh.
-              Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
+            <p className="lead-24">
+              {story?story.data.abstract:''}
+          </p>
             <Link to={url('/about')} className="text-white">Read more</Link>
           </div>
           <div className="d-flex h-100 justify-content-end" style={{flex: 1.5}}>

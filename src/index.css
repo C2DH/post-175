@@ -74,6 +74,10 @@ a:-webkit-any-link {
   color: black!important;
 }
 
+.home-subtitle{
+  color: #9b9b9b;
+}
+
 #pics-container:after{
   content: "";
   position: absolute;
