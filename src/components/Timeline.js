@@ -54,7 +54,7 @@ class EventItem extends PureComponent {
         onMouseLeave={() => leaveEvent(event)}>
 
         {eventHeight && (
-          <g transform={`translate(${scale(event.startDate)}, ${y2-eventHeight- EVENT_RADIUS*3})`}>
+          <g className="timeline-g-click" transform={`translate(${scale(event.startDate)}, ${y2-eventHeight- EVENT_RADIUS*3})`}>
             <g transform={'translate(10, 0)'}>
                 <MultiText spacing={20} y={40+eventHeight} className="timeline-event-title" text={event.data.title} maxLen={25}></MultiText>
                 <text className="timeline-event-date">{event.data.start_date}</text>
@@ -65,7 +65,7 @@ class EventItem extends PureComponent {
         )}
 
         {!eventHeight && (
-          <g transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
+          <g className="timeline-g-click" transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
             <MultiText spacing={20} y={40} className="timeline-event-title" text={event.data.title} maxLen={25}></MultiText>
             <text className="timeline-event-date">{event.data.start_date}</text>
             <text dy={20} fill={color} className="timeline-event-category">{event.data.category_label}</text>

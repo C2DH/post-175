@@ -120,7 +120,7 @@ class Period extends PureComponent {
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
         <div
-          className="d-flex flex-column flex-1 cover"
+          className="d-flex flex-column flex-1 cover period-cover"
           style={{backgroundImage:`linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(29,29,29,1) 90%),url(${cover})`}}
           >
 
