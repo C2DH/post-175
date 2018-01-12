@@ -1,4 +1,5 @@
-import { fork, put, call } from 'redux-saga/effects'
+import { fork, put, call, select, takeEvery } from 'redux-saga/effects'
+import { setLanguage } from 'redux-i18n'
 import { takeLatestAndCancel } from './effects/take'
 import makeDocumentsListSaga from './hos/documents'
 import {
@@ -11,7 +12,11 @@ import {
   GET_STORY_LOADING,
   GET_STORY_FAILURE,
   GET_STORY_UNLOAD,
+  SET_SELECTED_LANG,
 } from '../actions'
+import {
+  getSelectedLang,
+} from '../selectors'
 import * as api from '../../api'
 
 function *handleGetStory({ payload }) {
@@ -24,7 +29,13 @@ function *handleGetStory({ payload }) {
   }
 }
 
+function *syncLangWi18n() {
+  const lang = yield select(getSelectedLang)
+  yield put(setLanguage(lang.param))
+}
+
 export default function* rootSaga() {
+  yield takeEvery(SET_SELECTED_LANG, syncLangWi18n)
   yield fork(
     takeLatestAndCancel,
     GET_STORY,
