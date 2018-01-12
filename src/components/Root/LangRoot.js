@@ -36,6 +36,7 @@ class LangRoot extends PureComponent {
   }
 
   render() {
+    const { lang } = this.props
     return (
       // <AnimatedSwitch
       //   atEnter={{ opacity: 1 }}

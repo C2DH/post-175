@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { localize } from '../localize'
 import { Link } from 'react-router-dom'
 import HomePics from '../components/HomePics'
 import classNames from 'classnames'
@@ -35,7 +36,7 @@ class Home extends PureComponent {
   }
 
   render() {
-    const { url, docs, langs, selectedLang, story } = this.props
+    const { url, docs, langs, selectedLang, story, t } = this.props
     return (
       <div className="h-100 d-flex flex-column bg-black">
         <div className='row no-gutters flex-1 w-100 '>
@@ -107,9 +108,9 @@ const mapStateToProps = state => ({
   langs: getLangs(state),
   selectedLang: getSelectedLang(state),
 })
-export default connect(mapStateToProps, {
+export default localize()(connect(mapStateToProps, {
   loadHomeDocs,
   unloadHomeDocs,
   loadStory,
   unloadStory,
-})(Home)
+})(Home))

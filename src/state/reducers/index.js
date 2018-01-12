@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { i18nState } from 'redux-i18n'
 import menuOpen from './menuOpen'
 import lang from './lang'
 import makeDocumentsList from './hor/documents'
@@ -15,6 +16,7 @@ import {
 } from '../actions'
 
 export default combineReducers({
+  i18nState,
   menuOpen,
   lang,
   timeline,
