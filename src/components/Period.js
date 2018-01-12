@@ -10,6 +10,7 @@ import {
   setDateTimeline,
 } from '../state/actions'
 import TopBar from './TopBar'
+import TimelineLegend from './TimelineLegend'
 import { TransitionMotion, spring, presets } from 'react-motion'
 
 const ArrowsButtons = ({ hasNext, hasPrev, onNext, onPrev }) => (
@@ -33,7 +34,15 @@ class Period extends PureComponent {
 
   state = {
     imageLoaded: false,
+    showLegend: false,
   }
+
+  toggleShowLegend = () => {
+    this.setState({
+      showLegend: !this.state.showLegend,
+    })
+  }
+
   goNext = () => {
     const { setDateTimeline, nextPeriod } = this.props
     setDateTimeline(nextPeriod.startDate)
@@ -119,53 +128,55 @@ class Period extends PureComponent {
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
         <TopBar title={'TIMELINE'} />
-        <div
-          className="d-flex flex-column flex-1 cover period-cover"
-          style={{backgroundImage:`linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(29,29,29,1) 90%),url(${cover})`}}
-          >
+        {this.state.showLegend
+        ? <TimelineLegend onClick={this.toggleShowLegend}/>
+        : <div
+            className="d-flex flex-column flex-1 cover period-cover"
+            style={{backgroundImage:`linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(29,29,29,1) 90%),url(${cover})`}}
+            >
+            <i className="material-icons m-l-auto pointer" onClick={this.toggleShowLegend}>info_outline</i>
+            <div className='flex-1 d-flex flex-column justify-content-end px-4'>
 
-          <div className='flex-1 d-flex flex-column justify-content-end px-4'>
 
+              <small className='period-label'>PERIODE</small>
+              <TransitionMotion
+                defaultStyles={this.getDefaultStyles()}
+                styles={this.getStyles()}
+                willLeave={this.periodWillLeave}
+                willEnter={this.periodWillEnter}
 
-            <small className='period-label'>PERIODE</small>
-            <TransitionMotion
-              defaultStyles={this.getDefaultStyles()}
-              styles={this.getStyles()}
-              willLeave={this.periodWillLeave}
-              willEnter={this.periodWillEnter}
+                >
 
-              >
+                {(styles)=><div style={{position:'relative',height:60}}>{styles.map(config => (
+                  <div key={config.key} className="w-100 period-years p-0"
+                    style={{position:'absolute', bottom: 0, left:`${config.style.x}px`}}
+                    >
+                    <h1 className="lead-48" style={{ position:'relative' }}>
+                    {config.data.period.startDate.getFullYear()}{' - '}{config.data.period.endDate.getFullYear() + 1}
+                    </h1>
+                  </div>
+                )
 
-              {(styles)=><div style={{position:'relative',height:60}}>{styles.map(config => (
-                <div key={config.key} className="w-100 period-years p-0"
-                  style={{position:'absolute', bottom: 0, left:`${config.style.x}px`}}
-                  >
-                  <h1 className="lead-48" style={{ position:'relative' }}>
-                  {config.data.period.startDate.getFullYear()}{' - '}{config.data.period.endDate.getFullYear() + 1}
-                  </h1>
-                </div>
-              )
+              )}</div>}
 
-            )}</div>}
+              </TransitionMotion>
 
-            </TransitionMotion>
+            </div>
 
-          </div>
-          <div className='flex-1 px-4 overflow-auto' style={{ minHeight: 300 }}>
+            <div className='flex-1 px-4 overflow-auto' style={{ minHeight: 300 }}>
 
-            <p className="period-description">{period.data.description}</p>
-          </div>
+              <p className="period-description">{period.data.description}</p>
+            </div>
 
-          <div className="w-100 h-100px d-flex flex-row-reverse" style={{zIndex:10}}>
-            <ArrowsButtons
-              onNext={this.goNext}
-              onPrev={this.goPrev}
-              hasNext={nextPeriod !== null}
-              hasPrev={prevPeriod !== null}
-            />
-          </div>
-
-        </div>
+            <div className="w-100 h-100px d-flex flex-row-reverse" style={{zIndex:10}}>
+              <ArrowsButtons
+                onNext={this.goNext}
+                onPrev={this.goPrev}
+                hasNext={nextPeriod !== null}
+                hasPrev={prevPeriod !== null}
+              />
+            </div>
+          </div>}
 
       </div>
     )
