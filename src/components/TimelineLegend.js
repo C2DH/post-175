@@ -19,7 +19,7 @@ export default class TimelineLegend extends PureComponent {
         <div className="d-flex flex-column overflow-auto h-100">
           <div className="w-100 p-3 bg-light d-inline-flex justify-content-between">
             <h3>Legend</h3>
-            <i className="material-icons" onClick={onClick}>close</i>
+            <i className="material-icons pointer" onClick={onClick}>close</i>
           </div>
           <div className="w-100 flex-1 p-3 bg-white font-14">
             <div className="d-flex flex-column flex-1">

@@ -76,7 +76,7 @@ class Home extends PureComponent {
               <div className="home-button p-3 border mb-1">
                 <Link to={url('/timeline')}>
                   <span className="text-light d-flex d-inline-flex justify-content-between align-items-center w-100 lead-24">
-                    <span className="ml-3">Discover the Timeline</span>
+                    <span className="ml-3">{t('home_button1')}</span>
                     <i className="material-icons mr-3 ml-2">arrow_forward</i>
                   </span>
                 </Link>
@@ -84,7 +84,7 @@ class Home extends PureComponent {
               <div className="home-button p-3 border mt-1">
                 <Link to={url('/map')}>
                   <span className="text-light d-flex d-inline-flex justify-content-between align-items-center w-100 lead-24">
-                    <span className="ml-3">Explore the Map</span>
+                    <span className="ml-3">{t('home_button2')}</span>
                     <i className="material-icons mr-3 ml-2">arrow_forward</i>
                   </span>
                 </Link>
@@ -93,7 +93,7 @@ class Home extends PureComponent {
           </div>
         </div>
         <div className='row no-gutters w-100 fixed-bottom d-flex align-items-center bg-opaque-black' style={{height: 60}}>
-          <p className="m-0 pl-3 font-14">A project by the Luxembourg Centre for the Contemporary and Digital History (CD2H)</p>
+          <p className="m-0 pl-3 font-14">{t('home_footer')}</p>
         </div>
       </div>
     )

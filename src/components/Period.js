@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { get } from 'lodash'
 import { connect } from 'react-redux'
+import { localize } from '../localize'
 import {
   getTimelineCurrentPeriod,
   getTimelineNextPeriod,
@@ -123,7 +124,7 @@ class Period extends PureComponent {
   }
 
   render () {
-    const { period, nextPeriod, prevPeriod, style } = this.props
+    const { period, nextPeriod, prevPeriod, style, t } = this.props
     const cover = this.state.imageLoaded ? get(period, 'documents[0].attachment') : get(period, 'documents[0].snapshot')
     return (
       <div className="col-md-3 d-flex flex-column" style={style}>
@@ -138,7 +139,7 @@ class Period extends PureComponent {
             <div className='flex-1 d-flex flex-column justify-content-end px-4'>
 
 
-              <small className='period-label'>PERIODE</small>
+              <small className='period-label text-uppercase'>{t('timeline_periode')}</small>
               <TransitionMotion
                 defaultStyles={this.getDefaultStyles()}
                 styles={this.getStyles()}
@@ -188,6 +189,7 @@ const mapStateToProps = state => ({
   nextPeriod: getTimelineNextPeriod(state),
   prevPeriod: getTimelinePrevPeriod(state),
 })
-export default connect(mapStateToProps, {
+
+export default localize()(connect(mapStateToProps, {
   setDateTimeline,
-})(Period)
+})(Period))
