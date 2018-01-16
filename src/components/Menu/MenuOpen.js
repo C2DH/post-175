@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
+import { localize } from '../../localize'
 import { Link, withRouter } from 'react-router-dom'
 import { getMakeLangUrl, getLangs, getSelectedLang} from '../../state/selectors'
 
@@ -13,7 +14,7 @@ class MenuOpen extends PureComponent {
   }
 
   render() {
-    const { location, onRequestClose, url, langs, selectedLang, style } = this.props
+    const { location, onRequestClose, url, langs, selectedLang, style, t } = this.props
     const { pathname } = location
 
     const subDict = {
@@ -33,7 +34,7 @@ class MenuOpen extends PureComponent {
             </button>
           </div>
           <Link to={url('/')} className="menu-link" onClick={onRequestClose}>
-            <h1 className="display-4 text-light">175 <br /> Joer Post</h1>
+            <h1 className="display-4 text-light">175 <br /> {t('menu_joerpost')}</h1>
           </Link>
 
           <p className="text-grey" style={{fontSize: 18}}>{subDict[selectedLang.code]}</p>
@@ -47,28 +48,28 @@ class MenuOpen extends PureComponent {
                 <Link to={url('/')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/',
-                  })}>Home</h3>
+                  })}>{t('menu_home')}</h3>
                 </Link>
               </div>
               <div className='pb-2'>
                 <Link to={url('/map')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/map',
-                  })}>Map</h3>
+                  })}>{t('menu_map')}</h3>
                 </Link>
               </div>
               <div className='pb-2'>
                 <Link to={url('/timeline')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/timeline',
-                  })}>Timeline</h3>
+                  })}>{t('menu_timeline')}</h3>
                 </Link>
               </div>
               <div>
                 <Link to={url('/about')} className="menu-link" onClick={onRequestClose}>
                   <h3 className={classNames("text-light font-weight-light", {
                     'text-underlined': pathname === '/about',
-                  })}>About</h3>
+                  })}>{t('menu_about')}</h3>
                 </Link>
               </div>
             </div>
@@ -100,4 +101,4 @@ const mapStateToPros = state => ({
   langs: getLangs(state),
   selectedLang: getSelectedLang(state),
 })
-export default withRouter(connect(mapStateToPros)(MenuOpen))
+export default withRouter(connect(mapStateToPros)(localize()(MenuOpen)))

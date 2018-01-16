@@ -70,14 +70,20 @@ export const getPlacesInDate = createSelector(
 )
 
 export const getMapOverPlace = createSelector(
+  getMapTimelineCurrentDate,
   state => state.map.overPlace,
   state => state.places.data,
   getSelectedLangCode,
-  (id, data, langCode) => {
+  (currentDate, id, data, langCode) => {
     if (id === null) {
       return null
     }
-    return mapPlace(translateDoc(data[id], langCode))
+    const place =  mapPlace(translateDoc(data[id], langCode))
+    return {
+      ...place,
+      open: place.endDate === null || place.endDate > currentDate,
+    }
+
   }
 )
 

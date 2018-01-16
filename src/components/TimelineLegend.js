@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { localize } from '../localize'
 
 const points = [
   { color: '#ed6505', description: 'event'},
@@ -11,9 +12,9 @@ const points = [
   { color: '#13d436', description: 'technology'},
 ]
 
-export default class TimelineLegend extends PureComponent {
+class TimelineLegend extends PureComponent {
   render() {
-  const { onClick } = this.props
+  const { onClick, t } = this.props
     return (
       <div className={'d-flex flex-column flex-1'}>
         <div className="d-flex flex-column overflow-auto h-100">
@@ -28,7 +29,7 @@ export default class TimelineLegend extends PureComponent {
                   <svg width={30} height={30}>
                     <circle cx="10" cy="10" r={9} fill={p.color} />
                   </svg>
-                  <span className="font-12">{p.description}</span>
+                  <span className="font-12">{t(p.description)}</span>
                 </div>
               ))}
             </div>
@@ -38,3 +39,5 @@ export default class TimelineLegend extends PureComponent {
     )
   }
 }
+
+export default localize()(TimelineLegend)

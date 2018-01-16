@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { get } from 'lodash'
 import { connect } from 'react-redux'
+import { localize } from '../localize'
 import { clearOverPlace } from '../state/actions'
 
 const colors = {
@@ -13,9 +14,9 @@ const colors = {
 }
 
 
-export default class MapTooltip extends PureComponent {
+class MapTooltip extends PureComponent {
   render() {
-    const { place, style } = this.props
+    const { place, style, t } = this.props
     return (
       <div style={{...style}}
         className='d-flex flex-row'
@@ -25,8 +26,8 @@ export default class MapTooltip extends PureComponent {
         />
         <div className="h-100 bg-black p-2">
           {place.open
-            ? <p className="m-0 font-12" style={colors.green}>Open</p>
-            : <p className="m-0 font-12" style={colors.yellow}>Closed</p>}
+            ? <p className="m-0 font-12" style={colors.green}>{t('map_mapTooltipOpen')}</p>
+            : <p className="m-0 font-12" style={colors.yellow}>{t('map_mapTooltipClose')}</p>}
           <p style={{fontSize: 18, color: '#d4d4d4', margin: 0}}>{place.data.title}</p>
           <div className="w-100 d-inline-flex flex-1">
             <div className="h-100" style={{paddingTop: 2, paddingRight: 3}}>
@@ -38,9 +39,9 @@ export default class MapTooltip extends PureComponent {
           </div>
           <span className="font-12">
             {place.data.start_date &&
-            <span>From: {new Date(place.data.start_date).getFullYear()}</span>}
+            <span>{t('map_mapTooltipFrom')}: {new Date(place.data.start_date).getFullYear()}</span>}
             {place.data.end_date &&
-             <span> - To: {new Date(place.data.end_date).getFullYear()}</span>}
+             <span> - {t('map_mapTooltipTo')}: {new Date(place.data.end_date).getFullYear()}</span>}
           </span>
 
         </div>
@@ -48,3 +49,5 @@ export default class MapTooltip extends PureComponent {
     )
   }
 }
+
+export default localize()(MapTooltip)

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 import { get, head } from 'lodash'
+import { localize } from '../localize'
 import { TransitionMotion, spring } from 'react-motion'
 import { StaticMap } from 'react-map-gl'
 import PlaceOpeningTimeline from './PlaceOpeningTimeline'
@@ -92,7 +93,7 @@ class LegendDetail extends PureComponent {
   }
 
   render () {
-    const { place, style } = this.props
+    const { place, style, t } = this.props
     const { onImage } = this.state
     const selectedDocument = this.getSelectedDocument()
     const image = get(selectedDocument, 'attachment')
@@ -135,7 +136,7 @@ class LegendDetail extends PureComponent {
 
         </div>
         <div className="w-100 p-3 bg-light" style={{minHeight: 250}}>
-          <p className="font-12 mb-0">Office</p>
+          <p className="font-12 mb-0">{t('map_legendDetail')}</p>
           <h3>{place.data.title}</h3>
           <p className="font-14 text-muted">
             <i className="material-icons font-12">place</i> {place.data.address}
@@ -159,4 +160,4 @@ class LegendDetail extends PureComponent {
   }
 }
 
-export default LegendDetail
+export default localize()(LegendDetail)

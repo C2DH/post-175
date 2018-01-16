@@ -46,7 +46,7 @@ class Home extends PureComponent {
           <div className="d-flex h-100 home-flex-1 flex-column">
             <div>
               <h1>
-                175 <span style={{fontWeight: 300}}>Joer Post</span>
+                175 <span style={{fontWeight: 300}}>{t('home_joerpost')}</span>
             </h1>
               <p className="home-subtitle">
                 {story?story.data.subtitle:''}
@@ -69,7 +69,7 @@ class Home extends PureComponent {
             <p className="lead-24">
               {story?story.data.abstract:''}
           </p>
-            <Link to={url('/about')} className="text-white">Read more</Link>
+            <Link to={url('/about')} className="text-white">{t('home_readmore')}</Link>
           </div>
           <div className="d-flex h-100 justify-content-end" style={{flex: 1.5}}>
             <div className="d-flex flex-column">
