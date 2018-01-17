@@ -104,8 +104,8 @@ class MapPage extends PureComponent {
       latitude: place.coordinates[1],
       longitude: place.coordinates[0],
       zoom: 13,
-      // transitionInterpolator: new LinearInterpolator(),
-      // transitionDuration: 2000
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionDuration: 1000,
     })
   }
 
@@ -149,9 +149,9 @@ class MapPage extends PureComponent {
           <div className='d-flex flex-1 w-100 flex-column bg-darkgrey' style={{ overflow: 'hidden' }} ref={(node)=>this.mapContainer = node}>
               { width > 0 && (
                 <ReactMapGL
-                  transitionDuration={1000}
-                  transitionInterpolator={new FlyToInterpolator()}
                   {...viewport}
+                  maxZoom={12}
+                  minZoom={7.5}
                   mapboxApiAccessToken='pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg'
                   mapStyle="mapbox://styles/giorgiouboldi/cjalcurkr00os2soczuclhjxl"
                   height={height}

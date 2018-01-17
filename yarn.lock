@@ -3398,7 +3398,7 @@ ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-immutable@*:
+immutable@^3.8.2:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
 
@@ -4440,9 +4440,9 @@ math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
 
-"math.gl@>= 1.0.0-alpha.8", math.gl@^1.0.0-alpha.7:
-  version "1.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/math.gl/-/math.gl-1.0.0-alpha.8.tgz#51dd8d03e5c50096851e8a268d888c1eda766cd1"
+math.gl@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/math.gl/-/math.gl-1.0.2.tgz#b714c0d0f68b787c90ba026dad38e104a3e004d9"
   dependencies:
     gl-mat4 "^1.1.4"
     gl-quat "^1.0.0"
@@ -4580,9 +4580,9 @@ minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
-mjolnir.js@>=1.0.0-alpha.1:
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/mjolnir.js/-/mjolnir.js-1.0.0-alpha.2.tgz#c7fed2b660dc8b2cf40977b5a38d6a02c0f93d2a"
+mjolnir.js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mjolnir.js/-/mjolnir.js-1.0.0.tgz#881eaac896f2c2693bc39f5127b4fabe99ff56fb"
   dependencies:
     hammerjs "^2.0.8"
 
@@ -5662,18 +5662,18 @@ react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
-react-map-gl@3.2.0-alpha.3:
-  version "3.2.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-3.2.0-alpha.3.tgz#20831e783129bb31e2e2631d9cbf3610a776fb08"
+react-map-gl@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-3.2.0.tgz#44871578c7ea3094d387ce65fcac3a3e2099b445"
   dependencies:
     babel-runtime "^6.23.0"
     bowser "^1.2.0"
-    immutable "*"
+    immutable "^3.8.2"
     mapbox-gl "0.42.2"
-    math.gl ">= 1.0.0-alpha.8"
-    mjolnir.js ">=1.0.0-alpha.1"
+    math.gl "^1.0.0"
+    mjolnir.js "^1.0.0"
     prop-types "^15.5.7"
-    viewport-mercator-project "^5.0.0-alpha.1"
+    viewport-mercator-project "^5.0.0"
 
 react-motion@^0.5.0, react-motion@^0.5.2:
   version "0.5.2"
@@ -7063,11 +7063,11 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-viewport-mercator-project@^5.0.0-alpha.1:
-  version "5.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/viewport-mercator-project/-/viewport-mercator-project-5.0.0-alpha.1.tgz#637b849517f4fc3898028a89210d244b412011e0"
+viewport-mercator-project@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/viewport-mercator-project/-/viewport-mercator-project-5.0.0.tgz#d18709dad652581108a6dd58f320409491d40982"
   dependencies:
-    math.gl "^1.0.0-alpha.7"
+    math.gl "^1.0.0"
 
 vlq@^0.2.1:
   version "0.2.3"
