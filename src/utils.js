@@ -1,3 +1,4 @@
+import qs from 'query-string'
 import { EVENT_COLORS } from './consts'
 
 export const getEventColor = event => {
@@ -7,4 +8,18 @@ export const getEventColor = event => {
     return 'white'
   }
   return color
+}
+
+export const getQsSafeYear = location => {
+  const yearQs = qs.parse(location.search)['year']
+  return Math.abs(parseInt(yearQs, 10))
+}
+
+export const makeUrlWithYear = (location, year) => {
+  const qsAsObject = qs.parse(location.search)
+  const newQs = qs.stringify({
+    ...qsAsObject,
+    year
+  })
+  return `${location.pathname}?${newQs}`
 }

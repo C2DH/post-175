@@ -12,6 +12,7 @@ import {
   clearOverPlace,
   loadStory,
   unloadStory,
+  setDateTimelineMap,
 } from '../state/actions'
 import {
   getPlacesInDate,
@@ -19,7 +20,12 @@ import {
   getMapSelectedPlace,
   getMapTimelineCurrentDate,
   getStory,
+  getPlacesExtent,
 } from '../state/selectors'
+import {
+  getQsSafeYear,
+  makeUrlWithYear,
+} from '../utils'
 import TimelineNavigationMap from '../components/TimelineNavigationMap'
 import MobileAlert from '../components/MobileAlert'
 import MapTooltip from '../components/MapTooltip'
@@ -49,8 +55,33 @@ class MapPage extends PureComponent {
     window.addEventListener('resize', this.setMapSize, false)
   }
 
-  setMapSize = () => {
-    this.setState({width: this.mapContainer.offsetWidth, height: this.mapContainer.offsetHeight - 50})
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.extent !== nextProps.extent &&
+      nextProps.extent && !nextProps.currentDateRaw
+    ) {
+      // Init current date from query string
+      const year = getQsSafeYear(this.props.location)
+      const { extent } = nextProps
+      if (year && year >= extent[0].getFullYear() && year <= extent[1].getFullYear()) {
+        this.props.setDateTimelineMap(new Date(`${year}`))
+      } else {
+        this.props.history.replace(makeUrlWithYear(
+          this.props.location,
+          nextProps.currentDate.getFullYear()
+        ))
+      }
+    } else if (
+      nextProps.currentDate && this.props.currentDate &&
+      this.props.currentDate.getFullYear() !== nextProps.currentDate.getFullYear()
+      && this.props.currentDateRaw
+    ) {
+      // Set new year in querystring when date change
+      this.props.history.replace(makeUrlWithYear(
+        this.props.location,
+        nextProps.currentDate.getFullYear()
+      ))
+    }
   }
 
   componentWillUnmount() {
@@ -58,6 +89,13 @@ class MapPage extends PureComponent {
     this.props.unloadPlaces()
     this.props.unloadMap()
     window.removeEventListener('resize', this.setMapSize)
+  }
+
+  setMapSize = () => {
+    this.setState({
+      width: this.mapContainer.offsetWidth,
+      height: this.mapContainer.offsetHeight - 50
+    })
   }
 
   selectPlace = place => {
@@ -98,7 +136,6 @@ class MapPage extends PureComponent {
       currentDate,
       story,
     } = this.props
-    console.log('--->', overPlace)
 
     return (
       <div className="h-100 d-flex flex-column">
@@ -210,6 +247,8 @@ const mapStateToProps = state => ({
   overPlace: getMapOverPlace(state),
   selectedPlace: getMapSelectedPlace(state),
   currentDate: getMapTimelineCurrentDate(state),
+  currentDateRaw: state.map.currentDate,
+  extent: getPlacesExtent(state),
 })
 export default connect(mapStateToProps, {
   loadPlaces,
@@ -221,4 +260,5 @@ export default connect(mapStateToProps, {
   clearOverPlace,
   loadStory,
   unloadStory,
+  setDateTimelineMap,
 })(MapPage)

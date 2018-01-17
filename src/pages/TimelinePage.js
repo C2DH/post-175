@@ -17,7 +17,13 @@ import {
   getSelectedEvent,
   getTimelinePrevEvent,
   getTimelineNextEvent,
+  getEventsExtent,
+  getTimelineCurrentDate
 } from '../state/selectors'
+import {
+  getQsSafeYear,
+  makeUrlWithYear,
+} from '../utils'
 import MobileAlert from '../components/MobileAlert'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
@@ -29,6 +35,34 @@ class TimelinePage extends PureComponent {
   componentDidMount() {
     this.props.loadEvents()
     this.props.loadPeriods()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Init current date from query string
+    if (
+      this.props.extent !== nextProps.extent &&
+      nextProps.extent && !nextProps.currentDateRaw
+    ) {
+      const year = getQsSafeYear(this.props.location)
+      const { extent } = nextProps
+      if (year && year >= extent[0].getFullYear() && year <= extent[1].getFullYear()) {
+        this.props.setDateTimeline(new Date(`${year}`))
+      } else {
+        this.props.history.replace(makeUrlWithYear(
+          this.props.location,
+          nextProps.currentDate.getFullYear()
+        ))
+      }
+    } else if (
+      nextProps.currentDate && this.props.currentDate &&
+      this.props.currentDate.getFullYear() !== nextProps.currentDate.getFullYear()
+      && this.props.currentDateRaw
+    ) {
+      this.props.history.replace(makeUrlWithYear(
+        this.props.location,
+        nextProps.currentDate.getFullYear()
+      ))
+    }
   }
 
   componentWillUnmount() {
@@ -111,6 +145,9 @@ const mapStateToProps = state => ({
   selectedEvent: getSelectedEvent(state),
   nextEvent: getTimelineNextEvent(state),
   prevEvent: getTimelinePrevEvent(state),
+  extent: getEventsExtent(state),
+  currentDate: getTimelineCurrentDate(state),
+  currentDateRaw: state.timeline.currentDate,
 })
 export default connect(mapStateToProps, {
   loadEvents,
