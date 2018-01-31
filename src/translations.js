@@ -71,6 +71,6 @@ export default {
     transport: 'Transport',
     building: 'Bâtiments',
     technology: 'Technologie',
-    partners: 'Équipe',
+    partners: 'Collaborateurs',
   }
 }
