@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { localize } from '../localize'
 import {
   loadStory,
   unloadStory,
@@ -19,7 +20,7 @@ class About extends PureComponent {
   }
 
   render() {
-    const { story } = this.props
+    const { story, t } = this.props
     return (
       <div className='h-100 d-flex flex-column'>
         <TopBar />
@@ -28,13 +29,17 @@ class About extends PureComponent {
             <h1 className='text-light font-weight-light text-capitalize'>  {story?story.data.title:''}</h1>
           </div>
           <div className='bg-dangerz flex-2 px-5'>
-            <p>
+            <p className="about-text">
               {story?story.data.abstract:''}
             </p>
           </div>
           <div className='bg-warningz flex-1'>
-            <div>Partners</div>
-            <div>Credits</div>
+            <div><h6>{t('partners')}</h6></div>
+            <div className="d-flex flex-column">
+              <img className="about-logo" src="/img/unilu.jpg"></img>
+              <img className="about-logo" src="/img/c2dh.jpg"></img>
+              <img className="about-logo rounded-circle" src="/img/post.png"></img>
+            </div>
           </div>
 
         </div>
@@ -46,7 +51,8 @@ class About extends PureComponent {
 const mapStateToProps = state => ({
   story: getStory(state),
 })
-export default connect(mapStateToProps, {
+
+export default localize()(connect(mapStateToProps, {
   loadStory,
   unloadStory,
-})(About)
+})(About))

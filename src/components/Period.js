@@ -124,18 +124,18 @@ class Period extends PureComponent {
   }
 
   render () {
-    const { period, nextPeriod, prevPeriod, style, t } = this.props
+    const { period, nextPeriod, prevPeriod, style, t, story } = this.props
     const cover = this.state.imageLoaded ? get(period, 'documents[0].attachment') : get(period, 'documents[0].snapshot')
     return (
-      <div className="col-md-3 d-flex flex-column" style={style}>
-        <TopBar title={'TIMELINE'} />
+      <div className="col-md-3 d-flex flex-column" style={{...style,height: '100vh'}}>
+        <TopBar title={t('menu_timeline')} />
         {this.state.showLegend
-        ? <TimelineLegend onClick={this.toggleShowLegend}/>
+        ? <TimelineLegend onClick={this.toggleShowLegend} story={story}/>
         : <div
             className="d-flex flex-column flex-1 cover period-cover"
             style={{backgroundImage:`linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(29,29,29,1) 90%),url(${cover})`}}
             >
-            <i className="material-icons m-l-auto pointer" onClick={this.toggleShowLegend}>info_outline</i>
+            <i className="material-icons m-l-auto mt-3 mr-3 pointer" onClick={this.toggleShowLegend}>info_outline</i>
             <div className='flex-1 d-flex flex-column justify-content-end px-4'>
 
 

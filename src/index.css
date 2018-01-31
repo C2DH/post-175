@@ -107,6 +107,16 @@ a:-webkit-any-link {
   height: auto;
 }
 
+.home-link{
+  color: white;
+  text-decoration: underline;
+}
+
+.home-link:hover{
+  color: white;
+  text-decoration: underline;
+}
+
 #pics-container:after{
   content: "";
   position: absolute;
@@ -171,6 +181,23 @@ a:-webkit-any-link {
 /* custom components styles */
 .timeline-nav {
   user-select: none;
+}
+
+.timeline-legend-intro{
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.timeline-legend{
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.timeline-legend-close{
+  position: absolute;
+  z-index: 999;
+  top:15px;
+  right: 15px;
 }
 
 .timeline-nav-tick {
@@ -244,6 +271,7 @@ a:-webkit-any-link {
 .mapboxgl-popup-content {
   pointer-events: none;
 }*/
+
 
 .mapboxgl-ctrl-attrib {
   pointer-events: none;
@@ -341,6 +369,33 @@ a:-webkit-any-link {
 
 .text-underlined {
   text-decoration: underline;
+}
+
+.menu-logo-img{
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  width: 90%;
+}
+
+.menu-logo-cont{
+  flex: 0 1 33%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin: 5px;
+}
+
+.about-logo{
+  max-width: 33%;
+  height: auto;
+  margin: 10px 0;
+}
+
+.about-text{
+  font-size: 1.25rem;
+  height: calc(100vh - 57px - 48px);
+  overflow: auto;
 }
 
 @media (min-width: 576px) {

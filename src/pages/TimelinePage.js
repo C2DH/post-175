@@ -10,8 +10,11 @@ import {
   clearSelectedEvent,
   selectEvent,
   setDateTimeline,
+  loadStory,
+  unloadStory,
 } from '../state/actions'
 import {
+  getStory,
   getEvents,
   getPeriods,
   getSelectedEvent,
@@ -35,6 +38,7 @@ class TimelinePage extends PureComponent {
   componentDidMount() {
     this.props.loadEvents()
     this.props.loadPeriods()
+    this.props.loadStory('timeline')
   }
 
   componentWillReceiveProps(nextProps) {
@@ -69,6 +73,7 @@ class TimelinePage extends PureComponent {
     this.props.unloadEvents()
     this.props.unloadPeriods()
     this.props.unloadTimeline()
+    this.props.unloadStory()
   }
 
   goNext = () => {
@@ -84,14 +89,14 @@ class TimelinePage extends PureComponent {
   }
 
   render() {
-    const { events, periods, selectedEvent, nextEvent, prevEvent, clearSelectedEvent } = this.props
+    const { events, periods, selectedEvent, nextEvent, prevEvent, clearSelectedEvent, story } = this.props
     return (
       <div className='h-100 d-flex flex-column'>
         <MobileAlert />
         <div className='row no-gutters flex-1'>
           {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (
-              <Period style={{opacity:o}}/>
+              <Period style={{opacity:o}} story={story}/>
             )}
           </Motion> }
           {events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
@@ -148,6 +153,7 @@ const mapStateToProps = state => ({
   extent: getEventsExtent(state),
   currentDate: getTimelineCurrentDate(state),
   currentDateRaw: state.timeline.currentDate,
+  story: getStory(state),
 })
 export default connect(mapStateToProps, {
   loadEvents,
@@ -158,4 +164,6 @@ export default connect(mapStateToProps, {
   setDateTimeline,
   clearSelectedEvent,
   selectEvent,
+  loadStory,
+  unloadStory,
 })(TimelinePage)

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { find, head, get } from 'lodash'
 import { getEventColor } from '../utils'
+import { localize } from '../localize'
 
 const CloseBtn = ({onClose}) => (
   <div className="position-fixed pt-3 pr-3" style={{top: 0, right:0}}>
@@ -22,23 +23,23 @@ const EventType = ({ event }) => {
   )
 }
 
-const EventsControl = ({hasPrev, hasNext, goNext, goPrev}) => (
+const EventsControl = ({hasPrev, hasNext, goNext, goPrev, t}) => (
   <div className="w-100 d-inline-flex justify-content-between">
     <div
-      className="p1 d-inline-flex event-modal-control pointer"
+      className="p1 d-inline-flex  align-items-center event-modal-control pointer"
       onClick={goPrev}
       style={!hasPrev ? {pointerEvents: 'none', opacity: 0.8} : undefined}
       >
-      <i className="material-icons">arrow_back</i>
-      <span className="pb-2 ml-2">Previous event</span>
+      <i className="pb-2 material-icons">arrow_back</i>
+      <span className="pb-2 ml-2">{t('timeline_prev_event')}</span>
     </div>
     <div
-      className="p1 d-inline-flex event-modal-control pointer"
+      className="p1 d-inline-flex  align-items-center event-modal-control pointer"
       onClick={goNext}
       style={!hasNext ? {pointerEvents: 'none', opacity: 0.8} : undefined}
       >
-      <span className="pb-2 mr-2">Next event</span>
-      <i className="material-icons">arrow_forward</i>
+      <span className="pb-2 mr-2 text-right">{t('timeline_next_event')}</span>
+      <i className="pb-2 material-icons">arrow_forward</i>
     </div>
   </div>
 )
@@ -59,7 +60,7 @@ class EventModal extends PureComponent {
   }
 
   render() {
-    const { event, onClose, hasPrev, hasNext, goNext, goPrev, style } = this.props
+    const { event, onClose, hasPrev, hasNext, goNext, goPrev, style,t } = this.props
 
     // Take only docs \w snapshot
     const displayDocs = event.documents.filter(d => d.snapshot)
@@ -89,6 +90,7 @@ class EventModal extends PureComponent {
                   hasPrev={hasPrev}
                   goNext={goNext}
                   goPrev={goPrev}
+                  t={t}
                 />
               </div>
 
@@ -136,4 +138,4 @@ class EventModal extends PureComponent {
   }
 }
 
-export default EventModal
+export default localize()(EventModal)

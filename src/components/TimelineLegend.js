@@ -14,26 +14,24 @@ const points = [
 
 class TimelineLegend extends PureComponent {
   render() {
-  const { onClick, t } = this.props
+  const { onClick, t , story} = this.props
     return (
-      <div className={'d-flex flex-column flex-1'}>
-        <div className="d-flex flex-column overflow-auto h-100">
-          <div className="w-100 p-3 bg-light d-inline-flex justify-content-between">
-            <h3>Legend</h3>
-            <i className="material-icons pointer" onClick={onClick}>close</i>
-          </div>
-          <div className="w-100 flex-1 p-3 bg-white font-14">
-            <div className="d-flex flex-column flex-1">
-              {points.map((p, i) => (
-                <div className="d-inline-flex" key={i}>
-                  <svg width={30} height={30}>
-                    <circle cx="10" cy="10" r={9} fill={p.color} />
-                  </svg>
-                  <span className="font-12">{t(p.description)}</span>
-                </div>
-              ))}
+      <div className="d-flex flex-column flex-1 bg-white" style={{minHeight: '0', position:'relative'}}>
+        <i className="material-icons pointer timeline-legend-close" onClick={onClick}>close</i>
+        <div className="timeline-legend-intro d-flex flex-1 p-3 mt-4">
+          <p>
+            {story?story.data.abstract:''}
+          </p>
+        </div>
+        <div className="timeline-legend d-flex flex-column p-3 font-14">
+          {points.map((p, i) => (
+            <div className="d-inline-flex" key={i}>
+              <svg width={30} height={30}>
+                <circle cx="10" cy="10" r={9} fill={p.color} />
+              </svg>
+              <span className="font-12">{t(p.description)}</span>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     )

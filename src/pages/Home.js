@@ -93,7 +93,7 @@ class Home extends PureComponent {
           </div>
         </div>
         <div className='row no-gutters w-100 fixed-bottom d-flex align-items-center bg-opaque-black' style={{height: 60}}>
-          <p className="m-0 pl-3 font-14">{t('home_footer')}</p>
+          <p className="m-0 pl-3 font-14">{t('home_footer')} - <a className="home-link" href="https://www.c2dh.uni.lu" target="_black">C<sup>2</sup>DH</a></p>
         </div>
       </div>
     )

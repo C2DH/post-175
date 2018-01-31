@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { defaultMemoize } from 'reselect'
 import { scaleTime } from 'd3-scale'
 import { getPlacesRealExtent } from '../state/selectors'
+import { localize } from '../localize'
 
 const HEIGHT = 70
 const END_BAR_HEIGHT = 12
@@ -32,6 +33,7 @@ class PlaceOpeningTimeline extends PureComponent {
   render() {
     const { width } = this.state
     const { extent } = this.props
+    const { t } = this.props
     const scale = getScale(extent, width, 20)
     const range = scale.range()
 
@@ -98,7 +100,7 @@ class PlaceOpeningTimeline extends PureComponent {
             y={(TIMELINE_Y) - 25}
             className='opening-timeline-text'
           >
-            <tspan x={scale(openDate) - 20}>Opening</tspan>
+            <tspan x={scale(openDate) - 20}>{t('map_mapTooltipOpen')}</tspan>
             <tspan x={scale(openDate) - 15} dy={12}>{openDate.getFullYear()}</tspan>
           </text>
 
@@ -107,7 +109,7 @@ class PlaceOpeningTimeline extends PureComponent {
             y={(TIMELINE_Y) - 25}
             className='opening-timeline-text'
           >
-            <tspan x={scale(closeDate) - 15} >Closed</tspan>
+            <tspan x={scale(closeDate) - 20} >{t('map_mapTooltipClose')}</tspan>
             <tspan x={scale(closeDate) - 10} dy={12}>{closeDate.getFullYear()}</tspan>
           </text>}
 
@@ -120,4 +122,4 @@ class PlaceOpeningTimeline extends PureComponent {
 const mapStateToProps = state => ({
   extent: getPlacesRealExtent(state),
 })
-export default connect(mapStateToProps)(PlaceOpeningTimeline)
+export default localize()(connect(mapStateToProps)(PlaceOpeningTimeline))

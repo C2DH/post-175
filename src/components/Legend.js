@@ -3,6 +3,7 @@ import TopBar from './TopBar'
 import LegendIntro from './LegendIntro'
 import LegendDetail from './LegendDetail'
 import { Motion, TransitionMotion, spring } from 'react-motion'
+import { localize } from '../localize'
 
 const CloseLegendDetailBtn = ({onclick}) => (
   <div className="position-absolute legend-close-btn" style={{ zIndex: 999 }}>
@@ -15,10 +16,10 @@ const CloseLegendDetailBtn = ({onclick}) => (
 class Legend extends PureComponent {
 
   render () {
-    const { story, selectedPlace, onClose } = this.props
+    const { story, selectedPlace, onClose, t } = this.props
     return (
       <div className="col-md-3 d-flex flex-column" style={{ backgroundColor: 'white' }}>
-        <TopBar title={'MAP'} />
+        <TopBar title={t('menu_map')} />
 
         {selectedPlace &&
           <CloseLegendDetailBtn onclick={onClose} />}
@@ -51,4 +52,4 @@ class Legend extends PureComponent {
   }
 }
 
-export default Legend
+export default localize()(Legend)

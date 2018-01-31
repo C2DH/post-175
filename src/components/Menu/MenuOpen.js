@@ -22,6 +22,12 @@ class MenuOpen extends PureComponent {
       'de_DE':'Luxemburg verbinden'
     }
 
+    const logos = [
+      '/img/unilu.jpg',
+      '/img/c2dh.jpg',
+      '/img/post.png'
+    ]
+
     return (
       <div
         style={style}
@@ -87,8 +93,14 @@ class MenuOpen extends PureComponent {
               ))}
             </div>
           </div>
-          <div className="bg-light h-100px">
-            {/* Logos partners */}
+          <div className="d-flex bg-white h-100px">
+            {logos.map((logo,i) => (
+              <div
+                key={i}
+                className="menu-logo-cont">
+                <img className="menu-logo-img" src={logo}></img>
+              </div>
+            ))}
           </div>
         </div>
       </div>
