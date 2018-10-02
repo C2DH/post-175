@@ -8,6 +8,7 @@ import { DraggableCore } from 'react-draggable'
 import { Motion, spring, presets } from 'react-motion'
 import { getEventColor } from '../utils'
 
+const BOTTOM_HEIGHT = 80
 const NAVIGATION_PADDING = 30
 const CURSOR_RADIUS = NAVIGATION_PADDING / 2
 
@@ -125,6 +126,8 @@ class TimelineNavigationControlled extends PureComponent {
       currentDate,
       onDateChange,
       cursorRadius,
+      renderTop,
+      bottomHeight,
     } = this.props
 
     const scale = getScale(extent, width, padding)
@@ -132,10 +135,14 @@ class TimelineNavigationControlled extends PureComponent {
 
     return (
       <div
-        className={classNames('timeline-nav bg-dark w-100 d-flex flex-column', className)}
-        style={{ height: 100, ...style }}>
+        className={classNames('timeline-nav w-100 d-flex flex-column', className)}
+        style={style}>
 
-        {children && children({ scale, ticks, width, height })}
+        {renderTop && renderTop({ scale, width })}
+
+        <div style={{ height: bottomHeight }} className='bg-dark d-flex flex-column'>
+          {children && children({ scale, ticks, width, height: bottomHeight })}
+        </div>
 
         <div className="position-absolute">
           <TimelineCursor
@@ -156,6 +163,8 @@ class TimelineNavigationControlled extends PureComponent {
 TimelineNavigationControlled.defaultProps = {
   padding: NAVIGATION_PADDING,
   cursorRadius: CURSOR_RADIUS,
+  // The height of black timeline section \w events and ticks...
+  bottomHeight: BOTTOM_HEIGHT,
 }
 
 export default TimelineNavigationControlled

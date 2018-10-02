@@ -42,6 +42,7 @@ class TimelinePage extends PureComponent {
     this.props.loadStory('timeline')
   }
 
+  // TODO: Debounce for perforamance issues
   componentWillReceiveProps(nextProps) {
     // Init current date from query string
     if (
@@ -101,12 +102,13 @@ class TimelinePage extends PureComponent {
               <Period style={{opacity:o}} story={story}/>
             )}
           </Motion> } */}
-          {events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
+          {events && periods && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (
               <Timeline style={{opacity:o}} className='w-100' />
             )}
           </Motion> }
 
+          {/* TODO: Move in another component perforamance issues  */}
           <TransitionMotion
             defaultStyles={selectedEvent ? [{
               key: 'eventModal',

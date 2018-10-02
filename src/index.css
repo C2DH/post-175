@@ -21,6 +21,17 @@ body {
 .with-sidemenu {
   padding-left: 50px;
 }
+.period-box {
+  background-color: grey;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid darkgrey;
+}
+.period-box.hovered {
+  background-color: white;
+}
 
 button:focus {
   outline: 0px;

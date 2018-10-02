@@ -1,8 +1,9 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { getEvents, getEventsExtent, getTimelineCurrentDate } from '../state/selectors'
+import { getEvents, getPeriodsExtent, getTimelineCurrentDate, getPeriods } from '../state/selectors'
 import { setDateTimeline } from '../state/actions'
 import TimelineNavigationControlled, { TimelineTicks, TimelineEvents } from './TimelineNavigationControlled'
+import TimelinePeriods from './TimelinePeriods'
 
 class TimelineNavigation extends PureComponent {
   onEventClicked = (event) => {
@@ -10,14 +11,21 @@ class TimelineNavigation extends PureComponent {
   }
 
   render() {
-    const { extent, events, currentDate, setDateTimeline } = this.props
-
+    const { extent, events, periods, currentDate, setDateTimeline } = this.props
     return (
       <TimelineNavigationControlled
         className='align-self-end'
         currentDate={currentDate}
         onDateChange={setDateTimeline}
         extent={extent}
+        renderTop={({ width, scale }) => (
+          <TimelinePeriods
+            width={width}
+            scale={scale}
+            periods={periods}
+            currentDate={currentDate}
+          />
+        )}
       >
         {({ width, height, scale, ticks }) => (
           <Fragment>
@@ -38,7 +46,8 @@ class TimelineNavigation extends PureComponent {
 const mapStateToProps = state => ({
   currentDate: getTimelineCurrentDate(state),
   events: getEvents(state),
-  extent: getEventsExtent(state),
+  periods: getPeriods(state),
+  extent: getPeriodsExtent(state),
 })
 export default connect(mapStateToProps, {
   setDateTimeline,

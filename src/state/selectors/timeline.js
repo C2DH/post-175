@@ -74,7 +74,23 @@ export const getPeriods = createSelector(
 
 export const getEventsExtent = createSelector(
   getEvents,
-  events => events === null ? null : extent(events, e => e.startDate)
+  events => {
+    if (events === null) {
+      return null
+    }
+    const eventsExtent = extent(events, e => e.startDate)
+    return eventsExtent
+  }
+)
+
+export const getPeriodsExtent = createSelector(
+  getPeriods,
+  periods => {
+    if (periods === null) {
+      return null
+    }
+    return [periods[0].startDate, periods[periods.length - 1].endDate]
+  }
 )
 
 export const getTimelineCurrentDate = createSelector(
