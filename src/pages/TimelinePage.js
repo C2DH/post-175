@@ -31,6 +31,7 @@ import MobileAlert from '../components/MobileAlert'
 import Period from '../components/Period'
 import TimelineNavigation from '../components/TimelineNavigation'
 import Timeline from '../components/Timeline'
+import SideMenu from '../components/SideMenu'
 import { TransitionMotion, Motion, spring } from 'react-motion'
 import EventModal from '../components/EventModal'
 
@@ -93,7 +94,8 @@ class TimelinePage extends PureComponent {
     return (
       <div className='h-100 d-flex flex-column'>
         <MobileAlert />
-        <div className='row no-gutters flex-1'>
+        <SideMenu/>
+        <div className='row no-gutters flex-1 with-sidemenu'>
           {/* {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (
               <Period style={{opacity:o}} story={story}/>

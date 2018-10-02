@@ -5,6 +5,8 @@ import { closeMenu } from '../../state/actions'
 import { getMenuOpen } from '../../state/selectors'
 import MenuOpen from './MenuOpen'
 
+// old Menu ...
+
 class Menu extends PureComponent {
 
   // Leave menu in a cool way

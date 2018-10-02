@@ -18,6 +18,10 @@ body {
   height: 100%;
 }
 
+.with-sidemenu {
+  padding-left: 50px;
+}
+
 button:focus {
   outline: 0px;
 }
