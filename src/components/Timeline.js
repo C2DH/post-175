@@ -87,7 +87,7 @@ const mapStateToProps = state => ({
   extent: getEventsExtent(state),
 })
 
-const TimelineEvents = connect(mapStateToProps, { setDateTimeline, selectEvent })(class extends PureComponent {
+const TimelineMainEvents = connect(mapStateToProps, { setDateTimeline, selectEvent })(class extends PureComponent {
 
   state = {
     height: 0,
@@ -185,7 +185,7 @@ export default class Timeline extends PureComponent {
       <div className='col-md-9 d-flex flex-column' style={style}>
         {/* top timeline */}
         <div className="align-self-stretch flex-1 w-100 bg-black" style={{height:52, overflow:'hidden'}}>
-          <TimelineEvents/>
+          <TimelineMainEvents/>
         </div>
 
         {/* bottom timeline */}
