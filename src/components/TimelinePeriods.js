@@ -1,5 +1,4 @@
 import React, { PureComponent, Fragment } from 'react'
-import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 
 const PERIODS_HEIGHT = 30

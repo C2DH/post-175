@@ -9,6 +9,7 @@ import {
   WIDTH_WITH_EVENTS,
 } from '../state/selectors'
 import TimelineNavigation from './TimelineNavigation'
+import TimelineFilters from './TimelineFilters'
 import { last, get } from 'lodash'
 import { Motion, spring } from 'react-motion'
 import MultiText from '../components/MultiText'
@@ -183,6 +184,7 @@ export default class Timeline extends PureComponent {
     const { style, className } = this.props
     return (
       <div className={`d-flex flex-column ${className}`} style={style}>
+        <TimelineFilters />
         {/* top timeline */}
         <div className="align-self-stretch flex-1 w-100 bg-black" style={{height:52, overflow:'hidden'}}>
           <TimelineEvents/>
