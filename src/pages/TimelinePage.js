@@ -94,14 +94,14 @@ class TimelinePage extends PureComponent {
       <div className='h-100 d-flex flex-column'>
         <MobileAlert />
         <div className='row no-gutters flex-1'>
-          {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
+          {/* {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (
               <Period style={{opacity:o}} story={story}/>
             )}
-          </Motion> }
+          </Motion> } */}
           {events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (
-              <Timeline style={{opacity:o}} />
+              <Timeline style={{opacity:o}} className='w-100' />
             )}
           </Motion> }
 
