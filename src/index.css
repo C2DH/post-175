@@ -261,6 +261,13 @@ a:-webkit-any-link {
   cursor: pointer;
 }
 
+.timeline-category-filter circle {
+  opacity: 0.5;
+}
+.timeline-category-filter-active circle {
+  opacity: 1;
+}
+
 .legend-detail-image {
   min-height: 350px;
 }

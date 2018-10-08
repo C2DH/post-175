@@ -27,8 +27,15 @@ export const getEvents = createSelector(
   }))
 )
 
-export const getAnnotatedEvents = createSelector(
+export const getFilteredEvents = createSelector(
   getEvents,
+  state => state.timeline.categories,
+  (events, categories) => events === null ? null : events
+    .filter(event => categories.indexOf(event.data.category) !== -1)
+)
+
+export const getAnnotatedEvents = createSelector(
+  getFilteredEvents,
   events => {
     if(events == null ) { return null }
     let sortedEvents = sortBy(events, 'startDate')
@@ -110,7 +117,7 @@ export const getTimelineCurrentDate = createSelector(
 
 export const getTimelineYearsWithEvents = createSelector(
   getEventsExtent,
-  getAnnotatedEvents,
+  getFilteredEvents,
   (extent, events) => {
     if (extent === null) {
       return null

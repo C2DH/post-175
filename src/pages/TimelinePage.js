@@ -12,6 +12,7 @@ import {
   setDateTimeline,
   loadStory,
   unloadStory,
+  setCategoriesTimeline,
 } from '../state/actions'
 import {
   getStory,
@@ -25,7 +26,8 @@ import {
 } from '../state/selectors'
 import {
   getQsSafeYear,
-  makeUrlWithYear,
+  makeUrlWithYearAndCategories,
+  getQsSafeCategories,
 } from '../utils'
 import MobileAlert from '../components/MobileAlert'
 import Period from '../components/Period'
@@ -50,23 +52,27 @@ class TimelinePage extends PureComponent {
       nextProps.extent && !nextProps.currentDateRaw
     ) {
       const year = getQsSafeYear(this.props.location)
+      const categories = getQsSafeCategories(this.props.location)
+      this.props.setCategoriesTimeline(categories)
       const { extent } = nextProps
       if (year && year >= extent[0].getFullYear() && year <= extent[1].getFullYear()) {
         this.props.setDateTimeline(new Date(`${year}`))
       } else {
-        this.props.history.replace(makeUrlWithYear(
+        this.props.history.replace(makeUrlWithYearAndCategories(
           this.props.location,
-          nextProps.currentDate.getFullYear()
+          nextProps.currentDate.getFullYear(),
         ))
       }
     } else if (
-      nextProps.currentDate && this.props.currentDate &&
+      (nextProps.currentDate && this.props.currentDate &&
       this.props.currentDate.getFullYear() !== nextProps.currentDate.getFullYear()
-      && this.props.currentDateRaw
+      && this.props.currentDateRaw)
+      || this.props.categories !== nextProps.categories
     ) {
-      this.props.history.replace(makeUrlWithYear(
+      this.props.history.replace(makeUrlWithYearAndCategories(
         this.props.location,
-        nextProps.currentDate.getFullYear()
+        nextProps.currentDate.getFullYear(),
+        nextProps.categories,
       ))
     }
   }
@@ -91,7 +97,16 @@ class TimelinePage extends PureComponent {
   }
 
   render() {
-    const { events, periods, selectedEvent, nextEvent, prevEvent, clearSelectedEvent, story } = this.props
+    const {
+      location,
+      events,
+      periods,
+      selectedEvent,
+      nextEvent,
+      prevEvent,
+      clearSelectedEvent,
+      story,
+    } = this.props
     return (
       <div className='h-100 d-flex flex-column'>
         <MobileAlert />
@@ -157,6 +172,7 @@ const mapStateToProps = state => ({
   extent: getEventsExtent(state),
   currentDate: getTimelineCurrentDate(state),
   currentDateRaw: state.timeline.currentDate,
+  categories: state.timeline.categories,
   story: getStory(state),
 })
 export default connect(mapStateToProps, {
@@ -170,4 +186,5 @@ export default connect(mapStateToProps, {
   selectEvent,
   loadStory,
   unloadStory,
+  setCategoriesTimeline,
 })(TimelinePage)

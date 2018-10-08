@@ -1,8 +1,12 @@
 import React, { PureComponent } from 'react'
+import classNames from 'classnames'
+import { connect } from 'react-redux'
+import { toggleCategoryTimeline } from '../state/actions'
 import { EVENT_COLORS } from '../consts'
 
-export default class TimelineFilters extends PureComponent {
+class TimelineFilters extends PureComponent {
   render() {
+    const { categories, toggleCategoryTimeline } = this.props
     return (
       <div className='bg-black d-flex p-3 justify-content-between border-bottom border-right'>
 
@@ -10,7 +14,12 @@ export default class TimelineFilters extends PureComponent {
           <div>CATEGORIES:</div>
           <div className='px-3 d-flex align-items-center'>
             {Object.keys(EVENT_COLORS).map(name => (
-              <div className='d-flex align-items-center' key={name}>
+              <div
+                onClick={() => toggleCategoryTimeline(name)}
+                key={name}
+                className={classNames('d-flex align-items-center pointer timeline-category-filter', {
+                'timeline-category-filter-active': categories.indexOf(name) !== -1,
+              })}>
                 <svg height={14} width={14}>
                   <circle r={7} cx={7} cy={7} fill={EVENT_COLORS[name]} />
                 </svg>
@@ -31,3 +40,9 @@ export default class TimelineFilters extends PureComponent {
     )
   }
 }
+
+export default connect(state => ({
+  categories: state.timeline.categories,
+}), {
+  toggleCategoryTimeline,
+})(TimelineFilters)

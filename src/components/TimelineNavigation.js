@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { getEvents, getPeriodsExtent, getTimelineCurrentDate, getPeriods } from '../state/selectors'
+import { getFilteredEvents, getPeriodsExtent, getTimelineCurrentDate, getPeriods } from '../state/selectors'
 import { setDateTimeline } from '../state/actions'
 import TimelineNavigationControlled, { TimelineTicks, TimelineEvents } from './TimelineNavigationControlled'
 import TimelinePeriods from './TimelinePeriods'
@@ -45,7 +45,7 @@ class TimelineNavigation extends PureComponent {
 
 const mapStateToProps = state => ({
   currentDate: getTimelineCurrentDate(state),
-  events: getEvents(state),
+  events: getFilteredEvents(state),
   periods: getPeriods(state),
   extent: getPeriodsExtent(state),
 })

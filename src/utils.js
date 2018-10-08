@@ -15,11 +15,30 @@ export const getQsSafeYear = location => {
   return Math.abs(parseInt(yearQs, 10))
 }
 
+export const getQsSafeCategories = location => {
+  const categoriesQs = qs.parse(location.search).categories || []
+  return categoriesQs
+    .split(',')
+    .filter(cat => typeof EVENT_COLORS[cat] !== 'undefined')
+}
+
 export const makeUrlWithYear = (location, year) => {
   const qsAsObject = qs.parse(location.search)
   const newQs = qs.stringify({
     ...qsAsObject,
     year
+  })
+  return `${location.pathname}?${newQs}`
+}
+
+export const makeUrlWithYearAndCategories = (location, year, categories = []) => {
+  const qsAsObject = qs.parse(location.search)
+  const newQs = qs.stringify({
+    ...qsAsObject,
+    year,
+    categories: categories.join(','),
+  }, {
+    encode: false,
   })
   return `${location.pathname}?${newQs}`
 }
