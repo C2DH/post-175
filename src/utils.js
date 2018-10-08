@@ -17,7 +17,7 @@ export const getQsSafeYear = location => {
 }
 
 export const getQsSafeCategories = location => {
-  const categoriesQs = qs.parse(location.search).categories || []
+  const categoriesQs = qs.parse(location.search).categories || ''
   return categoriesQs
     .split(',')
     .filter(cat => typeof EVENT_COLORS[cat] !== 'undefined')
