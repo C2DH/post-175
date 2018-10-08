@@ -1,4 +1,5 @@
 import qs from 'query-string'
+import get from 'lodash/get'
 import { EVENT_COLORS } from './consts'
 
 export const getEventColor = event => {
@@ -22,6 +23,10 @@ export const getQsSafeCategories = location => {
     .filter(cat => typeof EVENT_COLORS[cat] !== 'undefined')
 }
 
+export const getQsSafeMilestone = location => {
+  return +get(qs.parse(location.search), 'milestone', 0) ? true : false
+}
+
 export const makeUrlWithYear = (location, year) => {
   const qsAsObject = qs.parse(location.search)
   const newQs = qs.stringify({
@@ -31,11 +36,12 @@ export const makeUrlWithYear = (location, year) => {
   return `${location.pathname}?${newQs}`
 }
 
-export const makeUrlWithYearAndCategories = (location, year, categories = []) => {
+export const makeUrlWithYearAndFilters = (location, year, categories = [], milestone) => {
   const qsAsObject = qs.parse(location.search)
   const newQs = qs.stringify({
     ...qsAsObject,
     year,
+    milestone: milestone ? 1 : 0,
     categories: categories.join(','),
   }, {
     encode: false,

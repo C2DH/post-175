@@ -13,6 +13,7 @@ import {
   loadStory,
   unloadStory,
   setCategoriesTimeline,
+  setMilestoneTimeline,
 } from '../state/actions'
 import {
   getStory,
@@ -26,8 +27,9 @@ import {
 } from '../state/selectors'
 import {
   getQsSafeYear,
-  makeUrlWithYearAndCategories,
+  makeUrlWithYearAndFilters,
   getQsSafeCategories,
+  getQsSafeMilestone,
 } from '../utils'
 import MobileAlert from '../components/MobileAlert'
 import Period from '../components/Period'
@@ -53,12 +55,15 @@ class TimelinePage extends PureComponent {
     ) {
       const year = getQsSafeYear(this.props.location)
       const categories = getQsSafeCategories(this.props.location)
+      const milestone = getQsSafeMilestone(this.props.location)
+      console.log('MMM', milestone)
       this.props.setCategoriesTimeline(categories)
+      this.props.setMilestoneTimeline(milestone)
       const { extent } = nextProps
       if (year && year >= extent[0].getFullYear() && year <= extent[1].getFullYear()) {
         this.props.setDateTimeline(new Date(`${year}`))
       } else {
-        this.props.history.replace(makeUrlWithYearAndCategories(
+        this.props.history.replace(makeUrlWithYearAndFilters(
           this.props.location,
           nextProps.currentDate.getFullYear(),
         ))
@@ -68,11 +73,13 @@ class TimelinePage extends PureComponent {
       this.props.currentDate.getFullYear() !== nextProps.currentDate.getFullYear()
       && this.props.currentDateRaw)
       || this.props.categories !== nextProps.categories
+      || this.props.milestone !== nextProps.milestone
     ) {
-      this.props.history.replace(makeUrlWithYearAndCategories(
+      this.props.history.replace(makeUrlWithYearAndFilters(
         this.props.location,
         nextProps.currentDate.getFullYear(),
         nextProps.categories,
+        nextProps.milestone
       ))
     }
   }
@@ -173,6 +180,7 @@ const mapStateToProps = state => ({
   currentDate: getTimelineCurrentDate(state),
   currentDateRaw: state.timeline.currentDate,
   categories: state.timeline.categories,
+  milestone: state.timeline.milestone,
   story: getStory(state),
 })
 export default connect(mapStateToProps, {
@@ -187,4 +195,5 @@ export default connect(mapStateToProps, {
   loadStory,
   unloadStory,
   setCategoriesTimeline,
+  setMilestoneTimeline,
 })(TimelinePage)

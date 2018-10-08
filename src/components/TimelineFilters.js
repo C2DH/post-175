@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { toggleCategoryTimeline } from '../state/actions'
+import { toggleCategoryTimeline, toggleTimelineMilestone } from '../state/actions'
 import { EVENT_COLORS } from '../consts'
 
 class TimelineFilters extends PureComponent {
   render() {
-    const { categories, toggleCategoryTimeline } = this.props
+    const { categories, milestone, toggleCategoryTimeline, toggleTimelineMilestone } = this.props
     return (
       <div className='bg-black d-flex p-3 justify-content-between border-bottom border-right'>
 
@@ -32,7 +32,9 @@ class TimelineFilters extends PureComponent {
         {/* TODO: use a shit like that https://haubek.github.io/custom-switch/ */}
         <div className='d-flex align-items-center'>
           Milestone only
-          <input type="checkbox" className='mx-2' />
+          <input
+            onChange={() => toggleTimelineMilestone()}
+            type="checkbox" className='mx-2' checked={milestone} />
           All events
         </div>
 
@@ -43,6 +45,8 @@ class TimelineFilters extends PureComponent {
 
 export default connect(state => ({
   categories: state.timeline.categories,
+  milestone: state.timeline.milestone,
 }), {
   toggleCategoryTimeline,
+  toggleTimelineMilestone,
 })(TimelineFilters)

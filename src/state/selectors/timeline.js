@@ -30,8 +30,12 @@ export const getEvents = createSelector(
 export const getFilteredEvents = createSelector(
   getEvents,
   state => state.timeline.categories,
-  (events, categories) => events === null ? null : events
-    .filter(event => categories.indexOf(event.data.category) !== -1)
+  state => state.timeline.milestone,
+  (events, categories, milestone) => events === null ? null : events
+    .filter(event => (
+      categories.indexOf(event.data.category) !== -1 &&
+      (!!event.data.main_event) === milestone
+    ))
 )
 
 export const getAnnotatedEvents = createSelector(
