@@ -8,7 +8,11 @@ class TimelineFilters extends PureComponent {
   render() {
     const { categories, milestone, toggleCategoryTimeline, toggleTimelineMilestone } = this.props
     return (
-      <div className='bg-black d-flex p-3 justify-content-between border-bottom border-right'>
+      // TODO: custom css
+      <div
+        className='bg-black d-flex p-3 justify-content-between border-bottom border-right'
+        style={{ height: 56 }}
+      >
 
         <div className='d-flex align-items-center'>
           <div>CATEGORIES:</div>
