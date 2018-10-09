@@ -7,6 +7,7 @@ import {
   GET_PERIODS,
   GET_PLACES,
   GET_HOME_DOCS,
+  GET_COLLECTION_DOCS,
   GET_STORY,
   GET_STORY_SUCCESS,
   GET_STORY_LOADING,
@@ -47,6 +48,11 @@ export default function* rootSaga() {
     api.getHomeDocuments,
     state => state.homeDocs,
     50, // <--- Count of home images!
+  ))
+  yield fork(makeDocumentsListSaga(
+    GET_COLLECTION_DOCS,
+    api.getCollectionDocuments,
+    state => state.collectionDocs,
   ))
   yield fork(makeDocumentsListSaga(
     GET_EVENTS,

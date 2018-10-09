@@ -13,6 +13,7 @@ import {
   GET_PERIODS,
   GET_PLACES,
   GET_HOME_DOCS,
+  GET_COLLECTION_DOCS,
 } from '../actions'
 
 export default combineReducers({
@@ -27,4 +28,5 @@ export default combineReducers({
   periods: makeDocumentsList(GET_PERIODS),
   places: makeDocumentsList(GET_PLACES),
   homeDocs: makeDocumentsList(GET_HOME_DOCS),
+  collectionDocs: makeDocumentsList(GET_COLLECTION_DOCS),
 })

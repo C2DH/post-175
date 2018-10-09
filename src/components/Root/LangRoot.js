@@ -9,6 +9,7 @@ import Home from '../../pages/Home'
 import MapPage from '../../pages/MapPage'
 import TimelinePage from '../../pages/TimelinePage'
 import About from '../../pages/About'
+import Collection from '../../pages/Collection'
 import { AnimatedSwitch } from 'react-router-transition';
 
 class LangRoot extends PureComponent {
@@ -50,6 +51,7 @@ class LangRoot extends PureComponent {
         <Route path='/map' exact component={MapPage} />
         <Route path='/timeline' exact component={TimelinePage} />
         <Route path='/about' exact component={About} />
+        <Route path='/collection' exact component={Collection} />
       </Switch>
       // </AnimatedSwitch>
     )

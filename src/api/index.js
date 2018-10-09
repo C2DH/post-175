@@ -41,6 +41,17 @@ export const getHomeDocuments = (params = {}) => getDocuments({
   },
 })
 
+export const getCollectionDocuments = (params = {}) => getDocuments({
+  ...params,
+  filters: {
+    ...params.filters,
+    data__type__in: [
+      'law', 'office', 'portrait', 'product', 'service',
+      'technology', 'transport',
+    ],
+  },
+})
+
 export const getEvents = (params = {}) => getDocuments({
   ...params,
   filters: {
