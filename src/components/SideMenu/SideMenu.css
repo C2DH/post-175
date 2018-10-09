@@ -4,42 +4,80 @@
   z-index: 1000;
   width: 56px;
   color: white;
+  font-size: 14px;
   top: 0;
   background-color: #2F353A;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.side-menu.expaned {
-  width: 183px;
-}
-.side-menu-top {
+.side-menu.expanded {
+  width: 190px;
 }
 
 /* Link */
-.side-menu-link {
+a.side-menu-link {
   display: flex;
   height: 56px;
   display: flex;
+  color: #fff;
+  text-decoration: none;
 }
-.side-menu-link > .link-icon {
+a.side-menu-link:hover,
+a.side-menu-link:active,
+{
+  color: #fff;
+  text-decoration: none;
+}
+a.side-menu-link.active {
+  background-color: #212529;
+}
+a.side-menu-link > .link-icon {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 56px;
 }
-.side-menu.expaned .side-menu-link {
+.side-menu.expanded a.side-menu-link {
   border-bottom: 1px solid #fff;
 }
-.side-menu .side-menu-link > .link-label {
-  width: 100%;
+.side-menu.expanded a.side-menu-link.no-bordered {
+  border-bottom: 0px;
+}
+.side-menu a.side-menu-link > .link-label {
+  flex: 1;
   align-items: center;
   display: none;
 }
-.side-menu.expaned .side-menu-link > .link-label {
+.side-menu.expanded a.side-menu-link > .link-label {
   display: flex;
 }
 
-.side-menu-bottom {
-  background-color: blue;
+/* Vertical label */
+.side-menu-vertical-label-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.side-menu-vertical-label {
+  transform: rotate(-90deg);
+  width: 56px;
+}
+
+/* Lang item */
+.side-menu-lang {
+  display: flex;
+  height: 40px;
+  width: 56px;
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.side-menu-lang.current-lang {
+  font-weight: bold;
 }
