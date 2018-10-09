@@ -103,7 +103,9 @@ class Collection extends PureComponent {
             onToggleCategory={this.handleToggleCategory}
           />
           {docs && <CollectionList docs={docs} />}
-          <CollectionTimeBrush />
+          {allFacets && <CollectionTimeBrush
+            allFacets={allFacets}
+          />}
         </div>
       </div>
     )
