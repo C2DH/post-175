@@ -55,9 +55,10 @@ class TimelinePage extends PureComponent {
     ) {
       const year = getQsSafeYear(this.props.location)
       const categories = getQsSafeCategories(this.props.location)
+      if (categories.length > 0) {
+        this.props.setCategoriesTimeline(categories)
+      }
       const milestone = getQsSafeMilestone(this.props.location)
-      console.log('MMM', milestone)
-      this.props.setCategoriesTimeline(categories)
       this.props.setMilestoneTimeline(milestone)
       const { extent } = nextProps
       if (year && year >= extent[0].getFullYear() && year <= extent[1].getFullYear()) {
