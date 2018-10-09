@@ -10,3 +10,7 @@ export const getCollectionDocuments = createSelector(
     ? null
     : ids.map(id => translateDoc(data[id], langCode))
 )
+
+export const getCollectionsFacets = state => state.collectionDocs.facets
+
+export const getCollectionsAllFacets = state => state.collectionFacets.data

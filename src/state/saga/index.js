@@ -2,12 +2,14 @@ import { fork, put, call, select, takeEvery } from 'redux-saga/effects'
 import { setLanguage } from 'redux-i18n'
 import { takeLatestAndCancel } from './effects/take'
 import makeDocumentsListSaga from './hos/documents'
+import makeFacetsSaga from './hos/facets'
 import {
   GET_EVENTS,
   GET_PERIODS,
   GET_PLACES,
   GET_HOME_DOCS,
   GET_COLLECTION_DOCS,
+  GET_COLLECTION_FACETS,
   GET_STORY,
   GET_STORY_SUCCESS,
   GET_STORY_LOADING,
@@ -53,6 +55,10 @@ export default function* rootSaga() {
     GET_COLLECTION_DOCS,
     api.getCollectionDocuments,
     state => state.collectionDocs,
+  ))
+  yield fork(makeFacetsSaga(
+    GET_COLLECTION_FACETS,
+    api.getCollectionDocuments,
   ))
   yield fork(makeDocumentsListSaga(
     GET_EVENTS,
