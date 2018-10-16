@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { find, head, get } from 'lodash'
 import { getEventColor } from '../utils'
 import { localize } from '../localize'
+import ZoomAndPanMedia from './ZoomAndPanMedia'
 
 const CloseBtn = ({onClose}) => (
   <div className="position-fixed pt-3 pr-3" style={{top: 0, right:0}}>
@@ -107,11 +108,16 @@ class EventModal extends PureComponent {
                   <div className="h-100 d-flex justify-content-center flex-column" style={{flex: 4.5}}>
                     <div className='h-100 overflow-auto m-3'>
                       {selectedDocument && (
+                        <ZoomAndPanMedia
+                          src={selectedDocument.type === 'pdf' ? selectedDocument.snapshot : selectedDocument.attachment}
+                        />
+                      )}
+                      {/* {selectedDocument && (
                         <img
                           className="img-fluid"
                           src={selectedDocument.type === 'pdf' ? selectedDocument.snapshot : selectedDocument.attachment}
                         />
-                      )}
+                      )} */}
                     </div>
                   </div>
 
