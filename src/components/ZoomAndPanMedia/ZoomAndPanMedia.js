@@ -3,9 +3,13 @@ import ReactHammer from 'react-hammerjs'
 import Hammer from 'hammerjs'
 import './ZoomAndPanMedia.css'
 
+const PINCH_TIMEOUT = 300
+
 export default class ZoomAndPanMedia extends Component {
   state = {
     zoom: 1,
+    pinchingZoom: 1,
+    lastPinchedAt: 0,
     deltaX: 0,
     deltaY: 0,
     panDeltaX: 0,
@@ -31,14 +35,38 @@ export default class ZoomAndPanMedia extends Component {
 
   handleZoom = e => {
     const { deltaX, deltaY } = this.state
-    const zoom = e.target.value
+    const zoom = +e.target.value
     this.setState({
+      pinchingZoom: 1,
       zoom,
       ...this.boundsDeltas(deltaX, deltaY, zoom),
     })
   }
 
+  handlePinch = e => {
+    const pinchingZoom = +e.scale
+    this.setState({
+      pinchingZoom,
+    })
+  }
+
+  handlePinchEnd = e => {
+    const { deltaX, deltaY, zoom } = this.state
+    let newZoom = zoom * e.scale
+    newZoom = Math.max(Math.min(newZoom, 4), 1)
+
+    this.setState({
+      pinchingZoom: 1,
+      lastPinchedAt: new Date().getTime(),
+      zoom: newZoom,
+      ...this.boundsDeltas(deltaX, deltaY, newZoom),
+    })
+  }
+
   handlePan = e => {
+    if (this.state.pinchingZoom !== 1 || new Date().getTime() - this.state.lastPinchedAt < PINCH_TIMEOUT) {
+      return
+    }
     this.setState({
       panDeltaX: +e.deltaX,
       panDeltaY: +e.deltaY
@@ -46,7 +74,10 @@ export default class ZoomAndPanMedia extends Component {
   }
 
   handlePanEnd = e => {
-    const { maxHeight, maxWidth, zoom } = this.state
+    if (this.state.pinchingZoom !== 1 || new Date().getTime() - this.state.lastPinchedAt < PINCH_TIMEOUT) {
+      return
+    }
+    const { maxHeight, maxWidth, zoom, pinchingZoom } = this.state
 
     let deltaX = +e.deltaX + this.state.deltaX
     let deltaY = +e.deltaY + this.state.deltaY
@@ -54,14 +85,16 @@ export default class ZoomAndPanMedia extends Component {
     this.setState({
       panDeltaX: 0,
       panDeltaY: 0,
-      ...this.boundsDeltas(deltaX, deltaY, zoom),
+      ...this.boundsDeltas(deltaX, deltaY, zoom * pinchingZoom),
     })
   }
 
   getTransform = () => {
-    const deltaX = this.state.deltaX + this.state.panDeltaX
-    const deltaY = this.state.deltaY + this.state.panDeltaY
-    return `translate(${deltaX}px, ${deltaY}px) scale(${this.state.zoom})`
+    const { deltaX, deltaY, panDeltaY, panDeltaX, zoom, pinchingZoom } = this.state
+    const translateDeltaX = deltaX + panDeltaX
+    const translateDeltaY = deltaY + panDeltaY
+    const scale = zoom * pinchingZoom
+    return `translate(${translateDeltaX}px, ${translateDeltaY}px) scale(${scale})`
   };
 
   onLoadImage = (e) => {
@@ -92,10 +125,14 @@ export default class ZoomAndPanMedia extends Component {
                 pan: {
                   enable: true,
                   direction: Hammer.DIRECTION_ALL,
-                }
+                },
+                pinch: {
+                  enable: true
+                },
               }
             }}
-            // onPinch={e => console.log(e)}
+            onPinch={this.handlePinch}
+            onPinchEnd={this.handlePinchEnd}
             onPan={this.handlePan}
             onPanEnd={this.handlePanEnd}
           >
