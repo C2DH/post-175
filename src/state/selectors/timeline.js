@@ -44,7 +44,7 @@ export const getFilteredEvents = createSelector(
   (events, categories, milestone) => events === null ? null : events
     .filter(event => (
       categories.indexOf(event.data.category) !== -1 &&
-      (!!event.data.main_event) === milestone
+      (!!event.data.key_event) === milestone
     ))
 )
 
