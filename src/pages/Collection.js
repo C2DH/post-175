@@ -109,6 +109,7 @@ class Collection extends PureComponent {
           />
           {docs && <CollectionList docs={docs} />}
           {allFacets && <CollectionTimeBrush
+            facets={facets}
             allFacets={allFacets}
           />}
         </div>
