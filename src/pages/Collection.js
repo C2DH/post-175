@@ -6,6 +6,7 @@ import SideMenu from '../components/SideMenu'
 import CollectionFilters from '../components/Collection/CollectionFilters'
 import CollectionList from '../components/Collection/CollectionList'
 import CollectionTimeBrush from '../components/Collection/CollectionTimeBrush'
+import { COLLECTION_DATE_TYPES } from '../consts'
 import {
   loadCollectionDocuments,
   unloadCollectionDocuments,
@@ -24,7 +25,11 @@ class Collection extends PureComponent {
   componentDidMount() {
     const queryParams = qs.parse(this.props.location.search)
     this.loadDocs(this.parseQueryParams(queryParams))
-    this.props.loadCollectionFacets()
+    this.props.loadCollectionFacets({
+      filters: {
+        data__type__in: COLLECTION_DATE_TYPES,
+      },
+    })
   }
 
   componentDidUpdate(prevProps) {
@@ -46,7 +51,7 @@ class Collection extends PureComponent {
   loadDocs = ({ categories, search }) => {
     this.props.loadCollectionDocuments({
       filters: {
-        type__in: categories.length > 0 ? categories : undefined,
+        data__type__in: categories.length > 0 ? categories : COLLECTION_DATE_TYPES,
       },
       q: search,
     })

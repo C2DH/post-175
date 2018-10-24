@@ -1,17 +1,10 @@
 import React, { PureComponent } from 'react'
 import debounce from 'lodash/debounce'
+import { localize } from '../../localize'
+import { COLLECTION_DATE_TYPES } from '../../consts'
 import './Collection.css'
 
-const ALL_CATEGORIES = [
-  {
-    name: 'image',
-  },
-  {
-    name: 'video',
-  }
-]
-
-export default class CollectionFilters extends PureComponent {
+class CollectionFilters extends PureComponent {
   state = {
     prevLocationKey: this.props.locationKey,
     searchText: this.props.search
@@ -44,20 +37,20 @@ export default class CollectionFilters extends PureComponent {
   debouncedOnSearchChange = debounce(this.props.onSearchChange, 150)
 
   render() {
-    const { categories, onToggleCategory } = this.props
+    const { categories, onToggleCategory, t } = this.props
     return (
       <div className='collection-filters'>
         <div className='collection-filters-categories'>
           <div>CATEGORIES:</div>
           <div className='categories-radios'>
-            {ALL_CATEGORIES.map(cat => (
-              <div className='category-radio' key={cat.name}>
+            {COLLECTION_DATE_TYPES.map(name => (
+              <div className='category-radio' key={name}>
                 <input
-                  onChange={() => onToggleCategory(cat.name)}
+                  onChange={() => onToggleCategory(name)}
                   type='checkbox'
-                  checked={categories.indexOf(cat.name) !== -1}
+                  checked={categories.indexOf(name) !== -1}
                 />
-                <div className='radio-label'>{cat.name}</div>
+                <div className='radio-label'>{t(name)}</div>
               </div>
             ))}
           </div>
@@ -75,3 +68,5 @@ export default class CollectionFilters extends PureComponent {
     )
   }
 }
+
+export default localize()(CollectionFilters)

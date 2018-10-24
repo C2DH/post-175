@@ -7,6 +7,15 @@
 // --batiments: #ff3e4c;
 // --Technologie: #13d436;
 
+export const COLLECTION_DATE_TYPES = [
+  'law',
+  'office',
+  'portrait',
+  'product',
+  'service',
+  'technology',
+  'transport',
+]
 
 export const EVENT_COLORS =  {
   event: '#ed6505',

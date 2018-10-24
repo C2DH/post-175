@@ -46,10 +46,6 @@ export const getCollectionDocuments = (params = {}) => getDocuments({
   facets: 'data__year',
   filters: {
     ...params.filters,
-    data__type__in: [
-      'law', 'office', 'portrait', 'product', 'service',
-      'technology', 'transport',
-    ],
   },
 })
 
