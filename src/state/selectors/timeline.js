@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { range, groupBy, last, sortBy } from 'lodash'
+import { range, groupBy, last, sortBy, countBy } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
@@ -25,6 +25,16 @@ export const getEvents = createSelector(
     startDate: event.data.start_date === null ? null : new Date(event.data.start_date),
     endDate: event.data.end_date === null ? null : new Date(event.data.end_date),
   }))
+)
+
+export const getEventsCateogryCounts = createSelector(
+  getEvents,
+  events => {
+    if (events === null) {
+      return null
+    }
+    return countBy(events, 'data.category')
+  }
 )
 
 export const getFilteredEvents = createSelector(
