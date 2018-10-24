@@ -105,3 +105,13 @@
 .collection-item > .item-caption {
   margin-top: 5px;
 }
+
+.collection-item > .item-caption > .item-label {
+  font-size: 20px;
+  line-height: 28px;
+  height: 60px;
+}
+.collection-item > .item-caption > .item-year {
+  font-size: 14px;
+  line-height: 20px;
+}
