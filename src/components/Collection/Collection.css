@@ -2,6 +2,7 @@
   color: #fff;
   top: 0;
   left: 56px;
+  z-index: 2;
   right: 0;
   height: 56px;
   background-color: #272A2D;
