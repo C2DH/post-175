@@ -16,6 +16,8 @@ import {
   GET_STORY_FAILURE,
   GET_STORY_UNLOAD,
   SET_SELECTED_LANG,
+  SEARCH_SUGGESTION,
+  CLEAR_SEARCH_SUGGESTION,
 } from '../actions'
 import {
   getSelectedLang,
@@ -29,6 +31,16 @@ function *handleGetStory({ payload }) {
     yield put({ type: GET_STORY_SUCCESS, payload: story })
   } catch (error) {
     yield put({ type: GET_STORY_FAILURE, error })
+  }
+}
+
+function *handleSearchSuggestion({ payload }) {
+  yield put({ type: `${SEARCH_SUGGESTION}_LOADING` })
+  try {
+    const results = yield call(api.searchSuggestion, payload)
+    yield put({ type: `${SEARCH_SUGGESTION}_SUCCESS`, payload: results })
+  } catch (error) {
+    yield put({ type: `${SEARCH_SUGGESTION}_FAILURE`, error })
   }
 }
 
@@ -75,4 +87,10 @@ export default function* rootSaga() {
     api.getPlaces,
     state => state.periods,
   ))
+  yield fork(
+    takeLatestAndCancel,
+    SEARCH_SUGGESTION,
+    CLEAR_SEARCH_SUGGESTION,
+    handleSearchSuggestion,
+  )
 }

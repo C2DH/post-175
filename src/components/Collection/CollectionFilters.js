@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { searchSuggestions, clearSuggestions } from '../../state/actions'
 import debounce from 'lodash/debounce'
 import { localize } from '../../localize'
 import { COLLECTION_DATE_TYPES } from '../../consts'
+import Search from './Search'
 import './Collection.css'
 
 class CollectionFilters extends PureComponent {
@@ -25,19 +28,31 @@ class CollectionFilters extends PureComponent {
     return null
   }
 
-  handleOnSearchChange = e => {
-    const text = e.target.value
+  handleOnSearchChange = (e, { newValue }) => {
     this.setState({
-      searchText: text,
+      searchText: newValue,
     }, () => {
-      this.debouncedOnSearchChange(text)
+      this.debouncedOnSearchChange(newValue)
+    })
+  }
+
+  onSuggestionSelected = (e, { suggestion }) => {
+    this.setState({
+      searchText: suggestion,
+    }, () => {
+      this.props.onSearchChange(suggestion)
     })
   }
 
   debouncedOnSearchChange = debounce(this.props.onSearchChange, 150)
 
+  debouncedSearchSuggestions = debounce(this.props.searchSuggestions, 150)
+
   render() {
-    const { categories, onToggleCategory, t } = this.props
+    const {
+      categories, onToggleCategory, suggestions, clearSuggestions, t
+    } = this.props
+
     return (
       <div className='collection-filters'>
         <div className='collection-filters-categories'>
@@ -56,10 +71,12 @@ class CollectionFilters extends PureComponent {
           </div>
         </div>
         <div className='collection-filters-search'>
-          <input
-            type='text'
-            className='form-control'
+          <Search
             placeholder='Search'
+            onSuggestionSelected={this.onSuggestionSelected}
+            searchSuggestions={this.debouncedSearchSuggestions}
+            clearSuggestions={clearSuggestions}
+            suggestions={suggestions}
             value={this.state.searchText}
             onChange={this.handleOnSearchChange}
           />
@@ -69,4 +86,9 @@ class CollectionFilters extends PureComponent {
   }
 }
 
-export default localize()(CollectionFilters)
+export default connect(state => ({
+  suggestions: state.searchSuggestion.results,
+}), {
+  searchSuggestions,
+  clearSuggestions
+})(localize()(CollectionFilters))
