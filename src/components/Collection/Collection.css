@@ -116,3 +116,8 @@
   font-size: 14px;
   line-height: 20px;
 }
+.collection-brush {
+  fill-opacity: 0.25;
+  fill: grey;
+  stroke: #fff;
+}
