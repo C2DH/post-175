@@ -66,9 +66,9 @@ class LangRoot extends PureComponent {
           <Route path='/timeline' exact component={TimelinePage} />
           <Route path='/about' exact component={About} />
           <Route path='/collection' exact component={Collection} />
-          <Route path='/item/:id' exact component={DocumentDetail} />
+          <Route path='/doc/:id' exact component={DocumentDetail} />
         </Switch>
-        {isModal ? <Route path='/item/:id' exact component={DocumentDetailModal} /> : null}
+        {isModal ? <Route path='/doc/:id' exact component={DocumentDetailModal} /> : null}
       </Fragment>
     )
   }

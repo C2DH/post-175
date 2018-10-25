@@ -9,6 +9,7 @@ import selectedEvent from './selectedEvent'
 import map from './map'
 import storyDetail from './storyDetail'
 import searchSuggestion from './searchSuggestion'
+import docDetail from './docDetail'
 
 import {
   GET_EVENTS,
@@ -28,6 +29,7 @@ export default combineReducers({
   selectedEvent,
   storyDetail,
   searchSuggestion,
+  docDetail,
   events: makeDocumentsList(GET_EVENTS),
   periods: makeDocumentsList(GET_PERIODS),
   places: makeDocumentsList(GET_PLACES),

@@ -18,6 +18,8 @@ import {
   SET_SELECTED_LANG,
   SEARCH_SUGGESTION,
   CLEAR_SEARCH_SUGGESTION,
+  GET_DOCUMENT,
+  GET_DOCUMENT_UNLOAD,
 } from '../actions'
 import {
   getSelectedLang,
@@ -31,6 +33,16 @@ function *handleGetStory({ payload }) {
     yield put({ type: GET_STORY_SUCCESS, payload: story })
   } catch (error) {
     yield put({ type: GET_STORY_FAILURE, error })
+  }
+}
+
+function *handleGetDocument({ payload }) {
+  yield put({ type: `${GET_DOCUMENT}_LOADING` })
+  try {
+    const story = yield call(api.getDocument, payload)
+    yield put({ type: `${GET_DOCUMENT}_SUCCESS`, payload: story })
+  } catch (error) {
+    yield put({ type: `${GET_DOCUMENT}_FAILURE`, error })
   }
 }
 
@@ -56,6 +68,12 @@ export default function* rootSaga() {
     GET_STORY,
     GET_STORY_UNLOAD,
     handleGetStory,
+  )
+  yield fork(
+    takeLatestAndCancel,
+    GET_DOCUMENT,
+    GET_DOCUMENT_UNLOAD,
+    handleGetDocument,
   )
   yield fork(makeDocumentsListSaga(
     GET_HOME_DOCS,

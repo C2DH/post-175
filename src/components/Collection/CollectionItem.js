@@ -7,7 +7,7 @@ export default class CollectionItem extends PureComponent {
   render() {
     const { doc } = this.props
     return (
-      <Link to={{ pathname: `/item/${doc.id}`, state: { modal: true } }}>
+      <Link to={{ pathname: `/doc/${doc.id}`, state: { modal: true } }}>
         <div className='collection-item'>
           <div className='item-image-box'>
             <img src={doc.snapshot} alt={doc.title} />

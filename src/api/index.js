@@ -34,7 +34,7 @@ export const getDocuments = (params = {}) =>
     .query(buildMillerParams(params))
     .then(extractBody)
 
-export const getEvent = (id) =>
+export const getDocument = (id) =>
   request.get(`${API_URL}/document/${id}`)
     .then(extractBody)
 

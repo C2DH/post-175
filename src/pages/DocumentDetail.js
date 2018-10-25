@@ -1,18 +1,53 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import {
+  getDocDetail
+} from '../state/selectors'
+import {
+  loadDocument,
+  unloadDocument,
+} from '../state/actions'
+import DocDetail from '../components/DocDetail'
 
-const DocumentDetail = ({ history, location }) => (
-  <div style={{
-    width: '100%',
-    height: '100%',
-    background: 'limegreen',
-    textAlign: 'center',
-  }}>
-    <button onClick={() => {
-      history.push('/collection')
-    }}>CLOSE</button>
-    <br />
-    I AM DETAIL!
-  </div>
-)
+class DocumentDetail extends PureComponent {
+  componentDidMount() {
+    const { match } = this.props
+    const { params: { id } } = match
+    this.props.loadDocument(id)
+  }
 
-export default DocumentDetail
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.props.unloadDocument()
+      this.props.loadDocument(this.props.match.params.id)
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.unloadDocument()
+  }
+
+  onClose = () => {
+    this.props.history.push(`/collection`)
+  }
+
+  render() {
+    const { doc } = this.props
+
+    return (
+      <div className='h-100 w-100'>
+        {doc && <DocDetail
+          doc={doc}
+          onClose={this.onClose}
+        />}
+      </div>
+    )
+  }
+}
+
+export default connect(state => ({
+  doc: getDocDetail(state),
+}), {
+  loadDocument,
+  unloadDocument,
+})(DocumentDetail)
