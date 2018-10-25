@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import memoize from 'memoize-one'
+import debounce from 'lodash/debounce'
 import { DraggableCore } from 'react-draggable'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import { timeYear } from 'd3-time'
@@ -60,7 +61,6 @@ class Brush extends React.Component {
 
   render() {
     const { scale, startYear, endYear, height } = this.props
-    console.log(scale, startYear, height)
     return (
       <g>
         <rect
@@ -87,21 +87,57 @@ class Brush extends React.Component {
 const PADDING = 56
 const MAX_BAR_HEIGHT = 30
 
+const makeExtentFromFacets = facets =>
+  makeExtent(facets.data__year, item => item.year)
+    .map(year => new Date(`${year}-01-01`))
+
 export default class CollectionTimeBrush extends PureComponent {
-  state = {
-    width: null,
-    height: null,
+  constructor(props) {
+    super(props)
+
+    const domain = scaleTime()
+      .domain(makeExtentFromFacets(props.allFacets))
+      .nice(timeYear, 10)
+      .domain()
+
+    const startYear = props.startYear ? props.startYear : domain[0]
+    const endYear = props.endYear ? props.endYear : domain[1]
+
+    this.state = {
+      startYear,
+      endYear,
+      prevLocationKey: props.locationKey,
+      width: null,
+      height: null,
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.prevLocationKey !== props.locationKey) {
+      if (
+        props.startYear && props.endYear &&
+        (
+          props.startYear.getFullYear() !== state.startYear.getFullYear() ||
+          props.endYear.getFullYear() !== state.endYear.getFullYear()
+        )
+      ) {
+        return {
+          startYear: props.startYear,
+          endYear: props.endYear,
+          prevLocationKey: props.locationKey,
+        }
+      }
+      return {
+        prevLocationKey: props.locationKey,
+      }
+    }
+    return null
   }
 
   componentDidMount() {
-    const width = this.container.clientWidth
-    const extent = this.getExtent(this.props.allFacets)
-    const scale = this.getScaleYears(extent, width, PADDING)
     this.setState({
-      width: width,
+      width: this.container.clientWidth,
       height: this.container.clientHeight,
-      startYear: scale.domain()[0],
-      endYear: scale.domain()[1],
     })
   }
 
@@ -118,14 +154,14 @@ export default class CollectionTimeBrush extends PureComponent {
       .nice(timeYear, 10)
   })
 
-  getExtent = memoize((allFacets) => {
-    return makeExtent(allFacets.data__year, item => item.year)
-      .map(year => new Date(`${year}-01-01`))
-  })
+  getExtent = memoize(makeExtentFromFacets)
 
   onBrushChange = (startYear, endYear) => {
     this.setState({ startYear, endYear })
+    this.debouncedOnYearsChange(startYear, endYear)
   }
+
+  debouncedOnYearsChange = debounce(this.props.onYearsChange, 150)
 
   render() {
     const { allFacets, facets } = this.props
