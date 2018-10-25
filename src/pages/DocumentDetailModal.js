@@ -6,6 +6,7 @@ import {
   getCollectionDocuments,
 } from '../state/selectors'
 import DocDetail from '../components/DocDetail'
+import SideMenu from '../components/SideMenu'
 
 class DocumentDetailModal extends PureComponent {
   getDocument = memoize((documents, id) => {
@@ -30,10 +31,13 @@ class DocumentDetailModal extends PureComponent {
         right: 0,
         zIndex: 9999,
       }}>
-        {doc && <DocDetail
-          doc={doc}
-          onClose={this.onClose}
-        />}
+        <SideMenu />
+        <div className='with-sidemenu h-100'>
+          {doc && <DocDetail
+            doc={doc}
+            onClose={this.onClose}
+          />}
+        </div>
       </div>
     )
   }

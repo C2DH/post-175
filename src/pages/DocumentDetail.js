@@ -8,6 +8,7 @@ import {
   unloadDocument,
 } from '../state/actions'
 import DocDetail from '../components/DocDetail'
+import SideMenu from '../components/SideMenu'
 
 class DocumentDetail extends PureComponent {
   componentDidMount() {
@@ -35,11 +36,14 @@ class DocumentDetail extends PureComponent {
     const { doc } = this.props
 
     return (
-      <div className='h-100 w-100'>
-        {doc && <DocDetail
-          doc={doc}
-          onClose={this.onClose}
-        />}
+      <div className='h-100'>
+        <SideMenu />
+        <div className='with-sidemenu h-100'>
+          {doc && <DocDetail
+            doc={doc}
+            onClose={this.onClose}
+          />}
+        </div>
       </div>
     )
   }
