@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import memoize from 'memoize-one'
 import qs from 'query-string'
 import get from 'lodash/get'
 import SideMenu from '../components/SideMenu'
 import CollectionFilters from '../components/Collection/CollectionFilters'
 import CollectionList from '../components/Collection/CollectionList'
 import CollectionTimeBrush from '../components/Collection/CollectionTimeBrush'
+import { COLLECTION_DATE_TYPES } from '../consts'
 import {
   loadCollectionDocuments,
   unloadCollectionDocuments,
@@ -24,7 +26,11 @@ class Collection extends PureComponent {
   componentDidMount() {
     const queryParams = qs.parse(this.props.location.search)
     this.loadDocs(this.parseQueryParams(queryParams))
-    this.props.loadCollectionFacets()
+    this.props.loadCollectionFacets({
+      filters: {
+        data__type__in: COLLECTION_DATE_TYPES,
+      },
+    })
   }
 
   componentDidUpdate(prevProps) {
@@ -32,7 +38,8 @@ class Collection extends PureComponent {
     const queryParams = qs.parse(this.props.location.search)
     if (
       prevQueryParams.search !== queryParams.search ||
-      prevQueryParams.categories !== queryParams.categories
+      prevQueryParams.categories !== queryParams.categories ||
+      prevQueryParams.overlaps !== queryParams.overlaps
     ) {
       this.loadDocs(this.parseQueryParams(queryParams))
     }
@@ -43,10 +50,15 @@ class Collection extends PureComponent {
     this.props.unloadCollectionFacets()
   }
 
-  loadDocs = ({ categories, search }) => {
+  loadDocs = ({ categories, search, overlaps }) => {
+    let overlapsQuery
+    if (overlaps && overlaps[0] && overlaps[1]) {
+      overlapsQuery = `${overlaps[0].getFullYear()}-01-01,${overlaps[1].getFullYear()}-12-31`
+    }
     this.props.loadCollectionDocuments({
+      overlaps: overlapsQuery,
       filters: {
-        type__in: categories.length > 0 ? categories : undefined,
+        data__type__in: categories.length > 0 ? categories : COLLECTION_DATE_TYPES,
       },
       q: search,
     })
@@ -55,7 +67,25 @@ class Collection extends PureComponent {
   parseQueryParams = queryParams => {
     const search = get(queryParams, 'search', '')
     const categories = parseQsAsList(get(queryParams, 'categories', ''))
-    return { search, categories }
+    let overlaps = get(queryParams, 'overlaps', '').split(',').filter(Boolean)
+    overlaps = [
+      isNaN(overlaps[0]) ? null : new Date(`${overlaps[0]}-01-01`),
+      isNaN(overlaps[1]) ? null : new Date(`${overlaps[1]}-12-31`),
+    ]
+
+    return { search, categories, overlaps }
+  }
+
+  handleOnOverlapsChange = (startYear, endYear) => {
+    const { location } = this.props
+    const queryParams = qs.parse(location.search)
+
+    this.props.history.push(`${location.pathname}?${qs.stringify({
+      ...queryParams,
+      overlaps: `${startYear.getFullYear()},${endYear.getFullYear()}`
+    }, {
+      encode: false,
+    })}`)
   }
 
   handleOnSearchChange = search => {
@@ -89,7 +119,7 @@ class Collection extends PureComponent {
   render() {
     const { docs, facets, allFacets, location } = this.props
     const queryParams = qs.parse(location.search)
-    const { search, categories } = this.parseQueryParams(queryParams)
+    const { search, categories, overlaps } = this.parseQueryParams(queryParams)
 
     return (
       <div className='h-100 collection-container'>
@@ -104,6 +134,11 @@ class Collection extends PureComponent {
           />
           {docs && <CollectionList docs={docs} />}
           {allFacets && <CollectionTimeBrush
+            startYear={overlaps[0]}
+            endYear={overlaps[1]}
+            onYearsChange={this.handleOnOverlapsChange}
+            locationKey={location.key}
+            facets={facets}
             allFacets={allFacets}
           />}
         </div>

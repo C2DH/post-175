@@ -1,17 +1,13 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { searchSuggestions, clearSuggestions } from '../../state/actions'
 import debounce from 'lodash/debounce'
+import { localize } from '../../localize'
+import { COLLECTION_DATE_TYPES } from '../../consts'
+import Search from './Search'
 import './Collection.css'
 
-const ALL_CATEGORIES = [
-  {
-    name: 'image',
-  },
-  {
-    name: 'video',
-  }
-]
-
-export default class CollectionFilters extends PureComponent {
+class CollectionFilters extends PureComponent {
   state = {
     prevLocationKey: this.props.locationKey,
     searchText: this.props.search
@@ -32,41 +28,55 @@ export default class CollectionFilters extends PureComponent {
     return null
   }
 
-  handleOnSearchChange = e => {
-    const text = e.target.value
+  handleOnSearchChange = (e, { newValue }) => {
     this.setState({
-      searchText: text,
+      searchText: newValue,
     }, () => {
-      this.debouncedOnSearchChange(text)
+      this.debouncedOnSearchChange(newValue)
+    })
+  }
+
+  onSuggestionSelected = (e, { suggestion }) => {
+    this.setState({
+      searchText: suggestion,
+    }, () => {
+      this.props.onSearchChange(suggestion)
     })
   }
 
   debouncedOnSearchChange = debounce(this.props.onSearchChange, 150)
 
+  debouncedSearchSuggestions = debounce(this.props.searchSuggestions, 150)
+
   render() {
-    const { categories, onToggleCategory } = this.props
+    const {
+      categories, onToggleCategory, suggestions, clearSuggestions, t
+    } = this.props
+
     return (
       <div className='collection-filters'>
         <div className='collection-filters-categories'>
           <div>CATEGORIES:</div>
           <div className='categories-radios'>
-            {ALL_CATEGORIES.map(cat => (
-              <div className='category-radio' key={cat.name}>
+            {COLLECTION_DATE_TYPES.map(name => (
+              <div className='category-radio' key={name}>
                 <input
-                  onChange={() => onToggleCategory(cat.name)}
+                  onChange={() => onToggleCategory(name)}
                   type='checkbox'
-                  checked={categories.indexOf(cat.name) !== -1}
+                  checked={categories.indexOf(name) !== -1}
                 />
-                <div className='radio-label'>{cat.name}</div>
+                <div className='radio-label'>{t(name)}</div>
               </div>
             ))}
           </div>
         </div>
         <div className='collection-filters-search'>
-          <input
-            type='text'
-            className='form-control'
+          <Search
             placeholder='Search'
+            onSuggestionSelected={this.onSuggestionSelected}
+            searchSuggestions={this.debouncedSearchSuggestions}
+            clearSuggestions={clearSuggestions}
+            suggestions={suggestions}
             value={this.state.searchText}
             onChange={this.handleOnSearchChange}
           />
@@ -75,3 +85,10 @@ export default class CollectionFilters extends PureComponent {
     )
   }
 }
+
+export default connect(state => ({
+  suggestions: state.searchSuggestion.results,
+}), {
+  searchSuggestions,
+  clearSuggestions
+})(localize()(CollectionFilters))

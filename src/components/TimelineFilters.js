@@ -1,12 +1,19 @@
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
+import get from 'lodash/get'
 import { connect } from 'react-redux'
+import { localize } from '../localize'
 import { toggleCategoryTimeline, toggleTimelineMilestone } from '../state/actions'
+import { getEventsCateogryCounts } from '../state/selectors'
 import { EVENT_COLORS } from '../consts'
 
 class TimelineFilters extends PureComponent {
   render() {
-    const { categories, milestone, toggleCategoryTimeline, toggleTimelineMilestone } = this.props
+    const {
+      categories, milestone, toggleCategoryTimeline,
+      toggleTimelineMilestone, categoriesCount, t
+    } = this.props
+
     return (
       // TODO: custom css
       <div
@@ -27,7 +34,11 @@ class TimelineFilters extends PureComponent {
                 <svg height={14} width={14}>
                   <circle r={7} cx={7} cy={7} fill={EVENT_COLORS[name]} />
                 </svg>
-                <div className='ml-1 mr-3'>{name}</div>
+                <div className='ml-1 mr-3'>
+                  {t(name)}
+                  {' '}
+                  {get(categoriesCount, name, '')}
+                </div>
               </div>
             ))}
           </div>
@@ -50,7 +61,8 @@ class TimelineFilters extends PureComponent {
 export default connect(state => ({
   categories: state.timeline.categories,
   milestone: state.timeline.milestone,
+  categoriesCount: getEventsCateogryCounts(state),
 }), {
   toggleCategoryTimeline,
   toggleTimelineMilestone,
-})(TimelineFilters)
+})(localize()(TimelineFilters))

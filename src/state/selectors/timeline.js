@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { range, groupBy, last, sortBy } from 'lodash'
+import { range, groupBy, last, sortBy, countBy } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
@@ -27,6 +27,16 @@ export const getEvents = createSelector(
   }))
 )
 
+export const getEventsCateogryCounts = createSelector(
+  getEvents,
+  events => {
+    if (events === null) {
+      return null
+    }
+    return countBy(events, 'data.category')
+  }
+)
+
 export const getFilteredEvents = createSelector(
   getEvents,
   state => state.timeline.categories,
@@ -34,7 +44,7 @@ export const getFilteredEvents = createSelector(
   (events, categories, milestone) => events === null ? null : events
     .filter(event => (
       categories.indexOf(event.data.category) !== -1 &&
-      (!!event.data.main_event) === milestone
+      (!!event.data.key_event) === milestone
     ))
 )
 

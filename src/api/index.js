@@ -20,6 +20,11 @@ const buildMillerParams = (params) => {
   return newParams
 }
 
+export const searchSuggestion = (term) =>
+  request.get(`${API_URL}/document/suggest/`)
+    .query({ q: term })
+    .then(({ body }) => ['Giova', '23', 'Abre Magik'])
+
 export const getStory = (idOrSlug) =>
   request.get(`${API_URL}/story/${idOrSlug}/`)
     .then(extractBody)
@@ -29,7 +34,7 @@ export const getDocuments = (params = {}) =>
     .query(buildMillerParams(params))
     .then(extractBody)
 
-export const getEvent = (id) =>
+export const getDocument = (id) =>
   request.get(`${API_URL}/document/${id}`)
     .then(extractBody)
 
@@ -46,10 +51,6 @@ export const getCollectionDocuments = (params = {}) => getDocuments({
   facets: 'data__year',
   filters: {
     ...params.filters,
-    data__type__in: [
-      'law', 'office', 'portrait', 'product', 'service',
-      'technology', 'transport',
-    ],
   },
 })
 

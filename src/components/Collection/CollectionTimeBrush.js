@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react'
 import memoize from 'memoize-one'
+import debounce from 'lodash/debounce'
+import { DraggableCore } from 'react-draggable'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import { timeYear } from 'd3-time'
+import { extent as makeExtent } from 'd3-array'
 import './Collection.css'
 
 const Ticks = ({ ticks, scale, y }) => (
-  <svg className='collection-ticks'>
+  <g>
     {ticks.map(tick=> (
       <text
         key={tick}
@@ -13,47 +16,133 @@ const Ticks = ({ ticks, scale, y }) => (
         y={y}
         className="timeline-nav-tick fill-white">{tick.getFullYear()}</text>
     ))}
-  </svg>
+  </g>
 )
 
-const Bars = ({ bars, scaleYears, scaleBars, height }) => (
-  <svg className='collection-bars'>
+const Bars = ({ bars, scaleYears, scaleBars, height, fill }) => (
+  <g>
     {bars.map(bar => (
       <rect
-        key={`${bar.data__year}`}
-        x={scaleYears(new Date(+bar.data__year, 1, 1))}
+        key={`${bar.year}`}
+        x={scaleYears(new Date(+bar.year, 1, 1))}
         y={height - scaleBars(bar.count) - 1}
-        width={scaleYears(new Date((+bar.data__year) + 1, 1, 1)) - scaleYears(new Date((+bar.data__year), 1, 1))}
+        width={scaleYears(new Date((+bar.year) + 1, 1, 1)) - scaleYears(new Date((+bar.year), 1, 1))}
         height={scaleBars(bar.count)}
-        fill='white'
+        fill={fill}
       />
     ))}
-  </svg>
+  </g>
 )
+
+const BRUSH_RADIUS = 12
+class Brush extends React.Component {
+  handleEndDrag = (e, data) => {
+    const { scale, endYear, extent } = this.props
+    const x = scale(endYear)
+    let newX = x + data.deltaX
+    const range = scale.range()
+    newX = Math.max(Math.min(newX, range[1]), range[0])
+    newX = Math.max(newX, scale(this.props.startYear) + BRUSH_RADIUS)
+    const newDate = scale.invert(newX)
+    this.props.onChange(this.props.startYear, newDate)
+
+  }
+
+  handleStartDrag = (e, data) => {
+    const { scale, startYear, extent } = this.props
+    const x = scale(startYear)
+    const range = scale.range()
+    let newX = x + data.deltaX
+    newX = Math.max(Math.min(newX, range[1]), range[0])
+    newX = Math.min(newX, scale(this.props.endYear) - BRUSH_RADIUS)
+    const newDate = scale.invert(newX)
+    this.props.onChange(newDate, this.props.endYear)
+  }
+
+  render() {
+    const { scale, startYear, endYear, height } = this.props
+    return (
+      <g>
+        <rect
+          className='collection-brush'
+          x={scale(startYear)} height={height} width={scale(endYear) - scale(startYear)}>
+
+        </rect>
+        <DraggableCore onDrag={this.handleStartDrag}>
+          <g transform={`translate(${scale(startYear)}, 0)`}>
+            <circle r={BRUSH_RADIUS} cx={0} cy={height/2} fill='grey' />
+          </g>
+        </DraggableCore>
+        <DraggableCore onDrag={this.handleEndDrag}>
+          <g transform={`translate(${scale(endYear)}, 0)`}>
+            <circle r={BRUSH_RADIUS} cx={0} cy={height/2} fill='grey' />
+          </g>
+        </DraggableCore>
+
+      </g>
+    )
+  }
+}
 
 const PADDING = 56
 const MAX_BAR_HEIGHT = 30
 
-// TODO: Remove hardcoding shit
-const extent = [new Date(`1830-01-01`), new Date(`2010-01-01`)]
-
-// Take only the good facets
-const filterFacets = facets =>
-  facets.filter(v => v.data__year !== null && !isNaN(+v.data__year))
+const makeExtentFromFacets = facets =>
+  makeExtent(facets.data__year, item => item.year)
+    .map(year => new Date(`${year}-01-01`))
 
 export default class CollectionTimeBrush extends PureComponent {
-  state = {
-    width: null,
+  constructor(props) {
+    super(props)
+
+    const domain = scaleTime()
+      .domain(makeExtentFromFacets(props.allFacets))
+      .nice(timeYear, 10)
+      .domain()
+
+    const startYear = props.startYear ? props.startYear : domain[0]
+    const endYear = props.endYear ? props.endYear : domain[1]
+
+    this.state = {
+      startYear,
+      endYear,
+      prevLocationKey: props.locationKey,
+      width: null,
+      height: null,
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.prevLocationKey !== props.locationKey) {
+      if (
+        props.startYear && props.endYear &&
+        (
+          props.startYear.getFullYear() !== state.startYear.getFullYear() ||
+          props.endYear.getFullYear() !== state.endYear.getFullYear()
+        )
+      ) {
+        return {
+          startYear: props.startYear,
+          endYear: props.endYear,
+          prevLocationKey: props.locationKey,
+        }
+      }
+      return {
+        prevLocationKey: props.locationKey,
+      }
+    }
+    return null
   }
 
   componentDidMount() {
     this.setState({
       width: this.container.clientWidth,
+      height: this.container.clientHeight,
     })
   }
 
   getScaleBars = memoize((facets, height) => {
-    const counts = filterFacets(facets).map(v => v.count)
+    const counts = facets.map(v => v.count)
     const maxCount = Math.max(...counts)
     return scaleLinear().domain([0, maxCount]).range([0, height])
   })
@@ -65,30 +154,58 @@ export default class CollectionTimeBrush extends PureComponent {
       .nice(timeYear, 10)
   })
 
-  getBars = memoize(filterFacets)
+  getExtent = memoize(makeExtentFromFacets)
+
+  onBrushChange = (startYear, endYear) => {
+    this.setState({ startYear, endYear })
+    this.debouncedOnYearsChange(startYear, endYear)
+  }
+
+  debouncedOnYearsChange = debounce(this.props.onYearsChange, 150)
 
   render() {
-    const { allFacets } = this.props
-    const { width } = this.state
+    const { allFacets, facets } = this.props
+    const { width, height } = this.state
     const scaleBars = this.getScaleBars(allFacets.data__year, MAX_BAR_HEIGHT)
+    const extent = this.getExtent(allFacets)
     let scaleYears
     let ticks
     let bars
     if (width) {
       scaleYears = this.getScaleYears(extent, width, PADDING)
       ticks = scaleYears.ticks(timeYear.every(10))
-      bars = this.getBars(allFacets.data__year)
     }
 
     return (
       <div className='collection-time-brush' ref={r => this.container = r}>
-        {width && <Bars
-          height={MAX_BAR_HEIGHT}
-          bars={bars}
-          scaleYears={scaleYears}
-          scaleBars={scaleBars}
-        />}
-        {width && <Ticks y={12} ticks={ticks} scale={scaleYears} />}
+        {width && <svg className='h-100'>
+          <g transform='translate(0, 6)'>
+            <Ticks y={MAX_BAR_HEIGHT + 12} ticks={ticks} scale={scaleYears} />
+            <Bars
+              height={MAX_BAR_HEIGHT}
+              bars={allFacets.data__year}
+              scaleYears={scaleYears}
+              scaleBars={scaleBars}
+              fill={'grey'}
+            />
+            <Bars
+              height={MAX_BAR_HEIGHT}
+              bars={facets.data__year}
+              scaleYears={scaleYears}
+              scaleBars={scaleBars}
+              fill={'white'}
+            />
+          </g>
+          <g>
+            <Brush
+              height={height}
+              startYear={this.state.startYear}
+              endYear={this.state.endYear}
+              onChange={this.onBrushChange}
+              scale={scaleYears}
+            />
+          </g>
+        </svg>}
       </div>
     )
   }

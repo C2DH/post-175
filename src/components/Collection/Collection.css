@@ -2,6 +2,7 @@
   color: #fff;
   top: 0;
   left: 56px;
+  z-index: 2;
   right: 0;
   height: 56px;
   background-color: #272A2D;
@@ -104,4 +105,19 @@
 }
 .collection-item > .item-caption {
   margin-top: 5px;
+}
+
+.collection-item > .item-caption > .item-label {
+  font-size: 20px;
+  line-height: 28px;
+  height: 60px;
+}
+.collection-item > .item-caption > .item-year {
+  font-size: 14px;
+  line-height: 20px;
+}
+.collection-brush {
+  fill-opacity: 0.25;
+  fill: grey;
+  stroke: #fff;
 }
