@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
+import get from 'lodash/get'
 import ReactMapGL, {
   NavigationControl,
   Marker,
@@ -8,6 +9,7 @@ import ReactMapGL, {
   FlyToInterpolator
 } from "react-map-gl";
 import Legend from "../components/Legend";
+import TimeSeries from "../components/TimeSeries";
 import {
   loadPlaces,
   unloadPlaces,
@@ -30,6 +32,7 @@ import {
   getStory,
   getPlacesExtent,
   getTimeSeries,
+  getTimeSeriesByIndicator,
 } from "../state/selectors";
 import { getQsSafeYear, makeUrlWithYear } from "../utils";
 import TimelineNavigationMap from "../components/TimelineNavigationMap";
@@ -152,10 +155,9 @@ class MapPage extends PureComponent {
       clearOverPlace,
       currentDate,
       story,
-      timeSeries
+      timeSeries,
+      timeSeriesByIndicator
     } = this.props;
-
-    console.log(timeSeries)
 
     return (
       <div className="h-100">
@@ -163,11 +165,16 @@ class MapPage extends PureComponent {
         <div className='h-100 with-sidemenu bg-info d-flex flex-column'>
           <div style={{ height: 50 }} className='bg-info' />
           <div className='row no-gutters flex-1 bg-info'>
-            <Legend
+            <TimeSeries
+              year={currentDate ? currentDate.getFullYear() : null}
+              columns={get(timeSeries, 'columns', []).slice(1)}
+              series={timeSeriesByIndicator}
+            />
+            {/* <Legend
               story={story}
               selectedPlace={selectedPlace}
               onClose={this.closePlaceDetail}
-            />
+            /> */}
             <div
               className="d-flex flex-1 w-100 flex-column bg-darkgrey"
               style={{ overflow: "hidden" }}
@@ -190,7 +197,7 @@ class MapPage extends PureComponent {
                   {currentDate && (
                     <CurrentYear year={currentDate.getFullYear()} />
                   )}
-                  {places &&
+                  {false && places &&
                     places.map(place => {
                       const isSelected = selectedPlace
                         ? place.id === selectedPlace.id
@@ -309,6 +316,7 @@ const mapStateToProps = state => ({
   currentDateRaw: state.map.currentDate,
   extent: getPlacesExtent(state),
   timeSeries: getTimeSeries(state),
+  timeSeriesByIndicator: getTimeSeriesByIndicator(state),
 });
 export default connect(
   mapStateToProps,
