@@ -122,7 +122,7 @@ class Collection extends PureComponent {
     const { search, categories, overlaps } = this.parseQueryParams(queryParams)
 
     return (
-      <div className='h-100 collection-container'>
+      <div className='h-100'>
         <SideMenu />
         <div className='h-100 with-sidemenu collection'>
           <CollectionFilters
