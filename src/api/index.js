@@ -1,5 +1,6 @@
 // API CALLS
 import request from "superagent";
+import { csvParse } from 'd3-dsv'
 const API_URL = "/api";
 
 // Extract only body from response, when other stuff like response
@@ -25,6 +26,21 @@ export const searchSuggestion = term =>
     .get(`${API_URL}/document/suggest/`)
     .query({ q: term })
     .then(({ body }) => ["Giova", "23", "Abre Magik"]);
+
+export const getTimeSeries = () =>
+  request.get(`${API_URL}/document/itu-stats/`).then(({ body }) => {
+    const path = body.src.split('/').slice(3).join('/')
+    return request.get(`/${path}`)
+      .set('Accept', 'text/plain')
+      .set('Content-Type', 'text/plain')
+      .then(response => {
+        const data = csvParse(response.text)
+        return {
+          rows: data.map(a => a),
+          columns: data.columns,
+        }
+      })
+  })
 
 export const getStory = idOrSlug =>
   request.get(`${API_URL}/story/${idOrSlug}/`).then(extractBody);

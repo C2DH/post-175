@@ -10,6 +10,7 @@ import map from './map'
 import storyDetail from './storyDetail'
 import searchSuggestion from './searchSuggestion'
 import docDetail from './docDetail'
+import timeSeries from './timeSeries'
 
 import {
   GET_EVENTS,
@@ -26,6 +27,7 @@ export default combineReducers({
   lang,
   timeline,
   map,
+  timeSeries,
   selectedEvent,
   storyDetail,
   searchSuggestion,

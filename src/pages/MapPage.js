@@ -18,7 +18,9 @@ import {
   clearOverPlace,
   loadStory,
   unloadStory,
-  setDateTimelineMap
+  setDateTimelineMap,
+  loadTimeSeries,
+  unloadTimeSeries,
 } from "../state/actions";
 import {
   getPlacesInDate,
@@ -26,7 +28,8 @@ import {
   getMapSelectedPlace,
   getMapTimelineCurrentDate,
   getStory,
-  getPlacesExtent
+  getPlacesExtent,
+  getTimeSeries,
 } from "../state/selectors";
 import { getQsSafeYear, makeUrlWithYear } from "../utils";
 import TimelineNavigationMap from "../components/TimelineNavigationMap";
@@ -50,6 +53,7 @@ class MapPage extends PureComponent {
   };
 
   componentDidMount() {
+    this.props.loadTimeSeries()
     this.props.loadStory("map");
     this.props.loadPlaces({ detailed: true });
     this.setMapSize();
@@ -100,13 +104,14 @@ class MapPage extends PureComponent {
     this.props.unloadStory();
     this.props.unloadPlaces();
     this.props.unloadMap();
+    this.props.unloadTimeSeries()
     window.removeEventListener("resize", this.setMapSize);
   }
 
   setMapSize = () => {
     this.setState({
       width: this.mapContainer.offsetWidth,
-      height: this.mapContainer.offsetHeight - 50
+      height: this.mapContainer.offsetHeight,
     });
   };
 
@@ -146,8 +151,11 @@ class MapPage extends PureComponent {
       setOverPlace,
       clearOverPlace,
       currentDate,
-      story
+      story,
+      timeSeries
     } = this.props;
+
+    console.log(timeSeries)
 
     return (
       <div className="h-100">
@@ -299,11 +307,14 @@ const mapStateToProps = state => ({
   selectedPlace: getMapSelectedPlace(state),
   currentDate: getMapTimelineCurrentDate(state),
   currentDateRaw: state.map.currentDate,
-  extent: getPlacesExtent(state)
+  extent: getPlacesExtent(state),
+  timeSeries: getTimeSeries(state),
 });
 export default connect(
   mapStateToProps,
   {
+    loadTimeSeries,
+    unloadTimeSeries,
     loadPlaces,
     unloadPlaces,
     unloadMap,

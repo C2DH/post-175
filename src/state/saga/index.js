@@ -20,6 +20,8 @@ import {
   CLEAR_SEARCH_SUGGESTION,
   GET_DOCUMENT,
   GET_DOCUMENT_UNLOAD,
+  GET_TIME_SERIES,
+  GET_TIME_SERIES_UNLOAD,
 } from '../actions'
 import {
   getSelectedLang,
@@ -46,6 +48,16 @@ function *handleGetDocument({ payload }) {
   }
 }
 
+function *handleGetTimeSeries({ payload }) {
+  yield put({ type: `${GET_TIME_SERIES}_LOADING` })
+  try {
+    const series = yield call(api.getTimeSeries, payload)
+    yield put({ type: `${GET_TIME_SERIES}_SUCCESS`, payload: series })
+  } catch (error) {
+    yield put({ type: `${GET_TIME_SERIES}_FAILURE`, error })
+  }
+}
+
 function *handleSearchSuggestion({ payload }) {
   yield put({ type: `${SEARCH_SUGGESTION}_LOADING` })
   try {
@@ -63,6 +75,12 @@ function *syncLangWi18n() {
 
 export default function* rootSaga() {
   yield takeEvery(SET_SELECTED_LANG, syncLangWi18n)
+  yield fork(
+    takeLatestAndCancel,
+    GET_TIME_SERIES,
+    GET_TIME_SERIES_UNLOAD,
+    handleGetTimeSeries,
+  )
   yield fork(
     takeLatestAndCancel,
     GET_STORY,
