@@ -50,7 +50,7 @@ class MapPage extends PureComponent {
 
   componentDidMount() {
     this.props.loadStory("map");
-    this.props.loadPlaces();
+    this.props.loadPlaces({ detailed: true });
     this.setMapSize();
     window.addEventListener("resize", this.setMapSize, false);
   }

@@ -2,7 +2,7 @@
   "name": "post-175",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://miller.inmagik.com",
+  "proxy": "https://luxptt.dhlab.lu",
   "dependencies": {
     "bootstrap": "4.1.3",
     "classnames": "^2.2.6",

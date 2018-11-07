@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
-import { uniq } from 'lodash'
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { uniq } from "lodash";
 import {
   loadEvents,
   unloadEvents,
@@ -13,8 +13,8 @@ import {
   loadStory,
   unloadStory,
   setCategoriesTimeline,
-  setMilestoneTimeline,
-} from '../state/actions'
+  setMilestoneTimeline
+} from "../state/actions";
 import {
   getStory,
   getEvents,
@@ -24,26 +24,26 @@ import {
   getTimelineNextEvent,
   getEventsExtent,
   getTimelineCurrentDate
-} from '../state/selectors'
+} from "../state/selectors";
 import {
   getQsSafeYear,
   makeUrlWithYearAndFilters,
   getQsSafeCategories,
-  getQsSafeMilestone,
-} from '../utils'
-import MobileAlert from '../components/MobileAlert'
-import Period from '../components/Period'
-import TimelineNavigation from '../components/TimelineNavigation'
-import Timeline from '../components/Timeline'
-import SideMenu from '../components/SideMenu'
-import { TransitionMotion, Motion, spring } from 'react-motion'
-import EventModal from '../components/EventModal'
+  getQsSafeMilestone
+} from "../utils";
+import MobileAlert from "../components/MobileAlert";
+import Period from "../components/Period";
+import TimelineNavigation from "../components/TimelineNavigation";
+import Timeline from "../components/Timeline";
+import SideMenu from "../components/SideMenu";
+import { TransitionMotion, Motion, spring } from "react-motion";
+import EventModal from "../components/EventModal";
 
 class TimelinePage extends PureComponent {
   componentDidMount() {
-    this.props.loadEvents()
-    this.props.loadPeriods()
-    this.props.loadStory('timeline')
+    this.props.loadEvents({ detailed: true });
+    this.props.loadPeriods();
+    this.props.loadStory("timeline");
   }
 
   // TODO: Debounce for perforamance issues
@@ -51,58 +51,69 @@ class TimelinePage extends PureComponent {
     // Init current date from query string
     if (
       this.props.extent !== nextProps.extent &&
-      nextProps.extent && !nextProps.currentDateRaw
+      nextProps.extent &&
+      !nextProps.currentDateRaw
     ) {
-      const year = getQsSafeYear(this.props.location)
-      const categories = getQsSafeCategories(this.props.location)
+      const year = getQsSafeYear(this.props.location);
+      const categories = getQsSafeCategories(this.props.location);
       if (categories.length > 0) {
-        this.props.setCategoriesTimeline(categories)
+        this.props.setCategoriesTimeline(categories);
       }
-      const milestone = getQsSafeMilestone(this.props.location)
-      this.props.setMilestoneTimeline(milestone)
-      const { extent } = nextProps
-      if (year && year >= extent[0].getFullYear() && year <= extent[1].getFullYear()) {
-        this.props.setDateTimeline(new Date(`${year}`))
+      const milestone = getQsSafeMilestone(this.props.location);
+      this.props.setMilestoneTimeline(milestone);
+      const { extent } = nextProps;
+      if (
+        year &&
+        year >= extent[0].getFullYear() &&
+        year <= extent[1].getFullYear()
+      ) {
+        this.props.setDateTimeline(new Date(`${year}`));
       } else {
-        this.props.history.replace(makeUrlWithYearAndFilters(
-          this.props.location,
-          nextProps.currentDate.getFullYear(),
-        ))
+        this.props.history.replace(
+          makeUrlWithYearAndFilters(
+            this.props.location,
+            nextProps.currentDate.getFullYear()
+          )
+        );
       }
     } else if (
-      (nextProps.currentDate && this.props.currentDate &&
-      this.props.currentDate.getFullYear() !== nextProps.currentDate.getFullYear()
-      && this.props.currentDateRaw)
-      || this.props.categories !== nextProps.categories
-      || this.props.milestone !== nextProps.milestone
+      (nextProps.currentDate &&
+        this.props.currentDate &&
+        this.props.currentDate.getFullYear() !==
+          nextProps.currentDate.getFullYear() &&
+        this.props.currentDateRaw) ||
+      this.props.categories !== nextProps.categories ||
+      this.props.milestone !== nextProps.milestone
     ) {
-      this.props.history.replace(makeUrlWithYearAndFilters(
-        this.props.location,
-        nextProps.currentDate.getFullYear(),
-        nextProps.categories,
-        nextProps.milestone
-      ))
+      this.props.history.replace(
+        makeUrlWithYearAndFilters(
+          this.props.location,
+          nextProps.currentDate.getFullYear(),
+          nextProps.categories,
+          nextProps.milestone
+        )
+      );
     }
   }
 
   componentWillUnmount() {
-    this.props.unloadEvents()
-    this.props.unloadPeriods()
-    this.props.unloadTimeline()
-    this.props.unloadStory()
+    this.props.unloadEvents();
+    this.props.unloadPeriods();
+    this.props.unloadTimeline();
+    this.props.unloadStory();
   }
 
   goNext = () => {
-    const { selectEvent, setDateTimeline, nextEvent } = this.props
-    setDateTimeline(nextEvent.startDate)
-    selectEvent(nextEvent)
-  }
+    const { selectEvent, setDateTimeline, nextEvent } = this.props;
+    setDateTimeline(nextEvent.startDate);
+    selectEvent(nextEvent);
+  };
 
   goPrev = () => {
-    const { selectEvent, setDateTimeline, prevEvent } = this.props
-    setDateTimeline(prevEvent.startDate)
-    selectEvent(prevEvent)
-  }
+    const { selectEvent, setDateTimeline, prevEvent } = this.props;
+    setDateTimeline(prevEvent.startDate);
+    selectEvent(prevEvent);
+  };
 
   render() {
     const {
@@ -113,61 +124,76 @@ class TimelinePage extends PureComponent {
       nextEvent,
       prevEvent,
       clearSelectedEvent,
-      story,
-    } = this.props
+      story
+    } = this.props;
     return (
-      <div className='h-100 d-flex flex-column'>
+      <div className="h-100 d-flex flex-column">
         <MobileAlert />
-        <SideMenu/>
-        <div className='row no-gutters flex-1 with-sidemenu'>
+        <SideMenu />
+        <div className="row no-gutters flex-1 with-sidemenu">
           {/* {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
             {({o}) => (
               <Period style={{opacity:o}} story={story}/>
             )}
           </Motion> } */}
-          {events && periods && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
-            {({o}) => (
-              <Timeline style={{opacity:o}} className='w-100' />
+          {events &&
+            periods && (
+              <Motion defaultStyle={{ o: 0 }} style={{ o: spring(1) }}>
+                {({ o }) => (
+                  <Timeline style={{ opacity: o }} className="w-100" />
+                )}
+              </Motion>
             )}
-          </Motion> }
 
           {/* TODO: Move in another component perforamance issues  */}
           <TransitionMotion
-            defaultStyles={selectedEvent ? [{
-              key: 'eventModal',
-              data: { selectedEvent, nextEvent, prevEvent },
-              style: { o: 0 },
-            }] : []}
-            styles={selectedEvent ? [{
-              key: 'eventModal',
-              data: { selectedEvent, nextEvent, prevEvent },
-              style: { o: spring(1) },
-            }] : []}
+            defaultStyles={
+              selectedEvent
+                ? [
+                    {
+                      key: "eventModal",
+                      data: { selectedEvent, nextEvent, prevEvent },
+                      style: { o: 0 }
+                    }
+                  ]
+                : []
+            }
+            styles={
+              selectedEvent
+                ? [
+                    {
+                      key: "eventModal",
+                      data: { selectedEvent, nextEvent, prevEvent },
+                      style: { o: spring(1) }
+                    }
+                  ]
+                : []
+            }
             willLeave={() => ({ o: spring(0) })}
             willEnter={() => ({ o: 0 })}
           >
-          {interpolatedStyles =>
-            <div>
-              {interpolatedStyles.map(config => {
-                return (
-                  <EventModal
-                    style={{ opacity: config.style.o }}
-                    key={config.key}
-                    hasNext={config.data.nextEvent !== null}
-                    hasPrev={config.data.prevEvent !== null}
-                    goNext={this.goNext}
-                    goPrev={this.goPrev}
-                    event={config.data.selectedEvent}
-                    onClose={clearSelectedEvent}
-                   />
-              )
-            })}
-            </div>
-          }
+            {interpolatedStyles => (
+              <div>
+                {interpolatedStyles.map(config => {
+                  return (
+                    <EventModal
+                      style={{ opacity: config.style.o }}
+                      key={config.key}
+                      hasNext={config.data.nextEvent !== null}
+                      hasPrev={config.data.prevEvent !== null}
+                      goNext={this.goNext}
+                      goPrev={this.goPrev}
+                      event={config.data.selectedEvent}
+                      onClose={clearSelectedEvent}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </TransitionMotion>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -182,19 +208,22 @@ const mapStateToProps = state => ({
   currentDateRaw: state.timeline.currentDate,
   categories: state.timeline.categories,
   milestone: state.timeline.milestone,
-  story: getStory(state),
-})
-export default connect(mapStateToProps, {
-  loadEvents,
-  unloadEvents,
-  loadPeriods,
-  unloadPeriods,
-  unloadTimeline,
-  setDateTimeline,
-  clearSelectedEvent,
-  selectEvent,
-  loadStory,
-  unloadStory,
-  setCategoriesTimeline,
-  setMilestoneTimeline,
-})(TimelinePage)
+  story: getStory(state)
+});
+export default connect(
+  mapStateToProps,
+  {
+    loadEvents,
+    unloadEvents,
+    loadPeriods,
+    unloadPeriods,
+    unloadTimeline,
+    setDateTimeline,
+    clearSelectedEvent,
+    selectEvent,
+    loadStory,
+    unloadStory,
+    setCategoriesTimeline,
+    setMilestoneTimeline
+  }
+)(TimelinePage);
