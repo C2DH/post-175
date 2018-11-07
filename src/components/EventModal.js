@@ -64,7 +64,7 @@ class EventModal extends PureComponent {
     const { event, onClose, hasPrev, hasNext, goNext, goPrev, style,t } = this.props
 
     // Take only docs \w snapshot
-    const displayDocs = event.documents.filter(d => d.snapshot)
+    const displayDocs = get(event, 'documents', []).filter(d => d.snapshot)
     const selectedDocument = this.state.selectedDocument
       ? this.state.selectedDocument
       : head(displayDocs)
