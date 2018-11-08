@@ -1,13 +1,25 @@
 import React, { PureComponent } from 'react'
+import TimeSerieChart from './TimeSerieChart'
+import './TimeSeries.css'
 
 class TimeSerie extends PureComponent {
   render() {
-    const { column, serie, year } = this.props
-    console.log(column, serie)
+    const { column, serie, year, extent } = this.props
     return (
-      <div>
-        <div>{column}</div>
-        <div>{serie[year]}</div>
+      <div className='px-3 py-1 d-flex flex-column text-white border-bottom time-serie'>
+        <div>
+          {column}
+        </div>
+        <div className='d-flex time-serie-chart-container'>
+          <h4>{serie[year] || '-'}</h4>
+          <div className='flex-1'>
+            {extent && <TimeSerieChart
+              year={year}
+              yearExtent={extent}
+              serie={serie}
+            />}
+          </div>
+        </div>
       </div>
     )
   }
@@ -15,15 +27,16 @@ class TimeSerie extends PureComponent {
 
 export default class TimeSeries extends PureComponent {
   render() {
-    const { columns, series, year } = this.props
+    const { columns, series, year, extent } = this.props
     return (
-      <div className="col-md-3">
+      <div className="col-md-3 bg-darkgrey time-series">
         {columns.map(col => (
           <TimeSerie
             key={col}
             year={year}
             column={col}
             serie={series[col]}
+            extent={extent}
           />
         ))}
       </div>

@@ -156,16 +156,18 @@ class MapPage extends PureComponent {
       currentDate,
       story,
       timeSeries,
-      timeSeriesByIndicator
+      timeSeriesByIndicator,
+      extent,
     } = this.props;
 
     return (
       <div className="h-100">
         <SideMenu />
-        <div className='h-100 with-sidemenu bg-info d-flex flex-column'>
+        <div className='h-100 with-sidemenu d-flex flex-column'>
           <div style={{ height: 50 }} className='bg-info' />
-          <div className='row no-gutters flex-1 bg-info'>
+          <div className='row no-gutters flex-1'>
             <TimeSeries
+              extent={extent}
               year={currentDate ? currentDate.getFullYear() : null}
               columns={get(timeSeries, 'columns', []).slice(1)}
               series={timeSeriesByIndicator}

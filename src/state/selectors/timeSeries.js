@@ -10,6 +10,9 @@ const makeRowsByYear = (rows, col, columns) => {
 
     const year = +row[columns[0]]
     const value = +row[col].replace(/ /g, '').replace(',', '.')
+    if (isNaN(value)) {
+      return rowsByYear
+    }
 
     return {
       ...rowsByYear,
