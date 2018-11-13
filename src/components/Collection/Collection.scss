@@ -1,0 +1,123 @@
+.collection-filters {
+  color: #fff;
+  top: 0;
+  left: 56px;
+  z-index: 2;
+  right: 0;
+  height: 56px;
+  background-color: #272A2D;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.collection-filters-categories {
+  display: flex;
+}
+.collection-filters-categories .categories-radios {
+  align-items: center;
+  margin-left: 20px;
+  display: flex;
+}
+.collection-filters-categories .categories-radios .category-radio {
+  align-items: center;
+  margin-right: 30px;
+  display: flex;
+}
+.collection-filters-categories .categories-radios .category-radio:last-child {
+  margin-right: 0;
+}
+.collection-filters-categories .categories-radios .category-radio .radio-label {
+  margin-left: 10px;
+}
+.collection-filters-categories .categories-radios .category-radio input {
+  margin-top: -2px;
+}
+
+.collection-time-brush {
+  bottom: 0;
+  left: 56px;
+  right: 0;
+  height: 56px;
+  border-top: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: fixed;
+}
+.collection-ticks {
+  width: 100%;
+  height: 20px;
+}
+.collection-bars {
+  /* border-bottom: 1px solid grey; */
+  /* margin-left: 30px; */
+  width: 100%;
+  height: 30px;
+}
+
+.collection-list {
+  height: 100%;
+  padding-top: 56px;
+  padding-bottom: 56px;
+  background-color: #272A2D;
+  height: 100%;
+}
+.collection-row {
+  padding-top: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 100%;
+  overflow-y: auto;
+}
+.collection-col {
+  /* border: 1px solid #fff; */
+}
+
+/* Colection item */
+.collection-item {
+  /* border: 1px solid grey; */
+  width: 100%;
+  color: white;
+  margin-bottom: 30px;
+  /* background-color: deepskyblue; */
+}
+.collection-item > .item-image-box {
+  background-color: #1D1F21;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 295px;
+  width: 100%;
+}
+.collection-item > .item-image-box > img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  vertical-align: middle;
+}
+.collection-item > .item-caption {
+  margin-top: 5px;
+}
+
+.collection-item > .item-caption > .item-label {
+  font-size: 20px;
+  line-height: 28px;
+  height: 60px;
+}
+.collection-item > .item-caption > .item-year {
+  font-size: 14px;
+  line-height: 20px;
+}
+.collection-brush {
+  fill-opacity: 0.25;
+  fill: grey;
+  stroke: #fff;
+}
