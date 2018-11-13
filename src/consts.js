@@ -8,22 +8,20 @@
 // --Technologie: #13d436;
 
 export const COLLECTION_DATE_TYPES = [
-  'law',
-  'office',
-  'portrait',
-  'product',
-  'service',
-  'technology',
-  'transport',
-]
+  "law",
+  "office",
+  "portrait",
+  "product",
+  "service",
+  "technology",
+  "transport"
+];
 
-export const EVENT_COLORS =  {
-  event: '#ed6505',
-  legislation: '#186a0f',
-  service: '#55f7df',
-  cooperation: '#2933ff',
-  staff: '#fdd00c',
-  transport: '#b413da',
-  building: '#ff3e4c',
-  technology: '#13d436',
-}
+export const EVENT_COLORS = {
+  cooperation: "#ed6505",
+  infrastructure: "#186a0f",
+  "legislation and events": "#55f7df",
+  service: "#2933ff",
+  staff: "#fdd00c",
+  technology: "#13d436"
+};
