@@ -1,11 +1,10 @@
 .time-series {
-  overflow-y: auto;
-}
+  overflow-y: auto; }
+
 .time-serie .time-serie-chart-container {
-  height: 50px;
-}
+  height: 50px; }
+
 .time-serie .time-serie-chart-container h4 {
   font-weight: normal;
   font-size: 36px;
-  flex: 0.33;
-}
+  flex: 0.33; }

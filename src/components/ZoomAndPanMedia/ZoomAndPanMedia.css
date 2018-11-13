@@ -2,8 +2,8 @@
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-}
+  flex-direction: column; }
+
 .zoom-and-pan-media-container {
   flex: 1;
   /* border: 1px solid green; */
@@ -13,13 +13,12 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-}
+  height: 100%; }
+
 .zoom-and-pan-media-container .zoomable {
   max-width: 100%;
   width: auto;
   height: auto;
   max-height: 100%;
   vertical-align: middle;
-  user-select: none;
-}
+  user-select: none; }

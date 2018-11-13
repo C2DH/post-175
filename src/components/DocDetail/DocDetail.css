@@ -2,13 +2,11 @@
   height: 100%;
   width: 100%;
   background-color: #272A2D;
-  display: flex;
-}
+  display: flex; }
 
 .doc-detail > .doc-detail-data {
   width: 100%;
-  flex: 1;
-}
+  flex: 1; }
 
 .doc-detail > .doc-detail-bar {
   color: white;
@@ -16,52 +14,41 @@
   padding-top: 10px;
   align-items: center;
   flex-direction: column;
-  width: 50px;
-}
+  width: 50px; }
 
 .doc-detail > .doc-detail-bar > .close-icon {
-  cursor: pointer;
-}
-
+  cursor: pointer; }
 
 .doc-detail > .doc-detail-data .doc-detail-info {
   padding: 30px;
-  background-color: white;
-}
-
+  background-color: white; }
 
 .doc-detail > .doc-detail-data .doc-detail-info > .doc-title {
-  margin-bottom: 30px;
-}
+  margin-bottom: 30px; }
 
 .doc-detail > .doc-detail-data .doc-detail-info > .doc-description {
   border-top: 1px solid #C4CDD5;
   padding-top: 30px;
-  padding-bottom: 20px;
-}
+  padding-bottom: 20px; }
 
 .doc-detail > .doc-detail-data .doc-detail-info
 > .doc-related-docs-container > .doc-related-docs-title {
-  text-transform: uppercase;
-}
+  text-transform: uppercase; }
 
 .doc-detail > .doc-detail-data .doc-detail-info >
 .doc-related-docs-container > .doc-related-docs {
   border-top: 1px solid #C4CDD5;
   padding-top: 10px;
-  /* display: flex; */
-}
+  /* display: flex; */ }
 
 .doc-detail > .doc-detail-data .doc-detail-info >
 .doc-related-docs-container > .doc-related-docs > .doc-related-doc {
   margin-top: 20px;
   height: 70px;
-  width: 70px;
-}
+  width: 70px; }
 
 .doc-detail > .doc-detail-data .doc-detail-info >
 .doc-related-docs-container > .doc-related-docs > .doc-related-doc img {
   object-fit: cover;
   height: 100%;
-  width: 70px;
-}
+  width: 70px; }
