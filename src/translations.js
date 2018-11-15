@@ -6,8 +6,11 @@ export default {
     menu_map: "Karte",
     menu_timeline: "Zeitleiste",
     menu_about: "Über die Ausstellung",
+    menu_collection: "Sammlung",
+    menu_themes: "Themen",
     // home page
     home_joerpost: "Joer Post",
+    home_title: "Connecter le Luxembourg",
     home_button1: "Entdecken Sie die Zeitleiste",
     home_button2: "Erkunden Sie die Karte",
     home_readmore: "Mehr",
@@ -46,8 +49,11 @@ export default {
     menu_map: "Carte",
     menu_timeline: "Ligne du temps",
     menu_about: "À propos",
+    menu_collection: "Collection",
+    menu_themes: "Thèmes",
     // home page
     home_joerpost: "Joer Post",
+    home_title: "Connecter le Luxembourg",
     home_button1: "Découvrez la ligne du temps",
     home_button2: "Explorez la carte",
     home_readmore: "Lire plus",
