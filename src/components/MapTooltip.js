@@ -50,4 +50,5 @@ class MapTooltip extends PureComponent {
   }
 }
 
-export default localize()(MapTooltip)
+// export default localize()(MapTooltip)
+export default MapTooltip
