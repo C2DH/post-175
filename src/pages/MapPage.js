@@ -215,7 +215,7 @@ class MapPage extends PureComponent {
         tiles: [`https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`],
       },
       paint: {"raster-opacity": 0.50},
-      layout: { visibility: true },
+      layout: { visibility: 'visible' },
       minzoom: 0,
       maxzoom: 22
     })) : []
