@@ -23,6 +23,8 @@ import {
   setDateTimelineMap,
   loadTimeSeries,
   unloadTimeSeries,
+  loadRasterLayers,
+  unloadRasterLayers,
 } from "../state/actions";
 import {
   getPlacesInDate,
@@ -33,6 +35,7 @@ import {
   getPlacesExtent,
   getTimeSeries,
   getTimeSeriesByIndicator,
+  getRasterLayers,
 } from "../state/selectors";
 import { getQsSafeYear, makeUrlWithYear } from "../utils";
 import TimelineNavigationMap from "../components/TimelineNavigationMap";
@@ -59,6 +62,7 @@ class MapPage extends PureComponent {
     this.props.loadTimeSeries()
     this.props.loadStory("map");
     this.props.loadPlaces({ detailed: true });
+    this.props.loadRasterLayers({})
     this.setMapSize();
     window.addEventListener("resize", this.setMapSize, false);
   }
@@ -101,14 +105,44 @@ class MapPage extends PureComponent {
         )
       );
     }
+
+
+  }
+
+  componentDidUpdate(oldProps) {
+    if(oldProps.rasterLayers !== this.props.rasterLayers){
+      console.log("rasterLayers",this.props.rasterLayers)
+      // this.addRasterLayersToMap(this.props.rasterLayers)
+
+    }
+  }
+
+  addRasterLayersToMap = (layers) => {
+    console.log("123", this.mapRef)
+    if(this.mapRef){
+      const map = this.mapRef.getMap()
+      console.log(map)
+      map.addLayer({
+        id: 'raster-layer',
+        type: 'raster',
+        source: {
+          type: 'raster',
+          tiles: ['https://api.mapbox.com/v4/RASTER_LAYER/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoidGVvIiwiYSI6IllvZUo1LUkifQ.dirqtn275pAKdnqtLM2HSw'],
+        },
+        paint: {"raster-opacity": 0.50},
+        minzoom: 0,
+        maxzoom: 22
+      });
+    }
   }
 
   componentWillUnmount() {
-    this.props.unloadStory();
-    this.props.unloadPlaces();
-    this.props.unloadMap();
+    this.props.unloadStory()
+    this.props.unloadPlaces()
+    this.props.unloadMap()
     this.props.unloadTimeSeries()
-    window.removeEventListener("resize", this.setMapSize);
+    this.props.unloadRasterLayers()
+    window.removeEventListener("resize", this.setMapSize)
   }
 
   setMapSize = () => {
@@ -119,7 +153,7 @@ class MapPage extends PureComponent {
   };
 
   selectPlace = place => {
-    this.props.setSelectedPlace(place);
+    this.props.setSelectedPlace(place)
     this.updateViewport({
       latitude: place.coordinates[1],
       longitude: place.coordinates[0],
@@ -160,6 +194,8 @@ class MapPage extends PureComponent {
       extent,
     } = this.props;
 
+    console.log("width", width)
+
     return (
       <div className="h-100">
         <SideMenu />
@@ -192,6 +228,7 @@ class MapPage extends PureComponent {
                   height={height}
                   width={width}
                   onViewportChange={this.updateViewport}
+                  ref={r => this.mapRef = r}
                 >
                   <div style={{ position: "absolute", right: 5, top: 5 }}>
                     <NavigationControl onViewportChange={this.updateViewport} />
@@ -199,7 +236,7 @@ class MapPage extends PureComponent {
                   {currentDate && (
                     <CurrentYear year={currentDate.getFullYear()} />
                   )}
-                  {false && places &&
+                  {places &&
                     places.map(place => {
                       const isSelected = selectedPlace
                         ? place.id === selectedPlace.id
@@ -319,6 +356,7 @@ const mapStateToProps = state => ({
   extent: getPlacesExtent(state),
   timeSeries: getTimeSeries(state),
   timeSeriesByIndicator: getTimeSeriesByIndicator(state),
+  rasterLayers: getRasterLayers(state),
 });
 export default connect(
   mapStateToProps,
@@ -334,6 +372,8 @@ export default connect(
     clearOverPlace,
     loadStory,
     unloadStory,
-    setDateTimelineMap
+    setDateTimelineMap,
+    loadRasterLayers,
+    unloadRasterLayers,
   }
 )(MapPage);

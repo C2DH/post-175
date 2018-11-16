@@ -99,3 +99,12 @@ export const getPlaces = (params = {}) =>
       data__type: "place"
     }
   });
+
+  export const getRasterLayers = (params = {}) =>
+    getDocuments({
+      ...params,
+      filters: {
+        ...params.filters,
+        data__raster_layer__isnull: false
+      }
+    });

@@ -22,6 +22,7 @@ import {
   GET_DOCUMENT_UNLOAD,
   GET_TIME_SERIES,
   GET_TIME_SERIES_UNLOAD,
+  GET_RASTER_LAYERS,
 } from '../actions'
 import {
   getSelectedLang,
@@ -129,4 +130,9 @@ export default function* rootSaga() {
     CLEAR_SEARCH_SUGGESTION,
     handleSearchSuggestion,
   )
+  yield fork(makeDocumentsListSaga(
+    GET_RASTER_LAYERS,
+    api.getRasterLayers,
+    state => state.rasterLayers,
+  ))
 }

@@ -19,6 +19,7 @@ import {
   GET_HOME_DOCS,
   GET_COLLECTION_DOCS,
   GET_COLLECTION_FACETS,
+  GET_RASTER_LAYERS,
 } from '../actions'
 
 export default combineReducers({
@@ -38,4 +39,5 @@ export default combineReducers({
   homeDocs: makeDocumentsList(GET_HOME_DOCS),
   collectionDocs: makeDocumentsList(GET_COLLECTION_DOCS),
   collectionFacets: makeFacets(GET_COLLECTION_FACETS),
+  rasterLayers: makeDocumentsList(GET_RASTER_LAYERS),
 })
