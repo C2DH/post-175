@@ -11,7 +11,7 @@ import Immutable from 'immutable';
 //   Popup,
 //   FlyToInterpolator
 // } from "react-map-gl";
-import MapGL, { Marker, Popup, Layer } from '@urbica/react-map-gl';
+import MapGL, { Marker, Popup, Layer, Cluster } from '@urbica/react-map-gl';
 
 import Legend from "../components/Legend";
 import TimeSeries from "../components/TimeSeries";
@@ -51,7 +51,12 @@ import { Motion, TransitionMotion, spring, presets } from "react-motion";
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
-console.log("xx", mapboxgl)
+
+const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => (
+  <div style={{ ...style, background: "deepskyblue", padding: 4 }}>
+    {point_count_abbreviated}
+  </div>
+);
 
 class MapPage extends PureComponent {
   state = {
@@ -261,8 +266,9 @@ class MapPage extends PureComponent {
                   {currentDate && (
                     <CurrentYear year={currentDate.getFullYear()} />
                   )}
-                  {places &&
-                    places.map(place => {
+                  {places && <Cluster maxZoom={11} radius={20} extent={512} nodeSize={64} element={ClusterElement}>
+
+                    {places.map(place => {
                       const isSelected = selectedPlace
                         ? place.id === selectedPlace.id
                         : false;
@@ -311,6 +317,7 @@ class MapPage extends PureComponent {
                         </Marker>
                       );
                     })}
+                  </Cluster>}
 
                     {overPlace && <Popup
                       latitude={overPlace.coordinates[1]}
