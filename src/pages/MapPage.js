@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { localize } from '../localize'
 import get from 'lodash/get'
+import mapboxgl from 'mapbox-gl'
+import Immutable from 'immutable';
 // import ReactMapGL, {
 //   NavigationControl,
 //   Marker,
@@ -9,7 +11,7 @@ import get from 'lodash/get'
 //   Popup,
 //   FlyToInterpolator
 // } from "react-map-gl";
-import MapGL, { Marker, Popup } from '@urbica/react-map-gl';
+import MapGL, { Marker, Popup, Layer } from '@urbica/react-map-gl';
 
 import Legend from "../components/Legend";
 import TimeSeries from "../components/TimeSeries";
@@ -49,6 +51,7 @@ import { Motion, TransitionMotion, spring, presets } from "react-motion";
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
+console.log("xx", mapboxgl)
 
 class MapPage extends PureComponent {
   state = {
@@ -69,6 +72,7 @@ class MapPage extends PureComponent {
     this.setMapSize();
     window.addEventListener("resize", this.setMapSize, false);
   }
+
 
   componentWillReceiveProps(nextProps) {
     if (
@@ -115,8 +119,12 @@ class MapPage extends PureComponent {
   componentDidUpdate(oldProps) {
     if(oldProps.rasterLayers !== this.props.rasterLayers){
       console.log("rasterLayers",this.props.rasterLayers)
-      // this.addRasterLayersToMap(this.props.rasterLayers)
-
+    }
+    if(this.mapRef && !this.hasNavigation){
+      const map = this.mapRef.getMap()
+      console.log("maaap", map)
+      map.addControl(new mapboxgl.NavigationControl())
+      this.hasNavigation = true
     }
   }
 
@@ -195,9 +203,22 @@ class MapPage extends PureComponent {
       timeSeries,
       timeSeriesByIndicator,
       extent,
+      rasterLayers
     } = this.props;
 
     console.log("width", width)
+    const mapboxRasters = rasterLayers ? rasterLayers.map(l => Immutable.fromJS({
+      id: l.id.toString(),
+      type: 'raster',
+      source: {
+        type: 'raster',
+        tiles: [`https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`],
+      },
+      paint: {"raster-opacity": 0.50},
+      layout: { visibility: true },
+      minzoom: 0,
+      maxzoom: 22
+    })) : []
 
     return (
       <div className="h-100">
@@ -232,7 +253,7 @@ class MapPage extends PureComponent {
                   height={height}
                   width={width}
                   onViewportChange={this.updateViewport}
-                  ref={r => this.mapRef = r}
+                  ref={r => {this.mapRef = r; console.log("mapref", r)}}
                 >
                   {/* <div style={{ position: "absolute", right: 5, top: 5 }}>
                     <NavigationControl onViewportChange={this.updateViewport} />
@@ -291,61 +312,29 @@ class MapPage extends PureComponent {
                       );
                     })}
 
-                  <TransitionMotion
-                    defaultStyles={
-                      overPlace
-                        ? [
-                            {
-                              key: "popup",
-                              data: { overPlace },
-                              style: { o: 0 }
-                            }
-                          ]
-                        : []
-                    }
-                    styles={
-                      overPlace
-                        ? [
-                            {
-                              key: "popup",
-                              data: { overPlace },
-                              style: { o: spring(1) }
-                            }
-                          ]
-                        : []
-                    }
-                    willLeave={() => ({ o: spring(0) })}
-                    willEnter={() => ({ o: 0 })}
-                  >
-                    {interpolatedStyles => (
-                      <div>
-                        {interpolatedStyles.map(config => {
-                          return (
-                            <div key={config.key}>
-                              <Popup
-                                latitude={config.data.overPlace.coordinates[1]}
-                                longitude={config.data.overPlace.coordinates[0]}
-                                tipSize={0}
-                                closeOnClick={false}
-                                anchor="bottom"
-                                closeButton={false}
-                                offsetBottom={15}
-                                element={
-                                  <MapTooltip
-                                    t={this.props.t}
-                                    // style={{ opacity: config.style.o }}
-                                    style={{ opacity: 1 }}
-                                    place={config.data.overPlace}
-                                  />
-                                }
-                              >
-                              </Popup>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </TransitionMotion>
+                    {overPlace && <Popup
+                      latitude={overPlace.coordinates[1]}
+                      longitude={overPlace.coordinates[0]}
+                      tipSize={0}
+                      closeOnClick={false}
+                      anchor="bottom"
+                      closeButton={false}
+                      offsetBottom={15}
+                      element={
+                        <MapTooltip
+                          t={this.props.t}
+                          // style={{ opacity: config.style.o }}
+                          style={{ opacity: 1 }}
+                          place={overPlace}
+                        />
+                      }
+                    >
+                    </Popup>}
+
+                    {mapboxRasters && mapboxRasters.length > 0 && mapboxRasters.map((rasterLayer, i) => (
+                      <Layer key={i} layer={rasterLayer}/>
+                    ))}
+
                 </MapGL>
               )}
             </div>
