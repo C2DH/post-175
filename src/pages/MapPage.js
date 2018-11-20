@@ -197,14 +197,16 @@ class MapPage extends PureComponent {
   };
 
   selectPlace = place => {
-    this.props.setSelectedPlace(place)
-    this.updateViewport({
-      latitude: place.coordinates[1],
-      longitude: place.coordinates[0],
-      zoom: 13,
-      // transitionInterpolator: new FlyToInterpolator(),
-      transitionDuration: 1000
-    });
+    if (place.data.place_type === 'office') {
+      this.props.setSelectedPlace(place)
+      this.updateViewport({
+        latitude: place.coordinates[1],
+        longitude: place.coordinates[0],
+        zoom: 13,
+        // transitionInterpolator: new FlyToInterpolator(),
+        transitionDuration: 1000
+      });
+    }
   };
 
   closePlaceDetail = () => {
@@ -313,6 +315,10 @@ class MapPage extends PureComponent {
                       const isSelected = selectedPlace
                         ? place.id === selectedPlace.id
                         : false;
+                      let fill = 'white'
+                      if (place.data.place_type === 'office') {
+                        fill = place.open ? "#13d436" : "#fdd00c"
+                      }
                       return (
                         <Marker
                           key={selectedPlace ? `selected-${place.id}` : place.id}
@@ -329,7 +335,7 @@ class MapPage extends PureComponent {
                                     cx={6}
                                     cy={6}
                                     r={5}
-                                    fill={place.open ? "#13d436" : "#fdd00c"}
+                                    fill={fill}
                                   />
                                 </svg>
                               )}
