@@ -4,6 +4,7 @@ import { localize } from '../localize'
 import get from 'lodash/get'
 import mapboxgl from 'mapbox-gl'
 import Immutable from 'immutable';
+import memoize from 'memoize-one'
 // import ReactMapGL, {
 //   NavigationControl,
 //   Marker,
@@ -11,7 +12,7 @@ import Immutable from 'immutable';
 //   Popup,
 //   FlyToInterpolator
 // } from "react-map-gl";
-import MapGL, { Marker, Popup, Layer, Cluster } from '@urbica/react-map-gl';
+import MapGL, { Marker, Popup, Layer, Cluster, Source } from '@urbica/react-map-gl';
 
 import Legend from "../components/Legend";
 import TimeSeries from "../components/TimeSeries";
@@ -161,25 +162,6 @@ class MapPage extends PureComponent {
     }
   }
 
-  addRasterLayersToMap = (layers) => {
-    console.log("123", this.mapRef)
-    if(this.mapRef){
-      const map = this.mapRef.getMap()
-      console.log(map)
-      map.addLayer({
-        id: 'raster-layer',
-        type: 'raster',
-        source: {
-          type: 'raster',
-          tiles: ['https://api.mapbox.com/v4/RASTER_LAYER/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoidGVvIiwiYSI6IllvZUo1LUkifQ.dirqtn275pAKdnqtLM2HSw'],
-        },
-        paint: {"raster-opacity": 0.50},
-        minzoom: 0,
-        maxzoom: 22
-      });
-    }
-  }
-
   componentWillUnmount() {
     this.props.unloadStory()
     this.props.unloadPlaces()
@@ -223,6 +205,35 @@ class MapPage extends PureComponent {
     });
   };
 
+  getLayers = memoize((rasterLayers, year) => {
+    if (!rasterLayers) {
+      return []
+    }
+
+    return rasterLayers
+      .filter(layer => new Date(layer.data.start_date).getFullYear() === year)
+      .map(l => Immutable.fromJS({
+        id: l.id.toString(),
+        type: 'raster',
+        source: l.id.toString(),
+        paint: {"raster-opacity": 0.50},
+        layout: { visibility: 'visible' },
+        minzoom: 0,
+        maxzoom: 22
+      }))
+  })
+
+  getSources = memoize((rasterLayers) => {
+    if (!rasterLayers) {
+      return []
+    }
+    return rasterLayers.map(l => Immutable.fromJS({
+      id: l.id.toString(),
+      type: 'raster',
+      tiles: [`https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`],
+    }))
+  })
+
   render() {
     const { width, height, viewport } = this.state;
     const {
@@ -243,20 +254,8 @@ class MapPage extends PureComponent {
       t,
     } = this.props;
 
-    console.log(placeTypesCount)
-    // console.log("width", width)
-    const mapboxRasters = rasterLayers ? rasterLayers.map(l => Immutable.fromJS({
-      id: l.id.toString(),
-      type: 'raster',
-      source: {
-        type: 'raster',
-        tiles: [`https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`],
-      },
-      paint: {"raster-opacity": 0.50},
-      layout: { visibility: 'visible' },
-      minzoom: 0,
-      maxzoom: 22
-    })) : []
+    const mapboxSources = this.getSources(rasterLayers)
+    const mapboxRasters = this.getLayers(rasterLayers, currentDate ? currentDate.getFullYear() : null)
 
     return (
       <div className="h-100">
@@ -385,15 +384,21 @@ class MapPage extends PureComponent {
                     >
                     </Popup>}
 
-                    {/* {mapboxRasters && mapboxRasters.length > 0 && mapboxRasters.map((rasterLayer, i) => (
-                      <Layer key={i} layer={rasterLayer}/>
-                    ))} */}
-
+                    {mapboxSources.map(source => (
+                      <Source
+                        key={source.get('id')}
+                        id={source.get('id')}
+                        source={source}
+                      />
+                    ))}
+                    {mapboxRasters && mapboxRasters.length > 0 && mapboxRasters.map((rasterLayer, i) => (
+                      <Layer key={rasterLayer.get('id')} layer={rasterLayer}/>
+                    ))}
                 </MapGL>
               )}
             </div>
           </div>
-          {places && <TimelineNavigationMap />}
+          {places && <TimelineNavigationMap rasterLayers={rasterLayers} />}
         </div>
       </div>
     );

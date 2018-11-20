@@ -33,11 +33,9 @@ class TimelineCursor extends PureComponent {
           handle=".timeline-handle"
           onDrag={this.onDrag}
           >
-            <svg height={height + cursorRadius}
+            <svg height={cursorRadius*2}
               width={cursorRadius*2}
-              style={{marginTop: -cursorRadius, transform: `translate(${x}px, 0px)`}}>
-              <line x1={cursorRadius} y1={cursorRadius} x2={cursorRadius} y2={height + cursorRadius} stroke="white"></line>
-              <circle className="timeline-handle" r={cursorRadius} cx={cursorRadius} cy={cursorRadius} fill="white" fillOpacity={0.4}></circle>
+              style={{transform: `translate(${x}px, 0px)`}}>
               <circle className="timeline-handle" r={cursorRadius/2} cx={cursorRadius} cy={cursorRadius} fill="white"></circle>
             </svg>
         </DraggableCore>
@@ -144,7 +142,17 @@ class TimelineNavigationControlled extends PureComponent {
           {children && children({ scale, ticks, width, height: bottomHeight })}
         </div>
 
-        <div className="position-absolute">
+        <div className="position-absolute w-100" style={{ bottom: 28 }}>
+          <div className='bg-black' style={{
+            borderRadius: cursorRadius / 4,
+            position: 'absolute',
+            top: cursorRadius / 4 * 3,
+            height: cursorRadius / 2,
+            left: scale(extent[0]),
+            width: scale(extent[1]) - scale(extent[0]),
+          }}>
+
+          </div>
           <TimelineCursor
             currentDate={currentDate}
             onDateChange={onDateChange}
