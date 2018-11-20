@@ -1,8 +1,9 @@
 import React from "react";
-import { findIndex } from "lodash";
+import { findIndex, range, sampleSize } from "lodash";
 import ReactDOM from "react-dom";
 import { StaggeredMotion, Motion, spring } from "react-motion";
 import { scaleLinear } from "d3-scale";
+import memoize from 'memoize-one'
 
 const NUM_PICS = 50;
 const MAX_DELTA = 150;
@@ -10,15 +11,18 @@ const MIN_DELTA = 10;
 
 class HomePicture extends React.PureComponent {
   render() {
-    const { left, width, image, selected, text, index } = this.props;
+    const { left, width, image, selected, text, index, percentHeight } = this.props;
     return (
       <div
         style={{
+          borderRight: selected ? 0 : `${parseInt(width / 10)}px solid black`,
+          borderLeft: selected ? 0 : `${parseInt(width / 10)}px solid black`,
           position: "absolute",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundImage: `url(${image})`,
-          height: `100%`,
+          top: selected ? 0 : `${(100 - percentHeight) / 2}%`,
+          height: selected ? '100%' : `${percentHeight}%`,
           left,
           width
         }}
@@ -143,9 +147,33 @@ export default class HomePics extends React.PureComponent {
     });
   };
 
+  randomicHeights = memoize(n => {
+    const MIN = 30
+    const scale = scaleLinear()
+      .domain([0, n - 1])
+      .range([0, 4 * Math.PI])
+
+    const randomic = range(n).map(i => {
+      let noise = Math.floor(Math.random() * 20) - 10
+      return noise + 20 + parseInt(Math.abs(Math.sin(scale(i)) * 60))
+    })
+    const swapper = sampleSize(range(n - 1), 10)
+    // console.log('Un', [...randomic])
+    swapper.forEach(swap => {
+      // console.log("S", swap)
+      const appo = randomic[swap]
+      randomic[swap] = randomic[swap + 1]
+      randomic[swap + 1] = appo
+    })
+    // console.log('Dos', [...randomic])
+    return randomic
+  })
+
   render() {
     const { positions, initialPositions, selectedIndex } = this.state;
     const { docs } = this.props;
+    const percentHeights = this.randomicHeights(docs.length)
+    console.log(percentHeights)
 
     return (
       <StaggeredMotion
@@ -169,6 +197,7 @@ export default class HomePics extends React.PureComponent {
           >
             {styles.map(({ left, width }, i) => (
               <HomePicture
+                percentHeight={percentHeights[i]}
                 selected={i === selectedIndex}
                 key={i}
                 index={i}
