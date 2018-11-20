@@ -230,18 +230,28 @@ class MapPage extends PureComponent {
         <SideMenu />
         <div className='h-100 with-sidemenu d-flex flex-column'>
           <div style={{ height: 50 }} className='bg-info' />
-          <div className='row no-gutters flex-1'>
+          <div className='row no-gutters flex-1' style={{ position: 'relative' }}>
             <TimeSeries
               extent={extent}
               year={currentDate ? currentDate.getFullYear() : null}
               columns={get(timeSeries, 'columns', []).slice(1)}
               series={timeSeriesByIndicator}
             />
-            {/* <Legend
-              story={story}
-              selectedPlace={selectedPlace}
-              onClose={this.closePlaceDetail}
-            /> */}
+            <div
+              className='col-md-3'
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                bottom: 0,
+                pointerEvents: selectedPlace ? undefined : 'none',
+              }}>
+              <Legend
+                story={story}
+                selectedPlace={selectedPlace}
+                onClose={this.closePlaceDetail}
+              />
+            </div>
             <div
               className="d-flex flex-1 w-100 flex-column bg-darkgrey"
               style={{ overflow: "hidden" }}

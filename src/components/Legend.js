@@ -18,36 +18,29 @@ class Legend extends PureComponent {
   render () {
     const { story, selectedPlace, onClose, t } = this.props
     return (
-      <div className="col-md-3 d-flex flex-column" style={{ backgroundColor: 'white' }}>
-        <TopBar title={t('menu_map')} />
+      <div>
+         {selectedPlace &&
+           <CloseLegendDetailBtn onclick={onClose} />}
 
-        {selectedPlace &&
-          <CloseLegendDetailBtn onclick={onClose} />}
-
-        <div className='flex-1' style={{ position: 'relative' }}>
-          <LegendIntro story={story} />
-
-          <TransitionMotion
-            defaultStyles={selectedPlace ? [{ key: 'place', data: { selectedPlace }, style: { x: -500 }}] : []}
-            styles={selectedPlace ? [{ key: 'place', data: { selectedPlace }, style: { x: spring(0) }}] : []}
-            willLeave={() => ({ x: spring(-500) })}
-            willEnter={() => ({ x: -500 })}
-          >
-            {styles =>
-              <div>
-              {styles.map(({ style: { x }, key, data: { selectedPlace } }) => (
-                <LegendDetail
-                  key={key}
-                  style={{ left: x }}
-                  place={selectedPlace}
-                />
-              ))}
-              </div>
-          }
-          </TransitionMotion>
-        </div>
+        <TransitionMotion
+          defaultStyles={selectedPlace ? [{ key: 'place', data: { selectedPlace }, style: { x: -500 }}] : []}
+          styles={selectedPlace ? [{ key: 'place', data: { selectedPlace }, style: { x: spring(0) }}] : []}
+          willLeave={() => ({ x: spring(-500) })}
+          willEnter={() => ({ x: -500 })}
+        >
+          {styles =>
+            <div>
+            {styles.map(({ style: { x }, key, data: { selectedPlace } }) => (
+              <LegendDetail
+                key={key}
+                style={{ left: x }}
+                place={selectedPlace}
+              />
+            ))}
+            </div>
+        }
+        </TransitionMotion>
       </div>
-
     )
   }
 }
