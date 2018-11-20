@@ -47,16 +47,22 @@ import TimelineNavigationMap from "../components/TimelineNavigationMap";
 import MobileAlert from "../components/MobileAlert";
 import MapTooltip from "../components/MapTooltip";
 import SideMenu from '../components/SideMenu'
+import { scaleLinear } from 'd3-scale'
 import { Motion, TransitionMotion, spring, presets } from "react-motion";
+import { Text } from '@vx/text'
+
+const circleScale = scaleLinear().range([30, 100]).domain([1, 60])
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
 
-const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => (
-  <div style={{ ...style, background: "deepskyblue", padding: 4 }}>
-    {point_count_abbreviated}
-  </div>
-);
+const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => {
+  const r = circleScale(point_count_abbreviated)
+  return <svg width={r + 2} height={r + 2}>
+    <circle cx={r / 2} cy={r / 2} r={Math.floor(r/2)} fill={'rgba(216,216,216,0.13)'} stroke='#979797' />
+    <Text x={r / 2} y={r / 2} fill='white' textAnchor='middle' verticalAnchor='middle'>{point_count_abbreviated}</Text>
+  </svg>
+};
 
 class MapPage extends PureComponent {
   state = {
@@ -122,12 +128,12 @@ class MapPage extends PureComponent {
   }
 
   componentDidUpdate(oldProps) {
-    if(oldProps.rasterLayers !== this.props.rasterLayers){
-      console.log("rasterLayers",this.props.rasterLayers)
-    }
+    // if(oldProps.rasterLayers !== this.props.rasterLayers){
+      // console.log("rasterLayers",this.props.rasterLayers)
+    // }
     if(this.mapRef && !this.hasNavigation){
       const map = this.mapRef.getMap()
-      console.log("maaap", map)
+      // console.log("maaap", map)
       map.addControl(new mapboxgl.NavigationControl())
       this.hasNavigation = true
     }
@@ -211,7 +217,7 @@ class MapPage extends PureComponent {
       rasterLayers
     } = this.props;
 
-    console.log("width", width)
+    // console.log("width", width)
     const mapboxRasters = rasterLayers ? rasterLayers.map(l => Immutable.fromJS({
       id: l.id.toString(),
       type: 'raster',
@@ -268,7 +274,7 @@ class MapPage extends PureComponent {
                   height={height}
                   width={width}
                   onViewportChange={this.updateViewport}
-                  ref={r => {this.mapRef = r; console.log("mapref", r)}}
+                  ref={r => {this.mapRef = r;}}
                 >
                   {/* <div style={{ position: "absolute", right: 5, top: 5 }}>
                     <NavigationControl onViewportChange={this.updateViewport} />
@@ -284,7 +290,7 @@ class MapPage extends PureComponent {
                         : false;
                       return (
                         <Marker
-                          key={place.id}
+                          key={selectedPlace ? `selected-${place.id}` : place.id}
                           longitude={place.coordinates[0]}
                           latitude={place.coordinates[1]}
                           element={
@@ -348,9 +354,9 @@ class MapPage extends PureComponent {
                     >
                     </Popup>}
 
-                    {mapboxRasters && mapboxRasters.length > 0 && mapboxRasters.map((rasterLayer, i) => (
+                    {/* {mapboxRasters && mapboxRasters.length > 0 && mapboxRasters.map((rasterLayer, i) => (
                       <Layer key={i} layer={rasterLayer}/>
-                    ))}
+                    ))} */}
 
                 </MapGL>
               )}
