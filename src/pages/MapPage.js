@@ -41,6 +41,7 @@ import {
   getTimeSeries,
   getTimeSeriesByIndicator,
   getRasterLayers,
+  getPlaceTypesCount,
 } from "../state/selectors";
 import { getQsSafeYear, makeUrlWithYear } from "../utils";
 import TimelineNavigationMap from "../components/TimelineNavigationMap";
@@ -63,6 +64,27 @@ const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => {
     <Text x={r / 2} y={r / 2} fill='white' textAnchor='middle' verticalAnchor='middle'>{point_count_abbreviated}</Text>
   </svg>
 };
+
+const MapHeader = ({ placeTypesCount, t }) => {
+  const counts = ['office', 'central', 'telegraph'].map(type => ({
+    label: type,
+    count: placeTypesCount[type],
+  })).filter(({ count }) => count)
+  return (
+    <div>
+      <div className='bg-black' style={{ height: 50 }}>
+        <h1 className='text-white'>{t('Carte')}</h1>
+      </div>
+      <div className='text-white d-flex' style={{ height: 50 }}>
+        {counts.map(({ label, count }) => (
+          <div key={label}>
+            <span>{label} {`(${count})`}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 class MapPage extends PureComponent {
   state = {
@@ -214,9 +236,12 @@ class MapPage extends PureComponent {
       timeSeries,
       timeSeriesByIndicator,
       extent,
-      rasterLayers
+      rasterLayers,
+      placeTypesCount,
+      t,
     } = this.props;
 
+    console.log(placeTypesCount)
     // console.log("width", width)
     const mapboxRasters = rasterLayers ? rasterLayers.map(l => Immutable.fromJS({
       id: l.id.toString(),
@@ -235,7 +260,7 @@ class MapPage extends PureComponent {
       <div className="h-100">
         <SideMenu />
         <div className='h-100 with-sidemenu d-flex flex-column'>
-          <div style={{ height: 50 }} className='bg-info' />
+          <MapHeader t={t} placeTypesCount={placeTypesCount} />
           <div className='row no-gutters flex-1' style={{ position: 'relative' }}>
             <TimeSeries
               extent={extent}
@@ -372,6 +397,7 @@ class MapPage extends PureComponent {
 const mapStateToProps = state => ({
   story: getStory(state),
   places: getPlacesInDate(state),
+  placeTypesCount: getPlaceTypesCount(state),
   overPlace: getMapOverPlace(state),
   selectedPlace: getMapSelectedPlace(state),
   currentDate: getMapTimelineCurrentDate(state),

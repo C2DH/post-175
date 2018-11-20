@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { extent } from 'd3-array'
-import { get, flatten } from 'lodash'
+import { get, flatten, countBy } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
 
@@ -24,6 +24,16 @@ const mapPlace = place => ({
 export const getPlaces = createSelector(
   getRawPlaces,
   places => places === null ? null : places.map(mapPlace)
+)
+
+export const getPlaceTypesCount = createSelector(
+  getPlaces,
+  places => {
+    if (places === null) {
+      return {}
+    }
+    return countBy(places, 'data.place_type')
+  }
 )
 
 export const getPlacesRealExtent = createSelector(
