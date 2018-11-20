@@ -315,6 +315,9 @@ a:-webkit-any-link {
   pointer-events: none;
 }*/
 
+.mapboxgl-popup-tip {
+  opacity: 0;
+}
 .mapboxgl-ctrl-attrib {
   pointer-events: none;
   display: none;
