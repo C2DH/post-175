@@ -66,7 +66,7 @@ const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => {
   </svg>
 };
 
-const MapHeader = ({ placeTypesCount, t }) => {
+const MapHeader = ({ placeTypesCount, t, opacity, onOpacityChange, showOpacity }) => {
   const counts = ['office', 'central', 'telegraph'].map(type => ({
     label: type,
     count: placeTypesCount[type],
@@ -76,12 +76,20 @@ const MapHeader = ({ placeTypesCount, t }) => {
       <div className='bg-black' style={{ height: 50 }}>
         <h1 className='text-white'>{t('Carte')}</h1>
       </div>
-      <div className='text-white d-flex' style={{ height: 50 }}>
-        {counts.map(({ label, count }) => (
-          <div key={label}>
-            <span>{label} {`(${count})`}</span>
-          </div>
-        ))}
+      <div className='d-flex justify-content-between'>
+        <div className='text-white d-flex' style={{ height: 50 }}>
+          {counts.map(({ label, count }) => (
+            <div key={label}>
+              <span>{label} {`(${count})`}</span>
+            </div>
+          ))}
+        </div>
+        {showOpacity && <div>
+          <input
+            onChange={onOpacityChange}
+            value={opacity}
+            type='range' min={0} max={1} step={0.1} />
+        </div>}
       </div>
     </div>
   )
@@ -95,7 +103,8 @@ class MapPage extends PureComponent {
       zoom: 8
     },
     width: 0,
-    height: 0
+    height: 0,
+    opacity: 0.5,
   };
 
   componentDidMount() {
@@ -106,7 +115,6 @@ class MapPage extends PureComponent {
     this.setMapSize();
     window.addEventListener("resize", this.setMapSize, false);
   }
-
 
   componentWillReceiveProps(nextProps) {
     if (
@@ -146,8 +154,6 @@ class MapPage extends PureComponent {
         )
       );
     }
-
-
   }
 
   componentDidUpdate(oldProps) {
@@ -170,6 +176,8 @@ class MapPage extends PureComponent {
     this.props.unloadRasterLayers()
     window.removeEventListener("resize", this.setMapSize)
   }
+
+  handleOnOpacityChange = e => this.setState({ opacity: e.target.value })
 
   setMapSize = () => {
     this.setState({
@@ -205,7 +213,7 @@ class MapPage extends PureComponent {
     });
   };
 
-  getLayers = memoize((rasterLayers, year) => {
+  getLayers = memoize((rasterLayers, year, opacity) => {
     if (!rasterLayers) {
       return []
     }
@@ -216,7 +224,7 @@ class MapPage extends PureComponent {
         id: l.id.toString(),
         type: 'raster',
         source: l.id.toString(),
-        paint: {"raster-opacity": 0.50},
+        paint: {"raster-opacity": +opacity},
         layout: { visibility: 'visible' },
         minzoom: 0,
         maxzoom: 22
@@ -255,13 +263,23 @@ class MapPage extends PureComponent {
     } = this.props;
 
     const mapboxSources = this.getSources(rasterLayers)
-    const mapboxRasters = this.getLayers(rasterLayers, currentDate ? currentDate.getFullYear() : null)
+    const mapboxRasters = this.getLayers(
+      rasterLayers,
+      currentDate ? currentDate.getFullYear() : null,
+      this.state.opacity,
+    )
 
     return (
       <div className="h-100">
         <SideMenu />
         <div className='h-100 with-sidemenu d-flex flex-column'>
-          <MapHeader t={t} placeTypesCount={placeTypesCount} />
+          <MapHeader
+            t={t}
+            showOpacity={mapboxRasters.length > 0}
+            placeTypesCount={placeTypesCount}
+            opacity={this.state.opacity}
+            onOpacityChange={this.handleOnOpacityChange}
+          />
           <div className='row no-gutters flex-1' style={{ position: 'relative' }}>
             <TimeSeries
               extent={extent}
