@@ -34,7 +34,7 @@ export const getCollectionDocuments = createSelector(
       if (lastChunk.length === 6) {
         return chunks.concat([[nextDoc]])
       } else if (lastChunk.length === 5) {
-        if (!horizontal && !lastChunk.some(d => d.horizontal)) {
+        if (!lastChunk.some(d => d.horizontal)) {
           chunks[chunks.length - 1] = lastChunk.concat(nextDoc)
           return chunks
         } else {
@@ -47,6 +47,9 @@ export const getCollectionDocuments = createSelector(
     }, [])
 
     const colDocs = flatMap(docsChunks, chunk => {
+      if (chunk.length === 6) {
+        return chunk
+      }
       const horizs = chunk.filter(c => c.horizontal)
       if (horizs.length > 0) {
         const horiz = sample(horizs)
