@@ -68,7 +68,7 @@ export const getCollectionDocuments = (params = {}) =>
     ...params,
     facets: "data__year",
     filters: {
-      ...params.filters
+      // ...params.filters
     }
   });
 

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import classNames from 'classnames'
 import CollectionItem from './CollectionItem'
 import './Collection.css'
 
@@ -9,7 +10,9 @@ export default class CollectionList extends PureComponent {
       <div className='collection-list'>
         <div className='row collection-row'>
           {docs.map(doc => (
-            <div key={doc.id} className='col-md-3 collection-col'>
+            <div key={doc.id} className={classNames(`col-md-${doc.large ? 4 : 3} collection-col`, {
+              'bg-danger': doc.large,
+            })}>
               <CollectionItem doc={doc} />
             </div>
           ))}
