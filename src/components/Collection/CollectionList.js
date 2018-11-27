@@ -6,14 +6,21 @@ import './Collection.css'
 export default class CollectionList extends PureComponent {
   render() {
     const { docs } = this.props
+    console.log('~', docs)
     return (
       <div className='collection-list'>
-        <div className='row collection-row'>
-          {docs.map(doc => (
-            <div key={doc.id} className={classNames(`col-md-${doc.large ? 4 : 3} collection-col`, {
-              'bg-danger': doc.large,
-            })}>
-              <CollectionItem doc={doc} />
+        <div className='collection-list-wrapper'>
+          {docs.map((docRow, i) => (
+            <div className='row collection-row' key={i}>
+              {docRow.map(doc => (
+                <div key={doc.id} className={classNames(`collection-col`, {
+                  'col': docRow.length === 6,
+                  'col-2': docRow.length === 5 && !doc.large,
+                  'col-4': docRow.length === 5 && doc.large,
+                })}>
+                  <CollectionItem doc={doc} />
+                </div>
+              ))}
             </div>
           ))}
         </div>

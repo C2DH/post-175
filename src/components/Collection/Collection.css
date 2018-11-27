@@ -62,15 +62,12 @@
   height: 100%;
   padding-top: 56px;
   padding-bottom: 56px;
-  background-color: #272A2D;
-  height: 100%; }
-
-.collection-row {
-  padding-top: 50px;
-  padding-left: 30px;
-  padding-right: 30px;
-  height: 100%;
-  overflow-y: auto; }
+  background-color: #272A2D; }
+  .collection-list .collection-list-wrapper {
+    padding-right: 86px;
+    padding-left: 20px;
+    height: 100%;
+    overflow-y: auto; }
 
 .collection-col {
   /* border: 1px solid #fff; */ }

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import get from 'lodash/get'
-import flatMap from 'lodash/flatMap'
+import map from 'lodash/map'
 import sample from 'lodash/sample'
 import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
@@ -46,7 +46,7 @@ export const getCollectionDocuments = createSelector(
       }
     }, [])
 
-    const colDocs = flatMap(docsChunks, chunk => {
+    const colDocs = map(docsChunks, chunk => {
       if (chunk.length === 6) {
         return chunk
       }
@@ -58,7 +58,6 @@ export const getCollectionDocuments = createSelector(
       } else {
         return chunk
       }
-
     })
 
     // console.log('->', docsChunks, colDocs)
