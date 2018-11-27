@@ -61,7 +61,7 @@ import { Text } from "@vx/text";
 
 const circleScale = scaleLinear()
   .range([30, 100])
-  .domain([1, 60]);
+  .domain([1, 184]);
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
@@ -383,7 +383,7 @@ class MapPage extends PureComponent {
                   {places && (
                     <Cluster
                       maxZoom={11}
-                      radius={20}
+                      radius={40}
                       extent={512}
                       nodeSize={64}
                       element={ClusterElement}
