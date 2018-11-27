@@ -1,6 +1,6 @@
 // API CALLS
 import request from "superagent";
-import { csvParse } from 'd3-dsv'
+import { csvParse } from "d3-dsv";
 const API_URL = "/api";
 
 // Extract only body from response, when other stuff like response
@@ -29,18 +29,22 @@ export const searchSuggestion = term =>
 
 export const getTimeSeries = () =>
   request.get(`${API_URL}/document/itu-stats/`).then(({ body }) => {
-    const path = body.src.split('/').slice(3).join('/')
-    return request.get(`/${path}`)
-      .set('Accept', 'text/plain')
-      .set('Content-Type', 'text/plain')
+    const path = body.src
+      .split("/")
+      .slice(3)
+      .join("/");
+    return request
+      .get(`/${path}`)
+      .set("Accept", "text/plain")
+      .set("Content-Type", "text/plain")
       .then(response => {
-        const data = csvParse(response.text)
+        const data = csvParse(response.text);
         return {
           rows: data.map(a => a),
-          columns: data.columns,
-        }
-      })
-  })
+          columns: data.columns
+        };
+      });
+  });
 
 export const getStory = idOrSlug =>
   request.get(`${API_URL}/story/${idOrSlug}/`).then(extractBody);
@@ -68,7 +72,7 @@ export const getCollectionDocuments = (params = {}) =>
     ...params,
     facets: "data__year",
     filters: {
-      // ...params.filters
+      ...params.filters
     }
   });
 
@@ -100,11 +104,11 @@ export const getPlaces = (params = {}) =>
     }
   });
 
-  export const getRasterLayers = (params = {}) =>
-    getDocuments({
-      ...params,
-      filters: {
-        ...params.filters,
-        data__raster_layer__isnull: false
-      }
-    });
+export const getRasterLayers = (params = {}) =>
+  getDocuments({
+    ...params,
+    filters: {
+      ...params.filters,
+      data__raster_layer__isnull: false
+    }
+  });

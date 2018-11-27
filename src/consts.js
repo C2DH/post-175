@@ -8,13 +8,15 @@
 // --Technologie: #13d436;
 
 export const COLLECTION_DATE_TYPES = [
+  "advertising",
+  "book",
+  "building",
+  "image",
   "law",
-  "office",
-  "portrait",
-  "product",
-  "service",
-  "technology",
-  "transport"
+  "map",
+  "object",
+  "other",
+  "video"
 ];
 
 export const EVENT_COLORS = {

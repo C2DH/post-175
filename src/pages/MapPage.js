@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { localize } from '../localize'
-import get from 'lodash/get'
-import mapboxgl from 'mapbox-gl'
-import Immutable from 'immutable';
-import memoize from 'memoize-one'
+import { localize } from "../localize";
+import get from "lodash/get";
+import mapboxgl from "mapbox-gl";
+import Immutable from "immutable";
+import memoize from "memoize-one";
 // import ReactMapGL, {
 //   NavigationControl,
 //   Marker,
@@ -12,7 +12,13 @@ import memoize from 'memoize-one'
 //   Popup,
 //   FlyToInterpolator
 // } from "react-map-gl";
-import MapGL, { Marker, Popup, Layer, Cluster, Source } from '@urbica/react-map-gl';
+import MapGL, {
+  Marker,
+  Popup,
+  Layer,
+  Cluster,
+  Source
+} from "@urbica/react-map-gl";
 
 import Legend from "../components/Legend";
 import TimeSeries from "../components/TimeSeries";
@@ -30,7 +36,7 @@ import {
   loadTimeSeries,
   unloadTimeSeries,
   loadRasterLayers,
-  unloadRasterLayers,
+  unloadRasterLayers
 } from "../state/actions";
 import {
   getPlacesInDate,
@@ -42,58 +48,92 @@ import {
   getTimeSeries,
   getTimeSeriesByIndicator,
   getRasterLayers,
-  getPlaceTypesCount,
+  getPlaceTypesCount
 } from "../state/selectors";
 import { getQsSafeYear, makeUrlWithYear } from "../utils";
 import TimelineNavigationMap from "../components/TimelineNavigationMap";
 import MobileAlert from "../components/MobileAlert";
 import MapTooltip from "../components/MapTooltip";
-import SideMenu from '../components/SideMenu'
-import { scaleLinear } from 'd3-scale'
+import SideMenu from "../components/SideMenu";
+import { scaleLinear } from "d3-scale";
 import { Motion, TransitionMotion, spring, presets } from "react-motion";
-import { Text } from '@vx/text'
+import { Text } from "@vx/text";
 
-const circleScale = scaleLinear().range([30, 100]).domain([1, 60])
+const circleScale = scaleLinear()
+  .range([30, 100])
+  .domain([1, 60]);
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
 
 const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => {
-  const r = circleScale(point_count_abbreviated)
-  return <svg width={r + 2} height={r + 2}>
-    <circle cx={r / 2} cy={r / 2} r={Math.floor(r/2)} fill={'rgba(216,216,216,0.13)'} stroke='#979797' />
-    <Text x={r / 2} y={r / 2} fill='white' textAnchor='middle' verticalAnchor='middle'>{point_count_abbreviated}</Text>
-  </svg>
+  const r = circleScale(point_count_abbreviated);
+  return (
+    <svg width={r + 2} height={r + 2}>
+      <circle
+        cx={r / 2}
+        cy={r / 2}
+        r={Math.floor(r / 2)}
+        fill={"rgba(216,216,216,0.13)"}
+        stroke="#979797"
+      />
+      <Text
+        x={r / 2}
+        y={r / 2}
+        fill="white"
+        textAnchor="middle"
+        verticalAnchor="middle"
+      >
+        {point_count_abbreviated}
+      </Text>
+    </svg>
+  );
 };
 
-const MapHeader = ({ placeTypesCount, t, opacity, onOpacityChange, showOpacity }) => {
-  const counts = ['office', 'central', 'telegraph'].map(type => ({
-    label: type,
-    count: placeTypesCount[type],
-  })).filter(({ count }) => count)
+const MapHeader = ({
+  placeTypesCount,
+  t,
+  opacity,
+  onOpacityChange,
+  showOpacity
+}) => {
+  const counts = ["office", "central", "telegraph"]
+    .map(type => ({
+      label: type,
+      count: placeTypesCount[type]
+    }))
+    .filter(({ count }) => count);
   return (
     <div>
-      <div className='bg-black' style={{ height: 50 }}>
-        <h1 className='text-white'>{t('Carte')}</h1>
+      <div className="bg-black" style={{ height: 50 }}>
+        <h1 className="text-white">{t("Carte")}</h1>
       </div>
-      <div className='d-flex justify-content-between'>
-        <div className='text-white d-flex' style={{ height: 50 }}>
+      <div className="d-flex justify-content-between">
+        <div className="text-white d-flex" style={{ height: 50 }}>
           {counts.map(({ label, count }) => (
             <div key={label}>
-              <span>{label} {`(${count})`}</span>
+              <span>
+                {label} {`(${count})`}
+              </span>
             </div>
           ))}
         </div>
-        {showOpacity && <div>
-          <input
-            onChange={onOpacityChange}
-            value={opacity}
-            type='range' min={0} max={1} step={0.1} />
-        </div>}
+        {showOpacity && (
+          <div>
+            <input
+              onChange={onOpacityChange}
+              value={opacity}
+              type="range"
+              min={0}
+              max={1}
+              step={0.1}
+            />
+          </div>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 class MapPage extends PureComponent {
   state = {
@@ -104,14 +144,14 @@ class MapPage extends PureComponent {
     },
     width: 0,
     height: 0,
-    opacity: 0.5,
+    opacity: 0.5
   };
 
   componentDidMount() {
-    this.props.loadTimeSeries()
+    this.props.loadTimeSeries();
     this.props.loadStory("map");
     this.props.loadPlaces({ detailed: true });
-    this.props.loadRasterLayers({})
+    this.props.loadRasterLayers({});
     this.setMapSize();
     window.addEventListener("resize", this.setMapSize, false);
   }
@@ -158,37 +198,37 @@ class MapPage extends PureComponent {
 
   componentDidUpdate(oldProps) {
     // if(oldProps.rasterLayers !== this.props.rasterLayers){
-      // console.log("rasterLayers",this.props.rasterLayers)
+    // console.log("rasterLayers",this.props.rasterLayers)
     // }
-    if(this.mapRef && !this.hasNavigation){
-      const map = this.mapRef.getMap()
+    if (this.mapRef && !this.hasNavigation) {
+      const map = this.mapRef.getMap();
       // console.log("maaap", map)
-      map.addControl(new mapboxgl.NavigationControl())
-      this.hasNavigation = true
+      map.addControl(new mapboxgl.NavigationControl());
+      this.hasNavigation = true;
     }
   }
 
   componentWillUnmount() {
-    this.props.unloadStory()
-    this.props.unloadPlaces()
-    this.props.unloadMap()
-    this.props.unloadTimeSeries()
-    this.props.unloadRasterLayers()
-    window.removeEventListener("resize", this.setMapSize)
+    this.props.unloadStory();
+    this.props.unloadPlaces();
+    this.props.unloadMap();
+    this.props.unloadTimeSeries();
+    this.props.unloadRasterLayers();
+    window.removeEventListener("resize", this.setMapSize);
   }
 
-  handleOnOpacityChange = e => this.setState({ opacity: e.target.value })
+  handleOnOpacityChange = e => this.setState({ opacity: e.target.value });
 
   setMapSize = () => {
     this.setState({
       width: this.mapContainer.offsetWidth,
-      height: this.mapContainer.offsetHeight,
+      height: this.mapContainer.offsetHeight
     });
   };
 
   selectPlace = place => {
-    if (place.data.place_type === 'office') {
-      this.props.setSelectedPlace(place)
+    if (place.data.place_type === "office") {
+      this.props.setSelectedPlace(place);
       this.updateViewport({
         latitude: place.coordinates[1],
         longitude: place.coordinates[0],
@@ -215,32 +255,40 @@ class MapPage extends PureComponent {
 
   getLayers = memoize((rasterLayers, year, opacity) => {
     if (!rasterLayers) {
-      return []
+      return [];
     }
 
     return rasterLayers
       .filter(layer => new Date(layer.data.start_date).getFullYear() === year)
-      .map(l => Immutable.fromJS({
-        id: l.id.toString(),
-        type: 'raster',
-        source: l.id.toString(),
-        paint: {"raster-opacity": +opacity},
-        layout: { visibility: 'visible' },
-        minzoom: 0,
-        maxzoom: 22
-      }))
-  })
+      .map(l =>
+        Immutable.fromJS({
+          id: l.id.toString(),
+          type: "raster",
+          source: l.id.toString(),
+          paint: { "raster-opacity": +opacity },
+          layout: { visibility: "visible" },
+          minzoom: 0,
+          maxzoom: 22
+        })
+      );
+  });
 
-  getSources = memoize((rasterLayers) => {
+  getSources = memoize(rasterLayers => {
     if (!rasterLayers) {
-      return []
+      return [];
     }
-    return rasterLayers.map(l => Immutable.fromJS({
-      id: l.id.toString(),
-      type: 'raster',
-      tiles: [`https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`],
-    }))
-  })
+    return rasterLayers.map(l =>
+      Immutable.fromJS({
+        id: l.id.toString(),
+        type: "raster",
+        tiles: [
+          `https://api.mapbox.com/v4/${
+            l.data.raster_layer
+          }/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`
+        ]
+      })
+    );
+  });
 
   render() {
     const { width, height, viewport } = this.state;
@@ -259,20 +307,20 @@ class MapPage extends PureComponent {
       extent,
       rasterLayers,
       placeTypesCount,
-      t,
+      t
     } = this.props;
 
-    const mapboxSources = this.getSources(rasterLayers)
+    const mapboxSources = this.getSources(rasterLayers);
     const mapboxRasters = this.getLayers(
       rasterLayers,
       currentDate ? currentDate.getFullYear() : null,
-      this.state.opacity,
-    )
+      this.state.opacity
+    );
 
     return (
       <div className="h-100">
         <SideMenu />
-        <div className='h-100 with-sidemenu d-flex flex-column'>
+        <div className="h-100 with-sidemenu d-flex flex-column">
           <MapHeader
             t={t}
             showOpacity={mapboxRasters.length > 0}
@@ -280,22 +328,26 @@ class MapPage extends PureComponent {
             opacity={this.state.opacity}
             onOpacityChange={this.handleOnOpacityChange}
           />
-          <div className='row no-gutters flex-1' style={{ position: 'relative' }}>
+          <div
+            className="row no-gutters flex-1"
+            style={{ position: "relative" }}
+          >
             <TimeSeries
               extent={extent}
               year={currentDate ? currentDate.getFullYear() : null}
-              columns={get(timeSeries, 'columns', []).slice(1)}
+              columns={get(timeSeries, "columns", []).slice(1)}
               series={timeSeriesByIndicator}
             />
             <div
-              className='col-md-3'
+              className="col-md-3"
               style={{
-                position: 'absolute',
+                position: "absolute",
                 left: 0,
                 top: 0,
                 bottom: 0,
-                pointerEvents: selectedPlace ? undefined : 'none',
-              }}>
+                pointerEvents: selectedPlace ? undefined : "none"
+              }}
+            >
               <Legend
                 story={story}
                 selectedPlace={selectedPlace}
@@ -318,7 +370,9 @@ class MapPage extends PureComponent {
                   height={height}
                   width={width}
                   onViewportChange={this.updateViewport}
-                  ref={r => {this.mapRef = r;}}
+                  ref={r => {
+                    this.mapRef = r;
+                  }}
                 >
                   {/* <div style={{ position: "absolute", right: 5, top: 5 }}>
                     <NavigationControl onViewportChange={this.updateViewport} />
@@ -326,64 +380,74 @@ class MapPage extends PureComponent {
                   {currentDate && (
                     <CurrentYear year={currentDate.getFullYear()} />
                   )}
-                  {places && <Cluster maxZoom={11} radius={20} extent={512} nodeSize={64} element={ClusterElement}>
+                  {places && (
+                    <Cluster
+                      maxZoom={11}
+                      radius={20}
+                      extent={512}
+                      nodeSize={64}
+                      element={ClusterElement}
+                    >
+                      {places.map(place => {
+                        const isSelected = selectedPlace
+                          ? place.id === selectedPlace.id
+                          : false;
+                        let fill = "white";
+                        if (place.data.place_type === "office") {
+                          fill = place.open ? "#13d436" : "#fdd00c";
+                        }
+                        return (
+                          <Marker
+                            key={
+                              selectedPlace ? `selected-${place.id}` : place.id
+                            }
+                            longitude={place.coordinates[0]}
+                            latitude={place.coordinates[1]}
+                            element={
+                              <div onClick={() => this.selectPlace(place)}>
+                                {!isSelected && (
+                                  <svg width={12} height={12}>
+                                    <circle
+                                      onMouseEnter={() => setOverPlace(place)}
+                                      onMouseLeave={() => clearOverPlace()}
+                                      stroke="black"
+                                      cx={6}
+                                      cy={6}
+                                      r={5}
+                                      fill={fill}
+                                    />
+                                  </svg>
+                                )}
+                                {isSelected && (
+                                  <svg width={40} height={40}>
+                                    <circle
+                                      stroke="black"
+                                      cx={20}
+                                      cy={20}
+                                      r={10}
+                                      fill={place.open ? "#13d436" : "#fdd00c"}
+                                    />
+                                    <circle
+                                      cx={20}
+                                      cy={20}
+                                      r={20}
+                                      fill="transparent"
+                                      stroke={
+                                        place.open ? "#13d436" : "#fdd00c"
+                                      }
+                                    />
+                                  </svg>
+                                )}
+                              </div>
+                            }
+                          />
+                        );
+                      })}
+                    </Cluster>
+                  )}
 
-                    {places.map(place => {
-                      const isSelected = selectedPlace
-                        ? place.id === selectedPlace.id
-                        : false;
-                      let fill = 'white'
-                      if (place.data.place_type === 'office') {
-                        fill = place.open ? "#13d436" : "#fdd00c"
-                      }
-                      return (
-                        <Marker
-                          key={selectedPlace ? `selected-${place.id}` : place.id}
-                          longitude={place.coordinates[0]}
-                          latitude={place.coordinates[1]}
-                          element={
-                            <div onClick={() => this.selectPlace(place)}>
-                              {!isSelected && (
-                                <svg width={12} height={12}>
-                                  <circle
-                                    onMouseEnter={() => setOverPlace(place)}
-                                    onMouseLeave={() => clearOverPlace()}
-                                    stroke="black"
-                                    cx={6}
-                                    cy={6}
-                                    r={5}
-                                    fill={fill}
-                                  />
-                                </svg>
-                              )}
-                              {isSelected && (
-                                <svg width={40} height={40}>
-                                  <circle
-                                    stroke="black"
-                                    cx={20}
-                                    cy={20}
-                                    r={10}
-                                    fill={place.open ? "#13d436" : "#fdd00c"}
-                                  />
-                                  <circle
-                                    cx={20}
-                                    cy={20}
-                                    r={20}
-                                    fill="transparent"
-                                    stroke={place.open ? "#13d436" : "#fdd00c"}
-                                  />
-                                </svg>
-                              )}
-                            </div>
-                          }
-                        >
-
-                        </Marker>
-                      );
-                    })}
-                  </Cluster>}
-
-                    {overPlace && <Popup
+                  {overPlace && (
+                    <Popup
                       latitude={overPlace.coordinates[1]}
                       longitude={overPlace.coordinates[0]}
                       tipSize={0}
@@ -399,18 +463,20 @@ class MapPage extends PureComponent {
                           place={overPlace}
                         />
                       }
-                    >
-                    </Popup>}
+                    />
+                  )}
 
-                    {mapboxSources.map(source => (
-                      <Source
-                        key={source.get('id')}
-                        id={source.get('id')}
-                        source={source}
-                      />
-                    ))}
-                    {mapboxRasters && mapboxRasters.length > 0 && mapboxRasters.map((rasterLayer, i) => (
-                      <Layer key={rasterLayer.get('id')} layer={rasterLayer}/>
+                  {mapboxSources.map(source => (
+                    <Source
+                      key={source.get("id")}
+                      id={source.get("id")}
+                      source={source}
+                    />
+                  ))}
+                  {mapboxRasters &&
+                    mapboxRasters.length > 0 &&
+                    mapboxRasters.map((rasterLayer, i) => (
+                      <Layer key={rasterLayer.get("id")} layer={rasterLayer} />
                     ))}
                 </MapGL>
               )}
@@ -434,7 +500,7 @@ const mapStateToProps = state => ({
   extent: getPlacesExtent(state),
   timeSeries: getTimeSeries(state),
   timeSeriesByIndicator: getTimeSeriesByIndicator(state),
-  rasterLayers: getRasterLayers(state),
+  rasterLayers: getRasterLayers(state)
 });
 export default connect(
   mapStateToProps,
@@ -452,6 +518,6 @@ export default connect(
     unloadStory,
     setDateTimelineMap,
     loadRasterLayers,
-    unloadRasterLayers,
+    unloadRasterLayers
   }
 )(localize()(MapPage));
