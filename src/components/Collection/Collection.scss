@@ -69,7 +69,8 @@
   // background: red;
   .collection-list-wrapper {
     padding-right: 86px;
-    padding-left: 20px;
+    padding-top: 30px;
+    // padding-left: 20px;
     height: 100%;
     // background: red;
     overflow-y: auto;
@@ -81,48 +82,67 @@
   // padding-right: 30px;
   // height: 100%;
   // overflow-y: auto;
+  // .collection-col:last-child {
+  //   background: red;
+  // }
 }
 .collection-col {
+  // height: 100%;
+  // background: red;
   // background: pink;
-  /* border: 1px solid #fff; */
+  // border: 1px solid #fff;
+  border-right: 1px solid grey;
+  margin-bottom: 30px;
 }
 
 /* Colection item */
 .collection-item {
-  /* border: 1px solid grey; */
+  // border: 1px solid red;
+  padding: 0 20px;
   width: 100%;
   color: white;
-  margin-bottom: 30px;
-  /* background-color: deepskyblue; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  // background-color: deepskyblue;
 }
 .collection-item > .item-image-box {
-  background-color: #1D1F21;
-  padding: 30px;
+  // background-color: #1D1F21;
+  // padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 295px;
+  justify-content: flex-end;
+  height: 100%;
   width: 100%;
 }
 .collection-item > .item-image-box > img {
+  // display: none;
   max-height: 100%;
   max-width: 100%;
   width: auto;
   vertical-align: middle;
 }
+.collection-item > .item-image-box.item-image-large > img {
+  height: auto;
+  width: 100%;
+}
 .collection-item > .item-caption {
-  margin-top: 5px;
+  margin-bottom: 40px;
 }
 
 .collection-item > .item-caption > .item-label {
+  // TODO: Should do this?
+  word-break: break-all;
   font-size: 20px;
   line-height: 28px;
   height: 60px;
 }
 .collection-item > .item-caption > .item-year {
+  color: #9B9B9B;
   font-size: 14px;
   line-height: 20px;
+  margin-bottom: 10px;
 }
 .collection-brush {
   fill-opacity: 0.25;
