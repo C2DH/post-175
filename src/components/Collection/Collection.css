@@ -73,6 +73,9 @@
   border-right: 1px solid grey;
   margin-bottom: 30px; }
 
+.collection-col.col-placeholder {
+  border: 0; }
+
 /* Colection item */
 .collection-item {
   padding: 0 20px;

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import get from 'lodash/get'
 import map from 'lodash/map'
+import range from 'lodash/range'
 import sample from 'lodash/sample'
 import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
@@ -51,13 +52,17 @@ export const getCollectionDocuments = createSelector(
         return chunk
       }
       const horizs = chunk.filter(c => c.horizontal)
+      const newChunk = [...chunk]
+
       if (horizs.length > 0) {
         const horiz = sample(horizs)
-        chunk[chunk.indexOf(horiz)].large = true
-        return chunk
-      } else {
-        return chunk
+        newChunk[newChunk.indexOf(horiz)].large = true
       }
+
+      return newChunk.concat(range(5 - newChunk.length).map(i => ({
+        id: `placeholder~${i}`,
+        placeholder: true,
+      })))
     })
 
     // console.log('->', docsChunks, colDocs)

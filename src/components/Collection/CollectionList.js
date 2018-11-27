@@ -6,7 +6,6 @@ import './Collection.css'
 export default class CollectionList extends PureComponent {
   render() {
     const { docs } = this.props
-    console.log('~', docs)
     return (
       <div className='collection-list'>
         <div className='collection-list-wrapper'>
@@ -17,8 +16,9 @@ export default class CollectionList extends PureComponent {
                   'col': docRow.length === 6,
                   'col-2': docRow.length === 5 && !doc.large,
                   'col-4': docRow.length === 5 && doc.large,
+                  'col-placeholder': doc.placeholder,
                 })}>
-                  <CollectionItem doc={doc} />
+                  {doc.placeholder ? <div /> : <CollectionItem doc={doc} />}
                 </div>
               ))}
             </div>

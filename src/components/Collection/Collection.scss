@@ -87,12 +87,11 @@
   // }
 }
 .collection-col {
-  // height: 100%;
-  // background: red;
-  // background: pink;
-  // border: 1px solid #fff;
   border-right: 1px solid grey;
   margin-bottom: 30px;
+}
+.collection-col.col-placeholder {
+  border: 0;
 }
 
 /* Colection item */
