@@ -1,4 +1,15 @@
 .Home {
+  .background-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .cols-grid {
+    opacity: 0.2;
+  }
+
   .abstract {
     font-size: 1.1rem;
   }

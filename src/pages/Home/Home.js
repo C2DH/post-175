@@ -43,7 +43,17 @@ class Home extends PureComponent {
       story && story.data.subtitle ? story.data.subtitle.split(" ") : [];
 
     return (
-      <div className="h-100 d-flex flex-column Home">
+      <div className="h-100 d-flex flex-column Home position-relative">
+        <div className="background-container">
+          <div className="container h-100">
+            <div className="row h-100 cols-grid">
+              <div className="col-3 border-right border-left border-light" />
+              <div className="col-3 border-right" />
+              <div className="col-3 border-right" />
+              <div className="col-3 border-right" />
+            </div>
+          </div>
+        </div>
         <div className="flex-grow-0 flex-shrink-0">
           <div className="container">
             <div className="row">
@@ -63,7 +73,7 @@ class Home extends PureComponent {
                     })}
                 </h1>
               </div>
-              <div className="col-4 text-white">
+              <div className="col-3 text-white">
                 <p className="mt-3 text-white-50 abstrac">
                   {story ? story.data.abstract : ""}
                 </p>
