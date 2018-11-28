@@ -1,0 +1,16 @@
+.Home {
+  .section-container {
+    border-top: 5px white solid;
+    padding: 25px;
+  }
+
+  .section-container:hover {
+    border-top: 5px var(--yellow-post) solid;
+  }
+
+  .section-text {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 1.5rem;
+    color: var(--dark);
+  }
+}

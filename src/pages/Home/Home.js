@@ -65,19 +65,21 @@ class Home extends PureComponent {
         <div className="flex-grow-0 flex-shrink-0 bg-white">
           <div className="container">
             <div className="row">
-              <div className="col-3 border-right">
-                <Link to={url("/timeline")}>
-                  <span className="d-flex d-inline-flex justify-content-between align-items-center">
-                    <i className="material-icons">arrow_forward</i>
-                    <span>{t("menu_timeline")}</span>
-                  </span>
-                </Link>
+              <div className="col-3 border-right border-left p-0">
+                <div className="section-container">
+                  <Link to={url("/timeline")}>
+                    <span className="d-flex d-inline-flex justify-content-between align-items-center">
+                      <i className="material-icons">arrow_forward</i>
+                      <span className="section-text">{t("menu_timeline")}</span>
+                    </span>
+                  </Link>
+                </div>
               </div>
               <div className="col-3 border-right">
                 <Link to={url("/collection")}>
                   <span className="d-flex d-inline-flex justify-content-between align-items-center">
                     <i className="material-icons">arrow_forward</i>
-                    <span>{t("menu_collection")}</span>
+                    <span className="section-text">{t("menu_collection")}</span>
                   </span>
                 </Link>
               </div>
@@ -85,15 +87,15 @@ class Home extends PureComponent {
                 <Link to={url("/map")}>
                   <span className="d-flex d-inline-flex justify-content-between align-items-center">
                     <i className="material-icons">arrow_forward</i>
-                    <span>{t("menu_map")}</span>
+                    <span className="section-text">{t("menu_map")}</span>
                   </span>
                 </Link>
               </div>
-              <div className="col-3">
+              <div className="col-3 border-right">
                 <Link to={url("/themes")}>
                   <span className="d-flex d-inline-flex justify-content-between align-items-center">
                     <i className="material-icons">arrow_forward</i>
-                    <span>{t("menu_themes")}</span>
+                    <span className="section-text">{t("menu_themes")}</span>
                   </span>
                 </Link>
               </div>
