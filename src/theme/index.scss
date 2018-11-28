@@ -70,10 +70,6 @@ h6 {
   font-weight: 600;
 }
 
-a:-webkit-any-link {
-  text-decoration: none;
-}
-
 /* general utilities */
 .h-100vh {
   height: 100vh;
@@ -124,42 +120,6 @@ a:-webkit-any-link {
   margin-left: auto;
 }
 
-/* home */
-.home-button,
-.home-button .text-light {
-  transition: all 0.3s;
-}
-
-.home-button:hover {
-  background-color: white;
-}
-
-.home-button:hover .text-light {
-  color: black !important;
-}
-
-.home-subtitle {
-  color: #9b9b9b;
-}
-
-.home-info-container {
-  overflow-y: scroll;
-}
-
-.home-h-100 {
-  height: auto;
-}
-
-.home-link {
-  color: white;
-  text-decoration: underline;
-}
-
-.home-link:hover {
-  color: white;
-  text-decoration: underline;
-}
-
 #pics-container:after {
   content: "";
   position: absolute;
@@ -198,7 +158,7 @@ a:-webkit-any-link {
 
 /* custom background styles */
 .bg-black {
-  background-color: #131313;
+  background-color: #000;
   color: #fff;
 }
 

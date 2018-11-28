@@ -1,7 +1,12 @@
 .Home {
+  .abstract {
+    font-size: 1.1rem;
+  }
+
   .section-container {
     border-top: 5px white solid;
-    padding: 25px;
+    padding: 25px 25px 50px 25px;
+    transition: border-top 0.3s linear;
   }
 
   .section-container:hover {
@@ -11,6 +16,33 @@
   .section-text {
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 1.5rem;
-    color: var(--dark);
+    transform: translateX(-24px);
+    transition: transform 0.3s linear;
+  }
+
+  .moving-container {
+    overflow: hidden;
+  }
+  .section-container:hover .moving-icon {
+    transform: translateX(0);
+  }
+
+  .section-container:hover .section-text {
+    transform: translateX(0);
+  }
+
+  .moving-icon {
+    transform: translateX(-24px);
+    width: 24px;
+    transition: transform 0.3s linear;
+  }
+
+  .read-more {
+    font-family: "IBM Plex Sans", sans-serif;
+    border-bottom: 1px solid var(--yellow-post);
+  }
+
+  a:hover {
+    text-decoration: none;
   }
 }

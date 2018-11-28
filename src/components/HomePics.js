@@ -6,7 +6,7 @@ import { scaleLinear } from "d3-scale";
 import memoize from "memoize-one";
 
 const NUM_PICS = 50;
-const MAX_DELTA = 150;
+const MAX_DELTA = 170;
 const MIN_DELTA = 10;
 
 class HomePicture extends React.PureComponent {
@@ -51,7 +51,7 @@ class HomePicture extends React.PureComponent {
                 >
                   <div
                     style={{ transform: `translateY(${y}px)` }}
-                    className="w-100 bg-overlay text-white d-flex flex-row justify-content-between"
+                    className="w-100 bg-black text-white d-flex flex-row justify-content-between"
                   >
                     <div className="font-12 m-3">{text}</div>
                   </div>
@@ -181,7 +181,6 @@ export default class HomePics extends React.PureComponent {
     const { positions, initialPositions, selectedIndex } = this.state;
     const { docs } = this.props;
     const percentHeights = this.randomicHeights(docs.length);
-    console.log(percentHeights);
 
     return (
       <StaggeredMotion

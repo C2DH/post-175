@@ -1,0 +1,25 @@
+.HomeMenu {
+  z-index: 999;
+  width: 56px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  background-color: var(--yellow-post);
+
+  .lang {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .lang.current-lang {
+    text-decoration: underline;
+  }
+}
