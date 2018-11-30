@@ -20,9 +20,13 @@ class TimelineNavigationMap extends PureComponent {
               className='bg-darkgrey text-white'
               style={{ flex: 1, position: 'relative' }}>
               {rasterLayers.map(layer => (
-                <div key={layer.id} style={{
-                  position: 'absolute',
-                  left: scale(new Date(layer.data.start_date))
+                <div
+                  onClick={() => setDateTimelineMap(new Date(layer.data.start_date))}
+                  key={layer.id}
+                  style={{
+                    cursor: 'pointer',
+                    position: 'absolute',
+                    left: scale(new Date(layer.data.start_date))
                 }}>x</div>
               ))}
             </div>
