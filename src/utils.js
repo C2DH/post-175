@@ -24,7 +24,7 @@ export const getQsSafeCategories = location => {
 }
 
 export const getQsSafeMilestone = location => {
-  return +get(qs.parse(location.search), 'milestone', 0) ? true : false
+  return +get(qs.parse(location.search), 'milestone', 1) ? true : false
 }
 
 export const makeUrlWithYear = (location, year) => {

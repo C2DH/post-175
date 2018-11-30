@@ -23,7 +23,7 @@ import {
   getTimelinePrevEvent,
   getTimelineNextEvent,
   getEventsExtent,
-  getTimelineCurrentDate
+  getTimelineCurrentDate,
 } from "../state/selectors";
 import {
   getQsSafeYear,
@@ -54,13 +54,19 @@ class TimelinePage extends PureComponent {
       nextProps.extent &&
       !nextProps.currentDateRaw
     ) {
-      const year = getQsSafeYear(this.props.location);
+      let year = getQsSafeYear(this.props.location);
       const categories = getQsSafeCategories(this.props.location);
       if (categories.length > 0) {
         this.props.setCategoriesTimeline(categories);
       }
       const milestone = getQsSafeMilestone(this.props.location);
       this.props.setMilestoneTimeline(milestone);
+      // When start \w milestone set the date to first milestone event...
+      if (milestone) {
+        year = Math.min(...nextProps.events
+          .filter(event => event.data.key_event)
+          .map(e => e.startDate.getFullYear()))
+      }
       const { extent } = nextProps;
       if (
         year &&
