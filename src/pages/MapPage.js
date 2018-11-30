@@ -5,6 +5,7 @@ import get from "lodash/get";
 import mapboxgl from "mapbox-gl";
 import Immutable from "immutable";
 import memoize from "memoize-one";
+import qs from 'query-string'
 // import ReactMapGL, {
 //   NavigationControl,
 //   Marker,
@@ -95,7 +96,9 @@ const MapHeader = ({
   t,
   opacity,
   onOpacityChange,
-  showOpacity
+  showOpacity,
+  selectedPlaceTypes,
+  toggleSelectedPlace,
 }) => {
   const counts = ["office", "central", "telegraph"]
     .map(type => ({
@@ -113,6 +116,11 @@ const MapHeader = ({
           {counts.map(({ label, count }) => (
             <div key={label}>
               <span>
+                <input
+                  type='checkbox'
+                  checked={selectedPlaceTypes.indexOf(label) !== -1}
+                  onChange={() => toggleSelectedPlace(label)}
+                />
                 {label} {`(${count})`}
               </span>
             </div>
@@ -290,10 +298,44 @@ class MapPage extends PureComponent {
     );
   });
 
+  getSelectedPlaces = () => {
+    return get(qs.parse(this.props.location.search), 'places', '')
+      .split(',').filter(Boolean)
+  }
+
+  toggleSelectedPlace = place => {
+    const { location } = this.props
+    const places = this.getSelectedPlaces()
+    let newPlaces
+    if (places.indexOf(place) === -1) {
+      newPlaces = places.concat(place)
+    } else {
+      newPlaces = places.filter(p => p !== place)
+    }
+
+    const qsAsObject = qs.parse(location.search)
+    const newQs = qs.stringify({
+      ...qsAsObject,
+      places: newPlaces.join(','),
+    }, {
+      encode: false,
+    })
+    this.props.history.replace(`${location.pathname}?${newQs}`)
+  }
+
+  getFilteredPlaces = memoize((places, placeTypes) => {
+    if (placeTypes.length === 0) {
+      return places
+    }
+    return places.filter(place => {
+      return placeTypes.indexOf(place.data.place_type) !== -1
+    })
+  })
+
   render() {
     const { width, height, viewport } = this.state;
     const {
-      places,
+      placesInTime,
       overPlace,
       selectedPlace,
       setSelectedPlace,
@@ -316,6 +358,8 @@ class MapPage extends PureComponent {
       currentDate ? currentDate.getFullYear() : null,
       this.state.opacity
     );
+    const selectedPlaceTypes = this.getSelectedPlaces()
+    const places = this.getFilteredPlaces(placesInTime, selectedPlaceTypes)
 
     return (
       <div className="h-100">
@@ -327,6 +371,8 @@ class MapPage extends PureComponent {
             placeTypesCount={placeTypesCount}
             opacity={this.state.opacity}
             onOpacityChange={this.handleOnOpacityChange}
+            selectedPlaceTypes={selectedPlaceTypes}
+            toggleSelectedPlace={this.toggleSelectedPlace}
           />
           <div
             className="row no-gutters flex-1"
@@ -491,7 +537,7 @@ class MapPage extends PureComponent {
 
 const mapStateToProps = state => ({
   story: getStory(state),
-  places: getPlacesInDate(state),
+  placesInTime: getPlacesInDate(state),
   placeTypesCount: getPlaceTypesCount(state),
   overPlace: getMapOverPlace(state),
   selectedPlace: getMapSelectedPlace(state),
