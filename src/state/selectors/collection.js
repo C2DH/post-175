@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect'
+import memoize from 'memoize-one'
 import get from 'lodash/get'
 import map from 'lodash/map'
 import range from 'lodash/range'
 import sample from 'lodash/sample'
 import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
+import { getDocDetail } from './document'
 
 const getCollectionDocumentsRaw = createSelector(
   state => state.collectionDocs.ids,
@@ -14,6 +16,27 @@ const getCollectionDocumentsRaw = createSelector(
     ? null
     : ids.map(id => translateDoc(data[id], langCode))
 )
+
+export const getCollectionDocumentDetail = memoize(id => createSelector(
+  getDocDetail,
+  state => state.collectionDocs.data,
+  getSelectedLangCode,
+  (detailCompleteDoc, dataDocs, langCode) => {
+    // If we got the complete detail return that
+    if (detailCompleteDoc) {
+      return detailCompleteDoc
+    }
+    // Otherwise return the doc from collection without realted shit
+    if (dataDocs[id]) {
+      const doc = translateDoc(dataDocs[id], langCode)
+      return {
+        ...doc,
+        documents: [],
+      }
+    }
+    return null
+  }
+))
 
 export const getCollectionDocuments = createSelector(
   getCollectionDocumentsRaw,

@@ -1,26 +1,31 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import memoize from 'memoize-one'
 import find from 'lodash/find'
 import {
-  getCollectionDocuments,
+  getCollectionDocumentDetail,
 } from '../state/selectors'
+import {
+  loadDocument,
+  unloadDocument,
+} from '../state/actions'
 import DocDetail from '../components/DocDetail'
 import SideMenu from '../components/SideMenu'
 
 class DocumentDetailModal extends PureComponent {
-  getDocument = memoize((documents, id) => {
-    return find(documents, { id: +id })
-  })
+  componentDidMount() {
+    this.props.loadDocument(this.props.doc.id)
+  }
+
+  componentWillUnmount() {
+    this.props.unloadDocument()
+  }
 
   onClose = () => {
     this.props.history.goBack()
   }
 
   render() {
-    const { documents, match } = this.props
-    const { params: { id } } = match
-    const doc = this.getDocument(documents, id)
+    const { doc } = this.props
 
     return (
       <div style={{
@@ -43,6 +48,9 @@ class DocumentDetailModal extends PureComponent {
   }
 }
 
-export default connect(state => ({
-  documents: getCollectionDocuments(state),
-}))(DocumentDetailModal)
+export default connect((state, props) => ({
+  doc: getCollectionDocumentDetail(props.match.params.id)(state),
+}), {
+  loadDocument,
+  unloadDocument,
+})(DocumentDetailModal)
