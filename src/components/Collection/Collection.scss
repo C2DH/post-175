@@ -119,19 +119,21 @@
   }
 }
 .collection-row {
+  height: 430px;
+  padding-bottom: 30px;
   // padding-top: 50px;
   // padding-left: 30px;
   // padding-right: 30px;
   // height: 100%;
   // overflow-y: auto;
-  // .collection-col:last-child {
-  //   background: red;
-  // }
+  .collection-col:last-child {
+    border-right: 0;
+  }
 }
 .collection-col {
-  height: 430px;
-  // border-right: 1px solid grey;
-  border: 1px solid grey;
+  // background: red;
+  border-right: 1px solid grey;
+  // border: 1px solid grey;
   // margin-bottom: 30px;
 }
 .collection-col.col-placeholder {

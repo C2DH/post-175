@@ -89,9 +89,14 @@
     padding-top: 30px;
     height: 100%; }
 
-.collection-col {
+.collection-row {
   height: 430px;
-  border: 1px solid grey; }
+  padding-bottom: 30px; }
+  .collection-row .collection-col:last-child {
+    border-right: 0; }
+
+.collection-col {
+  border-right: 1px solid grey; }
 
 .collection-col.col-placeholder {
   border: 0; }
