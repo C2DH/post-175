@@ -58,7 +58,7 @@ class CollectionFilters extends PureComponent {
     const {
       categories, onToggleCategory, suggestions, clearSuggestions, t,
       locationKey, startYear, endYear, onYearsChange, facets, allFacets,
-      count, allCount,
+      count, allCount, includeUncertain, toggleUncertain,
     } = this.props
     const { open } = this.state
 
@@ -104,6 +104,8 @@ class CollectionFilters extends PureComponent {
             <div className='col-md-7 d-flex flex-column'>
               <h5 className='filter-sub-title'>FILTER BY YEAR</h5>
                 {allFacets && <CollectionTimeBrush
+                  includeUncertain={includeUncertain}
+                  toggleUncertain={toggleUncertain}
                   locationKey={locationKey}
                   startYear={startYear}
                   endYear={endYear}

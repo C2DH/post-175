@@ -182,7 +182,7 @@ export default class CollectionTimeBrush extends PureComponent {
   debouncedOnYearsChange = debounce(this.props.onYearsChange, 150)
 
   render() {
-    const { allFacets, facets } = this.props
+    const { allFacets, facets, includeUncertain, toggleUncertain } = this.props
     const { width, height, startYear, endYear } = this.state
     const scaleBars = this.getScaleBars(allFacets.data__year, height)
     const extent = this.getExtent(allFacets)
@@ -227,7 +227,13 @@ export default class CollectionTimeBrush extends PureComponent {
           </svg>}
         </div>
         <div className='filter-brush-bottom'>
-          {startYear.getFullYear()}{' - '}{endYear.getFullYear()}
+          <div><input
+            type='checkbox'
+            onChange={() => toggleUncertain()}
+            checked={includeUncertain}
+          />
+          {' '}include items with uncertain dates</div>
+          <div>{startYear.getFullYear()}{' - '}{endYear.getFullYear()}</div>
         </div>
       </div>
     )

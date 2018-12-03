@@ -41,7 +41,8 @@ class Collection extends PureComponent {
     if (
       prevQueryParams.search !== queryParams.search ||
       prevQueryParams.categories !== queryParams.categories ||
-      prevQueryParams.overlaps !== queryParams.overlaps
+      prevQueryParams.overlaps !== queryParams.overlaps ||
+      prevQueryParams.uncertain !== queryParams.uncertain
     ) {
       this.loadDocs(this.parseQueryParams(queryParams))
     }
@@ -52,13 +53,20 @@ class Collection extends PureComponent {
     this.props.unloadCollectionFacets()
   }
 
-  loadDocs = ({ categories, search, overlaps }) => {
+  loadDocs = ({ categories, search, overlaps, includeUncertain }) => {
     let overlapsQuery
     if (overlaps && overlaps[0] && overlaps[1]) {
       overlapsQuery = `${overlaps[0].getFullYear()}-01-01,${overlaps[1].getFullYear()}-12-31`
     }
+    let exclude = {}
+    if (!includeUncertain) {
+      exclude = {
+        "data__year__iexact": "uncertain",
+      }
+    }
     this.props.loadCollectionDocuments({
       overlaps: overlapsQuery,
+      exclude,
       filters: {
         data__type__in: categories.length > 0 ? categories : COLLECTION_DATE_TYPES,
       },
@@ -69,13 +77,14 @@ class Collection extends PureComponent {
   parseQueryParams = queryParams => {
     const search = get(queryParams, 'search', '')
     const categories = parseQsAsList(get(queryParams, 'categories', ''))
+    const includeUncertain = +get(queryParams, 'uncertain', '1') ? true : false
     let overlaps = get(queryParams, 'overlaps', '').split(',').filter(Boolean)
     overlaps = [
       isNaN(overlaps[0]) ? null : new Date(`${overlaps[0]}-01-01`),
       isNaN(overlaps[1]) ? null : new Date(`${overlaps[1]}-12-31`),
     ]
 
-    return { search, categories, overlaps }
+    return { search, categories, overlaps, includeUncertain }
   }
 
   handleOnOverlapsChange = (startYear, endYear) => {
@@ -118,10 +127,23 @@ class Collection extends PureComponent {
     })}`)
   }
 
+  handleToggleUncertain = () => {
+    const { location } = this.props
+    const queryParams = qs.parse(location.search)
+    const uncertain = +get(queryParams, 'uncertain', '1') ? '0' : '1'
+
+    this.props.history.push(`${location.pathname}?${qs.stringify({
+      ...queryParams,
+      uncertain,
+    }, {
+      encode: false,
+    })}`)
+  }
+
   render() {
     const { docs, facets, allFacets, location, count, allCount } = this.props
     const queryParams = qs.parse(location.search)
-    const { search, categories, overlaps } = this.parseQueryParams(queryParams)
+    const { search, categories, overlaps, includeUncertain } = this.parseQueryParams(queryParams)
 
     return (
       <div className='h-100'>
@@ -135,6 +157,8 @@ class Collection extends PureComponent {
             onToggleCategory={this.handleToggleCategory}
             count={count}
             allCount={allCount}
+            includeUncertain={includeUncertain}
+            toggleUncertain={this.handleToggleUncertain}
 
             startYear={overlaps[0]}
             endYear={overlaps[1]}

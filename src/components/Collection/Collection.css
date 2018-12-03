@@ -54,6 +54,8 @@
     flex-direction: column;
     height: 100%; }
     .collection-filters-open .filter-brush-container .filter-brush-bottom {
+      display: flex;
+      justify-content: space-between;
       padding-top: 15px;
       color: white; }
 
