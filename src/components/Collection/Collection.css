@@ -87,12 +87,11 @@
   .collection-list .collection-list-wrapper {
     padding-right: 86px;
     padding-top: 30px;
-    height: 100%;
-    overflow-y: auto; }
+    height: 100%; }
 
 .collection-col {
-  border-right: 1px solid grey;
-  margin-bottom: 30px; }
+  height: 430px;
+  border: 1px solid grey; }
 
 .collection-col.col-placeholder {
   border: 0; }
@@ -122,7 +121,7 @@
 
 .collection-item > .item-image-box.item-image-large > img {
   height: auto;
-  width: 100%; }
+  width: unset; }
 
 .collection-item > .item-caption {
   margin-bottom: 40px; }

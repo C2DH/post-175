@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import get from 'lodash/get'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import MagikDotDotDot from '../MagikDotDotDot'
@@ -22,7 +23,7 @@ export default class CollectionItem extends PureComponent {
           <div className={classNames('item-image-box', {
             'item-image-large': doc.large,
           })}>
-            <img src={doc.snapshot} alt={doc.title} />
+            <img src={get(doc, 'data.resolutions.medium.url', doc.snapshot)} alt={doc.title} />
           </div>
         </div>
       </Link>
