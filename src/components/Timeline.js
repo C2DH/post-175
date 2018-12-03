@@ -39,8 +39,8 @@ class EventItem extends PureComponent {
     if (!event.displacementIndex) {
       y2 = eventHeight ? height / 2 + eventHeight / 2 : height / 2
     } else {
-      const k = event.displacementIndex % 2 === 0 ? 2 : 5
-      y2 = eventHeight ? height / 8 * k + eventHeight / 8 * k : height / 8 * k
+      const unitHeight = height / (event.displacementCount + 1)
+      y2 = unitHeight * (event.displacementIndex)
       if ((y2 - eventHeight) < 0) {
         y2 += Math.abs(y2 - eventHeight) + 80
       }
@@ -59,7 +59,7 @@ class EventItem extends PureComponent {
             <g transform={'translate(10, 0)'}>
                 <MultiText spacing={20} y={40+eventHeight} className="timeline-event-title" text={event.data.title} maxLen={25}></MultiText>
                 <text className="timeline-event-date">{event.data.start_date}</text>
-                <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category_label}</text>
+                <text dy={20+eventHeight} fill={color} className="timeline-event-category">{event.data.category_label}{'+'}{event.displacementIndex}</text>
             </g>
             <image xlinkHref={snapshot} x={1} y={EVENT_RADIUS}  width={EVENT_WIDTH} height={eventHeight}/>
           </g>
@@ -69,7 +69,7 @@ class EventItem extends PureComponent {
           <g className="timeline-g-click" transform={`translate(${scale(event.startDate)+10}, ${y2})`}>
             <MultiText spacing={20} y={40} className="timeline-event-title" text={event.data.title} maxLen={25}></MultiText>
             <text className="timeline-event-date">{event.data.start_date}</text>
-            <text dy={20} fill={color} className="timeline-event-category">{event.data.category_label}</text>
+            <text dy={20} fill={color} className="timeline-event-category">{event.data.category_label}{'+'}{event.displacementIndex}</text>
           </g>
         )}
 

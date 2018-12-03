@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { range, groupBy, last, sortBy, countBy } from 'lodash'
+import { range, groupBy, last, sortBy, countBy, uniqueId } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
@@ -59,12 +59,21 @@ export const getAnnotatedEvents = createSelector(
         if( event.startDate.getTime() - sortedEvents[i-1].startDate.getTime() < (DAY_DURATION * 180)){
           if(!sortedEvents[i-1].displacementIndex){
             sortedEvents[i-1].displacementIndex = 1
+            sortedEvents[i-1].displacementId = uniqueId()
           }
           event.displacementIndex = sortedEvents[i-1].displacementIndex + 1
+          event.displacementId = sortedEvents[i-1].displacementId
         }
       }
     })
-    return sortedEvents
+    const countDisplacemnt = countBy(sortedEvents, 'displacementId')
+    return sortedEvents.map(event => {
+      if (event.displacementId) {
+        event.displacementCount = countDisplacemnt[event.displacementId]
+        return event
+      }
+      return event
+    })
   }
 )
 
