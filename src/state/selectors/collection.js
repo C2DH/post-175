@@ -130,12 +130,29 @@ export const getCollectionsFacets = createSelector(
 export const getCollectionsAllFacets = createSelector(
   state => state.collectionFacets.data,
   facets => {
-    if (!facets) {
-      return facets
+    if (facets === null) {
+      return null
     }
-    const dataYearFacets = facets.data__year
+    const dataYearFacets = facets.facets.data__year
     return {
       data__year: fixFacets(dataYearFacets || []),
     }
+  }
+)
+
+export const getCollectionCount = createSelector(
+  state => state.collectionDocs.pagination.count,
+  count => {
+    return count
+  }
+)
+
+export const getCollectionAllCount = createSelector(
+  state => state.collectionFacets.data,
+  facets => {
+    if (facets === null) {
+      return null
+    }
+    return facets.count
   }
 )

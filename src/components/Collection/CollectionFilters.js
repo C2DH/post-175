@@ -57,7 +57,8 @@ class CollectionFilters extends PureComponent {
   render() {
     const {
       categories, onToggleCategory, suggestions, clearSuggestions, t,
-      locationKey, startYear, endYear, onYearsChange, facets, allFacets
+      locationKey, startYear, endYear, onYearsChange, facets, allFacets,
+      count, allCount,
     } = this.props
     const { open } = this.state
 
@@ -66,22 +67,22 @@ class CollectionFilters extends PureComponent {
         <div className='collection-filters'>
           <div className='filters-title d-flex align-items-center'>
             <h2>Archive</h2>
-            <small className='ml-2'>23 / 23</small>
+            <small className='ml-2'>{count} / {allCount}</small>
             <small className='ml-2'>items shown</small>
           </div>
           <div className='filters-actions'>
-            <button>Search</button>
-            <button onClick={this.toggleFiltersOpen}>Filter</button>
+            <Search
+              placeholder='Search'
+              onSuggestionSelected={this.onSuggestionSelected}
+              searchSuggestions={this.debouncedSearchSuggestions}
+              clearSuggestions={clearSuggestions}
+              suggestions={suggestions}
+              value={this.state.searchText}
+              onChange={this.handleOnSearchChange}
+            />
+            <button className='btn'>Search</button>
+            <button className='btn' onClick={this.toggleFiltersOpen}>Filter</button>
           </div>
-          {/* <Search
-            placeholder='Search'
-            onSuggestionSelected={this.onSuggestionSelected}
-            searchSuggestions={this.debouncedSearchSuggestions}
-            clearSuggestions={clearSuggestions}
-            suggestions={suggestions}
-            value={this.state.searchText}
-            onChange={this.handleOnSearchChange}
-          /> */}
         </div>
         {open && <div className='collection-filters-open'>
           <div className='row no-gutters'>
@@ -102,7 +103,6 @@ class CollectionFilters extends PureComponent {
             </div>
             <div className='col-md-7 d-flex flex-column'>
               <h5 className='filter-sub-title'>FILTER BY YEAR</h5>
-              <div className='filter-brush-container'>
                 {allFacets && <CollectionTimeBrush
                   locationKey={locationKey}
                   startYear={startYear}
@@ -111,10 +111,6 @@ class CollectionFilters extends PureComponent {
                   facets={facets}
                   allFacets={allFacets}
                 />}
-                <div className='filter-brush-bottom'>
-                  {startYear.getFullYear()}{' - '}{endYear.getFullYear()}
-                </div>
-              </div>
             </div>
           </div>
         </div>}

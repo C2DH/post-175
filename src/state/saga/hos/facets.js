@@ -9,7 +9,7 @@ const makeFacets = (
   function* handleGetFacets({ payload: { params } }) {
     yield put({ type: `${actionType}_LOADING` })
     try {
-      const { facets } = yield call(apiFn, {
+      const { facets, count } = yield call(apiFn, {
         ...params,
         facets_only: true,
         limit: 1,
@@ -17,7 +17,7 @@ const makeFacets = (
 
       yield put({
         type: `${actionType}_SUCCESS`,
-        payload: facets,
+        payload: { facets, count },
       })
     } catch (error) {
       yield put({ type: `${actionType}_FAILURE`, error: String(error) })

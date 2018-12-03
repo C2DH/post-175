@@ -18,6 +18,8 @@ import {
   getCollectionDocuments,
   getCollectionsFacets,
   getCollectionsAllFacets,
+  getCollectionCount,
+  getCollectionAllCount,
 } from '../state/selectors'
 
 const parseQsAsList = str => str.split(',').filter(Boolean)
@@ -117,7 +119,7 @@ class Collection extends PureComponent {
   }
 
   render() {
-    const { docs, facets, allFacets, location } = this.props
+    const { docs, facets, allFacets, location, count, allCount } = this.props
     const queryParams = qs.parse(location.search)
     const { search, categories, overlaps } = this.parseQueryParams(queryParams)
 
@@ -131,6 +133,8 @@ class Collection extends PureComponent {
             onSearchChange={this.handleOnSearchChange}
             categories={categories}
             onToggleCategory={this.handleToggleCategory}
+            count={count}
+            allCount={allCount}
 
             startYear={overlaps[0]}
             endYear={overlaps[1]}
@@ -149,6 +153,8 @@ export default connect(state => ({
   docs: getCollectionDocuments(state),
   facets: getCollectionsFacets(state),
   allFacets: getCollectionsAllFacets(state),
+  count: getCollectionCount(state),
+  allCount: getCollectionAllCount(state),
 }), {
   loadCollectionDocuments,
   unloadCollectionDocuments,

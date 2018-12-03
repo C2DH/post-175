@@ -2,7 +2,7 @@
   color: #fff;
   top: 0;
   left: 56px;
-  z-index: 2;
+  z-index: 3;
   right: 0;
   height: 56px;
   background-color: #272A2D;
@@ -14,6 +14,9 @@
   align-items: center;
   padding-left: 86px;
   padding-right: 86px; }
+  .collection-filters .filters-actions {
+    display: flex;
+    align-items: center; }
   .collection-filters .filters-title h2 {
     margin: 0; }
 

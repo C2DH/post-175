@@ -183,7 +183,7 @@ export default class CollectionTimeBrush extends PureComponent {
 
   render() {
     const { allFacets, facets } = this.props
-    const { width, height } = this.state
+    const { width, height, startYear, endYear } = this.state
     const scaleBars = this.getScaleBars(allFacets.data__year, height)
     const extent = this.getExtent(allFacets)
     let scaleYears
@@ -195,35 +195,40 @@ export default class CollectionTimeBrush extends PureComponent {
     }
 
     return (
-      <div className='collection-time-brush' ref={r => this.container = r}>
-        {width && <svg style={{ height, width, overflow: 'visible' }}>
-          <g transform='translate(0, 0)'>
-            {/* <Ticks y={MAX_BAR_HEIGHT + 12} ticks={ticks} scale={scaleYears} /> */}
-            <Bars
-              height={height}
-              bars={allFacets.data__year}
-              scaleYears={scaleYears}
-              scaleBars={scaleBars}
-              fill={'grey'}
-            />
-            <Bars
-              height={height}
-              bars={facets.data__year}
-              scaleYears={scaleYears}
-              scaleBars={scaleBars}
-              fill={'white'}
-            />
-          </g>
-          <g>
-            <Brush
-              height={height}
-              startYear={this.state.startYear}
-              endYear={this.state.endYear}
-              onChange={this.onBrushChange}
-              scale={scaleYears}
-            />
-          </g>
-        </svg>}
+      <div className='filter-brush-container'>
+        <div className='collection-time-brush' ref={r => this.container = r}>
+          {width && <svg style={{ height, width, overflow: 'visible' }}>
+            <g transform='translate(0, 0)'>
+              {/* <Ticks y={MAX_BAR_HEIGHT + 12} ticks={ticks} scale={scaleYears} /> */}
+              <Bars
+                height={height}
+                bars={allFacets.data__year}
+                scaleYears={scaleYears}
+                scaleBars={scaleBars}
+                fill={'grey'}
+              />
+              <Bars
+                height={height}
+                bars={facets.data__year}
+                scaleYears={scaleYears}
+                scaleBars={scaleBars}
+                fill={'white'}
+              />
+            </g>
+            <g>
+              <Brush
+                height={height}
+                startYear={this.state.startYear}
+                endYear={this.state.endYear}
+                onChange={this.onBrushChange}
+                scale={scaleYears}
+              />
+            </g>
+          </svg>}
+        </div>
+        <div className='filter-brush-bottom'>
+          {startYear.getFullYear()}{' - '}{endYear.getFullYear()}
+        </div>
       </div>
     )
   }
