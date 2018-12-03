@@ -34,7 +34,7 @@ const Bars = ({ bars, scaleYears, scaleBars, height, fill }) => (
   </g>
 )
 
-const BRUSH_RADIUS = 12
+const BRUSH_RADIUS = 9
 class Brush extends React.Component {
   handleEndDrag = (e, data) => {
     const { scale, endYear, extent } = this.props
@@ -61,21 +61,39 @@ class Brush extends React.Component {
 
   render() {
     const { scale, startYear, endYear, height } = this.props
+    const range = scale.range()
     return (
       <g>
-        <rect
+        {/* <rect
           className='collection-brush'
           x={scale(startYear)} height={height} width={scale(endYear) - scale(startYear)}>
-
-        </rect>
+        </rect> */}
+        <line
+          x1={range[0]}
+          y1={height}
+          strokeWidth={2}
+          x2={range[1]}
+          y2={height}
+          stroke={'grey'}
+          fill={'grey'}
+        />
+        <line
+          x1={scale(startYear)}
+          y1={height}
+          strokeWidth={2}
+          x2={scale(endYear)}
+          y2={height}
+          stroke={'yellow'}
+          fill={'yellow'}
+        />
         <DraggableCore onDrag={this.handleStartDrag}>
           <g transform={`translate(${scale(startYear)}, 0)`}>
-            <circle r={BRUSH_RADIUS} cx={0} cy={height/2} fill='grey' />
+            <circle r={BRUSH_RADIUS} cx={0} cy={height} fill='yellow' />
           </g>
         </DraggableCore>
         <DraggableCore onDrag={this.handleEndDrag}>
           <g transform={`translate(${scale(endYear)}, 0)`}>
-            <circle r={BRUSH_RADIUS} cx={0} cy={height/2} fill='grey' />
+            <circle r={BRUSH_RADIUS} cx={0} cy={height} fill='yellow' />
           </g>
         </DraggableCore>
 
@@ -84,7 +102,7 @@ class Brush extends React.Component {
   }
 }
 
-const PADDING = 56
+const PADDING = 0
 const MAX_BAR_HEIGHT = 30
 
 const makeExtentFromFacets = facets =>
@@ -166,7 +184,7 @@ export default class CollectionTimeBrush extends PureComponent {
   render() {
     const { allFacets, facets } = this.props
     const { width, height } = this.state
-    const scaleBars = this.getScaleBars(allFacets.data__year, MAX_BAR_HEIGHT)
+    const scaleBars = this.getScaleBars(allFacets.data__year, height)
     const extent = this.getExtent(allFacets)
     let scaleYears
     let ticks
@@ -178,18 +196,18 @@ export default class CollectionTimeBrush extends PureComponent {
 
     return (
       <div className='collection-time-brush' ref={r => this.container = r}>
-        {width && <svg className='h-100'>
-          <g transform='translate(0, 6)'>
-            <Ticks y={MAX_BAR_HEIGHT + 12} ticks={ticks} scale={scaleYears} />
+        {width && <svg style={{ height, width, overflow: 'visible' }}>
+          <g transform='translate(0, 0)'>
+            {/* <Ticks y={MAX_BAR_HEIGHT + 12} ticks={ticks} scale={scaleYears} /> */}
             <Bars
-              height={MAX_BAR_HEIGHT}
+              height={height}
               bars={allFacets.data__year}
               scaleYears={scaleYears}
               scaleBars={scaleBars}
               fill={'grey'}
             />
             <Bars
-              height={MAX_BAR_HEIGHT}
+              height={height}
               bars={facets.data__year}
               scaleYears={scaleYears}
               scaleBars={scaleBars}

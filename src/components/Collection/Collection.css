@@ -12,41 +12,58 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 30px;
-  padding-right: 30px; }
+  padding-left: 86px;
+  padding-right: 86px; }
+  .collection-filters .filters-title h2 {
+    margin: 0; }
 
-.collection-filters-categories {
-  display: flex; }
+.collection-filters-open {
+  position: fixed;
+  z-index: 2;
+  left: 56px;
+  top: 56px;
+  right: 0;
+  padding-left: 86px;
+  padding-right: 86px;
+  background-color: #272A2D;
+  border: 1px solid white; }
+  .collection-filters-open .filter-sub-title {
+    color: yellow;
+    margin: 0;
+    margin-top: 10px; }
+  .collection-filters-open .categories-radios {
+    padding-top: 10px;
+    padding-bottom: 10px; }
+  .collection-filters-open .categories-radios .category-radio {
+    align-items: center;
+    display: flex; }
+  .collection-filters-open .categories-radios .category-radio:last-child {
+    margin-right: 0; }
+  .collection-filters-open .categories-radios .category-radio .radio-label {
+    color: white;
+    margin-left: 10px; }
+  .collection-filters-open .categories-radios .category-radio input {
+    margin-top: -2px; }
+  .collection-filters-open .filter-brush-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; }
+    .collection-filters-open .filter-brush-container .filter-brush-bottom {
+      padding-top: 15px;
+      color: white; }
 
-.collection-filters-categories .categories-radios {
-  align-items: center;
-  margin-left: 20px;
-  display: flex; }
-
-.collection-filters-categories .categories-radios .category-radio {
-  align-items: center;
-  margin-right: 30px;
-  display: flex; }
-
-.collection-filters-categories .categories-radios .category-radio:last-child {
-  margin-right: 0; }
-
-.collection-filters-categories .categories-radios .category-radio .radio-label {
-  margin-left: 10px; }
-
-.collection-filters-categories .categories-radios .category-radio input {
-  margin-top: -2px; }
+.collection-brush {
+  fill-opacity: 0.25;
+  fill: grey;
+  stroke: #fff; }
 
 .collection-time-brush {
-  bottom: 0;
-  left: 56px;
-  right: 0;
-  height: 56px;
-  border-top: 1px solid grey;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  position: fixed; }
+  height: 100%; }
+  .collection-time-brush svg {
+    margin: 0;
+    padding: 0; }
 
 .collection-ticks {
   width: 100%;
@@ -61,7 +78,6 @@
 .collection-list {
   height: 100%;
   padding-top: 56px;
-  padding-bottom: 56px;
   background-color: #272A2D; }
   .collection-list .collection-list-wrapper {
     padding-right: 86px;
@@ -117,8 +133,3 @@
   font-size: 14px;
   line-height: 20px;
   margin-bottom: 10px; }
-
-.collection-brush {
-  fill-opacity: 0.25;
-  fill: grey;
-  stroke: #fff; }

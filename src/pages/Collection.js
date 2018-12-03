@@ -131,16 +131,14 @@ class Collection extends PureComponent {
             onSearchChange={this.handleOnSearchChange}
             categories={categories}
             onToggleCategory={this.handleToggleCategory}
-          />
-          {docs && <CollectionList docs={docs} />}
-          {allFacets && <CollectionTimeBrush
+
             startYear={overlaps[0]}
             endYear={overlaps[1]}
             onYearsChange={this.handleOnOverlapsChange}
-            locationKey={location.key}
             facets={facets}
             allFacets={allFacets}
-          />}
+          />
+          {docs && <CollectionList docs={docs} />}
         </div>
       </div>
     )
