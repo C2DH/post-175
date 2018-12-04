@@ -13,7 +13,7 @@ export default class CollectionList extends PureComponent {
     return (
       <div className='row no-gutters collection-row' key={key} style={style}>
         {docRow.map(doc => (
-          <div key={doc.id} className={classNames(`collection-col col-md`, {
+          <div key={doc.id} className={classNames(`collection-col`, {
             'col': docRow.length === 6,
             'col-2': docRow.length === 5 && !doc.large,
             'col-4': docRow.length === 5 && doc.large,
@@ -28,6 +28,7 @@ export default class CollectionList extends PureComponent {
 
   render() {
     const { docs } = this.props
+    console.log('Uuuuuuuuuuu', docs)
     return (
       <div className='collection-list'>
         <div className='collection-list-wrapper'>

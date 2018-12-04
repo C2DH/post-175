@@ -17,7 +17,7 @@ const buildMillerParams = params => {
   if (newParams.exclude && typeof newParams.exclude !== "string") {
     newParams = { ...newParams, exclude: JSON.stringify(newParams.exclude) };
   }
-  console.log(params, newParams);
+  // console.log(params, newParams);
   return newParams;
 };
 

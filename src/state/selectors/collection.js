@@ -45,10 +45,13 @@ export const getCollectionDocuments = createSelector(
       return null
     }
     // TODO: Remove filter by API query....
-    const snapDocs = docs.filter(doc => doc.snapshot)
+    // const snapDocs = docs.filter(doc => doc.snapshot)
+    // console.log("|", snapDocs, docs)
 
-    const docsChunks = snapDocs.reduce((chunks, doc) => {
-      const horizontal = doc.data.width > doc.data.height
+    const docsChunks = docs.reduce((chunks, doc) => {
+      const horizontal = doc.data.width
+        ? doc.data.width > doc.data.height
+        : false
       const nextDoc = { ...doc, horizontal }
       if (chunks.length === 0) {
         return chunks.concat([[nextDoc]])
