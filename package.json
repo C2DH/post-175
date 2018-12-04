@@ -28,6 +28,7 @@
     "react-hammerjs": "^1.0.1",
     "react-map-gl": "^4.0.0",
     "react-motion": "^0.5.2",
+    "react-player": "^1.7.0",
     "react-redux": "^5.0.7",
     "react-responsive": "^5.0.0",
     "react-router-dom": "^4.3.1",

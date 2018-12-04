@@ -13,7 +13,7 @@ import SideMenu from '../components/SideMenu'
 
 class DocumentDetailModal extends PureComponent {
   componentDidMount() {
-    this.props.loadDocument(this.props.doc.id)
+    this.props.loadDocument(this.props.match.params.id)
   }
 
   componentWillUnmount() {

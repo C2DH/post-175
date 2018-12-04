@@ -1,16 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import ZoomAndPanMedia from '../ZoomAndPanMedia'
+import DocMedia from './DocMedia'
 import './DocDetail.css'
 
 const DocDetail = ({ doc, onClose }) => (
   <div className='doc-detail'>
     <div className='doc-detail-data'>
       <div className='row w-100 m-0 h-100'>
-        <div className='col-md-9 doc-detail-media'>
-          <ZoomAndPanMedia
-            src={doc.type === 'pdf' ? doc.snapshot : doc.attachment}
-          />
+        <div className='col-md-9'>
+          <DocMedia doc={doc} />
         </div>
         <div className='col-md-3 doc-detail-info'>
           <div className='doc-date'>{doc.data.start_date}</div>

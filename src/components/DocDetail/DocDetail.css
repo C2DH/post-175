@@ -52,3 +52,9 @@
   object-fit: cover;
   height: 100%;
   width: 70px; }
+
+.doc-detail .doc-media-video {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 100%; }
