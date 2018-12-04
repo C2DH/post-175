@@ -3,16 +3,28 @@
   width: 100%;
   background-color: #272A2D;
   display: flex; }
+  .doc-detail .doc-detail-lang-switcher {
+    background: yellow;
+    width: 100%; }
+    .doc-detail .doc-detail-lang-switcher .doc-detail-lang {
+      text-align: center;
+      cursor: pointer;
+      height: 30px; }
+    .doc-detail .doc-detail-lang-switcher .doc-detail-lang.doc-detail-current-lang {
+      text-decoration: underline; }
 
 .doc-detail > .doc-detail-data {
   width: 100%;
   flex: 1; }
 
 .doc-detail > .doc-detail-bar {
-  color: white;
+  background: white;
+  color: black;
+  border-right: 1px solid black;
   display: flex;
   padding-top: 10px;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
   width: 50px; }
 

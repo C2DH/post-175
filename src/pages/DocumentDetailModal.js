@@ -35,14 +35,12 @@ class DocumentDetailModal extends PureComponent {
         left: 0,
         right: 0,
         zIndex: 9999,
+        height: '100%',
       }}>
-        <SideMenu />
-        <div className='with-sidemenu h-100'>
-          {doc && <DocDetail
-            doc={doc}
-            onClose={this.onClose}
-          />}
-        </div>
+        {doc && <DocDetail
+          doc={doc}
+          onClose={this.onClose}
+        />}
       </div>
     )
   }

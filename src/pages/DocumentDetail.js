@@ -37,13 +37,10 @@ class DocumentDetail extends PureComponent {
 
     return (
       <div className='h-100'>
-        <SideMenu />
-        <div className='with-sidemenu h-100'>
-          {doc && <DocDetail
-            doc={doc}
-            onClose={this.onClose}
-          />}
-        </div>
+        {doc && <DocDetail
+          doc={doc}
+          onClose={this.onClose}
+        />}
       </div>
     )
   }
