@@ -28,7 +28,6 @@ export default class CollectionList extends PureComponent {
 
   render() {
     const { docs } = this.props
-    console.log('Uuuuuuuuuuu', docs)
     return (
       <div className='collection-list'>
         <div className='collection-list-wrapper'>

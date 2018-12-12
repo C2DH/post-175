@@ -87,3 +87,16 @@
   display: flex;
   height: 100%;
 }
+
+.doc-detail .doc-media-pdf {
+  // padding-top: 15px;
+  // padding-bottom: 15px;
+  justify-content: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  // margin-top: 15px;
+  // margin-bottom: 100px;
+  // height: calc(100% - 30px);
+  // width: 100%;
+}
