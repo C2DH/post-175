@@ -1,0 +1,411 @@
+{
+  "id": 45,
+  "url": "http://ww1.lu/api/story/45/",
+  "slug": "chapter-1",
+  "short_url": "wJWmLao",
+  "title": "L' histoire du reseau mobile",
+  "abstract": null,
+  "documents": [
+    {
+      "id": 1907,
+      "url": "https://player.vimeo.com/external/297901592.sd.mp4?s=0990ef5e2affe98d29750fe23fabaa5168ad74d8&profile_id=165",
+      "src": null,
+      "data": {
+        "provenance": "Archives postales",
+        "reference": {
+          "de_DE": "Vorführung eines Fernschreibers im Postmusée durch Carlo Stemper (29.07.2017)",
+          "fr_FR": "Démonstration d’un téléscripteur au Postmusée par Carlo Stemper (29.07.2017)"
+        },
+        "end_date": "2017-07-29",
+        "creator": "Mediacentre Uni.lu",
+        "title": {
+          "de_DE": "Vorführung eines Fernschreibers im Postmusée durch Carlo Stemper (29.07.2017)",
+          "fr_FR": "Démonstration d’un téléscripteur au Postmusée par Carlo Stemper (29.07.2017)"
+        },
+        "year": 2017,
+        "download": false,
+        "type": "video",
+        "start_date": "2017-07-29",
+        "subtitles": {
+          "vtt": {
+            "en_US": "https://luxptt.dhlab.lu/media/video/video-telex.en_US.vtt",
+            "fr_FR": "https://luxptt.dhlab.lu/media/video/video-telex.fr_FR.vtt"
+          },
+          "srt": {
+            "en_US": "https://luxptt.dhlab.lu/media/video/video-telex.en_US.srt",
+            "fr_FR": "https://luxptt.dhlab.lu/media/video/video-telex.fr_FR.srt"
+          }
+        },
+        "description": {
+          "de_DE": "Der Fernschreiber (Telex auf Luxemburgisch) wurde in den 1930er Jahren erfunden, setzte sich in Luxemburg jedoch erst nach dem Zweiten Weltkrieg durch.",
+          "fr_FR": "Le téléscripteur (Telex en luxembourgeois) a été inventé dans les années 1930, mais s'est imposé au Luxembourg seulement après la Deuxième Guerre mondiale."
+        }
+      },
+      "type": "video",
+      "slug": "video-telex",
+      "title": "Vidéo télex",
+      "snapshot": null,
+      "copyrights": "",
+      "attachment": null,
+      "documents": [
+        {
+          "id": 2372,
+          "title": "Introduction du service télex",
+          "slug": "introduction-telex",
+          "mimetype": "",
+          "type": "entity",
+          "data": {
+            "category": "technology",
+            "end_date": "1951-12-31",
+            "reference": {
+              "de_DE": "Einführung des Telex-Dienstes",
+              "fr_FR": "Introduction du service du télex"
+            },
+            "title": {
+              "de_DE": "Einführung des Telex-Dienstes",
+              "fr_FR": "Introduction du service du télex"
+            },
+            "key_event": false,
+            "category_label": {
+              "de_DE": "Technologie",
+              "fr_FR": "Technologie"
+            },
+            "type": "event",
+            "start_date": "1951-01-01",
+            "description": {
+              "de_DE": "Im Jahr 1961 führte das Großherzogtum den Telex-Dienst mit der Bundesrepublik Deutschland, Belgien und dem Vereinigten Königreich ein. Dieser neue Dienst überstieg rasch das Volumen der internationalen Telegrafie, welche fortan kontinuierlich an Bedeutung verlor.",
+              "fr_FR": "En 1961, le Grand-Duché introduit le service télex avec la République fédérale d'Allemagne, la Belgique et le Royaume-Uni. Il supplante rapidement la télégraphie internationale qui entre dans une période de déclin continue. "
+            }
+          },
+          "url": null,
+          "attachment": null,
+          "snapshot": null
+        },
+        {
+          "id": 2333,
+          "title": "Nouveau complexe télex-télégraphe",
+          "slug": "telex-telegraphe",
+          "mimetype": "",
+          "type": "entity",
+          "data": {
+            "category": "service",
+            "end_date": "1975-05-15",
+            "reference": {
+              "de_DE": "Eröffnung eines neuen Telex- und Telegrafenamtes",
+              "fr_FR": "Inauguration d’un nouveau complexe télex-télégraphe"
+            },
+            "title": {
+              "de_DE": "Eröffnung eines neuen Telex- und Telegrafenamtes",
+              "fr_FR": "Inauguration d’un nouveau complexe télex-télégraphe"
+            },
+            "key_event": false,
+            "category_label": {
+              "de_DE": "Dienstleistungen",
+              "fr_FR": "Services"
+            },
+            "type": "event",
+            "start_date": "1975-05-15",
+            "description": {
+              "de_DE": "Im Mai 1975 eröffnete die Post- und Telekommunikationsbehörde ein neues Amt welches Telex-, Telefon und Telegrafie-infrastrukturen kombinierte. Die neue Transitzentrale des Telex war mit der Technik crosspoint TWD2 ausgestattet und entsprach der letzten Generation der Telex-technik, auch wenn diese Abteilung erst 2007 ihren Dienst einstellte.",
+              "fr_FR": "En mai 1975, l’Administration des Postes et Télécommunications inaugure un site qui combine des infrastructures de télex, de téléphones et de télégraphes. En particulier, le nouveau central de transit télex présente la technique crosspoint TWKD2 du producteur allemand Siemens et correspond à la dernière génération de télex, pourtant disparus seulement en 2007."
+            }
+          },
+          "url": null,
+          "attachment": null,
+          "snapshot": null
+        },
+        {
+          "id": 1523,
+          "url": null,
+          "src": "https://luxptt.dhlab.lu/media/timbre-Caritas-1924-EisPostpage147.jpg",
+          "data": {
+            "provenance": "Eis Post : les postes télécommunications au Luxembourg - page 147",
+            "thumbnail_height": 320,
+            "copyright": null,
+            "end_date": "1924-12-31",
+            "title": {
+              "de_DE": "Die erste \"Caritas\"-Briefmarke mit dem Bildnis von Großherzogin Marie-Adelaïde",
+              "fr_FR": "Le premier timbre \"Caritas\" à l'effigie de la Grande-Duchesse Marie-Adelaïde"
+            },
+            "creator": null,
+            "place_type": null,
+            "height": 2468,
+            "thumbnail_width": 260,
+            "width": 2000,
+            "location": {
+              "de_DE": null,
+              "en_US": null,
+              "fr_FR": null
+            },
+            "year": 1924,
+            "date": {
+              "de_DE": null,
+              "en_US": null,
+              "fr_FR": null
+            },
+            "resolutions": {
+              "thumbnail": {
+                "url": "https://luxptt.dhlab.lu/media/image/snapshots/UDnWS3i.thumbnail.jpg",
+                "width": 260,
+                "height": 320
+              },
+              "medium": {
+                "url": "https://luxptt.dhlab.lu/media/image/snapshots/UDnWS3i.medium.jpg",
+                "width": 810,
+                "height": 1000
+              },
+              "low": {
+                "url": "https://luxptt.dhlab.lu/media/image/snapshots/UDnWS3i.low.jpg",
+                "width": 648,
+                "height": 800
+              },
+              "original": {
+                "width": 2000,
+                "height": 2468
+              }
+            },
+            "download": false,
+            "type": "image",
+            "start_date": "1924-01-01",
+            "description": {
+              "de_DE": null,
+              "en_US": null,
+              "fr_FR": null
+            }
+          },
+          "type": "image",
+          "slug": "premier-timbre-caritas",
+          "title": "Le premier timbre \"Caritas\" à l'effigie de la Grande-Duchesse Marie-Adelaïde",
+          "snapshot": "https://luxptt.dhlab.lu/media/image/snapshots/UDnWS3i.snapshot.png",
+          "copyrights": "",
+          "attachment": "https://luxptt.dhlab.lu/media/timbre-Caritas-1924-EisPostpage147.jpg",
+          "documents": [
+            {
+              "id": 1776,
+              "title": "Début de la série annuelle de timbres de bienfaisance \"Caritas\"",
+              "slug": "premiers-timbres-caritas",
+              "mimetype": "",
+              "type": "entity",
+              "data": {
+                "category": "legislation and events",
+                "description": {
+                  "de_DE": "Im Jahr 1924 stellte die Post-, Telegrafen- und Telefonverwaltung die ersten \"Caritas\"-Briefmarken, welche einen Aufpreis für wohltätige Zwecke beinhalteten, aus. 1924 handelte es sich um Briefmarken mit dem Bildnis der Großherzogin Marie-Adelaïde, welche bereits 1914 ausgestellt wurden, aber 1924 bem Druck mit einem Aufpreis versehen wurden.",
+                  "fr_FR": "En 1924, l'Administration des Postes, Télégraphes et Téléphones procède à l'émission des premiers timbres \"Caritas\" comprenant une surtaxe au profit des bonnes oeuvres. En 1924, il s'agit de timbres à l'effigie de la Grande-Duchesse Marie-Adelaïde émis en 1914 et surchargés à la presse d'imprimerie. "
+                },
+                "end_date": "1924-12-31",
+                "title": {
+                  "de_DE": "Beginn der jährlichen Briefmarkenserie \"Caritas\" für wohltätige Zwecke ",
+                  "fr_FR": "Début de la série annuelle de timbres de bienfaisance \"Caritas\""
+                },
+                "key_event": false,
+                "category_label": {
+                  "de_DE": "Gesetzgebung und Ereignisse",
+                  "fr_FR": "Législation et événements"
+                },
+                "type": "event",
+                "start_date": "1924-01-01"
+              },
+              "url": null,
+              "attachment": null,
+              "snapshot": null
+            }
+          ],
+          "locked": false
+        }
+      ],
+      "locked": false
+    },
+    {
+      "id": 1847,
+      "url": null,
+      "src": "https://luxptt.dhlab.lu/media/Period%207%20-%20Br%C3%A9ifdr%C3%A9iesch-Kalenner-2017.jpg",
+      "data": {
+        "provenance": "Archives postales",
+        "thumbnail_height": 339,
+        "copyright": null,
+        "end_date": "2017-01-01",
+        "title": {
+          "de_DE": "\"Bréifdréiesch-Kalenner\" 2017",
+          "fr_FR": "\"Bréifdréiesch-Kalenner\" 2017"
+        },
+        "creator": null,
+        "place_type": null,
+        "height": 1659,
+        "thumbnail_width": 234,
+        "width": 1146,
+        "location": {
+          "de_DE": null,
+          "en_US": null,
+          "fr_FR": null
+        },
+        "year": 2017,
+        "date": {
+          "de_DE": null,
+          "en_US": null,
+          "fr_FR": null
+        },
+        "download": false,
+        "type": "image",
+        "start_date": "2017-01-01",
+        "description": {
+          "de_DE": "Einmal pro Jahr, kurz vor Neujahr, erhält jeder Postkunde einen Kalender vom Briefträger seines Viertels. Der Kalender von 2017 feiert das 175. Jubiläum der luxemburgischen Postdienste.",
+          "fr_FR": "Une fois par an, juste avant le Nouvel An, chaque client de Post obtient un calendrier par le facteur de son quartier. Celui de 2017 célèbre le 175e anniversaire des services postaux luxembourgeois."
+        }
+      },
+      "type": "image",
+      "slug": "period-7",
+      "title": "Cover period 7",
+      "snapshot": "https://luxptt.dhlab.lu/media/image/snapshots/2LHcTJZ.snapshot.png",
+      "copyrights": "",
+      "attachment": "https://luxptt.dhlab.lu/media/Period%207%20-%20Br%C3%A9ifdr%C3%A9iesch-Kalenner-2017.jpg",
+      "documents": [
+        {
+          "id": 1840,
+          "title": "Période 2005 à aujourd’hu",
+          "slug": "priode-2005-aujourdhu",
+          "mimetype": "",
+          "type": "entity",
+          "data": {
+            "description": {
+              "de_DE": "Seit 2005 bestimmt das Internet die Aktivitäten des P&T-Unternehmens und verdrängt frühere Telekommunikationstechnologien. Auch die Postdienste werden an die Möglichkeiten des Internets angepasst. So erlaubt der Dienst “Packup“ seit 2008 Internetbestellungen flexibel zu verwalten, “Tëlé vun der Post”, ein Dienst der 2009 eingeführt wurde, bietet digitales Fernsehen an.",
+              "fr_FR": "Depuis 2005, Internet domine les activités de l’Entreprise des P&T et met à l’écart les technologies de télécommunication antérieures. Les services postaux sont à leur tour adaptés aux possibilités d’Internet. Ainsi, depuis 2008, le service “Packup“ permet de gérer de manière flexible des envois commandés en ligne, “Tëlé vun der Post“, introduit en 2009, est un service de télévision numérique."
+            },
+            "type": "period",
+            "start_date": "2005-01-01",
+            "end_date": "2017-12-31",
+            "title": {
+              "de_DE": "Zeitraum von 2005 bis heute",
+              "fr_FR": "Période 2005 à aujourd’hui"
+            }
+          },
+          "url": null,
+          "attachment": null,
+          "snapshot": null
+        }
+      ],
+      "locked": false
+    }
+  ],
+  "tags": [
+    {
+      "id": 2,
+      "category": "publishing",
+      "slug": "chapter",
+      "name": "chapter",
+      "status": "public",
+      "data": {
+        "name": {}
+      }
+    }
+  ],
+  "covers": [],
+  "stories": [],
+  "data": {
+    "color": "#fff",
+    "abstract": {
+      "de_DE": "",
+      "en_US": "",
+      "fr_FR": ""
+    },
+    "count_modules": 1,
+    "background": {
+      "bbox": [
+        0,
+        2240,
+        2848,
+        3842
+      ],
+      "backgroundColor": "#1e1e1e",
+      "overlay": ""
+    },
+    "title": {
+      "de_DE": "Der Einmarsch",
+      "en_US": "The Invasion",
+      "fr_FR": "L'Invasion"
+    }
+  },
+  "contents": {
+
+    "modules": [
+      {
+        "module": "video_interview",
+        "object": {
+          "caption": {
+            "de_DE": "Démonstration d’un téléscripteur au Postmusée par Carlo Stemper (29.07.2017)",
+            "fr_FR": "Démonstration d’un téléscripteur au Postmusée par Carlo Stemper (29.07.2017)"
+          },
+          "type": "video",
+          "id": 1907
+        },
+
+
+        "objects": [
+          {
+            "id": 1847,
+            "from": "00:02",
+            "to": "00:09",
+          },
+          {
+            "id": 1523,
+            "from": "00:14",
+            "to": "00:20",
+          }
+        ],
+        "speakers": [
+          {
+            "id": 1847,
+            "from": "00:00",
+            "to": "00:15",
+          },
+          {
+            "id": 1523,
+            "from": "00:16",
+            "to": "00:30",
+          },
+        ],
+      },
+
+
+
+    ]
+  },
+  "date": "2018-02-16T10:52:40Z",
+  "date_created": "2018-02-16T10:52:40.256935Z",
+  "date_last_modified": "2018-04-12T16:14:05.988742Z",
+  "status": "public",
+  "source": false,
+  "authors": [
+    {
+      "id": 2,
+      "profile": {
+        "id": 3,
+        "bio": null,
+        "picture": null,
+        "username": "matteo.azzi",
+        "user": {
+          "id": 3,
+          "username": "matteo.azzi",
+          "email": "",
+          "is_staff": true
+        },
+        "newsletter": "W"
+      },
+      "fullname": "matteo.azzi",
+      "affiliation": null,
+      "data": {
+        "lastname": "",
+        "num_stories": 25,
+        "firstname": ""
+      },
+      "slug": "matteoazzi"
+    }
+  ],
+  "owner": {
+    "id": 3,
+    "username": "matteo.azzi",
+    "email": "",
+    "is_staff": true
+  },
+  "highlights": [],
+  "version": "6abdeea"
+}
