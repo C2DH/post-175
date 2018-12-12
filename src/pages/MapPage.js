@@ -103,9 +103,9 @@ const MapHeader = ({
   const counts = ["office", "central", "telegraph"]
     .map(type => ({
       label: type,
-      count: placeTypesCount[type]
+      count: placeTypesCount[type] || 0,
     }))
-    .filter(({ count }) => count);
+    // .filter(({ count }) => count);
   return (
     <div>
       <div className="bg-black" style={{ height: 50 }}>
