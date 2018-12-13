@@ -10,14 +10,7 @@ import {
   getSideDocs,
 } from '../state/selectors'
 
-const stringTimeToSeconds = str => {
-  const [min, secs] = str.split(':')
-  return (parseInt(min) * 60) + parseInt(secs)
-}
-
-const betweenTime = playedSeconds => ({ from, to }) => {
-  const secondsFrom = stringTimeToSeconds(from)
-  const secondsTo = stringTimeToSeconds(to)
+const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
   return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
 }
 

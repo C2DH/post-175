@@ -33,6 +33,11 @@ export const getVideoUrl = createSelector(
   }
 )
 
+const stringTimeToSeconds = str => {
+  const [min, secs] = str.split(':')
+  return (parseInt(min) * 60) + parseInt(secs)
+}
+
 export const getSpeakers = createSelector(
   getVideoStory,
   story => {
@@ -40,14 +45,19 @@ export const getSpeakers = createSelector(
       return null
     }
     const speakers = get(story, 'contents.modules[0].speakers')
-    console.log('~~', speakers)
     const docsBy = keyBy(story.documents, 'id')
     if (Array.isArray(speakers)) {
-      return speakers.map(speaker => ({
-        from: speaker.from,
-        to: speaker.to,
-        doc: docsBy[speaker.id],
-      }))
+      return speakers.map(speaker => {
+        const secondsFrom = stringTimeToSeconds(speaker.from)
+        const secondsTo = stringTimeToSeconds(speaker.to)
+        return {
+          secondsFrom,
+          secondsTo,
+          from: speaker.from,
+          to: speaker.to,
+          doc: docsBy[speaker.id],
+        }
+      })
     }
     return null
   }
@@ -62,11 +72,17 @@ export const getSideDocs = createSelector(
     const speakers = get(story, 'contents.modules[0].objects')
     const docsBy = keyBy(story.documents, 'id')
     if (Array.isArray(speakers)) {
-      return speakers.map(speaker => ({
-        from: speaker.from,
-        to: speaker.to,
-        doc: docsBy[speaker.id],
-      }))
+      return speakers.map(speaker => {
+        const secondsFrom = stringTimeToSeconds(speaker.from)
+        const secondsTo = stringTimeToSeconds(speaker.to)
+        return {
+          secondsFrom,
+          secondsTo,
+          from: speaker.from,
+          to: speaker.to,
+          doc: docsBy[speaker.id],
+        }
+      })
     }
     return null
   }
