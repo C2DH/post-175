@@ -49,6 +49,10 @@ export const getTimeSeries = () =>
 export const getStory = idOrSlug =>
   request.get(`${API_URL}/story/${idOrSlug}/`).then(extractBody);
 
+// HACK remove only for testing purpose
+export const getFakeStory = idOrSlug =>
+  request.get(`/fakeStory.json`).then(extractBody);
+
 export const getDocuments = (params = {}) =>
   request
     .get(`${API_URL}/document/`)

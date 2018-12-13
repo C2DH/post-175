@@ -1,0 +1,48 @@
+.video-story {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .video-story-top {
+    height: 60px;
+    background: red;
+  }
+
+  .video-story-video {
+    background: deepskyblue;
+    flex: 1;
+    display: flex;
+    .video-container {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      video {
+        object-fit: cover;
+      }
+    }
+  }
+
+  .video-story-bottom {
+    height: 200px;
+    display: flex;
+    .lang-switcher {
+      background: yellow;
+      text-align: center;
+      width: 70px;
+    }
+    .speaker {
+      color: white;
+      padding: 20px;
+      width: 500px;
+      h5 {
+        color: grey;
+      }
+    }
+    .subtitles {
+      flex: 1;
+      color: white;
+    }
+  }
+
+}
