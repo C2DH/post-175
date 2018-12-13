@@ -17,6 +17,7 @@ export default class VideoStory extends Component {
     playedSeconds: 0,
     played: 0,
     sideWidth: 400,
+    playing: true,
   }
 
   onProgress = (progressState) => {
@@ -33,9 +34,11 @@ export default class VideoStory extends Component {
     }))
   }
 
+  togglePlaying = () => this.setState({playing: !this.state.playing})
+
   render() {
-    const { url, title, getSpeakerAt, getSideDocAt } = this.props
-    const { durationSeconds, playedSeconds, played, sideWidth } = this.state
+    const { url, title, getSpeakerAt, getSideDocAt, sideDocs, story } = this.props
+    const { durationSeconds, playedSeconds, played, sideWidth, playing } = this.state
     const speaker = getSpeakerAt(playedSeconds)
     const sideDoc = getSideDocAt(playedSeconds)
 
@@ -47,6 +50,10 @@ export default class VideoStory extends Component {
             durationSeconds={durationSeconds}
             playedSeconds={playedSeconds}
             played={played}
+            sideDocs={sideDocs}
+            story={story}
+            playing={playing}
+            togglePlaying={this.togglePlaying}
           />
         </div>
 
@@ -56,7 +63,7 @@ export default class VideoStory extends Component {
               controls
               onDuration={this.onDuration}
               onProgress={this.onProgress}
-              playing
+              playing={playing}
               volume={0}
               width='100%'
               height='100%'

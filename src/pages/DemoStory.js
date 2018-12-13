@@ -47,6 +47,8 @@ class DemoStory extends Component {
             url={url}
             getSideDocAt={this.sideDocAt}
             getSpeakerAt={this.speakerAt}
+            sideDocs={sideDocs}
+            story={story}
           />
         )}
       </div>
