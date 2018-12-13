@@ -4,7 +4,10 @@ import TopControls from './TopControls'
 import Speaker from './Speaker'
 import LangSwitcher from './LangSwitcher'
 import Subtitles from './Subtitles'
+import SideDocument from './SideDocument'
 import './VideoStory.css'
+
+const MIN_SIDE_WIDTH = 250
 
 export default class VideoStory extends Component {
   state = {
@@ -13,6 +16,7 @@ export default class VideoStory extends Component {
     loadedSeconds: 0,
     playedSeconds: 0,
     played: 0,
+    sideWidth: 400,
   }
 
   onProgress = (progressState) => {
@@ -23,11 +27,17 @@ export default class VideoStory extends Component {
     this.setState({ durationSeconds })
   }
 
+  handleSideDocDrag = (e, data) => {
+    return this.setState(prevState => ({
+      sideWidth: Math.max(prevState.sideWidth + (-data.x), MIN_SIDE_WIDTH),
+    }))
+  }
+
   render() {
-    const { url, title, getSpeakerAt } = this.props
-    const { durationSeconds, playedSeconds, played } = this.state
-    // const doc = getDocAtVideoTime('00:23')
+    const { url, title, getSpeakerAt, getSideDocAt } = this.props
+    const { durationSeconds, playedSeconds, played, sideWidth } = this.state
     const speaker = getSpeakerAt(playedSeconds)
+    const sideDoc = getSideDocAt(playedSeconds)
 
     return (
       <div className='video-story'>
@@ -41,7 +51,7 @@ export default class VideoStory extends Component {
         </div>
 
         <div className='video-story-video'>
-          <div className='video-container'>
+          <div className='video-container bg-danger'>
             <ReactPlayer
               controls
               onDuration={this.onDuration}
@@ -53,8 +63,10 @@ export default class VideoStory extends Component {
               url={url}
             />
           </div>
-          {/* <SideDocument /> */}
-          <div className='h-100 bg-info' style={{ width: 400 }}/>
+          <SideDocument
+            onDrag={this.handleSideDocDrag}
+            width={sideWidth}
+          />
         </div>
 
         <div className='video-story-bottom'>

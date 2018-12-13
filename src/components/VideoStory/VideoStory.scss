@@ -10,15 +10,25 @@
   }
 
   .video-story-video {
-    background: deepskyblue;
     flex: 1;
     display: flex;
     .video-container {
       height: 100%;
-      width: 100%;
+      flex: 1;
       overflow: hidden;
       video {
         object-fit: cover;
+      }
+    }
+    .side-document {
+      background: white;
+      position: relative;
+      .handle-circle-container {
+        top: calc(50% - 25px);
+        left: -25px;
+        width: 50px;
+        height: 50px;
+        position: absolute;
       }
     }
   }
@@ -40,6 +50,7 @@
       }
     }
     .subtitles {
+      padding: 20px;
       flex: 1;
       color: white;
     }

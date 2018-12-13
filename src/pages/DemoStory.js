@@ -15,6 +15,12 @@ const stringTimeToSeconds = str => {
   return (parseInt(min) * 60) + parseInt(secs)
 }
 
+const betweenTime = playedSeconds => ({ from, to }) => {
+  const secondsFrom = stringTimeToSeconds(from)
+  const secondsTo = stringTimeToSeconds(to)
+  return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
+}
+
 class DemoStory extends Component {
   componentDidMount() {
     this.props.loadStory('video_fake_story')
@@ -22,25 +28,31 @@ class DemoStory extends Component {
 
   speakerAt = playedSeconds => {
     const { speakers } = this.props
-    const speaker = find(speakers, speaker => {
-      const secondsFrom = stringTimeToSeconds(speaker.from)
-      const secondsTo = stringTimeToSeconds(speaker.to)
-      return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
-    })
+    const speaker = find(speakers, betweenTime(playedSeconds))
     if (speaker) {
       return speaker.doc
     }
     return null
   }
 
+  sideDocAt = playedSeconds => {
+    const { sideDocs } = this.props
+    const sideDoc = find(sideDocs, betweenTime(playedSeconds))
+    if (sideDoc) {
+      return sideDoc.doc
+    }
+    return null
+  }
+
   render() {
-    const { story, url, speakers } = this.props
-    console.log(story, speakers)
+    const { story, url, speakers, sideDocs } = this.props
+    console.log(story, speakers, sideDocs)
     return (
       <div className='h-100 bg-dark'>
         {story && (
           <VideoStory
             url={url}
+            getSideDocAt={this.sideDocAt}
             getSpeakerAt={this.speakerAt}
           />
         )}

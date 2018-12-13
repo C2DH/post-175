@@ -1,7 +1,6 @@
 import React, { memo, Fragment } from 'react'
 
 export default memo(function Speaker({ doc }) {
-  console.log('O.o', doc)
   return (
     <div className='speaker'>
       {doc && <Fragment>
