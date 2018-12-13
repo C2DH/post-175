@@ -80,6 +80,13 @@ export default class VideoStory extends Component {
         default: true
       })
     }
+    // XXX HACK XXX
+    // Super workaround
+    // On firefox when the track src change the subtitles won't change
+    // so setting key to ReactPlayer cause mount/unmount of node
+    const playerKey = navigator.userAgent.toLowerCase().indexOf('firefox') !== -1
+      ? subtitlesFile
+      : undefined
 
     return (
       <div className='video-story'>
@@ -100,6 +107,7 @@ export default class VideoStory extends Component {
         <div className='video-story-video'>
           <div className='video-container'>
             <ReactPlayer
+              key={playerKey}
               ref={r => this.player = r}
               onClick={this.togglePlaying}
               // controls
