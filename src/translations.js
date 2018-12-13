@@ -8,6 +8,8 @@ export default {
     menu_about: "Über die Ausstellung",
     menu_collection: "Sammlung",
     menu_themes: "Themen",
+    menu_desc:
+      "Die Geschichte des Post und Telekommunikationsunternehmens des Großherzogtums seit 1842",
     // home page
     home_joerpost: "Joer Post",
     home_title: "Connecter le Luxembourg",
@@ -51,6 +53,8 @@ export default {
     menu_about: "À propos",
     menu_collection: "Collection",
     menu_themes: "Thèmes",
+    menu_desc:
+      "Histoire de l’Entreprise des Postes et Télécommunications du Grand-Duché de Luxembourg depuis 1842.",
     // home page
     home_joerpost: "Joer Post",
     home_title: "Connecter le Luxembourg",

@@ -21,7 +21,7 @@ class HomeMenu extends PureComponent {
     const { langs, selectedLang } = this.props;
     return (
       <div className="HomeMenu d-flex flex-column">
-        <div className="lang border-bottom border-warning">
+        <div className="info">
           <NavLink
             to={{ pathname: "/about", search: `?lang=${selectedLang.param}` }}
             className="d-flex"
