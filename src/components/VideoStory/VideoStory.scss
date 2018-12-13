@@ -41,6 +41,7 @@
         height: 10px;
         background-color: #7B7B7B;
         position: relative;
+        cursor: pointer;
 
         .side-doc {
           position: absolute;
@@ -48,6 +49,7 @@
           background: #F8C91C;
           border: solid #000 1px;
           width: 10px;
+          pointer-events: none;
         }
 
         .progress {
@@ -55,6 +57,7 @@
           position: absolute;
           height: 100%;
           border-radius:0;
+          pointer-events: none;
         }
       }
 

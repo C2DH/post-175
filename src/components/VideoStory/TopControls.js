@@ -9,7 +9,8 @@ export default memo(function TopControls({
   sideDocs,
   story,
   playing,
-  togglePlaying
+  togglePlaying,
+  onSeek,
 }) {
   const playedMinutes = moment(playedSeconds, 's').format('mm:ss')
   const durationMinutes = moment(durationSeconds, 's').format('mm:ss')
@@ -26,7 +27,12 @@ export default memo(function TopControls({
             <div>{playedMinutes}/{durationMinutes}</div>
           </div>
         </div>
-        <div className="track">
+        <div className="track" onClick={e => {
+          const rect = e.target.getBoundingClientRect()
+          const clickX = e.clientX - rect.x
+          const percentOffset = clickX / rect.width
+          onSeek(percentOffset)
+        }}>
 
           <div className="progress" style={{width: `${played*100}%`}}></div>
           {sideDocs && sideDocs.length > 0 && sideDocs.map((sideDoc, i) => (

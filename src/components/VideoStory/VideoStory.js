@@ -28,6 +28,11 @@ export default class VideoStory extends Component {
     this.setState({ durationSeconds })
   }
 
+  onSeek = (percent) => {
+    this.player.seekTo(percent)
+    this.setState({played: percent})
+  }
+
   handleSideDocDrag = (e, data) => {
     return this.setState(prevState => ({
       sideWidth: Math.max(prevState.sideWidth + (-data.x), MIN_SIDE_WIDTH),
@@ -54,12 +59,14 @@ export default class VideoStory extends Component {
             story={story}
             playing={playing}
             togglePlaying={this.togglePlaying}
+            onSeek={this.onSeek}
           />
         </div>
 
         <div className='video-story-video'>
           <div className='video-container'>
             <ReactPlayer
+              ref={r => this.player = r}
               controls
               onDuration={this.onDuration}
               onProgress={this.onProgress}
@@ -67,6 +74,7 @@ export default class VideoStory extends Component {
               volume={0}
               width='100%'
               height='100%'
+              progressInterval={500}
               url={url}
             />
           </div>
