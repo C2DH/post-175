@@ -7,6 +7,35 @@
   .video-story-top {
     height: 60px;
     background: red;
+    display: flex;
+    flex-direction: row;
+
+    .control-button {
+      background-color: #FFFFFF;
+      height: 60px;
+      width: 60px;
+      &.border-right {
+        border-right: solid #222 1px;
+      }
+    }
+
+    .track-container {
+      flex:1;
+      background-color: blue;
+      display: flex;
+      flex-direction: column;
+
+      .video-meta {
+        flex: 1;
+      }
+
+      .track {
+        height: 10px;
+        background-color: yellow;
+      }
+    }
+
+
   }
 
   .video-story-video {
