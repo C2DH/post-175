@@ -51,7 +51,7 @@ export default class VideoStory extends Component {
         </div>
 
         <div className='video-story-video'>
-          <div className='video-container bg-danger'>
+          <div className='video-container'>
             <ReactPlayer
               controls
               onDuration={this.onDuration}
@@ -64,6 +64,7 @@ export default class VideoStory extends Component {
             />
           </div>
           <SideDocument
+            doc={sideDoc}
             onDrag={this.handleSideDocDrag}
             width={sideWidth}
           />
