@@ -30,6 +30,25 @@
         height: 50px;
         position: absolute;
       }
+      .display-doc {
+        background: black;
+        color: white;
+        padding-left: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .title {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-right: 20px;
+        }
+        .doc-image {
+          flex: 1;
+          background-size: cover;
+          background-position: center;
+        }
+      }
     }
   }
 
