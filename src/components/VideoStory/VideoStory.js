@@ -30,7 +30,7 @@ export default class VideoStory extends Component {
 
   onSeek = (percent) => {
     this.player.seekTo(percent)
-    this.setState({played: percent})
+    // this.setState({played: percent})
   }
 
   handleSideDocDrag = (e, data) => {

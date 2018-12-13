@@ -12,8 +12,8 @@ export default memo(function TopControls({
   togglePlaying,
   onSeek,
 }) {
-  const playedMinutes = moment(playedSeconds, 's').format('mm:ss')
-  const durationMinutes = moment(durationSeconds, 's').format('mm:ss')
+  const playedMinutes = moment.utc(parseInt(playedSeconds) * 1000).format('mm:ss')
+  const durationMinutes = moment.utc(parseInt(durationSeconds) * 1000).format('mm:ss')
   return (
     <React.Fragment>
       <div className="control-button border-right">↰</div>
