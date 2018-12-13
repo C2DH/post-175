@@ -26,16 +26,6 @@ export const getPlaces = createSelector(
   places => places === null ? null : places.map(mapPlace)
 )
 
-export const getPlaceTypesCount = createSelector(
-  getPlaces,
-  places => {
-    if (places === null) {
-      return {}
-    }
-    return countBy(places, 'data.place_type')
-  }
-)
-
 export const getPlacesRealExtent = createSelector(
   getPlaces,
   places => places === null
@@ -76,6 +66,18 @@ export const getPlacesInDate = createSelector(
         ...place,
         open: place.endDate === null || place.endDate > currentDate,
       }))
+  }
+)
+
+
+export const getPlaceTypesCount = createSelector(
+  // getPlaces,
+  getPlacesInDate,
+  places => {
+    if (places === null) {
+      return {}
+    }
+    return countBy(places, 'data.place_type')
   }
 )
 

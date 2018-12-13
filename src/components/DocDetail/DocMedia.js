@@ -1,12 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player'
+import { Document, Page, pdfjs } from 'react-pdf'
 import map from 'lodash/map'
 import ZoomAndPanMedia from '../ZoomAndPanMedia'
 import { getSelectedLang } from '../../state/selectors'
 
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
+
 function DocMedia({ doc, lang }) {
-  if (doc.data.type === 'video') {
+  if (doc.type === 'video') {
+    // Video
     let tracks = []
     if (doc.data.subtitles) {
       tracks = map(doc.data.subtitles, sub => ({
@@ -28,12 +32,37 @@ function DocMedia({ doc, lang }) {
         />
       </div>
     )
+  } else if (doc.type === 'pdf') {
+    if (doc.attachment === null) {
+      return null
+    }
+    // PDF
+    const pdfFile = process.env.NODE_ENV === 'production'
+      ? doc.attachment
+      // IN dev replace \w dev proxy 2 avoid CORS problems
+      : doc.attachment.replace(/^(https:\/\/)(.*)\/media\/(.*)$/, 'http://localhost:3000/media/$3')
+
+    console.log('PDF FILE: ', pdfFile)
+
+    return (
+      <div className='doc-media-pdf'>
+        <Document
+          file={pdfFile}
+        >
+          <Page
+            pageNumber={1}
+          />
+        </Document>
+      </div>
+    )
+  } else {
+    // Image
+    return (
+      <ZoomAndPanMedia
+        src={doc.attachment ? doc.snapshot : doc.attachment}
+      />
+    )
   }
-  return (
-    <ZoomAndPanMedia
-      src={doc.type === 'pdf' ? doc.snapshot : doc.attachment}
-    />
-  )
 }
 
 export default connect(state => ({

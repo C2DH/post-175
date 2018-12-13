@@ -70,3 +70,9 @@
   justify-content: center;
   display: flex;
   height: 100%; }
+
+.doc-detail .doc-media-pdf {
+  justify-content: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center; }

@@ -32,7 +32,13 @@ import * as api from '../../api'
 function *handleGetStory({ payload }) {
   yield put({ type: GET_STORY_LOADING })
   try {
-    const story = yield call(api.getStory, payload)
+    // HACK used to provide the fake story!
+    let story
+    if (payload === 'video_fake_story') {
+      story = yield call(api.getFakeStory, payload)
+    } else {
+      story = yield call(api.getStory, payload)
+    }
     yield put({ type: GET_STORY_SUCCESS, payload: story })
   } catch (error) {
     yield put({ type: GET_STORY_FAILURE, error })
