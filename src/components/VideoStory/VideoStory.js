@@ -21,21 +21,23 @@ export default class VideoStory extends Component {
     subtitles: [],
   }
 
-  componentDidMount() {
+  onPlayerReady = () => {
     const video = this.player.getInternalPlayer()
-    // TODO: Maybe check what happends when languages change...
-    // i think the track dom element change
-    const track = video.textTracks[0]
-    if (track) {
-      track.addEventListener('cuechange', this.setSubtitles)
+    if (video) {
+      const track = video.textTracks[0]
+      if (track) {
+        track.addEventListener('cuechange', this.setSubtitles)
+      }
     }
   }
 
   componentWillUnmount() {
     const video = this.player.getInternalPlayer()
-    const track = video.textTracks[0]
-    if (track) {
-      track.removeEventListener('cuechange', this.setSubtitles)
+    if (video) {
+      const track = video.textTracks[0]
+      if (track) {
+        track.removeEventListener('cuechange', this.setSubtitles)
+      }
     }
   }
 
@@ -99,7 +101,8 @@ export default class VideoStory extends Component {
           <div className='video-container'>
             <ReactPlayer
               ref={r => this.player = r}
-              controls
+              // controls
+              onReady={this.onPlayerReady}
               onDuration={this.onDuration}
               onProgress={this.onProgress}
               playing={playing}
