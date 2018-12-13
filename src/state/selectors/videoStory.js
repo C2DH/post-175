@@ -12,7 +12,7 @@ export const getVideoStory = createSelector(
     if (story === null) {
       return null
     }
-    return story
+    return translateDoc(story, langCode)
   }
 )
 
