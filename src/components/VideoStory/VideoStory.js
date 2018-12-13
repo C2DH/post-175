@@ -75,7 +75,7 @@ export default class VideoStory extends Component {
     const tracks = []
     if (subtitlesFile) {
       tracks.push({
-        kind: 'subtitles',
+        kind: 'metadata',
         src: subtitlesFile,
         default: true
       })
