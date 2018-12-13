@@ -101,6 +101,7 @@ export default class VideoStory extends Component {
           <div className='video-container'>
             <ReactPlayer
               ref={r => this.player = r}
+              onClick={this.togglePlaying}
               // controls
               onReady={this.onPlayerReady}
               onDuration={this.onDuration}
