@@ -81,6 +81,7 @@
       background: white;
       position: relative;
       .handle-circle-container {
+        cursor: col-resize;
         top: calc(50% - 25px);
         left: -25px;
         width: 50px;
@@ -114,8 +115,21 @@
     display: flex;
     .lang-switcher {
       background: yellow;
-      text-align: center;
       width: 70px;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      display: flex;
+      .lang {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-weight: bold;
+        &.current-lang {
+          text-decoration: underline;
+        }
+      }
     }
     .speaker {
       color: white;

@@ -40,7 +40,7 @@ export default memo(function TopControls({
               <div id={`side-doc-${i}`} className="side-doc" style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}}>
               </div>
               <UncontrolledTooltip placement="bottom" target={`side-doc-${i}`} className="side-doc-tooltip">
-                Hello world!
+                {sideDoc.doc.title}
               </UncontrolledTooltip>
             </React.Fragment>
 
