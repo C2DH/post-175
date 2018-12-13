@@ -18,6 +18,30 @@ export default class VideoStory extends Component {
     played: 0,
     sideWidth: 400,
     playing: true,
+    subtitles: [],
+  }
+
+  componentDidMount() {
+    const video = this.player.getInternalPlayer()
+    // TODO: Maybe check what happends when languages change...
+    // i think the track dom element change
+    const track = video.textTracks[0]
+    if (track) {
+      track.addEventListener('cuechange', this.setSubtitles)
+    }
+  }
+
+  componentWillUnmount() {
+    const video = this.player.getInternalPlayer()
+    const track = video.textTracks[0]
+    if (track) {
+      track.removeEventListener('cuechange', this.setSubtitles)
+    }
+  }
+
+  setSubtitles = (e) => {
+    const subtitles = Array.from(e.target.activeCues).map(cue => cue.text)
+    this.setState({ subtitles })
   }
 
   onProgress = (progressState) => {
@@ -42,10 +66,18 @@ export default class VideoStory extends Component {
   togglePlaying = () => this.setState({playing: !this.state.playing})
 
   render() {
-    const { url, title, getSpeakerAt, getSideDocAt, sideDocs, story } = this.props
-    const { durationSeconds, playedSeconds, played, sideWidth, playing } = this.state
+    const { url, title, getSpeakerAt, getSideDocAt, sideDocs, story, subtitlesFile } = this.props
+    const { durationSeconds, playedSeconds, played, sideWidth, playing, subtitles } = this.state
     const speaker = getSpeakerAt(playedSeconds)
     const sideDoc = getSideDocAt(playedSeconds)
+    const tracks = []
+    if (subtitlesFile) {
+      tracks.push({
+        kind: 'subtitles',
+        src: subtitlesFile,
+        default: true
+      })
+    }
 
     return (
       <div className='video-story'>
@@ -76,6 +108,9 @@ export default class VideoStory extends Component {
               height='100%'
               progressInterval={500}
               url={url}
+              config={{
+                file: { tracks }
+              }}
             />
           </div>
           <SideDocument
@@ -88,7 +123,7 @@ export default class VideoStory extends Component {
         <div className='video-story-bottom'>
           <LangSwitcher />
           <Speaker doc={speaker} />
-          <Subtitles />
+          <Subtitles subtitles={subtitles} />
         </div>
 
       </div>

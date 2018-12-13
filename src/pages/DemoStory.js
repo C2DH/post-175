@@ -8,6 +8,7 @@ import {
   getVideoUrl,
   getSpeakers,
   getSideDocs,
+  getVideoSubtitlesFile,
 } from '../state/selectors'
 
 const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
@@ -38,13 +39,13 @@ class DemoStory extends Component {
   }
 
   render() {
-    const { story, url, speakers, sideDocs } = this.props
-    console.log(story, speakers, sideDocs)
+    const { story, url, speakers, sideDocs, subtitlesFile } = this.props
     return (
       <div className='h-100 bg-dark'>
         {story && (
           <VideoStory
             url={url}
+            subtitlesFile={subtitlesFile}
             getSideDocAt={this.sideDocAt}
             getSpeakerAt={this.speakerAt}
             sideDocs={sideDocs}
@@ -59,6 +60,7 @@ class DemoStory extends Component {
 export default connect(state => ({
   story: getVideoStory(state),
   url: getVideoUrl(state),
+  subtitlesFile: getVideoSubtitlesFile(state),
   sideDocs: getSideDocs(state),
   speakers: getSpeakers(state),
 }), {
