@@ -4,10 +4,11 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  top: 0;
+  height: 136px;
   background-color: var(--yellow-post);
 
-  .lang {
+  .lang,
+  .info {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
     text-transform: uppercase;
@@ -17,6 +18,12 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    height: 40px;
+  }
+
+  .info {
+    height: 56px;
+    border-bottom: 1px solid #d8d8d8;
   }
 
   .lang.current-lang {
