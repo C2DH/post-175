@@ -12,7 +12,8 @@ import About from '../../pages/About'
 import Collection from '../../pages/Collection'
 import DocumentDetail from '../../pages/DocumentDetail'
 import DocumentDetailModal from '../../pages/DocumentDetailModal'
-import DemoStory from '../../pages/DemoStory'
+import Stories from '../../pages/Stories'
+import Story from '../../pages/Story'
 
 class LangRoot extends PureComponent {
   componentWillMount() {
@@ -67,7 +68,8 @@ class LangRoot extends PureComponent {
           <Route path='/timeline' exact component={TimelinePage} />
           <Route path='/about' exact component={About} />
           <Route path='/collection' exact component={Collection} />
-          <Route path='/stories' exact component={DemoStory} />
+          <Route path='/stories' exact component={Stories} />
+          <Route path='/stories/:id' exact component={Story} />
           <Route path='/doc/:id' exact component={DocumentDetail} />
         </Switch>
         {isModal ? <Route path='/doc/:id' exact component={DocumentDetailModal} /> : null}

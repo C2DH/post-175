@@ -1,0 +1,20 @@
+a.story-card {
+  text-decoration: none;
+  height: 100%;
+  .story-card-content {
+    width: 500px;
+    height: 100%;
+    color: white;
+    border-right: 1px solid grey;
+    padding: 0 10px;
+    .count {
+      padding: 10px 0;
+      color: grey;
+    }
+    .image {
+      height: 400px;
+      background-position: center;
+      background-size: cover;
+    }
+  }
+}

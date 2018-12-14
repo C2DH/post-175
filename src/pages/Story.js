@@ -15,7 +15,7 @@ const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
   return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
 }
 
-class DemoStory extends Component {
+class Story extends Component {
   componentDidMount() {
     this.props.loadStory('video_fake_story')
   }
@@ -38,6 +38,8 @@ class DemoStory extends Component {
     return null
   }
 
+  goBack = () => this.props.history.push('/stories')
+
   render() {
     const { story, url, speakers, sideDocs, subtitlesFile } = this.props
     return (
@@ -50,6 +52,7 @@ class DemoStory extends Component {
             getSpeakerAt={this.speakerAt}
             sideDocs={sideDocs}
             story={story}
+            onBack={this.goBack}
           />
         )}
       </div>
@@ -65,4 +68,4 @@ export default connect(state => ({
   speakers: getSpeakers(state),
 }), {
   loadStory,
-})(DemoStory)
+})(Story)

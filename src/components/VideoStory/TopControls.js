@@ -13,15 +13,16 @@ export default memo(function TopControls({
   onSeek,
   volume,
   setVolume,
+  onBack,
 }) {
   const playedMinutes = moment.utc(parseInt(playedSeconds) * 1000).format('mm:ss')
   const durationMinutes = moment.utc(parseInt(durationSeconds) * 1000).format('mm:ss')
   return (
     <React.Fragment>
-      <div className="control-button border-right">↰</div>
-      <div className="control-button" onClick={togglePlaying}>
+      <button className="control-button border-right" onClick={onBack}>↰</button>
+      <button className="control-button" onClick={togglePlaying}>
         { playing ? <span>&#9632;</span> : <span>&#9654;</span> }
-      </div>
+      </button>
       <div className="track-container">
         <div className="video-meta text-white">
           <div className="d-flex h-100 align-items-center">

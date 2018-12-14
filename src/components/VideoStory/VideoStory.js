@@ -71,7 +71,7 @@ export default class VideoStory extends Component {
   togglePlaying = () => this.setState({playing: !this.state.playing})
 
   render() {
-    const { url, title, getSpeakerAt, getSideDocAt, sideDocs, story, subtitlesFile } = this.props
+    const { url, title, getSpeakerAt, getSideDocAt, sideDocs, story, subtitlesFile, onBack } = this.props
     const { durationSeconds, playedSeconds, played, sideWidth, playing, subtitles, volume } = this.state
     const speaker = getSpeakerAt(playedSeconds)
     const sideDoc = getSideDocAt(playedSeconds)
@@ -96,6 +96,7 @@ export default class VideoStory extends Component {
 
         <div className='video-story-top'>
           <TopControls
+            onBack={onBack}
             durationSeconds={durationSeconds}
             playedSeconds={playedSeconds}
             played={played}
