@@ -16,6 +16,7 @@ export default class VideoStory extends Component {
     loadedSeconds: 0,
     playedSeconds: 0,
     played: 0,
+    volume: 0,
     sideWidth: 400,
     playing: true,
     subtitles: [],
@@ -65,11 +66,13 @@ export default class VideoStory extends Component {
     }))
   }
 
+  setVolume = volume => this.setState({ volume })
+
   togglePlaying = () => this.setState({playing: !this.state.playing})
 
   render() {
     const { url, title, getSpeakerAt, getSideDocAt, sideDocs, story, subtitlesFile } = this.props
-    const { durationSeconds, playedSeconds, played, sideWidth, playing, subtitles } = this.state
+    const { durationSeconds, playedSeconds, played, sideWidth, playing, subtitles, volume } = this.state
     const speaker = getSpeakerAt(playedSeconds)
     const sideDoc = getSideDocAt(playedSeconds)
     const tracks = []
@@ -101,6 +104,8 @@ export default class VideoStory extends Component {
             playing={playing}
             togglePlaying={this.togglePlaying}
             onSeek={this.onSeek}
+            volume={volume}
+            setVolume={this.setVolume}
           />
         </div>
 
@@ -115,7 +120,7 @@ export default class VideoStory extends Component {
               onDuration={this.onDuration}
               onProgress={this.onProgress}
               playing={playing}
-              volume={0}
+              volume={volume}
               width='100%'
               height='100%'
               progressInterval={500}
