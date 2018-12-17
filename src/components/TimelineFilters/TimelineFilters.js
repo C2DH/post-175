@@ -2,13 +2,14 @@ import React, { PureComponent } from "react";
 import classNames from "classnames";
 import get from "lodash/get";
 import { connect } from "react-redux";
-import { localize } from "../localize";
+import { localize } from "../../localize";
 import {
   toggleCategoryTimeline,
   toggleTimelineMilestone
-} from "../state/actions";
-import { getEventsCateogryCounts } from "../state/selectors";
-import { EVENT_COLORS } from "../consts";
+} from "../../state/actions";
+import { getEventsCateogryCounts } from "../../state/selectors";
+import { EVENT_COLORS } from "../../consts";
+import "./TimelineFilters.css";
 
 class TimelineFilters extends PureComponent {
   render() {
@@ -23,30 +24,41 @@ class TimelineFilters extends PureComponent {
 
     return (
       // TODO: custom css
-      <div
-        className="bg-black d-flex p-3 justify-content-between border-bottom border-right"
-        style={{ height: 56 }}
-      >
+      <div className="d-flex justify-content-between TimelineFilters text-white">
         <div className="d-flex align-items-center">
-          <div>CATEGORIES:</div>
-          <div className="px-3 d-flex align-items-center">
+          <div className="d-flex align-items-center">
             {Object.keys(EVENT_COLORS).map(name => (
               <div
                 onClick={() => toggleCategoryTimeline(name)}
                 key={name}
                 className={classNames(
-                  "d-flex align-items-center pointer timeline-category-filter",
+                  "d-flex align-items-center category-filter mr-3",
                   {
-                    "timeline-category-filter-active":
-                      categories.indexOf(name) !== -1
+                    active: categories.indexOf(name) !== -1
                   }
                 )}
               >
-                <svg height={14} width={14}>
-                  <circle r={7} cx={7} cy={7} fill={EVENT_COLORS[name]} />
+                <svg height={18} width={18}>
+                  <rect
+                    height={10}
+                    width={10}
+                    x={4}
+                    y={4}
+                    fill={EVENT_COLORS[name]}
+                  />
+                  <rect
+                    height={16}
+                    width={16}
+                    x={1}
+                    y={1}
+                    fill="none"
+                    stroke="#6c757d"
+                    rx="2"
+                    ry="2"
+                  />
                 </svg>
-                <div className="ml-1 mr-3">
-                  {t(name)} {get(categoriesCount, name, "")}
+                <div className="ml-1">
+                  {t(name)} ({get(categoriesCount, name, "")})
                 </div>
               </div>
             ))}
@@ -54,17 +66,17 @@ class TimelineFilters extends PureComponent {
         </div>
 
         {/* TODO: use a shit like that https://haubek.github.io/custom-switch/ */}
-        <div className="d-flex align-items-center">
-          <span>All events</span>
+        <div className="d-flex align-items-center filter-switch">
+          <span className="mr-2">Milestones only</span>
           <span className="switch switch-sm">
             <input
               type="checkbox"
-              checked={milestone}
+              checked={!milestone}
               onChange={() => toggleTimelineMilestone()}
               className="switch"
               id="milestone-switch"
             />
-            <label htmlFor="milestone-switch">Milestones</label>
+            <label htmlFor="milestone-switch">All events</label>
           </span>
         </div>
       </div>

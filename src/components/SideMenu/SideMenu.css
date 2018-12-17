@@ -6,6 +6,7 @@
   width: 56px;
   font-size: 14px;
   top: 0;
+  left: 0px;
   background-color: var(--yellow-post);
   display: flex;
   flex-direction: column;

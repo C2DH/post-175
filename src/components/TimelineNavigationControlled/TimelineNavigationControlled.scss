@@ -1,0 +1,16 @@
+.timeline-nav {
+  user-select: none;
+
+  .timeline-handle {
+    cursor: pointer;
+  }
+
+  .timeline-nav-tick {
+    text-anchor: middle;
+    font-size: 0.75rem;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+}

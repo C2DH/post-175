@@ -1,0 +1,35 @@
+.TimelinePeriods {
+  .period-box {
+    background-color: grey;
+    color: black;
+    display: flex;
+    align-items: center;
+    border: 1px solid darkgrey;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  .period-box .period {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    text-align: center;
+  }
+
+  .period-box.hovered {
+    background-color: white;
+  }
+
+  .pop-up {
+    overflow-y: auto;
+  }
+  .pop-up h3 {
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+    font-weight: 600;
+  }
+
+  .pop-up p {
+    font-size: 0.75rem;
+  }
+}

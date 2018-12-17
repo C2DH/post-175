@@ -1,0 +1,17 @@
+.Timeline {
+  margin-left: 56px;
+
+  .title {
+    background-color: var(--dark-post);
+    border-color: #000 !important;
+  }
+
+  .top-bar {
+    height: 56px;
+  }
+
+  .filters-container,
+  .navigation-container {
+    background-color: var(--dark-post);
+  }
+}

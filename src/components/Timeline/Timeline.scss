@@ -1,0 +1,31 @@
+.TimelineEvents {
+  .timeline-nav-tick {
+    font-size: 0.75rem;
+  }
+
+  .timeline-g-click {
+    cursor: pointer;
+  }
+
+  .timeline-g-click:hover .timeline-event-title {
+    text-decoration: underline;
+  }
+
+  .timeline-event-date {
+    fill: #828282;
+    text-anchor: start;
+    font-size: 0.875rem;
+  }
+
+  .timeline-event-category {
+    text-anchor: start;
+    font-size: 0.875rem;
+  }
+
+  .timeline-event-title {
+    fill: #fff;
+    text-anchor: start;
+    font-size: 1.25rem;
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+  }
+}

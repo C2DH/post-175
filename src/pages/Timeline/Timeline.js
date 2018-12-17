@@ -14,7 +14,7 @@ import {
   unloadStory,
   setCategoriesTimeline,
   setMilestoneTimeline
-} from "../state/actions";
+} from "../../state/actions";
 import {
   getStory,
   getEvents,
@@ -23,23 +23,24 @@ import {
   getTimelinePrevEvent,
   getTimelineNextEvent,
   getEventsExtent,
-  getTimelineCurrentDate,
-} from "../state/selectors";
+  getTimelineCurrentDate
+} from "../../state/selectors";
 import {
   getQsSafeYear,
   makeUrlWithYearAndFilters,
   getQsSafeCategories,
   getQsSafeMilestone
-} from "../utils";
-import MobileAlert from "../components/MobileAlert";
-import Period from "../components/Period";
-import TimelineNavigation from "../components/TimelineNavigation";
-import Timeline from "../components/Timeline";
-import SideMenu from "../components/SideMenu";
+} from "../../utils";
+import MobileAlert from "../../components/MobileAlert";
+import Period from "../../components/Period";
+import TimelineNavigation from "../../components/TimelineNavigation";
+import TimelineViz from "../../components/Timeline";
+import SideMenu from "../../components/SideMenu";
 import { TransitionMotion, Motion, spring } from "react-motion";
-import EventModal from "../components/EventModal";
+import EventModal from "../../components/EventModal";
+import "./Timeline.css";
 
-class TimelinePage extends PureComponent {
+class Timeline extends PureComponent {
   componentDidMount() {
     this.props.loadEvents({ detailed: true });
     this.props.loadPeriods();
@@ -63,9 +64,11 @@ class TimelinePage extends PureComponent {
       this.props.setMilestoneTimeline(milestone);
       // When start \w milestone set the date to first milestone event...
       if (milestone) {
-        year = Math.min(...nextProps.events
-          .filter(event => event.data.key_event)
-          .map(e => e.startDate.getFullYear()))
+        year = Math.min(
+          ...nextProps.events
+            .filter(event => event.data.key_event)
+            .map(e => e.startDate.getFullYear())
+        );
       }
       const { extent } = nextProps;
       if (
@@ -133,71 +136,76 @@ class TimelinePage extends PureComponent {
       story
     } = this.props;
     return (
-      <div className="h-100 d-flex flex-column">
+      <div className="h-100 d-flex flex-column Timeline position-relative">
         <MobileAlert />
         <SideMenu />
-        <div className="row no-gutters flex-1 with-sidemenu">
-          {/* {periods && events && <Motion defaultStyle={{o:0}} style={{o: spring(1)}}>
-            {({o}) => (
-              <Period style={{opacity:o}} story={story}/>
-            )}
-          </Motion> } */}
+        <div className="flex-grow-0 flex-shrink-0 border-bottom title">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="top-bar d-flex align-items-center">
+                  <h2 className="text-white m-0">
+                    {story ? story.data.title : ""}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex-shrink-1 flex-grow-1 d-flex">
           {events &&
             periods && (
               <Motion defaultStyle={{ o: 0 }} style={{ o: spring(1) }}>
-                {({ o }) => (
-                  <Timeline style={{ opacity: o }} className="w-100" />
-                )}
+                {({ o }) => <TimelineViz style={{ opacity: o }} />}
               </Motion>
             )}
-
-          {/* TODO: Move in another component perforamance issues  */}
-          <TransitionMotion
-            defaultStyles={
-              selectedEvent
-                ? [
-                    {
-                      key: "eventModal",
-                      data: { selectedEvent, nextEvent, prevEvent },
-                      style: { o: 0 }
-                    }
-                  ]
-                : []
-            }
-            styles={
-              selectedEvent
-                ? [
-                    {
-                      key: "eventModal",
-                      data: { selectedEvent, nextEvent, prevEvent },
-                      style: { o: spring(1) }
-                    }
-                  ]
-                : []
-            }
-            willLeave={() => ({ o: spring(0) })}
-            willEnter={() => ({ o: 0 })}
-          >
-            {interpolatedStyles => (
-              <div>
-                {interpolatedStyles.map(config => {
-                  return (
-                    <EventModal
-                      style={{ opacity: config.style.o }}
-                      key={config.key}
-                      hasNext={config.data.nextEvent !== null}
-                      hasPrev={config.data.prevEvent !== null}
-                      goNext={this.goNext}
-                      goPrev={this.goPrev}
-                      event={config.data.selectedEvent}
-                      onClose={clearSelectedEvent}
-                    />
-                  );
-                })}
-              </div>
-            )}
-          </TransitionMotion>
         </div>
+        {/* TODO: Move in another component perforamance issues  */}
+        <TransitionMotion
+          defaultStyles={
+            selectedEvent
+              ? [
+                  {
+                    key: "eventModal",
+                    data: { selectedEvent, nextEvent, prevEvent },
+                    style: { o: 0 }
+                  }
+                ]
+              : []
+          }
+          styles={
+            selectedEvent
+              ? [
+                  {
+                    key: "eventModal",
+                    data: { selectedEvent, nextEvent, prevEvent },
+                    style: { o: spring(1) }
+                  }
+                ]
+              : []
+          }
+          willLeave={() => ({ o: spring(0) })}
+          willEnter={() => ({ o: 0 })}
+        >
+          {interpolatedStyles => (
+            <div>
+              {interpolatedStyles.map(config => {
+                return (
+                  <EventModal
+                    style={{ opacity: config.style.o }}
+                    key={config.key}
+                    hasNext={config.data.nextEvent !== null}
+                    hasPrev={config.data.prevEvent !== null}
+                    goNext={this.goNext}
+                    goPrev={this.goPrev}
+                    event={config.data.selectedEvent}
+                    onClose={clearSelectedEvent}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </TransitionMotion>
       </div>
     );
   }
@@ -232,4 +240,4 @@ export default connect(
     setCategoriesTimeline,
     setMilestoneTimeline
   }
-)(TimelinePage);
+)(Timeline);

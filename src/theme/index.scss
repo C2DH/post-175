@@ -16,6 +16,7 @@
 
 :root {
   --yellow-post: #f8c91c;
+  --dark-post: #25272b;
 }
 
 html {
@@ -39,17 +40,6 @@ body {
 
 .with-sidemenu {
   padding-left: 56px;
-}
-.period-box {
-  background-color: grey;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid darkgrey;
-}
-.period-box.hovered {
-  background-color: white;
 }
 
 button:focus {
@@ -180,9 +170,6 @@ h6 {
 }
 
 /* custom components styles */
-.timeline-nav {
-  user-select: none;
-}
 
 .timeline-legend-intro {
   flex-grow: 1;
@@ -201,57 +188,12 @@ h6 {
   right: 15px;
 }
 
-.timeline-nav-tick {
-  text-anchor: middle;
-  font-size: 14px;
-  font-weight: 100;
-}
-
-.timeline-g-click {
-  cursor: pointer;
-}
-
-.timeline-g-click:hover .timeline-event-title {
-  text-decoration: underline;
-}
-
 .fill-grey {
   fill: #828282;
 }
 
 .fill-white {
   fill: #fff;
-}
-
-.timeline-event-date {
-  fill: #fff;
-  text-anchor: start;
-  font-size: 10px;
-  font-weight: 100;
-}
-
-.timeline-event-category {
-  /*fill: #ed6505;*/
-  text-anchor: start;
-  font-size: 10px;
-  font-weight: 100;
-}
-
-.timeline-event-title {
-  fill: #fff;
-  text-anchor: start;
-  font-size: 18px;
-}
-
-.timeline-handle {
-  cursor: pointer;
-}
-
-.timeline-category-filter circle {
-  opacity: 0.5;
-}
-.timeline-category-filter-active circle {
-  opacity: 1;
 }
 
 .legend-detail-image {
@@ -411,8 +353,8 @@ $switch-height: calc(#{$input-height} * 0.8) !default;
 $switch-height-sm: calc(#{$input-height-sm} * 0.8) !default;
 $switch-height-lg: calc(#{$input-height-lg} * 0.8) !default;
 $switch-border-radius: $switch-height !default;
-$switch-bg: map-get($theme-colors, "danger") !default;
-$switch-checked-bg: map-get($theme-colors, "success") !default;
+$switch-bg: black !default;
+$switch-checked-bg: black !default;
 $switch-disabled-bg: $custom-control-indicator-disabled-bg !default;
 $switch-disabled-color: var(--gray-light) !default;
 $switch-thumb-bg: $white !default;
@@ -449,6 +391,7 @@ $switch-transition: 0.2s all !default;
       user-select: none;
       vertical-align: middle;
       text-indent: calc(calc(#{$switch-height} * 2) + 0.5rem);
+      margin-bottom: 0;
     }
 
     + label::before,
