@@ -33,6 +33,23 @@ export const getVideoUrl = createSelector(
   }
 )
 
+export const getVideoSubtitlesFile = createSelector(
+  getVideoStory,
+  story => {
+    if (story === null) {
+      return null
+    }
+    const objectId = get(story, 'contents.modules[0].object.id')
+    if (objectId) {
+      const doc = find(story.documents, { id: objectId })
+      if (doc) {
+        return get(doc, 'data.subtitles.srt', null)
+      }
+    }
+    return null
+  }
+)
+
 const stringTimeToSeconds = str => {
   const [min, secs] = str.split(':')
   return (parseInt(min) * 60) + parseInt(secs)

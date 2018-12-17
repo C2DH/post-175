@@ -27,13 +27,9 @@
         "type": "video",
         "start_date": "2017-07-29",
         "subtitles": {
-          "vtt": {
-            "en_US": "https://luxptt.dhlab.lu/media/video/video-telex.en_US.vtt",
-            "fr_FR": "https://luxptt.dhlab.lu/media/video/video-telex.fr_FR.vtt"
-          },
           "srt": {
-            "en_US": "https://luxptt.dhlab.lu/media/video/video-telex.en_US.srt",
-            "fr_FR": "https://luxptt.dhlab.lu/media/video/video-telex.fr_FR.srt"
+            "de_DE": "http://localhost:3000/sub_de.vtt",
+            "fr_FR": "http://localhost:3000/sub_fr.vtt"
           }
         },
         "description": {

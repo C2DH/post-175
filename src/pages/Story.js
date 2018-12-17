@@ -8,13 +8,14 @@ import {
   getVideoUrl,
   getSpeakers,
   getSideDocs,
+  getVideoSubtitlesFile,
 } from '../state/selectors'
 
 const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
   return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
 }
 
-class DemoStory extends Component {
+class Story extends Component {
   componentDidMount() {
     this.props.loadStory('video_fake_story')
   }
@@ -37,18 +38,21 @@ class DemoStory extends Component {
     return null
   }
 
+  goBack = () => this.props.history.push('/stories')
+
   render() {
-    const { story, url, speakers, sideDocs } = this.props
-    console.log(story, speakers, sideDocs)
+    const { story, url, speakers, sideDocs, subtitlesFile } = this.props
     return (
       <div className='h-100 bg-dark'>
         {story && (
           <VideoStory
             url={url}
+            subtitlesFile={subtitlesFile}
             getSideDocAt={this.sideDocAt}
             getSpeakerAt={this.speakerAt}
             sideDocs={sideDocs}
             story={story}
+            onBack={this.goBack}
           />
         )}
       </div>
@@ -59,8 +63,9 @@ class DemoStory extends Component {
 export default connect(state => ({
   story: getVideoStory(state),
   url: getVideoUrl(state),
+  subtitlesFile: getVideoSubtitlesFile(state),
   sideDocs: getSideDocs(state),
   speakers: getSpeakers(state),
 }), {
   loadStory,
-})(DemoStory)
+})(Story)
