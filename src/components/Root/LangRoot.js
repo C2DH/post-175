@@ -7,7 +7,7 @@ import { getLangs } from "../../state/selectors";
 import { setLang } from "../../state/actions";
 import Home from "../../pages/Home";
 import MapPage from "../../pages/MapPage";
-import TimelinePage from "../../pages/TimelinePage";
+import TimelinePage from "../../pages/Timeline";
 import About from "../../pages/About";
 import Collection from "../../pages/Collection";
 import DocumentDetail from "../../pages/DocumentDetail";
