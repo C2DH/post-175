@@ -26,7 +26,7 @@ const EventType = ({ event }) => {
       <svg width={20} height={20}>
         <circle cx="10" cy="10" r={8} fill={color} />
       </svg>
-      <span className="font-12" style={{ color: color, paddingTop: 2 }}>
+      <span className="font-12 ml-2" style={{ color: color, paddingTop: 2 }}>
         {event.data.category_label}
       </span>
     </div>
@@ -92,7 +92,7 @@ class EventModal extends PureComponent {
         <div className="container h-100">
           <div className="row h-100 no-gutters justify-content-center">
             {displayDocs.length > 0 && (
-              <div className="col-7 h-100 flex-column d-flex flex-wrap doc-container">
+              <div className="col-7 h-100 flex-column d-flex doc-container">
                 <div className="w-100 flex-1 p-5" style={{ minHeight: 0 }}>
                   <img
                     src={selectedDocument.data.resolutions.medium.url}
@@ -180,7 +180,7 @@ class EventModal extends PureComponent {
                 {displayDocs.length > 1 && (
                   <div className="w-100 p-3">
                     <h6 className="related-title">related documents</h6>
-                    <div className="d-flex w-100">
+                    <div className="d-flex flex-wrap w-100">
                       {displayDocs &&
                         displayDocs.map((doc, i) => (
                           <div
