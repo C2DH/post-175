@@ -104,7 +104,7 @@ class EventModal extends PureComponent {
                         className="collection-link"
                         to={{
                           pathname: `/doc/${selectedDocument.id}`,
-                          state: { modal: false }
+                          state: { modal: true }
                         }}
                       >
                         open

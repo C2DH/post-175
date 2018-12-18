@@ -1,30 +1,11 @@
-.collection-filters {
-  color: #fff;
-  top: 0;
-  left: 56px;
-  z-index: 3;
-  right: 0;
-  height: 56px;
-  background-color: #272A2D;
-  border-bottom: 1px solid grey;
-  border-right: 1px solid grey;
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 86px;
-  padding-right: 86px;
-  .filters-actions {
-    display: flex;
-    align-items: center;
-
-  }
-  .filters-title {
-    h2 {
-      margin: 0;
-    }
+.CollectionFilters {
+  .top-bar {
+    height: 56px;
+    background-color: var(--dark-post);
+    border-color: #000 !important;
   }
 }
+
 .collection-filters-open {
   position: fixed;
   z-index: 2;
@@ -33,7 +14,7 @@
   right: 0;
   padding-left: 86px;
   padding-right: 86px;
-  background-color: #272A2D;
+  background-color: #272a2d;
   border: 1px solid white;
 
   .filter-sub-title {
@@ -104,37 +85,25 @@
 }
 
 .collection-list {
-  height: 100%;
-  padding-top: 56px;
-  // padding-bottom: 56px;
-  background-color: #272A2D;
-  // background: red;
+  height: calc(100% - 56px);
+  padding-top: 15px;
   .collection-list-wrapper {
-    padding-right: 86px;
-    padding-top: 30px;
-    // padding-left: 20px;
     height: 100%;
-    // background: red;
-    // overflow-y: auto;
   }
 }
 .collection-row {
   height: 430px;
   padding-bottom: 30px;
-  // padding-top: 50px;
-  // padding-left: 30px;
-  // padding-right: 30px;
-  // height: 100%;
-  // overflow-y: auto;
   .collection-col:last-child {
     border-right: 0;
   }
 }
 .collection-col {
-  // background: red;
   border-right: 1px solid grey;
-  // border: 1px solid grey;
-  // margin-bottom: 30px;
+}
+
+.collection-col a {
+  text-decoration: none;
 }
 .collection-col.col-placeholder {
   border: 0;
@@ -142,14 +111,7 @@
 
 /* Colection item */
 .collection-item {
-  // border: 1px solid red;
   padding: 0 20px;
-  width: 100%;
-  color: white;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  // background-color: deepskyblue;
 }
 .collection-item > .item-image-box {
   // background-color: #1D1F21;
@@ -158,19 +120,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  height: 100%;
-  width: 100%;
+  overflow: hidden;
+  // height: 100%;
+  // width: 100%;
 }
 .collection-item > .item-image-box > img {
   // display: none;
-  max-height: 100%;
-  max-width: 100%;
-  width: auto;
-  vertical-align: middle;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 .collection-item > .item-image-box.item-image-large > img {
-  height: auto;
-  width: unset;
+  //height: auto;
+  //width: unset;
   // width: 100%;
 }
 .collection-item > .item-caption {
@@ -178,14 +140,11 @@
 }
 
 .collection-item > .item-caption > .item-label {
-  // TODO: Should do this?
-  word-break: break-all;
-  font-size: 20px;
-  line-height: 28px;
-  height: 60px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 1.25rem;
 }
 .collection-item > .item-caption > .item-year {
-  color: #9B9B9B;
+  color: #9b9b9b;
   font-size: 14px;
   line-height: 20px;
   margin-bottom: 10px;
