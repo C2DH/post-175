@@ -7,18 +7,6 @@ import ZoomAndPanMedia from "../ZoomAndPanMedia";
 import "./EventModal.css";
 import classNames from "classnames";
 
-const CloseBtn = ({ onClose }) => (
-  <div className="position-fixed pt-3 pr-3" style={{ top: 0, right: 0 }}>
-    <button
-      onClick={onClose}
-      className="btn text-white rounded-0 d-flex justify-content-center"
-      style={{ backgroundColor: "transparent" }}
-    >
-      <i className="material-icons">close</i>
-    </button>
-  </div>
-);
-
 const EventType = ({ event }) => {
   const color = getEventColor(event);
   return (
@@ -79,7 +67,7 @@ class EventModal extends PureComponent {
       t
     } = this.props;
 
-    // Take only docs \w snapshot
+    // Take only docs \w resolution
     const displayDocs = get(event, "documents", []).filter(
       d => d.data.resolutions
     );
@@ -90,7 +78,7 @@ class EventModal extends PureComponent {
     return (
       <div className="EventModal fixed-top fixed-bottom" style={style}>
         <div className="container h-100">
-          <div className="row h-100 no-gutters justify-content-center">
+          <div className="row h-100 no-gutters justify-content-center align-items-center">
             {displayDocs.length > 0 && (
               <div className="col-7 h-100 flex-column d-flex doc-container">
                 <div className="w-100 flex-1 p-5" style={{ minHeight: 0 }}>
@@ -100,42 +88,6 @@ class EventModal extends PureComponent {
                     height="100%"
                     className="img-preview"
                   />
-                  {/*<div
-                    className="h-100 d-flex justify-content-center flex-column"
-                    style={{ flex: 4.5 }}
-                  >
-                    <div className="h-100 overflow-auto m-3">
-                      {selectedDocument && (
-                        <ZoomAndPanMedia
-                          src={
-                            selectedDocument.type === "pdf"
-                              ? selectedDocument.snapshot
-                              : selectedDocument.attachment
-                          }
-                        />
-                      )}
-
-                    </div>
-                  </div>
-                  */}
-                  {/*displayDocs.length > 1 && (
-                    <div className="flex-1 h-100 pr-3 mt-3 flex-column overflow-auto">
-                      {displayDocs &&
-                        displayDocs.map((doc, i) => (
-                          <img
-                            key={doc.id}
-                            src={doc.snapshot}
-                            className="img-fluid mb-1 grayscale pointer"
-                            onClick={this.handleSelectDocument(doc)}
-                            style={
-                              doc.id === selectedDocument.id
-                                ? { border: "1px solid red", filter: "none" }
-                                : null
-                            }
-                          />
-                        ))}
-                    </div>
-                  )*/}
                 </div>
                 <div className="p-3 w-100 text-white d-flex align-items-center border-top border-light">
                   <div className="px-3">
@@ -164,9 +116,11 @@ class EventModal extends PureComponent {
             )}
 
             <div
-              className={`col-${
-                displayDocs.length > 0 ? 5 : 6
-              } d-flex h-100 event-info`}
+              className={classNames(`d-flex event-info`, {
+                "col-5": displayDocs.length > 0,
+                "col-6": displayDocs.length == 0,
+                "h-100": displayDocs.length > 0
+              })}
             >
               <div className="flex-grow-1 border-right event-info-container">
                 <div className="p-3 w-100 border-bottom">
@@ -214,25 +168,6 @@ class EventModal extends PureComponent {
                   goPrev={goPrev}
                 />
               </div>
-              {/*            <div className="flex-1 h-100 bg-white d-flex flex-column">
-                <div className="flex-1 bg-light p-1">
-                  <EventType event={event} />
-                  <div className="w-100 pl-3 pr-3">
-                    <h2 style={{ fontSize: 28 }}>{event.data.title}</h2>
-                    <p className="font-12">{event.data.start_date}</p>
-                  </div>
-                </div>
-                <div className="p-3 mt-3 overflow-auto" style={{ flex: 2 }}>
-                  <p>{event.data.description}</p>
-                </div>
-                <EventsControl
-                  hasNext={hasNext}
-                  hasPrev={hasPrev}
-                  goNext={goNext}
-                  goPrev={goPrev}
-                  t={t}
-                />
-              </div>*/}
             </div>
           </div>
         </div>
