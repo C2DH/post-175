@@ -1,0 +1,244 @@
+import React, { PureComponent } from "react";
+import { find, head, get } from "lodash";
+import { Link } from "react-router-dom";
+import { getEventColor } from "../../utils";
+import { localize } from "../../localize";
+import ZoomAndPanMedia from "../ZoomAndPanMedia";
+import "./EventModal.css";
+import classNames from "classnames";
+
+const CloseBtn = ({ onClose }) => (
+  <div className="position-fixed pt-3 pr-3" style={{ top: 0, right: 0 }}>
+    <button
+      onClick={onClose}
+      className="btn text-white rounded-0 d-flex justify-content-center"
+      style={{ backgroundColor: "transparent" }}
+    >
+      <i className="material-icons">close</i>
+    </button>
+  </div>
+);
+
+const EventType = ({ event }) => {
+  const color = getEventColor(event);
+  return (
+    <div className="d-inline-flex">
+      <svg width={20} height={20}>
+        <circle cx="10" cy="10" r={8} fill={color} />
+      </svg>
+      <span className="font-12" style={{ color: color, paddingTop: 2 }}>
+        {event.data.category_label}
+      </span>
+    </div>
+  );
+};
+
+const EventsControl = ({ hasPrev, hasNext, goNext, goPrev, t }) => (
+  <div className="w-100 d-flex flex-column">
+    <button
+      className="btn d-flex w-100 align-items-center justify-content-center"
+      onClick={goPrev}
+      disabled={!hasPrev}
+    >
+      <i className="material-icons">arrow_back</i>
+    </button>
+    <button
+      className="btn d-flex w-100 align-items-center justify-content-center"
+      onClick={goNext}
+      disabled={!hasNext}
+    >
+      <i className="material-icons">arrow_forward</i>
+    </button>
+  </div>
+);
+
+class EventModal extends PureComponent {
+  state = {
+    selectedDocument: null
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.event !== nextProps.event) {
+      this.setState({ selectedDocument: null });
+    }
+  }
+
+  handleSelectDocument = selectedDocument => () => {
+    this.setState({ selectedDocument });
+  };
+
+  render() {
+    const {
+      event,
+      onClose,
+      hasPrev,
+      hasNext,
+      goNext,
+      goPrev,
+      style,
+      t
+    } = this.props;
+
+    // Take only docs \w snapshot
+    const displayDocs = get(event, "documents", []).filter(
+      d => d.data.resolutions
+    );
+    const selectedDocument = this.state.selectedDocument
+      ? this.state.selectedDocument
+      : head(displayDocs);
+
+    return (
+      <div className="EventModal fixed-top fixed-bottom" style={style}>
+        <div className="container h-100">
+          <div className="row h-100 no-gutters justify-content-center">
+            {displayDocs.length > 0 && (
+              <div className="col-7 h-100 flex-column d-flex flex-wrap doc-container">
+                <div className="w-100 flex-1 p-5" style={{ minHeight: 0 }}>
+                  <img
+                    src={selectedDocument.data.resolutions.medium.url}
+                    width="100%"
+                    height="100%"
+                    className="img-preview"
+                  />
+                  {/*<div
+                    className="h-100 d-flex justify-content-center flex-column"
+                    style={{ flex: 4.5 }}
+                  >
+                    <div className="h-100 overflow-auto m-3">
+                      {selectedDocument && (
+                        <ZoomAndPanMedia
+                          src={
+                            selectedDocument.type === "pdf"
+                              ? selectedDocument.snapshot
+                              : selectedDocument.attachment
+                          }
+                        />
+                      )}
+
+                    </div>
+                  </div>
+                  */}
+                  {/*displayDocs.length > 1 && (
+                    <div className="flex-1 h-100 pr-3 mt-3 flex-column overflow-auto">
+                      {displayDocs &&
+                        displayDocs.map((doc, i) => (
+                          <img
+                            key={doc.id}
+                            src={doc.snapshot}
+                            className="img-fluid mb-1 grayscale pointer"
+                            onClick={this.handleSelectDocument(doc)}
+                            style={
+                              doc.id === selectedDocument.id
+                                ? { border: "1px solid red", filter: "none" }
+                                : null
+                            }
+                          />
+                        ))}
+                    </div>
+                  )*/}
+                </div>
+                <div className="p-3 w-100 text-white d-flex align-items-center border-top border-light">
+                  <div className="px-3">
+                    <p className="date text-white-50">
+                      {get(selectedDocument, "data.year")}
+                    </p>
+                    <p className="text-white description">
+                      {get(selectedDocument, "title")}
+                    </p>
+                  </div>
+                  <div className="px-3 align-self-end ml-auto">
+                    <p>
+                      <Link
+                        className="collection-link"
+                        to={{
+                          pathname: `/doc/${selectedDocument.id}`,
+                          state: { modal: false }
+                        }}
+                      >
+                        open
+                      </Link>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div
+              className={`col-${
+                displayDocs.length > 0 ? 5 : 6
+              } d-flex h-100 event-info`}
+            >
+              <div className="flex-grow-1 border-right event-info-container">
+                <div className="p-3 w-100 border-bottom">
+                  <EventType event={event} />
+                  <h4>{event.data.title}</h4>
+                  <p className="text-black-50 mb-0">{event.data.start_date}</p>
+                </div>
+                <div className="p-3 w-100 border-bottom">
+                  <p>{event.data.description}</p>
+                </div>
+                {displayDocs.length > 1 && (
+                  <div className="w-100 p-3">
+                    <h6 className="related-title">related documents</h6>
+                    <div className="d-flex w-100">
+                      {displayDocs &&
+                        displayDocs.map((doc, i) => (
+                          <div
+                            key={doc.id}
+                            className={classNames(`square`, {
+                              selected: doc.id === selectedDocument.id
+                            })}
+                          >
+                            <img
+                              src={doc.data.resolutions.low.url}
+                              className="square-content"
+                              onClick={this.handleSelectDocument(doc)}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="action-bar flex-grow-0 flex-shrink-0">
+                <button
+                  onClick={onClose}
+                  className="btn d-flex w-100 align-items-center justify-content-center"
+                >
+                  <i className="material-icons">close</i>
+                </button>
+                <EventsControl
+                  hasNext={hasNext}
+                  hasPrev={hasPrev}
+                  goNext={goNext}
+                  goPrev={goPrev}
+                />
+              </div>
+              {/*            <div className="flex-1 h-100 bg-white d-flex flex-column">
+                <div className="flex-1 bg-light p-1">
+                  <EventType event={event} />
+                  <div className="w-100 pl-3 pr-3">
+                    <h2 style={{ fontSize: 28 }}>{event.data.title}</h2>
+                    <p className="font-12">{event.data.start_date}</p>
+                  </div>
+                </div>
+                <div className="p-3 mt-3 overflow-auto" style={{ flex: 2 }}>
+                  <p>{event.data.description}</p>
+                </div>
+                <EventsControl
+                  hasNext={hasNext}
+                  hasPrev={hasPrev}
+                  goNext={goNext}
+                  goPrev={goPrev}
+                  t={t}
+                />
+              </div>*/}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default localize()(EventModal);

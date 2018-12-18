@@ -1,0 +1,88 @@
+.EventModal {
+  padding: 50px 0px;
+  background-color: rgba(19, 19, 19, 0.9);
+
+  .doc-container {
+    background-color: var(--dark-post);
+
+    .description {
+      font-family: "IBM Plex Sans Condensed", sans-serif;
+      font-size: 1.25rem;
+    }
+
+    .date {
+      margin-bottom: 5px;
+    }
+
+    .collection-link {
+      text-decoration: none;
+      text-transform: uppercase;
+      color: white;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 0.875rem;
+      padding-bottom: 3px;
+      border-bottom: 1px solid var(--yellow-post);
+    }
+
+    .collection-link:hover {
+      text-decoration: none;
+      color: white;
+    }
+
+    .img-preview {
+      object-fit: contain;
+    }
+  }
+
+  .event-info {
+    background-color: white;
+
+    .event-info-container {
+      overflow-y: auto;
+    }
+
+    .action-bar {
+      width: 56px;
+
+      button {
+        height: 56px;
+      }
+    }
+
+    .related-title {
+      color: var(--yellow-post);
+      text-transform: uppercase;
+    }
+
+    .square {
+      position: relative;
+      flex: 0 0 33.33333%;
+      max-width: 33.33333%;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+
+    .square.selected {
+      border: 5px solid var(--yellow-post);
+    }
+
+    .square:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+    }
+
+    .square-content {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 5px;
+      object-fit: cover;
+      filter: grayscale(1);
+    }
+
+    .square-content:hover {
+      filter: grayscale(0);
+    }
+  }
+}
