@@ -143,10 +143,16 @@ export default class MultiText extends React.PureComponent {
       minLen,
       monospace,
       spacing = 25,
+      maxLine,
       ...rest
     } = this.props;
     const { bgWidth } = this.state;
-    const wrapped = textWrap(text, maxLen, minLen, monospace);
+    let wrapped = textWrap(text, maxLen, minLen, monospace)
+    if (maxLine && wrapped.length > maxLine) {
+      wrapped = wrapped.slice(0, maxLine)
+      wrapped[maxLine - 1] += '...'
+    }
+
     return (
       <g>
         <rect

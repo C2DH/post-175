@@ -91,6 +91,7 @@ class EventItem extends PureComponent {
                 y={55 + eventHeight}
                 className="timeline-event-title"
                 text={event.data.title}
+                maxLine={2}
                 maxLen={25}
               />
               <text className="timeline-event-date">
@@ -127,6 +128,7 @@ class EventItem extends PureComponent {
               y={50}
               className="timeline-event-title"
               text={event.data.title}
+              maxLine={2}
               maxLen={25}
             />
             <text className="timeline-event-date">{event.data.start_date}</text>
