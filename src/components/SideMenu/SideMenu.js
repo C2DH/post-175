@@ -9,7 +9,7 @@ import {
   getSelectedLang,
   getMakeLangUrl
 } from "../../state/selectors";
-import "./SideMenu.css";
+import "./SideMenu.scss";
 import clockIcon from "./clock.svg";
 import mapIcon from "./map.svg";
 import archiveIcon from "./archive.svg";

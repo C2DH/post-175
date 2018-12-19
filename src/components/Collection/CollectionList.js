@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import CollectionItem from './CollectionItem'
 import { List, WindowScroller, AutoSizer } from 'react-virtualized'
-import './Collection.css'
+import './Collection.scss'
 
 export default class CollectionList extends PureComponent {
 

@@ -16,7 +16,7 @@ import MultiText from "../../components/MultiText";
 import { DraggableCore } from "react-draggable";
 import { setDateTimeline, selectEvent } from "../../state/actions";
 import { getEventColor } from "../../utils";
-import "./Timeline.css";
+import "./Timeline.scss";
 
 const TIMELINE_PADDING = 30;
 const EVENT_WIDTH = 150;

@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import MagikDotDotDot from '../MagikDotDotDot'
 import CollectionImage from './CollectionImage'
-import './Collection.css'
+import './Collection.scss'
 
 export default class CollectionItem extends PureComponent {
   render() {

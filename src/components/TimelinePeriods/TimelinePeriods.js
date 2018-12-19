@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 import classNames from "classnames";
-import "./TimelinePeriods.css";
+import "./TimelinePeriods.scss";
 
 const PERIODS_HEIGHT = 30;
 

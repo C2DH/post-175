@@ -38,7 +38,7 @@ import TimelineViz from "../../components/Timeline";
 import SideMenu from "../../components/SideMenu";
 import { TransitionMotion, Motion, spring } from "react-motion";
 import EventModal from "../../components/EventModal";
-import "./Timeline.css";
+import "./Timeline.scss";
 
 class Timeline extends PureComponent {
   componentDidMount() {

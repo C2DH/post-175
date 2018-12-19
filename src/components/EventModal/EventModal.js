@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getEventColor } from "../../utils";
 import { localize } from "../../localize";
 import ZoomAndPanMedia from "../ZoomAndPanMedia";
-import "./EventModal.css";
+import "./EventModal.scss";
 import classNames from "classnames";
 
 const EventType = ({ event }) => {

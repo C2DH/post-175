@@ -6,7 +6,7 @@ import { localize } from '../../localize'
 import { COLLECTION_DATE_TYPES } from '../../consts'
 import Search from './Search'
 import CollectionTimeBrush from './CollectionTimeBrush'
-import './Collection.css'
+import './Collection.scss'
 
 class CollectionFilters extends PureComponent {
   state = {

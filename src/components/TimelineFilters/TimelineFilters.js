@@ -9,7 +9,7 @@ import {
 } from "../../state/actions";
 import { getEventsCateogryCounts } from "../../state/selectors";
 import { EVENT_COLORS } from "../../consts";
-import "./TimelineFilters.css";
+import "./TimelineFilters.scss";
 
 class TimelineFilters extends PureComponent {
   render() {
