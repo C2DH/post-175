@@ -1,0 +1,32 @@
+.pdf-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  .pdf-container {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+  .pdf-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: 1px solid gold;
+    height: 50px;
+    .page-input {
+      width: 50px;
+      background: transparent;
+      border: 1px solid grey;
+      color: white;
+      outline: none;
+    }
+    .arrow-back {
+      margin-right: 20px;
+    }
+    .arrow-next {
+      margin-left: 20px;
+    }
+  }
+}

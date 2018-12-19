@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player'
-import { Document, Page, pdfjs } from 'react-pdf'
 import map from 'lodash/map'
 import ZoomAndPanMedia from '../ZoomAndPanMedia'
 import { getSelectedLang } from '../../state/selectors'
+import PdfViewer from './PdfViewer'
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 function DocMedia({ doc, lang }) {
   if (doc.type === 'video') {
@@ -45,15 +44,20 @@ function DocMedia({ doc, lang }) {
     console.log('PDF FILE: ', pdfFile)
 
     return (
-      <div className='doc-media-pdf'>
-        <Document
-          file={pdfFile}
-        >
-          <Page
-            pageNumber={1}
-          />
-        </Document>
-      </div>
+      <PdfViewer file={pdfFile} />
+      // <div className='doc-media-pdf'>
+      //   <div  style={{ height: 100, background: 'red' }} />
+      //   <div className='pdf-container'>
+      //     <Document
+      //       className='pdf-pdf'
+      //       file={pdfFile}
+      //     >
+      //       <Page
+      //         pageNumber={1}
+      //       />
+      //     </Document>
+      //   </div>
+      // </div>
     )
   } else if (doc.type === '360viewer') {
     return (
