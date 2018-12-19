@@ -55,6 +55,13 @@ function DocMedia({ doc, lang }) {
         </Document>
       </div>
     )
+  } else if (doc.type === '360viewer') {
+    return (
+      <iframe
+        className='h-100 w-100 border-0'
+        src={doc.url}
+      />
+    )
   } else {
     // Image
     return (
