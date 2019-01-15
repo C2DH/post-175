@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import classNames from "classnames";
 import CollectionItem from "./CollectionItem";
 import { List, WindowScroller, AutoSizer } from "react-virtualized";
-import "./Collection.css";
+import "./Collection.scss";
 
 export default class CollectionList extends PureComponent {
   renderRow = ({ key, index, style }) => {
@@ -14,7 +14,7 @@ export default class CollectionList extends PureComponent {
         {docRow.map(doc => (
           <div
             key={doc.id}
-            className={classNames(`collection-col`, {
+            className={classNames(`collection-col d-flex`, {
               col: docRow.length === 6,
               "col-2": docRow.length === 5 && !doc.large,
               "col-4": docRow.length === 5 && doc.large,

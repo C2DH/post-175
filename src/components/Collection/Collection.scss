@@ -109,52 +109,48 @@
   border: 0;
 }
 
-/* Colection item */
+/* Collection item */
 .collection-item {
   padding: 0 20px;
-}
-.collection-item > .item-image-box {
-  // background-color: #1D1F21;
-  // padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  overflow: hidden;
-  // height: 100%;
-  // width: 100%;
-}
-.collection-item > .item-image-box > img {
-  // display: none;
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
-.collection-item > .item-image-box.item-image-large > img {
-  //height: auto;
-  //width: unset;
-  // width: 100%;
-}
-.collection-item > .item-caption {
-  margin-bottom: 40px;
-}
 
-.collection-item > .item-caption > .item-label {
-  font-family: "IBM Plex Sans Condensed", sans-serif;
-  font-size: 1.25rem;
-}
-.collection-item > .item-caption > .item-year {
-  color: #9b9b9b;
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 10px;
-}
-.collection-item .image-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3px;
-  background: grey;
+  .item-image-box {
+    overflow: auto;
+    flex-basis: 0;
+  }
+
+  .item-image-box > img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: 50% 100%;
+  }
+
+  .item-caption {
+    margin-bottom: 40px;
+  }
+
+  .item-label {
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+    font-size: 1.25rem;
+  }
+  .item-info {
+    color: #9b9b9b;
+    font-size: 0.875rem;
+    margin-bottom: 10px;
+  }
+
+  .item-icon .material-icons {
+    font-size: 1.2rem !important;
+    line-height: normal;
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    background: grey;
+  }
 }

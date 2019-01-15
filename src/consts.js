@@ -27,3 +27,11 @@ export const EVENT_COLORS = {
   staff: "#fdd00c",
   technology: "#13d436"
 };
+
+export const TYPE_ICON = {
+  "360viewer": "3d_rotation",
+  image: "photo",
+  pdf: "library_books",
+  video: "play_circle_filled",
+  audio: "audiotrack"
+};
