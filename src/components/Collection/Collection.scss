@@ -105,6 +105,11 @@
 .collection-col a {
   text-decoration: none;
 }
+
+.collection-col a:hover .item-label {
+  text-decoration: underline;
+}
+
 .collection-col.col-placeholder {
   border: 0;
 }

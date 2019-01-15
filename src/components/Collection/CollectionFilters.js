@@ -95,7 +95,7 @@ class CollectionFilters extends PureComponent {
               </div>
             </div>
             <div className="col-auto">
-              <div className="d-flex">
+              <div className="d-flex align-items-center">
                 <Search
                   placeholder="Search"
                   onSuggestionSelected={this.onSuggestionSelected}
