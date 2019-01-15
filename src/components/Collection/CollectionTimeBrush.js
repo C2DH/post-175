@@ -5,7 +5,7 @@ import { DraggableCore } from 'react-draggable'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import { timeYear } from 'd3-time'
 import { extent as makeExtent } from 'd3-array'
-import './Collection.css'
+import './Collection.scss'
 
 const Ticks = ({ ticks, scale, y }) => (
   <g>

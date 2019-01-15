@@ -1,0 +1,13 @@
+.TimelineFilters {
+  height: 56px; }
+  .TimelineFilters .category-filter {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.875rem;
+    opacity: 0.4;
+    transition: opacity 0.3s linear;
+    cursor: pointer; }
+  .TimelineFilters .category-filter.active {
+    opacity: 1; }
+  .TimelineFilters .filter-switch {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.875rem; }

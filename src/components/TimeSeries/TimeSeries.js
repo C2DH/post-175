@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import TimeSerieChart from "./TimeSerieChart";
-import "./TimeSeries.css";
+import "./TimeSeries.scss";
 
 class TimeSerie extends PureComponent {
   render() {

@@ -5,7 +5,7 @@ import Speaker from './Speaker'
 import LangSwitcher from './LangSwitcher'
 import Subtitles from './Subtitles'
 import SideDocument from './SideDocument'
-import './VideoStory.css'
+import './VideoStory.scss'
 
 const MIN_SIDE_WIDTH = 250
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactHammer from 'react-hammerjs'
 import Hammer from 'hammerjs'
-import './ZoomAndPanMedia.css'
+import './ZoomAndPanMedia.scss'
 
 const PINCH_TIMEOUT = 300
 

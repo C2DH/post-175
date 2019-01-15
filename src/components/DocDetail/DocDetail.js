@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import { getLangs, getSelectedLang, getMakeLangUrl } from '../../state/selectors'
 import DocMedia from './DocMedia'
-import './DocDetail.css'
+import './DocDetail.scss'
 
 const DocDetail = ({ doc, onClose, langs, selectedLang, url, location, history }) => (
   <div className='doc-detail'>

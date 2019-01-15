@@ -7,7 +7,7 @@ import { timeYear } from "d3-time";
 import { DraggableCore } from "react-draggable";
 import { Motion, spring, presets } from "react-motion";
 import { getEventColor } from "../../utils";
-import "./TimelineNavigationControlled.css";
+import "./TimelineNavigationControlled.scss";
 
 const BOTTOM_HEIGHT = 80;
 const NAVIGATION_PADDING = 30;

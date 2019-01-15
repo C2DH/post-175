@@ -18,7 +18,7 @@ import {
   getSelectedLang,
   getStory
 } from "../../state/selectors";
-import "./Home.css";
+import "./Home.scss";
 
 class Home extends PureComponent {
   componentDidMount() {

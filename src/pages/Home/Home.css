@@ -1,0 +1,48 @@
+.Home .background-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.Home .cols-grid {
+  opacity: 0.2; }
+
+.Home .abstract {
+  font-size: 1.1rem; }
+
+.Home .section-container {
+  border-top: 5px white solid;
+  padding: 25px 25px 50px 25px;
+  transition: border-top 0.3s linear;
+  min-height: 136px; }
+
+.Home .section-container:hover {
+  border-top: 5px var(--yellow-post) solid; }
+
+.Home .section-text {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 1.5rem;
+  transform: translateX(-24px);
+  transition: transform 0.3s linear; }
+
+.Home .moving-container {
+  overflow: hidden; }
+
+.Home .section-container:hover .moving-icon {
+  transform: translateX(0); }
+
+.Home .section-container:hover .section-text {
+  transform: translateX(0); }
+
+.Home .moving-icon {
+  transform: translateX(-24px);
+  width: 24px;
+  transition: transform 0.3s linear; }
+
+.Home .read-more {
+  font-family: "IBM Plex Sans", sans-serif;
+  border-bottom: 1px solid var(--yellow-post); }
+
+.Home a:hover {
+  text-decoration: none; }

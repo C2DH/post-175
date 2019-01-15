@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './StoryCard.css'
+import './StoryCard.scss'
 
 export default function StoryCard({ count, image, title, description, slug }) {
   return (

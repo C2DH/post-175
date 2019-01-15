@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import classNames from 'classnames'
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import {
@@ -16,7 +17,7 @@ import MultiText from "../../components/MultiText";
 import { DraggableCore } from "react-draggable";
 import { setDateTimeline, selectEvent } from "../../state/actions";
 import { getEventColor } from "../../utils";
-import "./Timeline.css";
+import "./Timeline.scss";
 
 const TIMELINE_PADDING = 30;
 const EVENT_WIDTH = 150;
@@ -64,19 +65,22 @@ class EventItem extends PureComponent {
         y2 += Math.abs(y2 - eventHeight) + 80;
       }
     }
-
     const color = getEventColor(event);
+
+    const hideImage = event.displacementCount && event.displacementCount >= 3
 
     return (
       <g
         onClick={() => selectEvent(event)}
         onMouseEnter={() => enterEvent(event)}
         onMouseLeave={() => leaveEvent(event)}
-        className="event-item"
+        className={classNames('event-item', {
+          'hidden-image': hideImage,
+        })}
       >
         {eventHeight && (
           <g
-            className="timeline-g-click"
+            className='timeline-g-click'
             transform={`translate(${scale(event.startDate)}, ${y2 -
               eventHeight -
               EVENT_RADIUS * 3})`}
@@ -87,6 +91,7 @@ class EventItem extends PureComponent {
                 y={55 + eventHeight}
                 className="timeline-event-title"
                 text={event.data.title}
+                maxLine={2}
                 maxLen={25}
               />
               <text className="timeline-event-date">
@@ -101,6 +106,9 @@ class EventItem extends PureComponent {
               </text>
             </g>
             <image
+              className={classNames({
+                'd-none': hideImage,
+              })}
               xlinkHref={snapshot}
               x={1}
               y={EVENT_RADIUS}
@@ -120,6 +128,7 @@ class EventItem extends PureComponent {
               y={50}
               className="timeline-event-title"
               text={event.data.title}
+              maxLine={2}
               maxLen={25}
             />
             <text className="timeline-event-date">{event.data.start_date}</text>

@@ -8,7 +8,7 @@ import {
   getSelectedLang,
   getMakeLangUrl
 } from "../../state/selectors";
-import "./HomeMenu.css";
+import "./HomeMenu.scss";
 
 class HomeMenu extends PureComponent {
   changeLang = langParam => {

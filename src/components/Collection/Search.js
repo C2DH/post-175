@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
-import './Search.css'
+import './Search.scss'
 
 const getSuggestionValue = suggestion => suggestion
 
