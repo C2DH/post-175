@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { searchSuggestions, clearSuggestions } from "../../state/actions";
 import debounce from "lodash/debounce";
 import { localize } from "../../localize";
+import classNames from "classnames";
 import { COLLECTION_DATE_TYPES } from "../../consts";
 import Search from "./Search";
 import CollectionTimeBrush from "./CollectionTimeBrush";
@@ -112,32 +113,47 @@ class CollectionFilters extends PureComponent {
                   className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white"
                   onClick={this.toggleFiltersOpen}
                 >
-                  <i className="material-icons">filter_list</i>
+                  <i className="material-icons">
+                    {open ? "close" : "filter_list"}
+                  </i>
                 </button>
               </div>
             </div>
           </div>
         </div>
-        {open && (
-          <div className="collection-filters-open CollectionFilters">
-            <div className="row no-gutters">
-              <div className="col-md-5">
-                <h5 className="filter-sub-title">FILTER BY TYPE</h5>
-                <div className="categories-radios row no-gutters">
+        <div
+          className={classNames("collection-filters CollectionFilters", {
+            open: open
+          })}
+        >
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-4">
+                <h6 className="filter-sub-title mt-3">filter by type</h6>
+                <div className="categories-radios d-flex flex-wrap my-3">
                   {COLLECTION_DATE_TYPES.map(name => (
-                    <div className="category-radio col-md-6" key={name}>
+                    <div className="custom-control custom-checkbox" key={name}>
                       <input
-                        onChange={() => onToggleCategory(name)}
                         type="checkbox"
-                        checked={categories.indexOf(name) !== -1}
+                        className="custom-control-input"
+                        checked={
+                          categories.length
+                            ? categories.indexOf(name) !== -1
+                            : true
+                        }
+                        id={name}
+                        onChange={() => onToggleCategory(name)}
+                        name={name}
                       />
-                      <div className="radio-label">{t(name)}</div>
+                      <label className="custom-control-label" htmlFor={name}>
+                        {t(name)}
+                      </label>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="col-md-7 d-flex flex-column">
-                <h5 className="filter-sub-title">FILTER BY YEAR</h5>
+              <div className="col-8 d-flex flex-column">
+                <h6 className="filter-sub-title mt-3">filter by year</h6>
                 {allFacets && (
                   <CollectionTimeBrush
                     includeUncertain={includeUncertain}
@@ -153,7 +169,7 @@ class CollectionFilters extends PureComponent {
               </div>
             </div>
           </div>
-        )}
+        </div>
       </Fragment>
     );
   }
