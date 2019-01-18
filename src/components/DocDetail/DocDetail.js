@@ -1,67 +1,93 @@
-import React from 'react'
-import classNames from 'classnames'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import { getLangs, getSelectedLang, getMakeLangUrl } from '../../state/selectors'
-import DocMedia from './DocMedia'
-import './DocDetail.scss'
+import React from "react";
+import classNames from "classnames";
+import { connect } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
+import {
+  getLangs,
+  getSelectedLang,
+  getMakeLangUrl
+} from "../../state/selectors";
+import DocMedia from "./DocMedia";
+import HomeMenu from "../HomeMenu";
+import "./DocDetail.scss";
 
-const DocDetail = ({ doc, onClose, langs, selectedLang, url, location, history }) => (
-  <div className='doc-detail'>
-    <div className='doc-detail-bar'>
-      <div className='close-icon' onClick={onClose}>{'←'}</div>
-      <div className='w-100'>
-        <div className='pointer text-center' onClick={() => {
-          alert('Download')
-        }}>{'↓'}</div>
-        <div className='doc-detail-lang-switcher'>
-          {langs.map(lang => (
-            <div
-              onClick={() => {
-                const currentUrl = location.pathname + location.search
-                history.push(url(currentUrl, lang.param))
-              }}
-              key={lang.code}
-              className={classNames('doc-detail-lang', {
-                'doc-detail-current-lang': lang.code === selectedLang.code,
-              })}>
-              {lang.param}
-            </div>
-          ))}
-        </div>
+const DocDetail = ({
+  doc,
+  onClose,
+  langs,
+  selectedLang,
+  url,
+  location,
+  history
+}) => (
+  <div className="doc-detail d-flex w-100 h-100">
+    <div className="doc-detail-bar border-right">
+      <div
+        className="close-icon w-100 d-flex justify-content-center align-items-center"
+        onClick={onClose}
+      >
+        <i className="material-icons">subdirectory_arrow_right</i>
       </div>
+      <HomeMenu className="position-relative" />
     </div>
-    <div className='doc-detail-data'>
-      <div className='row w-100 m-0 h-100'>
-        <div className='col-md-4 doc-detail-info'>
-          <div className='doc-date'>{doc.data.start_date}</div>
-          <h3 className='doc-title'>{doc.data.title}</h3>
-          <div className='doc-description'>
-            <p>{doc.data.description}</p>
-          </div>
-          <div className='doc-related-docs-container'>
-            <div className='doc-related-docs-title'>Related documents</div>
-            <div className='doc-related-docs row p-0'>
-              {doc.documents.map(relatedDoc => (
-                <div className='col-md-4 p-0 doc-related-doc' key={relatedDoc.id}>
-                  <Link to={`/doc/${relatedDoc.id}`}>
-                    <img src={relatedDoc.snapshot} alt={relatedDoc.title} />
-                  </Link>
+    <div className="doc-detail-data">
+      <div className="container-fluid h-100 px-0">
+        <div className="row no-gutters h-100">
+          <div className="col-md-4 h-100 d-flex">
+            <div className="doc-detail-info w-100">
+              <div className="p-3 w-100 border-bottom">
+                <h6 className="detail-title">title</h6>
+                <h4 className="doc-title">{doc.data.title}</h4>
+              </div>
+              {doc.data.description && (
+                <div className="p-3 w-100 border-bottom">
+                  <h6 className="detail-title">description</h6>
+                  <p>{doc.data.description}</p>
                 </div>
-              ))}
+              )}
+              <div className="p-3 w-100 border-bottom">
+                <h6 className="detail-title">date</h6>
+                <p>{doc.data.start_date}</p>
+              </div>
+              {doc.documents.length > 0 && (
+                <div className="p-3 w-100">
+                  <h6 className="detail-title">Related documents</h6>
+                  <div className="d-flex flex-wrap w-100">
+                    {doc.documents &&
+                      doc.documents.map((relatedDoc, i) => (
+                        <div key={relatedDoc.id} className="square">
+                          <Link to={`/doc/${relatedDoc.id}`}>
+                            {relatedDoc.data.resolutions ? (
+                              <img
+                                src={relatedDoc.data.resolutions.low.url}
+                                className="square-content"
+                              />
+                            ) : (
+                              <p className="square-content border m-0">
+                                {relatedDoc.data.title}
+                              </p>
+                            )}
+                          </Link>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-        <div className='col-md-8'>
-          <DocMedia doc={doc} />
+          <div className="col-md-8">
+            <DocMedia doc={doc} />
+          </div>
         </div>
       </div>
     </div>
   </div>
-)
+);
 
-export default withRouter(connect(state => ({
-  url: getMakeLangUrl(state),
-  langs: getLangs(state),
-  selectedLang: getSelectedLang(state),
-}))(DocDetail))
+export default withRouter(
+  connect(state => ({
+    url: getMakeLangUrl(state),
+    langs: getLangs(state),
+    selectedLang: getSelectedLang(state)
+  }))(DocDetail)
+);
