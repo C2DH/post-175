@@ -10,13 +10,22 @@ function DocMedia({ doc, lang }) {
   if (doc.type === "video") {
     // Video
     let tracks = [];
-    if (doc.data.subtitles) {
-      tracks = map(doc.data.subtitles.vtt, sub => ({
-        kind: "subtitles",
-        src: sub,
-        srcLang: lang.param
-      }));
+    if (doc.data.subtitles && doc.data.subtitles.vtt) {
+      tracks = [
+        {
+          kind: "subtitles",
+          src:
+            process.env.NODE_ENV === "production"
+              ? doc.data.subtitles.vtt
+              : doc.data.subtitles.vtt.replace(
+                  /^(https:\/\/)(.*)\/media\/(.*)$/,
+                  "http://localhost:3000/media/$3"
+                ),
+          srcLang: lang.param
+        }
+      ];
     }
+
     return (
       <div className="doc-media-video">
         <ReactPlayer
