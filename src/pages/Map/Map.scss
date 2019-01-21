@@ -1,0 +1,27 @@
+.Map {
+  margin-left: 56px;
+  .title {
+    background-color: var(--dark-post);
+    border-color: #000 !important;
+  }
+  .top-bar {
+    height: 56px;
+  }
+  .filters-container,
+  .navigation-container {
+    background-color: var(--dark-post);
+  }
+
+  .map-filters {
+    font-family: "IBM Plex Sans", sans-serif;
+    cursor: pointer;
+  }
+
+  .map-opacity {
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+
+  .map-filters:not(.active) {
+    opacity: 0.3;
+  }
+}

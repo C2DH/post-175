@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { localize } from "../localize";
+import { localize } from "../../localize";
 import get from "lodash/get";
 import mapboxgl from "mapbox-gl";
 import Immutable from "immutable";
 import memoize from "memoize-one";
-import qs from 'query-string'
+import qs from "query-string";
 // import ReactMapGL, {
 //   NavigationControl,
 //   Marker,
@@ -21,8 +21,8 @@ import MapGL, {
   Source
 } from "@urbica/react-map-gl";
 
-import Legend from "../components/Legend";
-import TimeSeries from "../components/TimeSeries";
+import Legend from "../../components/Legend";
+import TimeSeries from "../../components/TimeSeries";
 import {
   loadPlaces,
   unloadPlaces,
@@ -38,7 +38,7 @@ import {
   unloadTimeSeries,
   loadRasterLayers,
   unloadRasterLayers
-} from "../state/actions";
+} from "../../state/actions";
 import {
   getPlacesInDate,
   getMapOverPlace,
@@ -50,15 +50,18 @@ import {
   getTimeSeriesByIndicator,
   getRasterLayers,
   getPlaceTypesCount
-} from "../state/selectors";
-import { getQsSafeYear, makeUrlWithYear } from "../utils";
-import TimelineNavigationMap from "../components/TimelineNavigationMap";
-import MobileAlert from "../components/MobileAlert";
-import MapTooltip from "../components/MapTooltip";
-import SideMenu from "../components/SideMenu";
+} from "../../state/selectors";
+import { getQsSafeYear, makeUrlWithYear } from "../../utils";
+import TimelineNavigationMap from "../../components/TimelineNavigationMap";
+import MobileAlert from "../../components/MobileAlert";
+import MapTooltip from "../../components/MapTooltip";
+import SideMenu from "../../components/SideMenu";
 import { scaleLinear } from "d3-scale";
 import { Motion, TransitionMotion, spring, presets } from "react-motion";
 import { Text } from "@vx/text";
+import classNames from "classnames";
+import { MAP_ICON } from "../../consts";
+import "./Map.scss";
 
 const circleScale = scaleLinear()
   .range([30, 100])
@@ -98,52 +101,54 @@ const MapHeader = ({
   onOpacityChange,
   showOpacity,
   selectedPlaceTypes,
-  toggleSelectedPlace,
+  toggleSelectedPlace
 }) => {
-  const counts = ["office", "central", "telegraph"]
-    .map(type => ({
-      label: type,
-      count: placeTypesCount[type] || 0,
-    }))
-    // .filter(({ count }) => count);
+  const counts = ["office", "central", "telegraph"].map(type => ({
+    label: type,
+    count: placeTypesCount[type] || 0
+  }));
+  // .filter(({ count }) => count);
   return (
-    <div>
-      <div className="bg-black" style={{ height: 50 }}>
-        <h1 className="text-white">{t("Carte")}</h1>
-      </div>
-      <div className="d-flex justify-content-between">
-        <div className="text-white d-flex" style={{ height: 50 }}>
-          {counts.map(({ label, count }) => (
-            <div key={label}>
-              <span>
-                <input
-                  type='checkbox'
-                  checked={selectedPlaceTypes.indexOf(label) !== -1}
-                  onChange={() => toggleSelectedPlace(label)}
-                />
-                {label} {`(${count})`}
-              </span>
-            </div>
-          ))}
-        </div>
-        {showOpacity && (
-          <div>
-            <input
-              onChange={onOpacityChange}
-              value={opacity}
-              type="range"
-              min={0}
-              max={1}
-              step={0.1}
-            />
+    <div className="top-bar d-flex justify-content-between">
+      <div className="text-white d-flex align-items-center">
+        {counts.map(({ label, count }) => (
+          <div
+            key={label}
+            onClick={() => toggleSelectedPlace(label)}
+            className={classNames(
+              "map-filters mr-4 d-flex align-items-center",
+              {
+                active:
+                  selectedPlaceTypes.indexOf(label) !== -1 ||
+                  !selectedPlaceTypes.length
+              }
+            )}
+          >
+            <i className="material-icons">{MAP_ICON[label]}</i>
+            <span className="ml-2">
+              {label} {`(${count})`}
+            </span>
           </div>
-        )}
+        ))}
       </div>
+      {showOpacity && (
+        <div className="map-opacity d-flex align-items-center text-white">
+          <span className="mr-3">Historical map opacity</span>
+          <input
+            onChange={onOpacityChange}
+            value={opacity}
+            type="range"
+            min={0}
+            max={1}
+            step={0.1}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
-class MapPage extends PureComponent {
+class Map extends PureComponent {
   state = {
     viewport: {
       longitude: 6.087,
@@ -299,38 +304,42 @@ class MapPage extends PureComponent {
   });
 
   getSelectedPlaces = () => {
-    return get(qs.parse(this.props.location.search), 'places', '')
-      .split(',').filter(Boolean)
-  }
+    return get(qs.parse(this.props.location.search), "places", "")
+      .split(",")
+      .filter(Boolean);
+  };
 
   toggleSelectedPlace = place => {
-    const { location } = this.props
-    const places = this.getSelectedPlaces()
-    let newPlaces
+    const { location } = this.props;
+    const places = this.getSelectedPlaces();
+    let newPlaces;
     if (places.indexOf(place) === -1) {
-      newPlaces = places.concat(place)
+      newPlaces = places.concat(place);
     } else {
-      newPlaces = places.filter(p => p !== place)
+      newPlaces = places.filter(p => p !== place);
     }
 
-    const qsAsObject = qs.parse(location.search)
-    const newQs = qs.stringify({
-      ...qsAsObject,
-      places: newPlaces.join(','),
-    }, {
-      encode: false,
-    })
-    this.props.history.replace(`${location.pathname}?${newQs}`)
-  }
+    const qsAsObject = qs.parse(location.search);
+    const newQs = qs.stringify(
+      {
+        ...qsAsObject,
+        places: newPlaces.join(",")
+      },
+      {
+        encode: false
+      }
+    );
+    this.props.history.replace(`${location.pathname}?${newQs}`);
+  };
 
   getFilteredPlaces = memoize((places, placeTypes) => {
     if (placeTypes.length === 0) {
-      return places
+      return places;
     }
     return places.filter(place => {
-      return placeTypes.indexOf(place.data.place_type) !== -1
-    })
-  })
+      return placeTypes.indexOf(place.data.place_type) !== -1;
+    });
+  });
 
   render() {
     const { width, height, viewport } = this.state;
@@ -358,22 +367,54 @@ class MapPage extends PureComponent {
       currentDate ? currentDate.getFullYear() : null,
       this.state.opacity
     );
-    const selectedPlaceTypes = this.getSelectedPlaces()
-    const places = this.getFilteredPlaces(placesInTime, selectedPlaceTypes)
+    const selectedPlaceTypes = this.getSelectedPlaces();
+    const places = this.getFilteredPlaces(placesInTime, selectedPlaceTypes);
 
     return (
-      <div className="h-100">
+      <div className="h-100 d-flex flex-column Map position-relative">
+        <MobileAlert />
         <SideMenu />
-        <div className="h-100 with-sidemenu d-flex flex-column">
-          <MapHeader
-            t={t}
-            showOpacity={mapboxRasters.length > 0}
-            placeTypesCount={placeTypesCount}
-            opacity={this.state.opacity}
-            onOpacityChange={this.handleOnOpacityChange}
-            selectedPlaceTypes={selectedPlaceTypes}
-            toggleSelectedPlace={this.toggleSelectedPlace}
-          />
+        <div className="flex-grow-0 flex-shrink-0 border-bottom title">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="top-bar d-flex align-items-center">
+                  <h2 className="text-white m-0">
+                    {story ? story.data.title : ""}
+                  </h2>
+                </div>
+              </div>
+            </div>
+            {/*          <MapHeader
+                        t={t}
+                        showOpacity={mapboxRasters.length > 0}
+                        placeTypesCount={placeTypesCount}
+                        opacity={this.state.opacity}
+                        onOpacityChange={this.handleOnOpacityChange}
+                        selectedPlaceTypes={selectedPlaceTypes}
+                        toggleSelectedPlace={this.toggleSelectedPlace}
+                      />
+                      */}
+          </div>
+        </div>
+        <div className="flex-grow-0 flex-shrink-0 border-bottom title">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <MapHeader
+                  t={t}
+                  showOpacity={mapboxRasters.length > 0}
+                  placeTypesCount={placeTypesCount}
+                  opacity={this.state.opacity}
+                  onOpacityChange={this.handleOnOpacityChange}
+                  selectedPlaceTypes={selectedPlaceTypes}
+                  toggleSelectedPlace={this.toggleSelectedPlace}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex-shrink-1 flex-grow-1 d-flex">
           <div
             className="row no-gutters flex-1"
             style={{ position: "relative" }}
@@ -528,7 +569,17 @@ class MapPage extends PureComponent {
               )}
             </div>
           </div>
-          {places && <TimelineNavigationMap rasterLayers={rasterLayers} />}
+        </div>
+        <div className="flex-grow-0 flex-shrink-0 border-bottom title">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                {places && (
+                  <TimelineNavigationMap rasterLayers={rasterLayers} />
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -566,4 +617,4 @@ export default connect(
     loadRasterLayers,
     unloadRasterLayers
   }
-)(localize()(MapPage));
+)(localize()(Map));

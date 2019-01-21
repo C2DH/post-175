@@ -35,3 +35,9 @@ export const TYPE_ICON = {
   video: "play_circle_filled",
   audio: "audiotrack"
 };
+
+export const MAP_ICON = {
+  office: "local_post_office",
+  central: "settings_input_antenna",
+  telegraph: "settings_ethernet"
+};

@@ -6,7 +6,7 @@ import { find, get } from "lodash";
 import { getLangs } from "../../state/selectors";
 import { setLang } from "../../state/actions";
 import Home from "../../pages/Home";
-import MapPage from "../../pages/MapPage";
+import Map from "../../pages/Map";
 import TimelinePage from "../../pages/Timeline";
 import About from "../../pages/About";
 import Collection from "../../pages/Collection";
@@ -67,7 +67,7 @@ class LangRoot extends PureComponent {
       <Fragment>
         <Switch location={isModal ? this.previousLocation : location}>
           <Route path="/" exact component={Home} />
-          <Route path="/map" exact component={MapPage} />
+          <Route path="/map" exact component={Map} />
           <Route path="/timeline" exact component={TimelinePage} />
           <Route path="/about" exact component={About} />
           <Route path="/collection" exact component={Collection} />
