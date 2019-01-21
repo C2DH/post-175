@@ -1,0 +1,17 @@
+.LegendDetail {
+  .legend-detail-image {
+    position: relative;
+    width: 100%;
+    background-position: center center;
+  }
+
+  .legend-detail-image:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+
+  .place-type {
+    font-size: 0.875rem;
+  }
+}

@@ -70,8 +70,8 @@ const circleScale = scaleLinear()
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
 
-const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => {
-  const r = circleScale(point_count_abbreviated);
+const ClusterElement = cluster => {
+  const r = circleScale(cluster.properties.point_count_abbreviated);
   return (
     <svg width={r + 2} height={r + 2}>
       <circle
@@ -88,7 +88,7 @@ const ClusterElement = ({ properties: { point_count_abbreviated }, style }) => {
         textAnchor="middle"
         verticalAnchor="middle"
       >
-        {point_count_abbreviated}
+        {cluster.properties.point_count_abbreviated}
       </Text>
     </svg>
   );
@@ -155,6 +155,7 @@ class Map extends PureComponent {
       latitude: 49.667,
       zoom: 8
     },
+    supercluster: null,
     width: 0,
     height: 0,
     opacity: 0.5
@@ -245,7 +246,7 @@ class Map extends PureComponent {
       this.updateViewport({
         latitude: place.coordinates[1],
         longitude: place.coordinates[0],
-        zoom: 13,
+        zoom: 14,
         // transitionInterpolator: new FlyToInterpolator(),
         transitionDuration: 1000
       });
@@ -441,7 +442,7 @@ class Map extends PureComponent {
                 <MapGL
                   {...viewport}
                   style={{ width: "100%", height: "100%" }}
-                  maxZoom={12}
+                  maxZoom={16}
                   minZoom={7.5}
                   accessToken="pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg"
                   mapStyle="mapbox://styles/giorgiouboldi/cjalcurkr00os2soczuclhjxl"
@@ -464,58 +465,43 @@ class Map extends PureComponent {
                       radius={40}
                       extent={512}
                       nodeSize={64}
+                      innerRef={ref => this.setState({ supercluster: ref })}
                       element={ClusterElement}
                     >
                       {places.map(place => {
-                        const isSelected = selectedPlace
-                          ? place.id === selectedPlace.id
-                          : false;
                         let fill = "white";
                         if (place.data.place_type === "office") {
-                          fill = place.open ? "#13d436" : "#fdd00c";
+                          fill = place.open ? "#13d436" : "#ED6347";
                         }
                         return (
                           <Marker
                             key={
-                              selectedPlace ? `selected-${place.id}` : place.id
+                              /*selectedPlace ? `selected-${place.id}` : place.id*/
+                              `place-${place.id}`
                             }
                             longitude={place.coordinates[0]}
                             latitude={place.coordinates[1]}
                             element={
                               <div onClick={() => this.selectPlace(place)}>
-                                {!isSelected && (
-                                  <svg width={12} height={12}>
-                                    <circle
-                                      onMouseEnter={() => setOverPlace(place)}
-                                      onMouseLeave={() => clearOverPlace()}
-                                      stroke="black"
-                                      cx={6}
-                                      cy={6}
-                                      r={5}
-                                      fill={fill}
-                                    />
-                                  </svg>
-                                )}
-                                {isSelected && (
-                                  <svg width={40} height={40}>
-                                    <circle
-                                      stroke="black"
-                                      cx={20}
-                                      cy={20}
-                                      r={10}
-                                      fill={place.open ? "#13d436" : "#fdd00c"}
-                                    />
-                                    <circle
-                                      cx={20}
-                                      cy={20}
-                                      r={20}
-                                      fill="transparent"
-                                      stroke={
-                                        place.open ? "#13d436" : "#fdd00c"
-                                      }
-                                    />
-                                  </svg>
-                                )}
+                                <div
+                                  onMouseEnter={() => setOverPlace(place)}
+                                  onMouseLeave={() => clearOverPlace()}
+                                  className={classNames(
+                                    "place-marker d-flex align-items-center justify-content-center",
+                                    {
+                                      "place-selected": selectedPlace
+                                        ? selectedPlace.id == place.id
+                                        : false,
+                                      "place-clickable":
+                                        place.data.place_type === "office"
+                                    }
+                                  )}
+                                  style={{ backgroundColor: fill }}
+                                >
+                                  <i className="material-icons">
+                                    {MAP_ICON[place.data.place_type]}
+                                  </i>
+                                </div>
                               </div>
                             }
                           />
@@ -530,16 +516,11 @@ class Map extends PureComponent {
                       longitude={overPlace.coordinates[0]}
                       tipSize={0}
                       closeOnClick={false}
-                      anchor="bottom"
                       closeButton={false}
-                      offsetBottom={15}
+                      offset={[0, -10]}
+                      anchor="bottom"
                       element={
-                        <MapTooltip
-                          t={this.props.t}
-                          // style={{ opacity: config.style.o }}
-                          style={{ opacity: 1 }}
-                          place={overPlace}
-                        />
+                        <MapTooltip t={this.props.t} place={overPlace} />
                       }
                     />
                   )}
@@ -561,7 +542,7 @@ class Map extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="flex-grow-0 flex-shrink-0 border-bottom title">
+        <div className="flex-grow-0 flex-shrink-0 border-top timeline-container">
           <div className="container-fluid">
             <div className="row">
               <div className="col">

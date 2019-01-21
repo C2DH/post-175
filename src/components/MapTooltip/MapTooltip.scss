@@ -1,0 +1,15 @@
+.MapTooltip {
+  max-width: 400px;
+  background-color: var(--dark-post);
+  font-family: "IBM Plex Mono", monospace;
+
+  .place-img {
+    flex: 0 1 33%;
+  }
+
+  .place-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

@@ -196,18 +196,18 @@ h6 {
   fill: #fff;
 }
 
-.legend-detail-image {
-  min-height: 350px;
-}
-
-.legend-close-btn {
-  right: -30px;
-}
-
-.legend-close {
-  width: 53px;
-  height: 53px;
-}
+// .legend-detail-image {
+//   min-height: 350px;
+// }
+//
+// .legend-close-btn {
+//   right: -30px;
+// }
+//
+// .legend-close {
+//   width: 53px;
+//   height: 53px;
+// }
 
 .map-with-over-place {
   opacity: 0.2;
@@ -237,9 +237,8 @@ h6 {
 
 .map-year {
   position: absolute;
-  top: 0px;
+  top: 18px;
   left: 18px;
-  font-weight: 300;
   color: white;
   font-size: 3rem;
 }
@@ -262,8 +261,8 @@ h6 {
   stroke-width: 2;
 }
 .opening-timeline-closed {
-  fill: #fdd00c;
-  stroke: #fdd00c;
+  fill: #ed6347;
+  stroke: #ed6347;
   stroke-width: 2;
 }
 .opening-timeline-text {

@@ -8,7 +8,8 @@
     height: 56px;
   }
   .filters-container,
-  .navigation-container {
+  .navigation-container,
+  .timeline-container {
     background-color: var(--dark-post);
   }
 
@@ -23,5 +24,23 @@
 
   .map-filters:not(.active) {
     opacity: 0.3;
+  }
+
+  .timeline-container {
+    border-color: black !important;
+  }
+
+  .place-marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+  }
+
+  .place-selected {
+    border: 2px solid var(--yellow-post);
+  }
+
+  .place-clickable {
+    cursor: pointer;
   }
 }
