@@ -385,16 +385,6 @@ class Map extends PureComponent {
                 </div>
               </div>
             </div>
-            {/*          <MapHeader
-                        t={t}
-                        showOpacity={mapboxRasters.length > 0}
-                        placeTypesCount={placeTypesCount}
-                        opacity={this.state.opacity}
-                        onOpacityChange={this.handleOnOpacityChange}
-                        selectedPlaceTypes={selectedPlaceTypes}
-                        toggleSelectedPlace={this.toggleSelectedPlace}
-                      />
-                      */}
           </div>
         </div>
         <div className="flex-grow-0 flex-shrink-0 border-bottom title">
@@ -420,6 +410,7 @@ class Map extends PureComponent {
             style={{ position: "relative" }}
           >
             <TimeSeries
+              t={t}
               extent={extent}
               year={currentDate ? currentDate.getFullYear() : null}
               columns={get(timeSeries, "columns", []).slice(1)}

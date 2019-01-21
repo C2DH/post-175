@@ -1,20 +1,26 @@
 import React, { PureComponent } from "react";
 import TimeSerieChart from "./TimeSerieChart";
 import "./TimeSeries.scss";
+import classNames from "classnames";
 
 class TimeSerie extends PureComponent {
   render() {
-    const { column, serie, year, extent } = this.props;
+    const { column, serie, year, extent, t } = this.props;
     return (
-      <div className="px-3 py-1 d-flex flex-column text-white border-bottom time-serie">
-        <div>{column}</div>
-        <div className="d-flex time-serie-chart-container">
-          <h4>{serie[year] || "-"}</h4>
-          <div className="flex-1">
-            {extent && (
-              <TimeSerieChart year={year} yearExtent={extent} serie={serie} />
-            )}
-          </div>
+      <div className="p-3 text-white border-bottom border-light time-serie">
+        <h6 className="text-white-50 mb-1">{t(`${column}-title`)}</h6>
+        <p>{t(`${column}-desc`)}</p>
+        <h4
+          className={classNames("", {
+            "text-white-50": !serie[year]
+          })}
+        >
+          {serie[year] >= 0 ? serie[year] : "n/a"}
+        </h4>
+        <div className="time-serie-chart-container">
+          {extent && (
+            <TimeSerieChart year={year} yearExtent={extent} serie={serie} />
+          )}
         </div>
       </div>
     );
@@ -23,11 +29,12 @@ class TimeSerie extends PureComponent {
 
 export default class TimeSeries extends PureComponent {
   render() {
-    const { columns, series, year, extent } = this.props;
+    const { columns, series, year, extent, t } = this.props;
     return (
-      <div className="col-md-3 bg-darkgrey time-series">
+      <div className="col-md-3 time-series">
         {columns.map(col => (
           <TimeSerie
+            t={t}
             key={col}
             year={year}
             column={col}

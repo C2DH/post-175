@@ -1,11 +1,24 @@
 .time-series {
   overflow-y: auto;
-}
-.time-serie .time-serie-chart-container {
-  height: 50px;
-}
-.time-serie .time-serie-chart-container h4 {
-  font-weight: normal;
-  font-size: 36px;
-  flex: 0.33;
+  background-color: var(--dark-post);
+
+  .time-serie h6 {
+    text-transform: uppercase;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    font-size: 0.75rem;
+  }
+
+  .time-serie p {
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+  }
+
+  .time-serie .time-serie-chart-container {
+    height: 50px;
+  }
+  .time-serie .time-serie-chart-container h4 {
+    font-weight: normal;
+    font-size: 36px;
+    flex: 0.33;
+  }
 }
