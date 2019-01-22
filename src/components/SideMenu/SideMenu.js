@@ -10,10 +10,7 @@ import {
   getMakeLangUrl
 } from "../../state/selectors";
 import "./SideMenu.scss";
-import clockIcon from "./clock.svg";
 import mapIcon from "./map.svg";
-import archiveIcon from "./archive.svg";
-import listRichIcon from "./list-rich.svg";
 
 class SideMenu extends PureComponent {
   state = {
@@ -105,15 +102,31 @@ class SideMenu extends PureComponent {
             >
               <div className="link-label"> {t("menu_about")}</div>
             </NavLink>
-            <div className="side-menu-logo" />
+            <div className="side-menu-logo d-flex flex-wrap align-items-center">
+              <div className="col-4">
+                <a href="https://uni.lu" target="_blank">
+                  <img className="img-fluid" src="/img/unilu.jpg" />
+                </a>
+              </div>
+              <div className="col-4">
+                <a href="https://www.c2dh.uni.lu/" target="_blank">
+                  <img className="img-fluid" src="/img/c2dh.jpg" />
+                </a>
+              </div>
+              <div className="col-4">
+                <a href="https://www.post.lu/" target="_blank">
+                  <img className="img-fluid" src="/img/post.png" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-        <div
-          className="side-menu"
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-        >
-          <div className="side-menu-top">
+        <div className="side-menu">
+          <div
+            className="side-menu-top"
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
+          >
             <NavLink
               to={{
                 pathname: "/timeline",
@@ -156,7 +169,11 @@ class SideMenu extends PureComponent {
               </div>
             </NavLink>
           </div>
-          <div className="side-menu-vertical-label-container">
+          <div
+            className="side-menu-vertical-label-container"
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
+          >
             <div className="side-menu-vertical-label">
               <NavLink
                 to={{ pathname: "/", search: `?lang=${selectedLang.param}` }}
@@ -167,7 +184,11 @@ class SideMenu extends PureComponent {
             </div>
           </div>
           <div className="side-menu-bottom d-flex flex-column">
-            <div className="lang info">
+            <div
+              className="lang info"
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            >
               <NavLink
                 to={{
                   pathname: "/about",

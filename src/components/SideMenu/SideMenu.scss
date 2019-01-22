@@ -122,6 +122,7 @@
 .side-menu-expanded {
   z-index: 999;
   width: auto;
+  max-width: 300px;
   background-color: white;
   transform: translateX(-100%);
   transition: transform 0.3s linear;
@@ -141,6 +142,14 @@
 
   .side-menu-link.active:hover {
     background-color: #f4ae0c;
+  }
+
+  .side-menu-logo img {
+    filter: grayscale(1);
+  }
+
+  .side-menu-logo img:hover {
+    filter: grayscale(0);
   }
 }
 
