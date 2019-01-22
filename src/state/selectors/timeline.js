@@ -237,7 +237,7 @@ export const getTimelinePrevEvent = createSelector(
   getSelectedEvent,
   getAnnotatedEvents,
   (event, events) => {
-    if (event === null) {
+    if (event === null || events === null) {
       return null
     }
     const index = events.indexOf(event)
@@ -252,7 +252,7 @@ export const getTimelineNextEvent = createSelector(
   getSelectedEvent,
   getAnnotatedEvents,
   (event, events) => {
-    if (event === null) {
+    if (event === null || events === null) {
       return null
     }
     const index = events.indexOf(event)

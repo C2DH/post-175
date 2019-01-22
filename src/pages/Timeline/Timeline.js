@@ -110,6 +110,8 @@ class Timeline extends PureComponent {
     this.props.unloadPeriods();
     this.props.unloadTimeline();
     this.props.unloadStory();
+    // Clear the event open as modal...
+    this.props.selectEvent(null)
   }
 
   goNext = () => {
