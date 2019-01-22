@@ -74,10 +74,6 @@ export const getChapters = () =>
         })
     })
 
-// HACK remove only for testing purpose
-export const getFakeStory = idOrSlug =>
-  request.get(`/fakeStory.json`).then(extractBody);
-
 export const getDocuments = (params = {}) =>
   request
     .get(`${API_URL}/document/`)
