@@ -73,7 +73,7 @@ function DocMedia({ doc, lang }) {
     );
   } else if (doc.type === "360viewer") {
     return (
-      <div className="p-3 h-100 w-100">
+      <div className="h-100 w-100">
         <iframe
           className="h-100 w-100 border-0 360viewer-iframe"
           src={doc.url}
