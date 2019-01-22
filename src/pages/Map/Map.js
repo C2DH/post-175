@@ -405,140 +405,147 @@ class Map extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="flex-shrink-1 flex-grow-1 d-flex">
-          <div
-            className="row no-gutters flex-1"
-            style={{ position: "relative" }}
-          >
-            <TimeSeries
-              t={t}
-              extent={extent}
-              year={currentDate ? currentDate.getFullYear() : null}
-              columns={get(timeSeries, "columns", []).slice(1)}
-              series={timeSeriesByIndicator}
-            />
-            <div
-              className="col-md-3"
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                bottom: 0,
-                pointerEvents: selectedPlace ? undefined : "none"
-              }}
-            >
-              <Legend
-                story={story}
-                selectedPlace={selectedPlace}
-                onClose={this.closePlaceDetail}
+        <div
+          className="flex-shrink-1 flex-grow-1 d-flex"
+          style={{ overflow: "auto" }}
+        >
+          <div className="container-fluid px-0">
+            <div className="row no-gutters h-100 position-relative">
+              <TimeSeries
+                t={t}
+                extent={extent}
+                year={currentDate ? currentDate.getFullYear() : null}
+                columns={get(timeSeries, "columns", []).slice(1)}
+                series={timeSeriesByIndicator}
               />
-            </div>
-            <div
-              className="d-flex flex-1 w-100 flex-column bg-darkgrey"
-              style={{ overflow: "hidden" }}
-              ref={node => (this.mapContainer = node)}
-            >
-              {width > 0 && (
-                <MapGL
-                  {...viewport}
-                  style={{ width: "100%", height: "100%" }}
-                  maxZoom={16}
-                  minZoom={7.5}
-                  accessToken="pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg"
-                  mapStyle="mapbox://styles/giorgiouboldi/cjalcurkr00os2soczuclhjxl"
-                  height={height}
-                  width={width}
-                  onViewportChange={this.updateViewport}
-                  ref={r => {
-                    this.mapRef = r;
-                  }}
+              <div
+                className="col-md-3"
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  pointerEvents: selectedPlace ? undefined : "none"
+                }}
+              >
+                <Legend
+                  story={story}
+                  selectedPlace={selectedPlace}
+                  onClose={this.closePlaceDetail}
+                />
+              </div>
+              <div className="col-9">
+                <div
+                  className="h-100 w-100"
+                  style={{ overflow: "hidden" }}
+                  ref={node => (this.mapContainer = node)}
                 >
-                  {/* <div style={{ position: "absolute", right: 5, top: 5 }}>
-                    <NavigationControl onViewportChange={this.updateViewport} />
-                  </div> */}
-                  {currentDate && (
-                    <CurrentYear year={currentDate.getFullYear()} />
-                  )}
-                  {places && (
-                    <Cluster
-                      maxZoom={11}
-                      radius={40}
-                      extent={512}
-                      nodeSize={64}
-                      innerRef={ref => this.setState({ supercluster: ref })}
-                      element={ClusterElement}
+                  {width > 0 && (
+                    <MapGL
+                      {...viewport}
+                      style={{ width: "100%", height: "100%" }}
+                      maxZoom={16}
+                      minZoom={7.5}
+                      accessToken="pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg"
+                      mapStyle="mapbox://styles/giorgiouboldi/cjalcurkr00os2soczuclhjxl"
+                      height={height}
+                      width={width}
+                      onViewportChange={this.updateViewport}
+                      ref={r => {
+                        this.mapRef = r;
+                      }}
                     >
-                      {places.map(place => {
-                        let fill = "white";
-                        if (place.data.place_type === "office") {
-                          fill = place.open ? "#13d436" : "#ED6347";
-                        }
-                        return (
-                          <Marker
-                            key={
-                              /*selectedPlace ? `selected-${place.id}` : place.id*/
-                              `place-${place.id}`
+                      {/* <div style={{ position: "absolute", right: 5, top: 5 }}>
+                      <NavigationControl onViewportChange={this.updateViewport} />
+                      </div> */}
+                      {currentDate && (
+                        <CurrentYear year={currentDate.getFullYear()} />
+                      )}
+                      {places && (
+                        <Cluster
+                          maxZoom={11}
+                          radius={40}
+                          extent={512}
+                          nodeSize={64}
+                          innerRef={ref => this.setState({ supercluster: ref })}
+                          element={ClusterElement}
+                        >
+                          {places.map(place => {
+                            let fill = "white";
+                            if (place.data.place_type === "office") {
+                              fill = place.open ? "#13d436" : "#ED6347";
                             }
-                            longitude={place.coordinates[0]}
-                            latitude={place.coordinates[1]}
-                            element={
-                              <div onClick={() => this.selectPlace(place)}>
-                                <div
-                                  onMouseEnter={() => setOverPlace(place)}
-                                  onMouseLeave={() => clearOverPlace()}
-                                  className={classNames(
-                                    "place-marker d-flex align-items-center justify-content-center",
-                                    {
-                                      "place-selected": selectedPlace
-                                        ? selectedPlace.id == place.id
-                                        : false,
-                                      "place-clickable":
-                                        place.data.place_type === "office"
-                                    }
-                                  )}
-                                  style={{ backgroundColor: fill }}
-                                >
-                                  <i className="material-icons">
-                                    {MAP_ICON[place.data.place_type]}
-                                  </i>
-                                </div>
-                              </div>
-                            }
+                            return (
+                              <Marker
+                                key={
+                                  /*selectedPlace ? `selected-${place.id}` : place.id*/
+                                  `place-${place.id}`
+                                }
+                                longitude={place.coordinates[0]}
+                                latitude={place.coordinates[1]}
+                                element={
+                                  <div onClick={() => this.selectPlace(place)}>
+                                    <div
+                                      onMouseEnter={() => setOverPlace(place)}
+                                      onMouseLeave={() => clearOverPlace()}
+                                      className={classNames(
+                                        "place-marker d-flex align-items-center justify-content-center",
+                                        {
+                                          "place-selected": selectedPlace
+                                            ? selectedPlace.id == place.id
+                                            : false,
+                                          "place-clickable":
+                                            place.data.place_type === "office"
+                                        }
+                                      )}
+                                      style={{ backgroundColor: fill }}
+                                    >
+                                      <i className="material-icons">
+                                        {MAP_ICON[place.data.place_type]}
+                                      </i>
+                                    </div>
+                                  </div>
+                                }
+                              />
+                            );
+                          })}
+                        </Cluster>
+                      )}
+
+                      {overPlace && (
+                        <Popup
+                          latitude={overPlace.coordinates[1]}
+                          longitude={overPlace.coordinates[0]}
+                          tipSize={0}
+                          closeOnClick={false}
+                          closeButton={false}
+                          offset={[0, -10]}
+                          anchor="bottom"
+                          element={
+                            <MapTooltip t={this.props.t} place={overPlace} />
+                          }
+                        />
+                      )}
+
+                      {mapboxSources.map(source => (
+                        <Source
+                          key={source.get("id")}
+                          id={source.get("id")}
+                          source={source}
+                        />
+                      ))}
+                      {mapboxRasters &&
+                        mapboxRasters.length > 0 &&
+                        mapboxRasters.map((rasterLayer, i) => (
+                          <Layer
+                            key={rasterLayer.get("id")}
+                            layer={rasterLayer}
                           />
-                        );
-                      })}
-                    </Cluster>
+                        ))}
+                    </MapGL>
                   )}
-
-                  {overPlace && (
-                    <Popup
-                      latitude={overPlace.coordinates[1]}
-                      longitude={overPlace.coordinates[0]}
-                      tipSize={0}
-                      closeOnClick={false}
-                      closeButton={false}
-                      offset={[0, -10]}
-                      anchor="bottom"
-                      element={
-                        <MapTooltip t={this.props.t} place={overPlace} />
-                      }
-                    />
-                  )}
-
-                  {mapboxSources.map(source => (
-                    <Source
-                      key={source.get("id")}
-                      id={source.get("id")}
-                      source={source}
-                    />
-                  ))}
-                  {mapboxRasters &&
-                    mapboxRasters.length > 0 &&
-                    mapboxRasters.map((rasterLayer, i) => (
-                      <Layer key={rasterLayer.get("id")} layer={rasterLayer} />
-                    ))}
-                </MapGL>
-              )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

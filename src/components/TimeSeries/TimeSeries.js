@@ -31,17 +31,19 @@ export default class TimeSeries extends PureComponent {
   render() {
     const { columns, series, year, extent, t } = this.props;
     return (
-      <div className="col-md-3 time-series">
-        {columns.map(col => (
-          <TimeSerie
-            t={t}
-            key={col}
-            year={year}
-            column={col}
-            serie={series[col]}
-            extent={extent}
-          />
-        ))}
+      <div className="col-3 d-flex h-100">
+        <div className="time-series w-100">
+          {columns.map(col => (
+            <TimeSerie
+              t={t}
+              key={col}
+              year={year}
+              column={col}
+              serie={series[col]}
+              extent={extent}
+            />
+          ))}
+        </div>
       </div>
     );
   }
