@@ -10,7 +10,7 @@ function DocMedia({ doc, lang }) {
   if (doc.type === "video") {
     // Video
     let tracks = [];
-    if (doc.data.subtitles && doc.data.subtitles.vtt) {
+    if (doc.data.subtitles && typeof doc.data.subtitles.vtt === "string") {
       tracks = [
         {
           kind: "subtitles",
