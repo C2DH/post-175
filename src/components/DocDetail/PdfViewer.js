@@ -54,39 +54,39 @@ export default class PdfViewer extends Component {
             </Document>
           )}
         </div>
-        <div className="pdf-controls">
-          <div>
-            <button
-              onClick={() =>
-                this.setState({
-                  pageNumber: pageNumber - 1
-                })
-              }
-              disabled={pageNumber <= 1}
-              className="page-arrow arrow-back"
-            >
-              {"←"}
-            </button>
-            <input
-              className="page-input"
-              type="number"
-              onChange={this.handlePageChange}
-              value={pageNumber}
-            />
-            {" of "}
-            {numPages}
-            <button
-              onClick={() =>
-                this.setState({
-                  pageNumber: pageNumber + 1
-                })
-              }
-              disabled={pageNumber >= numPages}
-              className="page-arrow arrow-next"
-            >
-              {"→"}
-            </button>
-          </div>
+        <div className="pdf-controls p-3">
+          <button
+            onClick={() =>
+              this.setState({
+                pageNumber: pageNumber - 1
+              })
+            }
+            disabled={pageNumber <= 1}
+            className="btn btn-dark bg-transparent mr-2"
+          >
+            {"←"}
+          </button>
+          <input
+            className="page-input mr-2"
+            type="number"
+            onChange={this.handlePageChange}
+            value={pageNumber}
+            min="1"
+            max="numPages"
+          />
+          {" of "}
+          {numPages}
+          <button
+            onClick={() =>
+              this.setState({
+                pageNumber: pageNumber + 1
+              })
+            }
+            disabled={pageNumber >= numPages}
+            className="btn btn-dark bg-transparent ml-2"
+          >
+            {"→"}
+          </button>
         </div>
       </div>
     );
