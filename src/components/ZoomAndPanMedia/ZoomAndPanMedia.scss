@@ -5,7 +5,6 @@
   flex-direction: column;
   .zoom-and-pan-media-container {
     flex: 1 1 0;
-    /* border: 1px solid green; */
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -14,6 +13,7 @@
     height: 100%;
     margin: 1rem;
     cursor: grab;
+    flex-basis: 0;
   }
 
   .zoom-and-pan-media-container:active {
