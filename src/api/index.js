@@ -1,5 +1,6 @@
 // API CALLS
 import request from "superagent";
+import keyBy from 'lodash/keyBy'
 import { csvParse } from "d3-dsv";
 const API_URL = "/api";
 
@@ -48,6 +49,26 @@ export const getTimeSeries = () =>
 
 export const getStory = idOrSlug =>
   request.get(`${API_URL}/story/${idOrSlug}/`).then(extractBody);
+
+export const getChapters = () =>
+  request.get(`${API_URL}/story/`)
+    .query({
+      limit: 1,
+      filters: JSON.stringify({
+        'tags__slug': 'theme',
+      })
+    })
+    .then(({ body }) => {
+      if (body.results.length === 0) {
+        return []
+      }
+      const id = body.results[0].id
+      return request.get(`${API_URL}/story/${id}`)
+        .then(({ body }) => {
+          const chaptersById = keyBy(body.stories, 'id')
+          return body.data.chapters.map(id => chaptersById[id]).filter(Boolean)
+        })
+    })
 
 // HACK remove only for testing purpose
 export const getFakeStory = idOrSlug =>

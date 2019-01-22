@@ -1,44 +1,23 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import padStart from 'lodash/padStart'
+import get from 'lodash/get'
+import { loadChapters, unloadChapters } from '../state/actions'
+import { getChapters } from '../state/selectors'
 import StoryCard from '../components/StoryCard'
 import SideMenu from '../components/SideMenu'
 
-const FAKE_STORIES = [
-  {
-    id: 1,
-    slug: 'video_fake_story',
-    count: '01',
-    title: 'A cool story',
-    image: 'https://luxptt.dhlab.lu/media/home-luxembourgmonnet1980001.jpg',
-    description: 'Mellon Collie and the Infinite Sadness'
-  },
-  {
-    id: 2,
-    slug: 'video_fake_story',
-    count: '01',
-    image: 'https://luxptt.dhlab.lu/media/home-eschsuralzette15juin1995001.jpg',
-    title: 'A cool story',
-    description: 'Mellon Collie and the Infinite Sadness'
-  },
-  {
-    id: 3,
-    slug: 'video_fake_story',
-    count: '01',
-    title: 'A cool story',
-    image: 'https://luxptt.dhlab.lu/media/home-brochuretlphonesansdateintrieur.jpg',
-    description: 'Mellon Collie and the Infinite Sadness'
-  },
-  {
-    id: 4,
-    slug: 'video_fake_story',
-    count: '01',
-    title: 'A cool story',
-    image: 'https://luxptt.dhlab.lu/media/home-brochuretlphonesansdateintrieur.jpg',
-    description: 'Mellon Collie and the Infinite Sadness'
+class Stories extends Component {
+  componentDidMount() {
+    this.props.loadChapters()
   }
-]
 
-export default class Stories extends Component {
+  componentWillUnmount() {
+    this.props.unloadChapters()
+  }
+
   render() {
+    const { chapters } = this.props
     return (
       <div className='h-100'>
         <SideMenu />
@@ -47,10 +26,14 @@ export default class Stories extends Component {
             <h1>Dossiers thématique</h1>
           </div>
           <div className='d-flex h-100' style={{ overflowY: 'auto' }}>
-            {FAKE_STORIES.map(story => (
+            {chapters && chapters.map((chapter, i) => (
               <StoryCard
-                key={story.id}
-                {...story}
+                count={padStart(i + 1, 2, 0)}
+                image={get(chapter, 'covers[0].data.resolutions.medium.url')}
+                key={chapter.id}
+                slug={chapter.slug}
+                title={chapter.data.title}
+                description={chapter.data.abstract}
               />
             ))}
           </div>
@@ -59,3 +42,10 @@ export default class Stories extends Component {
     )
   }
 }
+
+export default connect(state => ({
+  chapters: getChapters(state),
+}), {
+  loadChapters,
+  unloadChapters,
+})(Stories)

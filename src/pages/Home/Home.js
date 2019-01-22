@@ -140,7 +140,7 @@ class Home extends PureComponent {
               </div>
               <div className="col-3 border-right p-0">
                 <div className="section-container">
-                  <Link to={url("/themes")}>
+                  <Link to={url("/stories")}>
                     <span className="moving-container d-flex d-inline-flex justify-content-between align-items-center">
                       <i className="material-icons text-dark moving-icon">
                         arrow_forward

@@ -4,6 +4,8 @@ import { takeLatestAndCancel } from './effects/take'
 import makeDocumentsListSaga from './hos/documents'
 import makeFacetsSaga from './hos/facets'
 import {
+  GET_CHAPTERS,
+  GET_CHAPTERS_UNLOAD,
   GET_EVENTS,
   GET_PERIODS,
   GET_PLACES,
@@ -75,6 +77,16 @@ function *handleSearchSuggestion({ payload }) {
   }
 }
 
+function *handleGetChapters() {
+  yield put({ type: `${GET_CHAPTERS}_LOADING` })
+  try {
+    const chapters = yield call(api.getChapters)
+    yield put({ type: `${GET_CHAPTERS}_SUCCESS`, payload: chapters })
+  } catch (error) {
+    yield put({ type: `${GET_CHAPTERS}_FAILURE`, error })
+  }
+}
+
 function *syncLangWi18n() {
   const lang = yield select(getSelectedLang)
   yield put(setLanguage(lang.param))
@@ -87,6 +99,12 @@ export default function* rootSaga() {
     GET_TIME_SERIES,
     GET_TIME_SERIES_UNLOAD,
     handleGetTimeSeries,
+  )
+  yield fork(
+    takeLatestAndCancel,
+    GET_CHAPTERS,
+    GET_CHAPTERS_UNLOAD,
+    handleGetChapters,
   )
   yield fork(
     takeLatestAndCancel,

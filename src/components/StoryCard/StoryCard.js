@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import './StoryCard.scss'
 
-export default function StoryCard({ count, image, title, description, slug }) {
+export default memo(function StoryCard({ count, image, title, description, slug }) {
   return (
     <Link to={`/stories/${slug}`} className='story-card'>
       <div className='story-card-content'>
@@ -13,4 +13,4 @@ export default function StoryCard({ count, image, title, description, slug }) {
       </div>
     </Link>
   )
-}
+})
