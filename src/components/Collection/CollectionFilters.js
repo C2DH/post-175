@@ -16,20 +16,20 @@ class CollectionFilters extends PureComponent {
     open: false
   };
 
-  static getDerivedStateFromProps(props, state) {
-    if (state.prevLocationKey !== props.locationKey) {
-      if (state.searchText !== props.search) {
-        return {
-          searchText: props.search,
-          prevLocationKey: props.locationKey
-        };
-      }
-      return {
-        prevLocationKey: props.locationKey
-      };
-    }
-    return null;
-  }
+  // static getDerivedStateFromProps(props, state) {
+  //   if (state.prevLocationKey !== props.locationKey) {
+  //     if (state.searchText !== props.search) {
+  //       return {
+  //         searchText: props.search,
+  //         prevLocationKey: props.locationKey
+  //       };
+  //     }
+  //     return {
+  //       prevLocationKey: props.locationKey
+  //     };
+  //   }
+  //   return null;
+  // }
 
   toggleFiltersOpen = () =>
     this.setState(({ open }) => ({
@@ -42,7 +42,7 @@ class CollectionFilters extends PureComponent {
         searchText: newValue
       },
       () => {
-        this.debouncedOnSearchChange(newValue);
+        // this.debouncedOnSearchChange(newValue);
       }
     );
   };
@@ -57,6 +57,11 @@ class CollectionFilters extends PureComponent {
       }
     );
   };
+
+  handleSubmit = e => {
+    e.preventDefault()
+    this.props.onSearchChange(this.state.searchText)
+  }
 
   debouncedOnSearchChange = debounce(this.props.onSearchChange, 150);
 
@@ -85,41 +90,44 @@ class CollectionFilters extends PureComponent {
     return (
       <Fragment>
         <div className="container-fluid CollectionFilters">
-          <div className="row top-bar border-bottom align-items-center">
-            <div className="col-auto mr-auto">
-              <div className="text-white">
-                <h2 className="m-0 d-inline-block">Archive</h2>
-                <small className="ml-2">
-                  {count} / {allCount}
-                </small>
-                <small className="ml-2">items shown</small>
+          <form onSubmit={this.handleSubmit}>
+            <div className="row top-bar border-bottom align-items-center">
+              <div className="col-auto mr-auto">
+                <div className="text-white">
+                  <h2 className="m-0 d-inline-block">Archive</h2>
+                  <small className="ml-2">
+                    {count} / {allCount}
+                  </small>
+                  <small className="ml-2">items shown</small>
+                </div>
+              </div>
+              <div className="col-auto">
+                <div className="d-flex align-items-center">
+                  <Search
+                    placeholder="Search"
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    searchSuggestions={this.debouncedSearchSuggestions}
+                    clearSuggestions={clearSuggestions}
+                    suggestions={suggestions}
+                    value={this.state.searchText}
+                    onChange={this.handleOnSearchChange}
+                  />
+                  <button type='submit' className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white">
+                    <i className="material-icons">search</i>
+                  </button>
+                  <button
+                    type='button'
+                    className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white"
+                    onClick={this.toggleFiltersOpen}
+                  >
+                    <i className="material-icons">
+                      {open ? "close" : "filter_list"}
+                    </i>
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="col-auto">
-              <div className="d-flex align-items-center">
-                <Search
-                  placeholder="Search"
-                  onSuggestionSelected={this.onSuggestionSelected}
-                  searchSuggestions={this.debouncedSearchSuggestions}
-                  clearSuggestions={clearSuggestions}
-                  suggestions={suggestions}
-                  value={this.state.searchText}
-                  onChange={this.handleOnSearchChange}
-                />
-                <button className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white">
-                  <i className="material-icons">search</i>
-                </button>
-                <button
-                  className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white"
-                  onClick={this.toggleFiltersOpen}
-                >
-                  <i className="material-icons">
-                    {open ? "close" : "filter_list"}
-                  </i>
-                </button>
-              </div>
-            </div>
-          </div>
+          </form>
         </div>
         <div
           className={classNames("collection-filters CollectionFilters", {

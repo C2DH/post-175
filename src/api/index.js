@@ -26,7 +26,7 @@ export const searchSuggestion = term =>
   request
     .get(`${API_URL}/document/suggest/`)
     .query({ q: term })
-    .then(({ body }) => ["Giova", "23", "Abre Magik"]);
+    .then(({ body }) => body.results);
 
 export const getTimeSeries = () =>
   request.get(`${API_URL}/document/itu-stats/`).then(({ body }) => {
