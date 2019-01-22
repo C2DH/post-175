@@ -329,18 +329,6 @@ h6 {
   margin: 5px;
 }
 
-.about-logo {
-  max-width: 33%;
-  height: auto;
-  margin: 10px 0;
-}
-
-.about-text {
-  font-size: 1.25rem;
-  height: calc(100vh - 57px - 48px);
-  overflow: auto;
-}
-
 /* switch toggle start from https://codepen.io/claviska/pen/KyWmjY */
 
 $switch-height: calc(#{$input-height} * 0.8) !default;
