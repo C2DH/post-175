@@ -334,6 +334,9 @@ class Map extends PureComponent {
   };
 
   getFilteredPlaces = memoize((places, placeTypes) => {
+    if (!places) {
+      return places
+    }
     if (placeTypes.length === 0) {
       return places;
     }
