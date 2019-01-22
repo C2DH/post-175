@@ -2,22 +2,35 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import find from 'lodash/find'
 import VideoStory from '../components/VideoStory'
-import { loadStory } from '../state/actions'
+import { loadStory, unloadStory } from '../state/actions'
 import {
   getVideoStory,
   getVideoUrl,
   getSpeakers,
   getSideDocs,
   getVideoSubtitlesFile,
+  getVideoStoryTitle,
 } from '../state/selectors'
 
 const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
-  return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
+  const intSeconds = parseInt(playedSeconds, 10)
+  return intSeconds >= secondsFrom && intSeconds <= secondsTo
 }
 
 class Story extends Component {
   componentDidMount() {
-    this.props.loadStory('video_fake_story')
+    this.props.loadStory(this.props.match.params.id)
+  }
+
+  componentDidUpdate(prevPros) {
+    if (this.props.match.params.id !== prevPros.match.params.id) {
+      this.props.unloadStory()
+      this.props.loadStory(this.props.match.params.id)
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.unloadStory()
   }
 
   speakerAt = playedSeconds => {
@@ -41,7 +54,7 @@ class Story extends Component {
   goBack = () => this.props.history.push('/stories')
 
   render() {
-    const { story, url, speakers, sideDocs, subtitlesFile } = this.props
+    const { story, url, title, sideDocs, subtitlesFile } = this.props
     return (
       <div className='h-100 bg-dark'>
         {story && (
@@ -51,7 +64,7 @@ class Story extends Component {
             getSideDocAt={this.sideDocAt}
             getSpeakerAt={this.speakerAt}
             sideDocs={sideDocs}
-            story={story}
+            title={title}
             onBack={this.goBack}
           />
         )}
@@ -61,6 +74,7 @@ class Story extends Component {
 }
 
 export default connect(state => ({
+  title: getVideoStoryTitle(state),
   story: getVideoStory(state),
   url: getVideoUrl(state),
   subtitlesFile: getVideoSubtitlesFile(state),
@@ -68,4 +82,5 @@ export default connect(state => ({
   speakers: getSpeakers(state),
 }), {
   loadStory,
+  unloadStory,
 })(Story)

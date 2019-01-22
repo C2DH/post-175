@@ -13,8 +13,7 @@ import TermsOfUse from "../../pages/TermsOfUse";
 import Collection from "../../pages/Collection";
 import DocumentDetail from "../../pages/DocumentDetail";
 import DocumentDetailModal from "../../pages/DocumentDetailModal";
-import Stories from "../../pages/Stories";
-import Story from "../../pages/Story";
+import StoriesRoot from "../../pages/StoriesRoot";
 
 class LangRoot extends PureComponent {
   componentWillMount() {
@@ -73,8 +72,7 @@ class LangRoot extends PureComponent {
           <Route path="/about" exact component={About} />
           <Route path="/terms-of-use" exact component={TermsOfUse} />
           <Route path="/collection" exact component={Collection} />
-          <Route path="/stories" exact component={Stories} />
-          <Route path="/stories/:id" exact component={Story} />
+          <Route path="/stories" component={StoriesRoot} />
           <Route path="/doc/:id" exact component={DocumentDetail} />
         </Switch>
         {isModal ? (

@@ -48,7 +48,11 @@ export const getTimeSeries = () =>
   });
 
 export const getStory = idOrSlug =>
-  request.get(`${API_URL}/story/${idOrSlug}/`).then(extractBody);
+  request.get(`${API_URL}/story/${idOrSlug}/`)
+    .query({
+      parser: 'yaml',
+    })
+    .then(extractBody);
 
 export const getChapters = () =>
   request.get(`${API_URL}/story/`)

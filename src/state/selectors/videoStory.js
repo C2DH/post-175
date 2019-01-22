@@ -24,7 +24,7 @@ export const getVideoUrl = createSelector(
     }
     const objectId = get(story, 'contents.modules[0].object.id')
     if (objectId) {
-      const doc = find(story.documents, { id: objectId })
+      const doc = find(story.documents, { document_id: objectId })
       if (doc) {
         return doc.url
       }
@@ -41,12 +41,28 @@ export const getVideoSubtitlesFile = createSelector(
     }
     const objectId = get(story, 'contents.modules[0].object.id')
     if (objectId) {
-      const doc = find(story.documents, { id: objectId })
+      const doc = find(story.documents, { document_id: objectId })
       if (doc) {
-        return get(doc, 'data.subtitles.srt', null)
+        let subtitlesFile = get(doc, 'data.subtitles.vtt', null)
+        // HACK for fixing proxy problem
+        // TODO check for production deploy env...
+        if (subtitlesFile) {
+          subtitlesFile = subtitlesFile.replace(/http(s)?(:\/\/)[^/]*/, '')
+        }
+        return subtitlesFile
       }
     }
     return null
+  }
+)
+
+export const getVideoStoryTitle = createSelector(
+  getVideoStory,
+  story => {
+    if (story === null) {
+      return null
+    }
+    return get(story, 'contents.modules[0].title', null)
   }
 )
 
@@ -62,7 +78,7 @@ export const getSpeakers = createSelector(
       return null
     }
     const speakers = get(story, 'contents.modules[0].speakers')
-    const docsBy = keyBy(story.documents, 'id')
+    const docsBy = keyBy(story.documents, 'document_id')
     if (Array.isArray(speakers)) {
       return speakers.map(speaker => {
         const secondsFrom = stringTimeToSeconds(speaker.from)
@@ -87,7 +103,7 @@ export const getSideDocs = createSelector(
       return null
     }
     const speakers = get(story, 'contents.modules[0].objects')
-    const docsBy = keyBy(story.documents, 'id')
+    const docsBy = keyBy(story.documents, 'document_id')
     if (Array.isArray(speakers)) {
       return speakers.map(speaker => {
         const secondsFrom = stringTimeToSeconds(speaker.from)

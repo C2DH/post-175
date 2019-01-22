@@ -7,7 +7,7 @@ export default memo(function TopControls({
   playedSeconds,
   played,
   sideDocs,
-  story,
+  title,
   playing,
   togglePlaying,
   onSeek,
@@ -26,7 +26,7 @@ export default memo(function TopControls({
       <div className="track-container">
         <div className="video-meta text-white">
           <div className="d-flex h-100 align-items-center">
-            <h3 className="mx-2">{story.data.title}</h3>
+            <h3 className="mx-2">{title}</h3>
             <div>{playedMinutes}/{durationMinutes}</div>
           </div>
           <div
@@ -42,14 +42,21 @@ export default memo(function TopControls({
 
           <div className="progress" style={{width: `${played*100}%`}}></div>
           {sideDocs && sideDocs.length > 0 && sideDocs.map((sideDoc, i) => (
-            <React.Fragment  key={i} >
-              <div id={`side-doc-${i}`} className="side-doc" style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}} />
+            <React.Fragment key={i} >
+              <div
+                onClick={e => {
+                  e.stopPropagation()
+                  onSeek(sideDoc.secondsFrom/durationSeconds)
+                }}
+                id={`side-doc-${i}`}
+                className="side-doc"
+                style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}}
+              />
               <UncontrolledTooltip placement="bottom" target={`side-doc-${i}`} className="side-doc-tooltip">
                 {sideDoc.doc.title}
               </UncontrolledTooltip>
             </React.Fragment>
-
-          ) )}
+          ))}
         </div>
       </div>
     </React.Fragment>

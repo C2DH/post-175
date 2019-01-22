@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import padStart from 'lodash/padStart'
 import get from 'lodash/get'
-import { loadChapters, unloadChapters } from '../state/actions'
+import { loadChapters } from '../state/actions'
 import { getChapters } from '../state/selectors'
 import StoryCard from '../components/StoryCard'
 import SideMenu from '../components/SideMenu'
@@ -10,10 +10,6 @@ import SideMenu from '../components/SideMenu'
 class Stories extends Component {
   componentDidMount() {
     this.props.loadChapters()
-  }
-
-  componentWillUnmount() {
-    this.props.unloadChapters()
   }
 
   render() {
@@ -47,5 +43,4 @@ export default connect(state => ({
   chapters: getChapters(state),
 }), {
   loadChapters,
-  unloadChapters,
 })(Stories)
