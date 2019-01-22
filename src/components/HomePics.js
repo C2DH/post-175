@@ -76,6 +76,15 @@ export default class HomePics extends React.PureComponent {
   }
 
   componentDidMount() {
+    this.calculatePosition()
+    window.addEventListener('resize', this.calculatePosition)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.calculatePosition)
+  }
+
+  calculatePosition = () => {
     const node = ReactDOM.findDOMNode(this);
     const width = node.offsetWidth;
     const itemWidth = width ? width / NUM_PICS : 0;
