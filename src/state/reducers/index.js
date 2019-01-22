@@ -11,6 +11,7 @@ import storyDetail from './storyDetail'
 import searchSuggestion from './searchSuggestion'
 import docDetail from './docDetail'
 import timeSeries from './timeSeries'
+import chapters from './chapters'
 
 import {
   GET_EVENTS,
@@ -33,6 +34,7 @@ export default combineReducers({
   storyDetail,
   searchSuggestion,
   docDetail,
+  chapters,
   events: makeDocumentsList(GET_EVENTS),
   periods: makeDocumentsList(GET_PERIODS),
   places: makeDocumentsList(GET_PLACES),

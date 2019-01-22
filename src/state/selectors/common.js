@@ -14,5 +14,9 @@ export const translateDoc = (doc, langCode) => {
     return obj
   }
 
-  return mapValues(doc, transObj)
+  if (isArray(doc)) {
+    return doc.map(transObj)
+  } else {
+    return mapValues(doc, transObj)
+  }
 }
