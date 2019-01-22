@@ -1,0 +1,25 @@
+.TermsOfUse {
+  margin-left: 56px;
+  overflow-y: auto;
+
+  .page-content a,
+  .page-content a:hover {
+    color: black;
+    text-decoration: underline;
+  }
+
+  .page-content p {
+    word-break: break-word;
+  }
+
+  .page-content h6 {
+    text-transform: uppercase;
+    color: var(--yellow-post);
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+  }
+
+  .page-content h6:first-of-type {
+    border-top: none !important;
+  }
+}
