@@ -8,6 +8,8 @@ export default {
     menu_about: "Über die Ausstellung",
     menu_collection: "Sammlung",
     menu_themes: "Themen",
+    menu_terms_of_use: "Nutzungsbedingungen",
+    menu_contact_us: "Kontaktieren Sie Uns",
     menu_desc:
       "Die Geschichte des Post und Telekommunikationsunternehmens des Großherzogtums seit 1842",
     // home page
@@ -78,6 +80,8 @@ export default {
     menu_about: "À propos",
     menu_collection: "Collection",
     menu_themes: "Thèmes",
+    menu_terms_of_use: "Conditions d’utilisation",
+    menu_contact_us: "Contactez-Nous",
     menu_desc:
       "Histoire de l’Entreprise des Postes et Télécommunications du Grand-Duché de Luxembourg depuis 1842.",
     // home page
