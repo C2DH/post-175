@@ -46,10 +46,12 @@ export const getVideoSubtitlesFile = createSelector(
         let subtitlesFile = get(doc, 'data.subtitles.vtt', null)
         // HACK for fixing proxy problem
         // TODO check for production deploy env...
-        if (subtitlesFile) {
+        if (typeof subtitlesFile === 'string') {
           subtitlesFile = subtitlesFile.replace(/http(s)?(:\/\/)[^/]*/, '')
+          return subtitlesFile
+        } else {
+          return null
         }
-        return subtitlesFile
       }
     }
     return null

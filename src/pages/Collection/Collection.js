@@ -176,7 +176,6 @@ class Collection extends PureComponent {
       overlaps,
       includeUncertain
     } = this.parseQueryParams(queryParams);
-    console.log('FFF', dataTypeFacets, dataTypeAllFacets)
 
     return (
       <div className="h-100 CollectionPage">
