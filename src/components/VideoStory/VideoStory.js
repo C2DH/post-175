@@ -70,6 +70,8 @@ export default class VideoStory extends Component {
 
   togglePlaying = () => this.setState({playing: !this.state.playing})
 
+  stopPlaying = () => this.setState({ playing: false })
+
   render() {
     const { url, getSpeakerAt, getSideDocAt, sideDocs, title, subtitlesFile, onBack } = this.props
     const { durationSeconds, playedSeconds, played, sideWidth, playing, subtitles, volume } = this.state
@@ -135,6 +137,7 @@ export default class VideoStory extends Component {
             doc={sideDoc}
             onDrag={this.handleSideDocDrag}
             width={sideWidth}
+            stopPlaying={this.stopPlaying}
           />
         </div>
 

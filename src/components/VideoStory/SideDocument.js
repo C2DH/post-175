@@ -1,7 +1,8 @@
 import React, { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { DraggableCore } from 'react-draggable'
 
-export default memo(function SideDocument({ onDrag, width, doc }) {
+export default memo(function SideDocument({ onDrag, width, doc, stopPlaying }) {
   let year = null
   if (doc) {
     year = new Date(doc.data.start_data).getFullYear()
@@ -14,7 +15,15 @@ export default memo(function SideDocument({ onDrag, width, doc }) {
         <div className='year'>{year}</div>
         <div className='title'>
           <h2>{doc.title}</h2>
-          <a>OPEN</a>
+          <Link
+            onClick={stopPlaying}
+            to={{
+              pathname: `/doc/${doc.document_id}`,
+              state: { modal: true }
+            }}
+          >
+            open
+          </Link>
         </div>
         <div
           className='doc-image'
