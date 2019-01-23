@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import memoize from 'memoize-one'
 import get from 'lodash/get'
+import keyBy from 'lodash/keyBy'
 import map from 'lodash/map'
 import range from 'lodash/range'
 import sample from 'lodash/sample'
@@ -130,6 +131,18 @@ export const getCollectionsFacets = createSelector(
   }
 )
 
+
+export const getCollectionsDataTypeFacets = createSelector(
+  state => state.collectionDocs.facets,
+  facets => {
+    if (!facets) {
+      return facets
+    }
+    const dataTypeFacets = facets.data__type
+    return keyBy(dataTypeFacets, 'data__type')
+  }
+)
+
 export const getCollectionsAllFacets = createSelector(
   state => state.collectionFacets.data,
   facets => {
@@ -140,6 +153,17 @@ export const getCollectionsAllFacets = createSelector(
     return {
       data__year: fixFacets(dataYearFacets || []),
     }
+  }
+)
+
+export const getCollectionsDataTypeAllFacets = createSelector(
+  state => state.collectionFacets.data,
+  facets => {
+    if (!facets) {
+      return {}
+    }
+    const dataTypeFacets = facets.facets.data__type
+    return keyBy(dataTypeFacets, 'data__type')
   }
 )
 

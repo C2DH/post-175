@@ -19,7 +19,9 @@ import {
   getCollectionsFacets,
   getCollectionsAllFacets,
   getCollectionCount,
-  getCollectionAllCount
+  getCollectionAllCount,
+  getCollectionsDataTypeFacets,
+  getCollectionsDataTypeAllFacets,
 } from "../../state/selectors";
 import "./CollectionPage.css";
 
@@ -166,7 +168,7 @@ class Collection extends PureComponent {
   };
 
   render() {
-    const { docs, facets, allFacets, location, count, allCount } = this.props;
+    const { docs, facets, allFacets, location, count, allCount, dataTypeFacets, dataTypeAllFacets } = this.props;
     const queryParams = qs.parse(location.search);
     const {
       search,
@@ -174,6 +176,7 @@ class Collection extends PureComponent {
       overlaps,
       includeUncertain
     } = this.parseQueryParams(queryParams);
+    console.log('FFF', dataTypeFacets, dataTypeAllFacets)
 
     return (
       <div className="h-100 CollectionPage">
@@ -193,6 +196,8 @@ class Collection extends PureComponent {
           onYearsChange={this.handleOnOverlapsChange}
           facets={facets}
           allFacets={allFacets}
+          dataTypeFacets={dataTypeFacets}
+          dataTypeAllFacets={dataTypeAllFacets}
         />
         {docs && <CollectionList docs={docs} />}
       </div>
@@ -205,6 +210,8 @@ export default connect(
     docs: getCollectionDocuments(state),
     facets: getCollectionsFacets(state),
     allFacets: getCollectionsAllFacets(state),
+    dataTypeFacets: getCollectionsDataTypeFacets(state),
+    dataTypeAllFacets: getCollectionsDataTypeAllFacets(state),
     count: getCollectionCount(state),
     allCount: getCollectionAllCount(state)
   }),

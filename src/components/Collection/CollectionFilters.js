@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
+import get from 'lodash/get'
 import { connect } from "react-redux";
 import { searchSuggestions, clearSuggestions } from "../../state/actions";
 import debounce from "lodash/debounce";
@@ -83,7 +84,9 @@ class CollectionFilters extends PureComponent {
       count,
       allCount,
       includeUncertain,
-      toggleUncertain
+      toggleUncertain,
+      dataTypeFacets,
+      dataTypeAllFacets
     } = this.props;
     const { open } = this.state;
 
@@ -155,6 +158,12 @@ class CollectionFilters extends PureComponent {
                       />
                       <label className="custom-control-label" htmlFor={name}>
                         {t(name)}
+                        {' '}
+                        <small>
+                          {get(dataTypeFacets, `${name}.count`, 0)}
+                          {' / '}
+                          {get(dataTypeAllFacets, `${name}.count`, 0)}
+                        </small>
                       </label>
                     </div>
                   ))}

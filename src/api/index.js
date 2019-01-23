@@ -68,6 +68,11 @@ export const getChapters = () =>
       }
       const id = body.results[0].id
       return request.get(`${API_URL}/story/${id}`)
+        .query({
+          filters: JSON.stringify({
+            'status': 'public',
+          })
+        })
         .then(({ body }) => {
           const chaptersById = keyBy(body.stories, 'id')
           return body.data.chapters.map(id => chaptersById[id]).filter(Boolean)
