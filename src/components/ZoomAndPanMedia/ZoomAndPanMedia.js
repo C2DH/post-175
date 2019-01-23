@@ -161,6 +161,11 @@ export default class ZoomAndPanMedia extends Component {
             onPanEnd={this.handlePanEnd}
           >
             <img
+              alt='Zoom and pan'
+              onDragStart={e => {
+                e.preventDefault()
+                return false
+              }}
               onLoad={this.onLoadImage}
               draggable="false"
               style={{ transform: this.getTransform() }}
