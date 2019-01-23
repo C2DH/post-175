@@ -162,6 +162,9 @@ export default class ZoomAndPanMedia extends Component {
           >
             <img
               alt='Zoom and pan'
+              onWheel={e => {
+                this.handleZoomNew(e.deltaY * 0.01)()
+              }}
               onDragStart={e => {
                 e.preventDefault()
                 return false

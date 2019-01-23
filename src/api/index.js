@@ -95,7 +95,7 @@ export const getHomeDocuments = (params = {}) =>
 export const getCollectionDocuments = (params = {}) =>
   getDocuments({
     ...params,
-    facets: "data__year",
+    facets: ["data__year", 'data__type'],
     filters: {
       ...params.filters
     }
