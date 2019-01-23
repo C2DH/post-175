@@ -1,6 +1,7 @@
 // API CALLS
 import request from "superagent";
 import keyBy from 'lodash/keyBy'
+import get from 'lodash/get'
 import { csvParse } from "d3-dsv";
 const API_URL = "/api";
 
@@ -66,16 +67,19 @@ export const getChapters = () =>
       if (body.results.length === 0) {
         return []
       }
-      const id = body.results[0].id
-      return request.get(`${API_URL}/story/${id}`)
+      const theme = body.results[0]
+      return request.get(`${API_URL}/story/`)
         .query({
           filters: JSON.stringify({
             'status': 'public',
+            'mentioned_to__id': theme.id,
           })
         })
         .then(({ body }) => {
-          const chaptersById = keyBy(body.stories, 'id')
-          return body.data.chapters.map(id => chaptersById[id]).filter(Boolean)
+          const chaptersById = keyBy(body.results, 'id')
+          return get(theme, 'data.chapters', [])
+            .map(id => chaptersById[id])
+            .filter(Boolean)
         })
     })
 
