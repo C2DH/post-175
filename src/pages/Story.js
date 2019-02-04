@@ -1,62 +1,62 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import find from 'lodash/find'
-import VideoStory from '../components/VideoStory'
-import { loadStory, unloadStory } from '../state/actions'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import find from "lodash/find";
+import VideoStory from "../components/VideoStory";
+import { loadStory, unloadStory } from "../state/actions";
 import {
   getVideoStory,
   getVideoUrl,
   getSpeakers,
   getSideDocs,
   getVideoSubtitlesFile,
-  getVideoStoryTitle,
-} from '../state/selectors'
+  getVideoStoryTitle
+} from "../state/selectors";
 
 const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
-  const intSeconds = parseInt(playedSeconds, 10)
-  return intSeconds >= secondsFrom && intSeconds <= secondsTo
-}
+  const intSeconds = parseInt(playedSeconds, 10);
+  return intSeconds >= secondsFrom && intSeconds <= secondsTo;
+};
 
 class Story extends Component {
   componentDidMount() {
-    this.props.loadStory(this.props.match.params.id)
+    this.props.loadStory(this.props.match.params.id);
   }
 
   componentDidUpdate(prevPros) {
     if (this.props.match.params.id !== prevPros.match.params.id) {
-      this.props.unloadStory()
-      this.props.loadStory(this.props.match.params.id)
+      this.props.unloadStory();
+      this.props.loadStory(this.props.match.params.id);
     }
   }
 
   componentWillUnmount() {
-    this.props.unloadStory()
+    this.props.unloadStory();
   }
 
   speakerAt = playedSeconds => {
-    const { speakers } = this.props
-    const speaker = find(speakers, betweenTime(playedSeconds))
+    const { speakers } = this.props;
+    const speaker = find(speakers, betweenTime(playedSeconds));
     if (speaker) {
-      return speaker.doc
+      return speaker.doc;
     }
-    return null
-  }
+    return null;
+  };
 
   sideDocAt = playedSeconds => {
-    const { sideDocs } = this.props
-    const sideDoc = find(sideDocs, betweenTime(playedSeconds))
+    const { sideDocs } = this.props;
+    const sideDoc = find(sideDocs, betweenTime(playedSeconds));
     if (sideDoc) {
-      return sideDoc.doc
+      return sideDoc.doc;
     }
-    return null
-  }
+    return null;
+  };
 
-  goBack = () => this.props.history.push('/stories')
+  goBack = () => this.props.history.push("/stories");
 
   render() {
-    const { story, url, title, sideDocs, subtitlesFile } = this.props
+    const { story, url, title, sideDocs, subtitlesFile } = this.props;
     return (
-      <div className='h-100 bg-dark'>
+      <div className="h-100">
         {story && (
           <VideoStory
             url={url}
@@ -69,18 +69,21 @@ class Story extends Component {
           />
         )}
       </div>
-    )
+    );
   }
 }
 
-export default connect(state => ({
-  title: getVideoStoryTitle(state),
-  story: getVideoStory(state),
-  url: getVideoUrl(state),
-  subtitlesFile: getVideoSubtitlesFile(state),
-  sideDocs: getSideDocs(state),
-  speakers: getSpeakers(state),
-}), {
-  loadStory,
-  unloadStory,
-})(Story)
+export default connect(
+  state => ({
+    title: getVideoStoryTitle(state),
+    story: getVideoStory(state),
+    url: getVideoUrl(state),
+    subtitlesFile: getVideoSubtitlesFile(state),
+    sideDocs: getSideDocs(state),
+    speakers: getSpeakers(state)
+  }),
+  {
+    loadStory,
+    unloadStory
+  }
+)(Story);

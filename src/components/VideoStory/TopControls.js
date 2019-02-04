@@ -1,6 +1,6 @@
-import React, { memo } from 'react'
-import { UncontrolledTooltip } from 'reactstrap';
-import moment from 'moment'
+import React, { memo } from "react";
+import { UncontrolledTooltip } from "reactstrap";
+import moment from "moment";
 
 export default memo(function TopControls({
   durationSeconds,
@@ -13,52 +13,88 @@ export default memo(function TopControls({
   onSeek,
   volume,
   setVolume,
-  onBack,
+  onBack
 }) {
-  const playedMinutes = moment.utc(parseInt(playedSeconds) * 1000).format('mm:ss')
-  const durationMinutes = moment.utc(parseInt(durationSeconds) * 1000).format('mm:ss')
+  const playedMinutes = moment
+    .utc(parseInt(playedSeconds) * 1000)
+    .format("mm:ss");
+  const durationMinutes = moment
+    .utc(parseInt(durationSeconds) * 1000)
+    .format("mm:ss");
   return (
     <React.Fragment>
-      <button className="control-button border-right" onClick={onBack}>↰</button>
-      <button className="control-button" onClick={togglePlaying}>
-        { playing ? <span>&#9632;</span> : <span>&#9654;</span> }
+      <button
+        type="button"
+        className="control-button btn btn-light rounded-0 close-icon"
+        onClick={onBack}
+      >
+        <i className="material-icons">subdirectory_arrow_right</i>
+      </button>
+      <button
+        className="control-button btn btn-light rounded-0"
+        onClick={togglePlaying}
+      >
+        {playing ? (
+          <i className="material-icons">pause</i>
+        ) : (
+          <i className="material-icons">play_arrow</i>
+        )}
       </button>
       <div className="track-container">
         <div className="video-meta text-white">
           <div className="d-flex h-100 align-items-center">
-            <h3 className="mx-2">{title}</h3>
-            <div>{playedMinutes}/{durationMinutes}</div>
+            <h3 className="mb-0">{title}</h3>
+            <div className="ml-2">
+              ({playedMinutes}/{durationMinutes})
+            </div>
           </div>
           <div
+            className="d-flex audio"
             onClick={() => setVolume(volume === 0 ? 1 : 0)}
-            style={{ textDecoration: volume === 0 ? 'line-through' : undefined, cursor: 'pointer' }}>{'♪'}</div>
+          >
+            {volume === 0 ? (
+              <i className="material-icons">volume_off</i>
+            ) : (
+              <i className="material-icons">volume_up</i>
+            )}
+          </div>
         </div>
-        <div className="track" onClick={e => {
-          const rect = e.target.getBoundingClientRect()
-          const clickX = e.clientX - rect.x
-          const percentOffset = clickX / rect.width
-          onSeek(percentOffset)
-        }}>
-
-          <div className="progress" style={{width: `${played*100}%`}}></div>
-          {sideDocs && sideDocs.length > 0 && sideDocs.map((sideDoc, i) => (
-            <React.Fragment key={i} >
-              <div
-                onClick={e => {
-                  e.stopPropagation()
-                  onSeek(sideDoc.secondsFrom/durationSeconds)
-                }}
-                id={`side-doc-${i}`}
-                className="side-doc"
-                style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}}
-              />
-              <UncontrolledTooltip placement="bottom" target={`side-doc-${i}`} className="side-doc-tooltip">
-                {sideDoc.doc.title}
-              </UncontrolledTooltip>
-            </React.Fragment>
-          ))}
+        <div
+          className="track"
+          onClick={e => {
+            const rect = e.target.getBoundingClientRect();
+            const clickX = e.clientX - rect.x;
+            const percentOffset = clickX / rect.width;
+            onSeek(percentOffset);
+          }}
+        >
+          <div className="progress" style={{ width: `${played * 100}%` }} />
+          {sideDocs &&
+            sideDocs.length > 0 &&
+            sideDocs.map((sideDoc, i) => (
+              <React.Fragment key={i}>
+                <div
+                  onClick={e => {
+                    e.stopPropagation();
+                    onSeek(sideDoc.secondsFrom / durationSeconds);
+                  }}
+                  id={`side-doc-${i}`}
+                  className="side-doc"
+                  style={{
+                    left: `${(sideDoc.secondsFrom / durationSeconds) * 100}%`
+                  }}
+                />
+                <UncontrolledTooltip
+                  placement="left"
+                  target={`side-doc-${i}`}
+                  className="side-doc-tooltip"
+                >
+                  {sideDoc.doc.title}
+                </UncontrolledTooltip>
+              </React.Fragment>
+            ))}
         </div>
       </div>
     </React.Fragment>
-  )
-})
+  );
+});

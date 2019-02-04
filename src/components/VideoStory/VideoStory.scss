@@ -5,24 +5,26 @@
   flex-direction: column;
 
   .video-story-top {
-    height: 60px;
+    height: 56px;
     display: flex;
     flex-direction: row;
+    background-color: var(--dark-post);
 
     .control-button {
-      background-color: #FFFFFF;
-      height: 60px;
-      width: 60px;
+      background-color: #ffffff;
+      height: 56px;
+      width: 56px;
       display: flex;
       align-items: center;
       justify-content: center;
-      &.border-right {
-        border-right: solid #000 1px;
-      }
+    }
+
+    .close-icon {
+      transform: rotate(180deg);
     }
 
     .track-container {
-      flex:1;
+      flex: 1;
       display: flex;
       flex-direction: column;
 
@@ -33,38 +35,36 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 20px;
-        h3 {
-          font-size: 27px;
-          margin-left: 10px;
-        }
+      }
+
+      .audio {
+        cursor: pointer;
       }
 
       .track {
         height: 10px;
-        background-color: #7B7B7B;
+        background-color: #7b7b7b;
         position: relative;
         cursor: pointer;
 
         .side-doc {
           position: absolute;
           height: 100%;
-          background: #F8C91C;
+          background: #f8c91c;
           border: solid #000 1px;
           width: 10px;
         }
 
         .progress {
-          background-color: #F8C91C;
+          background-color: var(--yellow-post);
+          opacity: 0.75;
           position: absolute;
           height: 100%;
-          border-radius:0;
+          border-radius: 0;
           pointer-events: none;
         }
       }
-
     }
-
-
   }
 
   .video-story-video {
@@ -79,33 +79,49 @@
       }
     }
     .side-document {
-      background: white;
+      background: black;
       position: relative;
       .handle-circle-container {
         cursor: col-resize;
         top: calc(50% - 25px);
-        left: -25px;
+        left: calc(-25px);
         width: 50px;
         height: 50px;
         position: absolute;
       }
       .display-doc {
         background: black;
-        color: white;
-        padding-left: 10px;
         height: 100%;
         display: flex;
         flex-direction: column;
         .title {
           display: flex;
-          align-items: center;
+          align-items: flex-end;
           justify-content: space-between;
-          padding-right: 20px;
+          .truncate-parent {
+            min-width: 0;
+          }
+          h6 {
+            font-family: "IBM Plex Sans Condensed", sans-serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0;
+          }
+          .doc-open {
+            text-transform: uppercase;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid var(--yellow-post);
+          }
+          .doc-open:hover {
+            text-decoration: none;
+          }
         }
         .doc-image {
           flex: 1;
-          background-size: cover;
-          background-position: center;
+          background-size: contain;
+          background-position: center center;
+          background-repeat: no-repeat;
         }
       }
     }
@@ -114,48 +130,11 @@
   .video-story-bottom {
     height: 200px;
     display: flex;
-    .lang-switcher {
-      background: yellow;
-      width: 70px;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      display: flex;
-      .lang {
-        padding-top: 8px;
-        padding-bottom: 8px;
-        text-transform: uppercase;
-        cursor: pointer;
-        font-weight: bold;
-        &.current-lang {
-          text-decoration: underline;
-        }
-      }
-    }
-    .speaker {
-      color: white;
-      padding: 20px;
-      width: 500px;
-      h5 {
-        color: grey;
-      }
-    }
-    .subtitles {
-      padding: 20px;
-      flex: 1;
-      color: white;
-    }
-  }
+    padding-left: 56px;
 
-}
-
-.tooltip.side-doc-tooltip{
-  .tooltip-inner {
-    background-color: #F8C91C;
-    color: #222;
-  }
-  .arrow::before {
-    border-bottom-color: #F8C91C;
-
+    .speaker h1 {
+      font-family: "IBM Plex Sans Condensed", sans-serif;
+      font-size: 2.25rem;
+    }
   }
 }
