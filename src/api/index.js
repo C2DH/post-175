@@ -1,7 +1,7 @@
 // API CALLS
 import request from "superagent";
-import keyBy from 'lodash/keyBy'
-import get from 'lodash/get'
+import keyBy from "lodash/keyBy";
+import get from "lodash/get";
 import { csvParse } from "d3-dsv";
 const API_URL = "/api";
 
@@ -49,39 +49,43 @@ export const getTimeSeries = () =>
   });
 
 export const getStory = idOrSlug =>
-  request.get(`${API_URL}/story/${idOrSlug}/`)
+  request
+    .get(`${API_URL}/story/${idOrSlug}/`)
     .query({
-      parser: 'yaml',
+      parser: "yaml"
     })
     .then(extractBody);
 
 export const getChapters = () =>
-  request.get(`${API_URL}/story/`)
+  request
+    .get(`${API_URL}/story/`)
     .query({
       limit: 1,
       filters: JSON.stringify({
-        'tags__slug': 'theme',
+        tags__slug: "theme"
       })
     })
     .then(({ body }) => {
       if (body.results.length === 0) {
-        return []
+        return [];
       }
-      const theme = body.results[0]
-      return request.get(`${API_URL}/story/`)
+      const theme = body.results[0];
+      return request
+        .get(`${API_URL}/story/`)
         .query({
+          limit: 10,
           filters: JSON.stringify({
-            'status': 'public',
-            'mentioned_to__id': theme.id,
+            status: "public",
+            mentioned_to__id: theme.id
           })
         })
         .then(({ body }) => {
-          const chaptersById = keyBy(body.results, 'id')
-          return get(theme, 'data.chapters', [])
+          const chaptersById = keyBy(body.results, "id");
+          return get(theme, "data.chapters", [])
             .map(id => chaptersById[id])
-            .filter(Boolean)
-        })
-    })
+            .filter(Boolean);
+        });
+    });
 
 export const getDocuments = (params = {}) =>
   request
@@ -104,7 +108,7 @@ export const getHomeDocuments = (params = {}) =>
 export const getCollectionDocuments = (params = {}) =>
   getDocuments({
     ...params,
-    facets: ["data__year", 'data__type'],
+    facets: ["data__year", "data__type"],
     filters: {
       ...params.filters
     }
