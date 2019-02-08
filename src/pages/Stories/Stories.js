@@ -21,8 +21,8 @@ class Stories extends Component {
         <div className="container-fluid h-100 d-flex flex-column">
           <div className="row row-top-bar">
             <div className="col">
-              <div class="top-bar d-flex align-items-center">
-                <h2 class="text-white m-0">Dossiers Thémetiques</h2>
+              <div className="top-bar d-flex align-items-center">
+                <h2 className="text-white m-0">Dossiers Thémetiques</h2>
               </div>
             </div>
           </div>
