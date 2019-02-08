@@ -67,7 +67,7 @@ class TimelineFilters extends PureComponent {
 
         {/* TODO: use a shit like that https://haubek.github.io/custom-switch/ */}
         <div className="d-flex align-items-center filter-switch">
-          <span className="mr-2">Milestones only</span>
+          <span className="mr-2">{t("milestones_only")}</span>
           <span className="switch switch-sm">
             <input
               type="checkbox"
@@ -76,7 +76,7 @@ class TimelineFilters extends PureComponent {
               className="switch"
               id="milestone-switch"
             />
-            <label htmlFor="milestone-switch">All events</label>
+            <label htmlFor="milestone-switch">{t("all_events")}</label>
           </span>
         </div>
       </div>

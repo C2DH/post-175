@@ -3,12 +3,13 @@ import classNames from "classnames";
 import { Link } from "react-router-dom";
 import MagikDotDotDot from "../MagikDotDotDot";
 import CollectionImage from "./CollectionImage";
+import { localize } from "../../localize";
 import "./Collection.scss";
 import { TYPE_ICON } from "../../consts";
 
-export default class CollectionItem extends PureComponent {
+class CollectionItem extends PureComponent {
   render() {
-    const { doc } = this.props;
+    const { doc, t } = this.props;
     return (
       <Link
         to={{ pathname: `/doc/${doc.id}`, state: { modal: true } }}
@@ -17,7 +18,7 @@ export default class CollectionItem extends PureComponent {
         <div className="collection-item d-flex flex-column justify-content-between w-100 text-white">
           <div className="item-caption flex-shrink-0 flex-grow-0">
             <div className="d-flex item-info">
-              <div className="item-year">{doc.data.year}</div>
+              <div className="item-year">{t(doc.data.year)}</div>
               <div className="item-icon ml-auto">
                 <i className="material-icons">{TYPE_ICON[doc.type]}</i>
               </div>
@@ -39,3 +40,5 @@ export default class CollectionItem extends PureComponent {
     );
   }
 }
+
+export default localize()(CollectionItem);

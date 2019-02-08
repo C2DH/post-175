@@ -126,14 +126,14 @@ const MapHeader = ({
           >
             <i className="material-icons">{MAP_ICON[label]}</i>
             <span className="ml-2">
-              {label} {`(${count})`}
+              {t(label)} {`(${count})`}
             </span>
           </div>
         ))}
       </div>
       {showOpacity && (
         <div className="map-opacity d-flex align-items-center text-white">
-          <span className="mr-3">Historical map opacity</span>
+          <span className="mr-3">{t("map_opacity")}</span>
           <input
             onChange={onOpacityChange}
             value={opacity}

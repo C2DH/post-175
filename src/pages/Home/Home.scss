@@ -11,14 +11,16 @@
   }
 
   .abstract {
-    font-size: 1.1rem;
+    font-size: 0.85rem;
   }
 
   .section-container {
     border-top: 5px white solid;
-    padding: 25px 25px 50px 25px;
+    padding: 15px 0px 15px 15px;
     transition: border-top 0.3s linear;
     min-height: 136px;
+    display: flex;
+    align-items: center;
   }
 
   .section-container:hover {
@@ -27,7 +29,7 @@
 
   .section-text {
     font-family: "IBM Plex Sans", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     transform: translateX(-24px);
     transition: transform 0.3s linear;
   }

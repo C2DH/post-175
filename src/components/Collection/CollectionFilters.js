@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
-import get from 'lodash/get'
+import get from "lodash/get";
 import { connect } from "react-redux";
 import { searchSuggestions, clearSuggestions } from "../../state/actions";
 import debounce from "lodash/debounce";
@@ -60,9 +60,9 @@ class CollectionFilters extends PureComponent {
   };
 
   handleSubmit = e => {
-    e.preventDefault()
-    this.props.onSearchChange(this.state.searchText)
-  }
+    e.preventDefault();
+    this.props.onSearchChange(this.state.searchText);
+  };
 
   debouncedOnSearchChange = debounce(this.props.onSearchChange, 150);
 
@@ -97,17 +97,17 @@ class CollectionFilters extends PureComponent {
             <div className="row top-bar border-bottom align-items-center">
               <div className="col-auto mr-auto">
                 <div className="text-white">
-                  <h2 className="m-0 d-inline-block">Archive</h2>
+                  <h2 className="m-0 d-inline-block">{t("menu_collection")}</h2>
                   <small className="ml-2">
                     {count} / {allCount}
                   </small>
-                  <small className="ml-2">items shown</small>
+                  <small className="ml-2">{t("items_shown")}</small>
                 </div>
               </div>
               <div className="col-auto">
                 <div className="d-flex align-items-center">
                   <Search
-                    placeholder="Search"
+                    placeholder={t("search")}
                     onSuggestionSelected={this.onSuggestionSelected}
                     searchSuggestions={this.debouncedSearchSuggestions}
                     clearSuggestions={clearSuggestions}
@@ -115,11 +115,14 @@ class CollectionFilters extends PureComponent {
                     value={this.state.searchText}
                     onChange={this.handleOnSearchChange}
                   />
-                  <button type='submit' className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white">
+                  <button
+                    type="submit"
+                    className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white"
+                  >
                     <i className="material-icons">search</i>
                   </button>
                   <button
-                    type='button'
+                    type="button"
                     className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white"
                     onClick={this.toggleFiltersOpen}
                   >
@@ -140,7 +143,7 @@ class CollectionFilters extends PureComponent {
           <div className="container-fluid">
             <div className="row">
               <div className="col-4">
-                <h6 className="filter-sub-title mt-3">filter by type</h6>
+                <h6 className="filter-sub-title mt-3">{t("filter_by_type")}</h6>
                 <div className="categories-radios d-flex flex-wrap my-3">
                   {COLLECTION_DATE_TYPES.map(name => (
                     <div className="custom-control custom-checkbox" key={name}>
@@ -157,12 +160,11 @@ class CollectionFilters extends PureComponent {
                         name={name}
                       />
                       <label className="custom-control-label" htmlFor={name}>
-                        {t(name)}
-                        {' '}
+                        {t(name)}{" "}
                         <small>
-                          {get(dataTypeFacets, `${name}.count`, 0)}
-                          {' / '}
-                          {get(dataTypeAllFacets, `${name}.count`, 0)}
+                          ({get(dataTypeFacets, `${name}.count`, 0)}
+                          {" / "}
+                          {get(dataTypeAllFacets, `${name}.count`, 0)})
                         </small>
                       </label>
                     </div>
@@ -170,7 +172,7 @@ class CollectionFilters extends PureComponent {
                 </div>
               </div>
               <div className="col-8 d-flex flex-column">
-                <h6 className="filter-sub-title mt-3">filter by year</h6>
+                <h6 className="filter-sub-title mt-3">{t("filter_by_year")}</h6>
                 {allFacets && (
                   <CollectionTimeBrush
                     includeUncertain={includeUncertain}
@@ -181,6 +183,7 @@ class CollectionFilters extends PureComponent {
                     onYearsChange={onYearsChange}
                     facets={facets}
                     allFacets={allFacets}
+                    t={t}
                   />
                 )}
               </div>

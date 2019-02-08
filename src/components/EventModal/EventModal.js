@@ -95,7 +95,7 @@ class EventModal extends PureComponent {
                       {get(selectedDocument, "data.year")}
                     </p>
                     <p className="text-white description">
-                      {get(selectedDocument, "title")}
+                      {get(selectedDocument, "data.title")}
                     </p>
                   </div>
                   <div className="px-3 align-self-end ml-auto">
@@ -107,7 +107,7 @@ class EventModal extends PureComponent {
                           state: { modal: true }
                         }}
                       >
-                        open
+                        {t("open")}
                       </Link>
                     </p>
                   </div>
@@ -133,7 +133,7 @@ class EventModal extends PureComponent {
                 </div>
                 {displayDocs.length > 1 && (
                   <div className="w-100 p-3">
-                    <h6 className="related-title">related documents</h6>
+                    <h6 className="related-title">{t("related_documents")}</h6>
                     <div className="d-flex flex-wrap w-100">
                       {displayDocs &&
                         displayDocs.map((doc, i) => (

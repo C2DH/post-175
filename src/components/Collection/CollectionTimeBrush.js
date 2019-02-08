@@ -188,7 +188,13 @@ export default class CollectionTimeBrush extends PureComponent {
   debouncedOnYearsChange = debounce(this.props.onYearsChange, 150);
 
   render() {
-    const { allFacets, facets, includeUncertain, toggleUncertain } = this.props;
+    const {
+      allFacets,
+      facets,
+      includeUncertain,
+      toggleUncertain,
+      t
+    } = this.props;
     const { width, height, startYear, endYear } = this.state;
     const scaleBars = this.getScaleBars(allFacets.data__year, height);
     const extent = this.getExtent(allFacets);
@@ -245,7 +251,7 @@ export default class CollectionTimeBrush extends PureComponent {
               name="uncertainCheckbox"
             />
             <label className="custom-control-label" htmlFor="uncertainCheckbox">
-              include items with uncertain dates
+              {t("uncertain_dates")}
             </label>
           </div>
           <div>

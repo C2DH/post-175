@@ -74,7 +74,7 @@ class Home extends PureComponent {
                 </h1>
               </div>
               <div className="col-3 text-white">
-                <p className="mt-3 text-white-50 abstrac">
+                <p className="mt-3 text-white-50 abstract">
                   {story ? story.data.abstract : ""}
                 </p>
                 <p>

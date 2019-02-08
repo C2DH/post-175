@@ -9,6 +9,7 @@ import {
 } from "../../state/selectors";
 import DocMedia from "./DocMedia";
 import HomeMenu from "../HomeMenu";
+import { localize } from "../../localize";
 import "./DocDetail.scss";
 
 const DocDetail = ({
@@ -18,7 +19,8 @@ const DocDetail = ({
   selectedLang,
   url,
   location,
-  history
+  history,
+  t
 }) => (
   <div className="doc-detail d-flex w-100 h-100">
     <div className="doc-detail-bar border-right">
@@ -36,22 +38,22 @@ const DocDetail = ({
           <div className="col-md-4 h-100 d-flex">
             <div className="doc-detail-info w-100">
               <div className="p-3 w-100 border-bottom">
-                <h6 className="detail-title">title</h6>
+                <h6 className="detail-title">{t("title")}</h6>
                 <h4 className="doc-title">{doc.data.title}</h4>
               </div>
               {doc.data.description && (
                 <div className="p-3 w-100 border-bottom">
-                  <h6 className="detail-title">description</h6>
+                  <h6 className="detail-title">{t("description")}</h6>
                   <p>{doc.data.description}</p>
                 </div>
               )}
               <div className="p-3 w-100 border-bottom">
-                <h6 className="detail-title">date</h6>
+                <h6 className="detail-title">{t("date")}</h6>
                 <p>{doc.data.start_date}</p>
               </div>
               {doc.documents.length > 0 && (
                 <div className="p-3 w-100">
-                  <h6 className="detail-title">Related documents</h6>
+                  <h6 className="detail-title">t("related_documents")</h6>
                   <div className="d-flex flex-wrap w-100">
                     {doc.documents &&
                       doc.documents.map((relatedDoc, i) => (
@@ -89,5 +91,5 @@ export default withRouter(
     url: getMakeLangUrl(state),
     langs: getLangs(state),
     selectedLang: getSelectedLang(state)
-  }))(DocDetail)
+  }))(localize()(DocDetail))
 );

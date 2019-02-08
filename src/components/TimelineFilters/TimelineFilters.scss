@@ -3,7 +3,7 @@
 
   .category-filter {
     font-family: "IBM Plex Sans", sans-serif;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     opacity: 0.4;
     transition: opacity 0.3s linear;
     cursor: pointer;
@@ -15,6 +15,10 @@
 
   .filter-switch {
     font-family: "IBM Plex Sans", sans-serif;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+
+    label {
+      font-size: 0.75rem;
+    }
   }
 }
