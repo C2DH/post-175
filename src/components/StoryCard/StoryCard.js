@@ -12,18 +12,15 @@ export default memo(function StoryCard({
   countModules
 }) {
   return (
-    <Link
-      to={`/stories/${slug}`}
-      className={classNames("story-card", { disabled: !countModules })}
-    >
-      <div className="story-card-content">
+    <div className={classNames("story-card", { disabled: !countModules })}>
+      <Link to={`/stories/${slug}`}>
         <div className="count">{count}</div>
         <div className="image" style={{ backgroundImage: `url('${image}')` }} />
         <h4 className="title my-3">{title}</h4>
         <p className="description">
           {description ? description : "bientôt en ligne"}
         </p>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 });

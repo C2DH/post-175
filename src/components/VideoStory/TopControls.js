@@ -42,14 +42,14 @@ export default memo(function TopControls({
       </button>
       <div className="track-container">
         <div className="video-meta text-white">
-          <div className="d-flex h-100 align-items-center">
-            <h3 className="mb-0">{title}</h3>
-            <div className="ml-2">
-              ({playedMinutes}/{durationMinutes})
-            </div>
+          <div style={{ minWidth: 0 }}>
+            <h3 className="mb-0 text-truncate">{title}</h3>
+          </div>
+          <div className="ml-2">
+            ({playedMinutes}/{durationMinutes})
           </div>
           <div
-            className="d-flex audio"
+            className="d-flex audio ml-auto"
             onClick={() => setVolume(volume === 0 ? 1 : 0)}
           >
             {volume === 0 ? (

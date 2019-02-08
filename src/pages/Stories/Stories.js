@@ -26,25 +26,23 @@ class Stories extends Component {
               </div>
             </div>
           </div>
-          <div className="row flex-grow-1">
-            <div className="col">
-              <div className="d-flex h-100" style={{ overflowY: "auto" }}>
-                {chapters &&
-                  chapters.map((chapter, i) => (
-                    <StoryCard
-                      count={padStart(i + 1, 2, 0)}
-                      image={get(
-                        chapter,
-                        "covers[0].data.resolutions.medium.url"
-                      )}
-                      countModules={chapter.data.count_modules}
-                      key={chapter.id}
-                      slug={chapter.slug}
-                      title={chapter.data.title}
-                      description={chapter.data.abstract}
-                    />
-                  ))}
-              </div>
+          <div className="row h-100 " style={{ overflow: "auto" }}>
+            <div className="d-flex h-100">
+              {chapters &&
+                chapters.map((chapter, i) => (
+                  <StoryCard
+                    count={padStart(i + 1, 2, 0)}
+                    image={get(
+                      chapter,
+                      "covers[0].data.resolutions.medium.url"
+                    )}
+                    countModules={chapter.data.count_modules}
+                    key={chapter.id}
+                    slug={chapter.slug}
+                    title={chapter.data.title}
+                    description={chapter.data.abstract}
+                  />
+                ))}
             </div>
           </div>
         </div>
