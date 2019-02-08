@@ -335,7 +335,7 @@ class Map extends PureComponent {
 
   getFilteredPlaces = memoize((places, placeTypes) => {
     if (!places) {
-      return places
+      return places;
     }
     if (placeTypes.length === 0) {
       return places;
@@ -482,7 +482,7 @@ class Map extends PureComponent {
                               <Marker
                                 key={
                                   /*selectedPlace ? `selected-${place.id}` : place.id*/
-                                  `place-${place.id}`
+                                  `place-${place.id}${place.open}`
                                 }
                                 longitude={place.coordinates[0]}
                                 latitude={place.coordinates[1]}
