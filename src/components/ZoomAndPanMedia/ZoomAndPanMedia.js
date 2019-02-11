@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import ReactHammer from "react-hammerjs";
 import Hammer from "hammerjs";
+import { localize } from "../../localize";
 import "./ZoomAndPanMedia.scss";
 
 const PINCH_TIMEOUT = 300;
 
-export default class ZoomAndPanMedia extends Component {
+class ZoomAndPanMedia extends Component {
   state = {
     zoom: 1,
     pinchingZoom: 1,
@@ -139,7 +140,7 @@ export default class ZoomAndPanMedia extends Component {
   };
 
   render() {
-    const { src } = this.props;
+    const { src, t } = this.props;
     return (
       <div className="zoom-and-pan-media">
         <div className="zoom-and-pan-media-container">
@@ -161,13 +162,13 @@ export default class ZoomAndPanMedia extends Component {
             onPanEnd={this.handlePanEnd}
           >
             <img
-              alt='Zoom and pan'
+              alt="Zoom and pan"
               onWheel={e => {
-                this.handleZoomNew(e.deltaY * 0.01)()
+                this.handleZoomNew(e.deltaY * 0.01)();
               }}
               onDragStart={e => {
-                e.preventDefault()
-                return false
+                e.preventDefault();
+                return false;
               }}
               onLoad={this.onLoadImage}
               draggable="false"
@@ -191,7 +192,7 @@ export default class ZoomAndPanMedia extends Component {
               className="btn btn-dark bg-transparent"
               onClick={this.resetZoom}
             >
-              reset
+              {t("reset")}
             </button>
             <button
               type="button"
@@ -214,3 +215,5 @@ export default class ZoomAndPanMedia extends Component {
     );
   }
 }
+
+export default localize()(ZoomAndPanMedia);

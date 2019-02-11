@@ -9,6 +9,7 @@ import {
 } from "../../state/selectors";
 import DocMedia from "./DocMedia";
 import HomeMenu from "../HomeMenu";
+import DocDate from "../DocDate";
 import { localize } from "../../localize";
 import "./DocDetail.scss";
 
@@ -49,7 +50,14 @@ const DocDetail = ({
               )}
               <div className="p-3 w-100 border-bottom">
                 <h6 className="detail-title">{t("date")}</h6>
-                <p>{doc.data.start_date}</p>
+                <p>
+                  <DocDate
+                    startDate={doc.data.start_date}
+                    endDate={doc.data.end_date}
+                    year={doc.data.year}
+                    date={doc.data.date}
+                  />
+                </p>
               </div>
               {doc.documents.length > 0 && (
                 <div className="p-3 w-100">

@@ -18,7 +18,7 @@ class CollectionItem extends PureComponent {
         <div className="collection-item d-flex flex-column justify-content-between w-100 text-white">
           <div className="item-caption flex-shrink-0 flex-grow-0">
             <div className="d-flex item-info">
-              <div className="item-year">{t(doc.data.year)}</div>
+              <div className="item-year text-truncate">{t(doc.data.year)}</div>
               <div className="item-icon ml-auto">
                 <i className="material-icons">{TYPE_ICON[doc.type]}</i>
               </div>

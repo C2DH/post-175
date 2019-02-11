@@ -1,21 +1,32 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { DraggableCore } from "react-draggable";
+import DocDate from "../DocDate";
+import SideDocumentMedia from "./SideDocumentMedia";
 
-export default memo(function SideDocument({ onDrag, width, doc, stopPlaying }) {
-  let year = null;
-  if (doc) {
-    year = new Date(doc.data.start_date).getFullYear();
-    year = isNaN(year) ? null : year;
-  }
+export default memo(function SideDocument({
+  onDrag,
+  width,
+  doc,
+  stopPlaying,
+  t
+}) {
   return (
     <div className="side-document" style={{ width }}>
       {doc && (
         <div className="display-doc text-white px-2">
           <div className="title py-4">
             <div className="truncate-parent">
-              <p className="text-truncate mb-0 text-white-50">{year}</p>
-              <h6 className="text-truncate">{doc.title}</h6>
+              <p className="text-truncate mb-0 text-white-50">
+                {" "}
+                <DocDate
+                  startDate={doc.data.start_date}
+                  endDate={doc.data.end_date}
+                  year={doc.data.year}
+                  date={doc.data.date}
+                />
+              </p>
+              <h6 className="text-truncate">{doc.data.title}</h6>
             </div>
             <div className="mx-4">
               <Link
@@ -26,18 +37,11 @@ export default memo(function SideDocument({ onDrag, width, doc, stopPlaying }) {
                   state: { modal: true }
                 }}
               >
-                open
+                {t("open")}
               </Link>
             </div>
           </div>
-          <div
-            className="doc-image"
-            style={{
-              backgroundImage: `url(${
-                doc.data.resolutions ? doc.data.resolutions.medium.url : ""
-              })`
-            }}
-          />
+          <SideDocumentMedia doc={doc} />
         </div>
       )}
 

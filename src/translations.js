@@ -14,7 +14,7 @@ export default {
       "Die Geschichte des Post und Telekommunikationsunternehmens des Großherzogtums seit 1842",
     // home page
     home_joerpost: "Joer Post",
-    home_title: "Connecter le Luxembourg",
+    home_title: "luxemburg verbinden",
     home_button1: "Entdecken Sie die Zeitleiste",
     home_button2: "Erkunden Sie die Karte",
     home_readmore: "Mehr",
@@ -77,7 +77,7 @@ export default {
     technology: "Technologie",
     partners: "Partner",
     open: "öffnen",
-    related_documents: "verwandte Objekte",
+    related_documents: "verwandte Dokumente",
     items_shown: "Angezeigte Objekte",
     search: "Suche",
     filter_by_year: "Nach Jahr filtern",
@@ -94,7 +94,11 @@ export default {
     image: "bild",
     title: "Titel",
     date: "Jahreszahl",
-    description: "Beschreibung"
+    description: "Beschreibung",
+    reset: "zurücksetzen",
+    soon_online: "bald online",
+    speaker: "Interviewpartner",
+    unknown: "unbekannte"
   },
   fr: {
     // side menu
@@ -173,7 +177,7 @@ export default {
     technology: "Technologie",
     partners: "Collaborateurs",
     open: "ouvrir",
-    related_documents: "objets liés",
+    related_documents: "documents liés",
     items_shown: "Éléments affichés",
     search: "Recherche",
     filter_by_year: "Filtrer par année",
@@ -190,6 +194,10 @@ export default {
     image: "image",
     title: "titre",
     date: "date",
-    description: "description"
+    description: "description",
+    reset: "reset",
+    soon_online: "bientôt en ligne",
+    speaker: "interviewé",
+    unknown: "inconnu"
   }
 };

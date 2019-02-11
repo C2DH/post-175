@@ -6,6 +6,7 @@ import { loadChapters } from "../../state/actions";
 import { getChapters } from "../../state/selectors";
 import StoryCard from "../../components/StoryCard";
 import SideMenu from "../../components/SideMenu";
+import { localize } from "../../localize";
 import "./Stories.scss";
 
 class Stories extends Component {
@@ -14,7 +15,7 @@ class Stories extends Component {
   }
 
   render() {
-    const { chapters } = this.props;
+    const { chapters, t } = this.props;
     return (
       <div className="h-100 Stories">
         <SideMenu />
@@ -22,7 +23,7 @@ class Stories extends Component {
           <div className="row row-top-bar">
             <div className="col">
               <div className="top-bar d-flex align-items-center">
-                <h2 className="text-white m-0">Dossiers Thémetiques</h2>
+                <h2 className="text-white m-0">{t("menu_themes")}</h2>
               </div>
             </div>
           </div>
@@ -41,6 +42,7 @@ class Stories extends Component {
                     slug={chapter.slug}
                     title={chapter.data.title}
                     description={chapter.data.abstract}
+                    t={t}
                   />
                 ))}
             </div>
@@ -58,4 +60,4 @@ export default connect(
   {
     loadChapters
   }
-)(Stories);
+)(localize()(Stories));

@@ -89,7 +89,7 @@ export default memo(function TopControls({
                   target={`side-doc-${i}`}
                   className="side-doc-tooltip"
                 >
-                  {sideDoc.doc.title}
+                  {sideDoc.doc.data.title}
                 </UncontrolledTooltip>
               </React.Fragment>
             ))}
