@@ -4,6 +4,8 @@ import { localize } from "../../localize";
 const DocDate = ({ startDate, endDate, year, date, t }) => {
   if (date) {
     return <span>{date}</span>;
+  } else if (startDate && !endDate) {
+    return <span>{startDate}</span>;
   } else if (year) {
     return <span>{t(year)}</span>;
   } else if (startDate && endDate) {
