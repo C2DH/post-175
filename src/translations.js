@@ -97,7 +97,8 @@ export default {
     description: "Beschreibung",
     reset: "zurücksetzen",
     soon_online: "bald online",
-    speaker: "Interviewpartner"
+    speaker: "Interviewpartner",
+    unknown: "unbekannte"
   },
   fr: {
     // side menu
@@ -196,6 +197,7 @@ export default {
     description: "description",
     reset: "reset",
     soon_online: "bientôt en ligne",
-    speaker: "interviewé"
+    speaker: "interviewé",
+    unknown: "inconnu"
   }
 };

@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { DraggableCore } from "react-draggable";
+import DocDate from "../DocDate";
 
 export default memo(function SideDocument({
   onDrag,
@@ -9,18 +10,21 @@ export default memo(function SideDocument({
   stopPlaying,
   t
 }) {
-  let year = null;
-  if (doc) {
-    year = new Date(doc.data.start_date).getFullYear();
-    year = isNaN(year) ? null : year;
-  }
   return (
     <div className="side-document" style={{ width }}>
       {doc && (
         <div className="display-doc text-white px-2">
           <div className="title py-4">
             <div className="truncate-parent">
-              <p className="text-truncate mb-0 text-white-50">{year}</p>
+              <p className="text-truncate mb-0 text-white-50">
+                {" "}
+                <DocDate
+                  startDate={doc.data.start_date}
+                  endDate={doc.data.end_date}
+                  year={doc.data.year}
+                  date={doc.data.date}
+                />
+              </p>
               <h6 className="text-truncate">{doc.data.title}</h6>
             </div>
             <div className="mx-4">
