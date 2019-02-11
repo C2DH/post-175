@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { DraggableCore } from "react-draggable";
 import DocDate from "../DocDate";
+import SideDocumentMedia from "./SideDocumentMedia";
 
 export default memo(function SideDocument({
   onDrag,
@@ -40,14 +41,7 @@ export default memo(function SideDocument({
               </Link>
             </div>
           </div>
-          <div
-            className="doc-image"
-            style={{
-              backgroundImage: `url(${
-                doc.data.resolutions ? doc.data.resolutions.medium.url : ""
-              })`
-            }}
-          />
+          <SideDocumentMedia doc={doc} />
         </div>
       )}
 

@@ -123,6 +123,14 @@
           background-position: center center;
           background-repeat: no-repeat;
         }
+        .doc-video {
+          flex: 1;
+          height: 100%;
+          overflow: hidden;
+        }
+        .doc-video video {
+          object-fit: contain;
+        }
       }
     }
   }
