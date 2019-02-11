@@ -80,7 +80,6 @@ class VideoStory extends Component {
   };
 
   onProgress = progressState => {
-    console.log('Progess!', progressState)
     this.setState(progressState);
   };
 
