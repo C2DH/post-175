@@ -25,15 +25,20 @@ class VideoStory extends Component {
 
   onPlayerReady = () => {
     // Nothing to do
-    if (this.cuechangeSetted) {
+    if (this.videoInit) {
       return
     }
     const video = this.player.getInternalPlayer();
     if (video) {
       const track = video.textTracks[0];
+      // This means that the autoplay don't start the video
+      // so set the state local state abut playing to false
+      if (video.paused && this.state.playing) {
+        this.setState({ playing: false })
+      }
       if (track) {
         // This is necessary because onPlayerReady can be called multiple times...
-        this.cuechangeSetted = true
+        this.videoInit = true
         track.addEventListener("cuechange", this.setSubtitles);
       }
     }
@@ -57,12 +62,12 @@ class VideoStory extends Component {
       // XXX HACK XXX
       // Super workaround
       // On firefox when the track src change the subtitles won't change
-      // so when the subtitles file change set cuechangeSetted to false
+      // so when the subtitles file change set videoInit to false
       // so when player is ready the event listener is re-setted
       // and seek to the current seconds because when the player is
       // destroied the state abount video played is lost
       if (navigator.userAgent.toLowerCase().indexOf("firefox") !== -1) {
-        this.cuechangeSetted = false
+        this.videoInit = false
         this.player.seekTo(parseInt(this.state.playedSeconds))
         this.setState({ subtitles: [] })
       }
@@ -75,6 +80,7 @@ class VideoStory extends Component {
   };
 
   onProgress = progressState => {
+    console.log('Progess!', progressState)
     this.setState(progressState);
   };
 
