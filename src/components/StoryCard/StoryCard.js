@@ -9,7 +9,8 @@ export default memo(function StoryCard({
   title,
   description,
   slug,
-  countModules
+  countModules,
+  t
 }) {
   return (
     <div className={classNames("story-card", { disabled: !countModules })}>
@@ -18,7 +19,7 @@ export default memo(function StoryCard({
         <div className="image" style={{ backgroundImage: `url('${image}')` }} />
         <h4 className="title my-3">{title}</h4>
         <p className="description">
-          {description ? description : "bientôt en ligne"}
+          {description ? description : t("soon_online")}
         </p>
       </Link>
     </div>

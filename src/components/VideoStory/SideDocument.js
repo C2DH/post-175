@@ -2,7 +2,13 @@ import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { DraggableCore } from "react-draggable";
 
-export default memo(function SideDocument({ onDrag, width, doc, stopPlaying }) {
+export default memo(function SideDocument({
+  onDrag,
+  width,
+  doc,
+  stopPlaying,
+  t
+}) {
   let year = null;
   if (doc) {
     year = new Date(doc.data.start_date).getFullYear();
@@ -15,7 +21,7 @@ export default memo(function SideDocument({ onDrag, width, doc, stopPlaying }) {
           <div className="title py-4">
             <div className="truncate-parent">
               <p className="text-truncate mb-0 text-white-50">{year}</p>
-              <h6 className="text-truncate">{doc.title}</h6>
+              <h6 className="text-truncate">{doc.data.title}</h6>
             </div>
             <div className="mx-4">
               <Link
@@ -26,7 +32,7 @@ export default memo(function SideDocument({ onDrag, width, doc, stopPlaying }) {
                   state: { modal: true }
                 }}
               >
-                open
+                {t("open")}
               </Link>
             </div>
           </div>

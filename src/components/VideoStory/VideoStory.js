@@ -5,11 +5,12 @@ import TopControls from "./TopControls";
 import Speaker from "./Speaker";
 import Subtitles from "./Subtitles";
 import SideDocument from "./SideDocument";
+import { localize } from "../../localize";
 import "./VideoStory.scss";
 
 const MIN_SIDE_WIDTH = 30;
 
-export default class VideoStory extends Component {
+class VideoStory extends Component {
   state = {
     durationSeconds: 0,
     loaded: 0,
@@ -92,7 +93,8 @@ export default class VideoStory extends Component {
       sideDocs,
       title,
       subtitlesFile,
-      onBack
+      onBack,
+      t
     } = this.props;
     const {
       durationSeconds,
@@ -166,6 +168,7 @@ export default class VideoStory extends Component {
             onDrag={this.handleSideDocDrag}
             width={sideWidth}
             stopPlaying={this.stopPlaying}
+            t={t}
           />
         </div>
 
@@ -174,7 +177,7 @@ export default class VideoStory extends Component {
           <div className="container text-white">
             <div className="row">
               <div className="col-4">
-                <Speaker doc={speaker} />
+                <Speaker doc={speaker} t={t} />
               </div>
               <div className="col-8">
                 <Subtitles subtitles={subtitles} />
@@ -186,3 +189,5 @@ export default class VideoStory extends Component {
     );
   }
 }
+
+export default localize()(VideoStory);

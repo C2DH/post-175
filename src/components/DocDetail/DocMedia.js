@@ -53,7 +53,7 @@ function DocMedia({ doc, lang }) {
             "http://localhost:3000/media/$3"
           );
 
-    console.log("PDF FILE: ", pdfFile);
+    //console.log("PDF FILE: ", pdfFile);
 
     return (
       <PdfViewer file={pdfFile} />
