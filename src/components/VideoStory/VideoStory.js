@@ -23,10 +23,16 @@ export default class VideoStory extends Component {
   };
 
   onPlayerReady = () => {
+    // Nothing to do
+    if (this.cuechangeSetted) {
+      return
+    }
     const video = this.player.getInternalPlayer();
     if (video) {
       const track = video.textTracks[0];
       if (track) {
+        // This is necessary because onPlayerReady can be called multiple times...
+        this.cuechangeSetted = true
         track.addEventListener("cuechange", this.setSubtitles);
       }
     }
@@ -43,13 +49,23 @@ export default class VideoStory extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (
-    //   this.props.getSideDocAt(this.state.playedSeconds) &&
-    //   this.props.getSideDocAt(this.state.playedSeconds) !==
-    //     this.props.getSideDocAt(prevState.playedSeconds)
-    // ) {
-    //   this.setState({ sideWidth: 400 });
-    // }
+    if (
+      this.props.subtitlesFile !== prevProps.subtitlesFile &&
+      this.props.subtitlesFile
+    ) {
+      // XXX HACK XXX
+      // Super workaround
+      // On firefox when the track src change the subtitles won't change
+      // so when the subtitles file change set cuechangeSetted to false
+      // so when player is ready the event listener is re-setted
+      // and seek to the current seconds because when the player is
+      // destroied the state abount video played is lost
+      if (navigator.userAgent.toLowerCase().indexOf("firefox") !== -1) {
+        this.cuechangeSetted = false
+        this.player.seekTo(parseInt(this.state.playedSeconds))
+        this.setState({ subtitles: [] })
+      }
+    }
   }
 
   setSubtitles = e => {
