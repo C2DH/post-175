@@ -7,11 +7,12 @@ import {
   getTimelineTopScale,
   getTimelineCurrentDate,
   getEventsExtent,
-  WIDTH_WITH_EVENTS
+  WIDTH_WITH_EVENTS,
+  EVENT_NO_IMAGE_HEIGHT,
 } from "../../state/selectors";
 import TimelineNavigation from "../TimelineNavigation";
 import TimelineFilters from "../TimelineFilters";
-import { last, get } from "lodash";
+import { last, get, sum } from "lodash";
 import { Motion, spring } from "react-motion";
 import MultiText from "../../components/MultiText";
 import { DraggableCore } from "react-draggable";
@@ -22,6 +23,8 @@ import "./Timeline.scss";
 const TIMELINE_PADDING = 30;
 const EVENT_WIDTH = 150;
 const EVENT_RADIUS = 8;
+const EVENT_PADDING_TOP = 50
+const MIN_VERTIAL_PADDING_EVENTS = 5
 
 class EventItem extends PureComponent {
   render() {
@@ -34,40 +37,53 @@ class EventItem extends PureComponent {
       leaveEvent
     } = this.props;
 
-    let eventHeight = 0;
-    //const snapshot = get(event, "documents[0].snapshot");
-    const snapshot = get(event, "documents[0].data.resolutions.low.url");
+    // Padding for top year header
+    const availableHeight = height - EVENT_PADDING_TOP
 
-    if (snapshot) {
-      const thumbnailHeight = get(
-        event,
-        //"documents[0].data.thumbnail_height",
-        "documents[0].data.resolutions.low.height",
-        0
-      );
-      //const thumbnailWidth = get(event, "documents[0].data.thumbnail_width", 0);
-      const thumbnailWidth = get(
-        event,
-        "documents[0].data.resolutions.low.width",
-        0
-      );
-      eventHeight = (thumbnailHeight * EVENT_WIDTH) / thumbnailWidth;
+    const snapshot = get(event, 'documents[0].data.resolutions.low.url')
+
+    // Height of event image
+    const imageHeight = event.imageHeight
+
+    // Total height occuped by events \w same displacementId
+    let totalOccupedHeight = event.totalOccupedHeight
+
+    // List of events \w same displacementId heights
+    let occupedHeights = event.occupedHeights
+
+    // Event has an image associated?
+    let hasImage = !!snapshot
+
+    // Not feet in current height...
+    if (event.totalOccupedHeight > availableHeight - (event.displacementCount + 1) * MIN_VERTIAL_PADDING_EVENTS) {
+      // FIXME this is a very stupid implementation
+
+      // Force no image
+      hasImage = false
+
+      totalOccupedHeight = event.displacementCount * EVENT_NO_IMAGE_HEIGHT
+
+      // All \w no images
+      occupedHeights = occupedHeights.map(() => EVENT_NO_IMAGE_HEIGHT)
     }
 
-    let y2 = 10;
+    const spacer = (availableHeight - totalOccupedHeight) / (event.displacementCount + 1)
 
-    if (!event.displacementIndex) {
-      y2 = eventHeight ? height / 2 + eventHeight / 2 : height / 2;
+    const y2 = (
+      sum(occupedHeights.slice(0, event.displacementIndex - 1)) +
+      event.displacementIndex * spacer +
+      EVENT_PADDING_TOP
+    )
+
+    let lineY2 = y2 - (EVENT_RADIUS / 2)
+
+    if (hasImage) {
+      lineY2 += 30 + imageHeight
     } else {
-      const unitHeight = height / (event.displacementCount + 1);
-      y2 = unitHeight * event.displacementIndex;
-      if (y2 - eventHeight < 0) {
-        y2 += Math.abs(y2 - eventHeight) + 80;
-      }
+      lineY2 += 25
     }
-    const color = getEventColor(event);
 
-    const hideImage = event.displacementCount && event.displacementCount >= 3
+    const color = getEventColor(event);
 
     return (
       <g
@@ -75,20 +91,18 @@ class EventItem extends PureComponent {
         onMouseEnter={() => enterEvent(event)}
         onMouseLeave={() => leaveEvent(event)}
         className={classNames('event-item', {
-          'hidden-image': hideImage,
+          'hidden-image': !hasImage,
         })}
       >
-        {eventHeight && (
+        {hasImage && (
           <g
             className='timeline-g-click'
-            transform={`translate(${scale(event.startDate)}, ${y2 -
-              eventHeight -
-              EVENT_RADIUS * 3})`}
+            transform={`translate(${scale(event.startDate)}, ${y2})`}
           >
             <g transform={"translate(10, 0)"}>
               <MultiText
                 spacing={25}
-                y={55 + eventHeight}
+                y={55 + imageHeight}
                 className="timeline-event-title"
                 text={event.data.title}
                 maxLine={2}
@@ -98,7 +112,7 @@ class EventItem extends PureComponent {
                 {event.data.start_date}
               </text>
               <text
-                dy={30 + eventHeight}
+                dy={30 + imageHeight}
                 fill={color}
                 className="timeline-event-category"
               >
@@ -107,21 +121,21 @@ class EventItem extends PureComponent {
             </g>
             <image
               className={classNames({
-                'd-none': hideImage,
+                'd-none': !hasImage,
               })}
               xlinkHref={snapshot}
               x={1}
               y={EVENT_RADIUS}
               width={EVENT_WIDTH}
-              height={eventHeight}
+              height={imageHeight}
             />
           </g>
         )}
 
-        {!eventHeight && (
+        {!hasImage && (
           <g
             className="timeline-g-click"
-            transform={`translate(${scale(event.startDate) + 10}, ${y2 - 20})`}
+            transform={`translate(${scale(event.startDate) + 10}, ${y2})`}
           >
             <MultiText
               spacing={25}
@@ -142,19 +156,19 @@ class EventItem extends PureComponent {
           x1={scale(event.startDate)}
           x2={scale(event.startDate)}
           y1={0}
-          y2={y2}
+          y2={lineY2}
           stroke={color}
         />
         <circle
           cx={scale(event.startDate)}
-          cy={y2}
+          cy={lineY2}
           fill={color}
           fillOpacity={0.4}
           r={EVENT_RADIUS}
         />
         <circle
           cx={scale(event.startDate)}
-          cy={y2}
+          cy={lineY2}
           stroke={color}
           fill={color}
           r={EVENT_RADIUS / 2}

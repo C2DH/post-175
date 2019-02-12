@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { range, groupBy, last, sortBy, countBy, uniqueId } from 'lodash'
+import { range, groupBy, get, sortBy, countBy, uniqueId, sum } from 'lodash'
 import { getSelectedLangCode } from './lang'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
@@ -48,16 +48,29 @@ export const getFilteredEvents = createSelector(
     ))
 )
 
+// FIXME: Move in another magic place...
+export const EVENT_NO_IMAGE_HEIGHT = 100
+const EVENT_WIDTH = 150
+
+const getImageEventHeight = (event, width) => {
+  const snapshot = get(event, "documents[0].data.resolutions.low.url")
+  if (snapshot) {
+    const thumbnailHeight = get(event, "documents[0].data.resolutions.low.height", 0)
+    const thumbnailWidth = get(event, "documents[0].data.resolutions.low.width", 0)
+    return ((thumbnailHeight * width) / thumbnailWidth)
+  }
+  return 0
+}
+
 export const getAnnotatedEvents = createSelector(
   getFilteredEvents,
   events => {
-    if(events == null ) { return null }
-    let sortedEvents = sortBy(events, 'startDate')
+    if (events == null ) { return null }
+    let sortedEvents = sortBy(events.map(e => ({ ...e })), 'startDate')
     sortedEvents.forEach((event, i) => {
-      if(i > 0){
-        // console.log(event.startDate.getTime() - sortedEvents[i-1].startDate.getTime())
-        if( event.startDate.getTime() - sortedEvents[i-1].startDate.getTime() < (DAY_DURATION * 180)){
-          if(!sortedEvents[i-1].displacementIndex){
+      if (i > 0) {
+        if (event.startDate.getTime() - sortedEvents[i-1].startDate.getTime() < (DAY_DURATION * 180)) {
+          if (!sortedEvents[i-1].displacementIndex) {
             sortedEvents[i-1].displacementIndex = 1
             sortedEvents[i-1].displacementId = uniqueId()
           }
@@ -65,12 +78,24 @@ export const getAnnotatedEvents = createSelector(
           event.displacementId = sortedEvents[i-1].displacementId
         }
       }
+      event.imageHeight = getImageEventHeight(event, EVENT_WIDTH)
+      event.desumedHeight = event.imageHeight + EVENT_NO_IMAGE_HEIGHT
     })
-    const countDisplacemnt = countBy(sortedEvents, 'displacementId')
+    const byDisplacementId = groupBy(sortedEvents, 'displacementId')
+
     return sortedEvents.map(event => {
       if (event.displacementId) {
-        event.displacementCount = countDisplacemnt[event.displacementId]
+        event.occupedHeights = byDisplacementId[event.displacementId].map(e => e.desumedHeight)
+        event.totalOccupedHeight = sum(event.occupedHeights)
+        event.displacementCount = 1
+        event.displacementCount = byDisplacementId[event.displacementId].length
         return event
+      } else {
+        event.displacementId = uniqueId()
+        event.occupedHeights = [event.desumedHeight]
+        event.totalOccupedHeight = event.desumedHeight
+        event.displacementIndex = 1
+        event.displacementCount = 1
       }
       return event
     })
@@ -140,7 +165,7 @@ export const getTimelineCurrentDate = createSelector(
 
 export const getTimelineYearsWithEvents = createSelector(
   getEventsExtent,
-  getFilteredEvents,
+  getAnnotatedEvents,
   (extent, events) => {
     if (extent === null) {
       return null
