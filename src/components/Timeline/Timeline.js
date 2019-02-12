@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import classNames from 'classnames'
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
+import memoize from 'memoize-one'
 import {
   getTimelineYearsWithEvents,
   getTimelineTopScale,
@@ -27,16 +28,8 @@ const EVENT_PADDING_TOP = 50
 const MIN_VERTIAL_PADDING_EVENTS = 5
 
 class EventItem extends PureComponent {
-  render() {
-    const {
-      event,
-      selectEvent,
-      scale,
-      height,
-      enterEvent,
-      leaveEvent
-    } = this.props;
 
+  computePosition = memoize((event, height) => {
     // Padding for top year header
     const availableHeight = height - EVENT_PADDING_TOP
 
@@ -82,6 +75,23 @@ class EventItem extends PureComponent {
     } else {
       lineY2 += 25
     }
+
+    return [y2, lineY2, hasImage]
+  })
+
+  render() {
+    const {
+      event,
+      selectEvent,
+      scale,
+      height,
+      enterEvent,
+      leaveEvent
+    } = this.props;
+
+    const snapshot = get(event, 'documents[0].data.resolutions.low.url')
+    const imageHeight = event.imageHeight
+    const [y2, lineY2, hasImage] = this.computePosition(event, height)
 
     const color = getEventColor(event);
 
@@ -252,7 +262,7 @@ const TimelineEvents = connect(
                         >
                           {year.year}
                         </text>
-                        {year.events.map(
+                        {height > 0 && year.events.map(
                           (event, eventIndex) =>
                             overEvent && overEvent.id === event.id ? null : (
                               <EventItem
