@@ -474,16 +474,18 @@ class Map extends PureComponent {
                           element={ClusterElement}
                         >
                           {places.map(place => {
+                            let key = `place-${place.id}`
                             let fill = "white";
                             if (place.data.place_type === "office") {
                               fill = place.open ? "#13d436" : "#ED6347";
+                              key += `~${place.open ? 'open' : 'closed'}`
+                            }
+                            if (selectedPlace && selectedPlace.id === place.id) {
+                              key += ':selected'
                             }
                             return (
                               <Marker
-                                key={
-                                  /*selectedPlace ? `selected-${place.id}` : place.id*/
-                                  `place-${place.id}${place.open}`
-                                }
+                                key={key}
                                 longitude={place.coordinates[0]}
                                 latitude={place.coordinates[1]}
                                 element={
@@ -495,7 +497,7 @@ class Map extends PureComponent {
                                         "place-marker d-flex align-items-center justify-content-center",
                                         {
                                           "place-selected": selectedPlace
-                                            ? selectedPlace.id == place.id
+                                            ? selectedPlace.id === place.id
                                             : false,
                                           "place-clickable":
                                             place.data.place_type === "office"
