@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import find from "lodash/find";
 import VideoStory from "../components/VideoStory";
+import Spinner from "../components/Spinner";
 import { loadStory, unloadStory } from "../state/actions";
 import {
   getVideoStory,
@@ -57,6 +58,10 @@ class Story extends Component {
     const { story, url, title, sideDocs, subtitlesFile } = this.props;
     return (
       <div className="h-100">
+        {story === null && <Spinner
+          screen='storyDetail'
+          firstLoading
+        />}
         {story && (
           <VideoStory
             url={url}

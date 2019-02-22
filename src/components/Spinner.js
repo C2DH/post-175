@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 // firstLoding: means if is first loading or another loading
 // Es:. a subsequent search is another loading
 // screen: means the page of spinner values:
-// collection, docDetail, timeline, map, stories
+// collection, docDetail, timeline, map, stories, storyDetail
 export default memo(function Spinner({ firstLoading, screen }) {
   if (firstLoading) {
     console.log(`Render Spinner in screen ${screen} while first loading!`)
