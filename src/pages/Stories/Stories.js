@@ -6,6 +6,7 @@ import { loadChapters } from "../../state/actions";
 import { getChapters } from "../../state/selectors";
 import StoryCard from "../../components/StoryCard";
 import SideMenu from "../../components/SideMenu";
+import Spinner from "../../components/Spinner";
 import { localize } from "../../localize";
 import "./Stories.scss";
 
@@ -18,6 +19,10 @@ class Stories extends Component {
     const { chapters, t } = this.props;
     return (
       <div className="h-100 Stories">
+        {chapters === null && <Spinner
+          firstLoading
+          screen='stories'
+        />}
         <SideMenu />
         <div className="container-fluid h-100 d-flex flex-column">
           <div className="row row-top-bar">
