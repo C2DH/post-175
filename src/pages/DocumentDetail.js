@@ -8,7 +8,7 @@ import {
   unloadDocument,
 } from '../state/actions'
 import DocDetail from '../components/DocDetail'
-import SideMenu from '../components/SideMenu'
+import Spinner from '../components/Spinner'
 
 class DocumentDetail extends PureComponent {
   componentDidMount() {
@@ -37,6 +37,7 @@ class DocumentDetail extends PureComponent {
 
     return (
       <div className='h-100'>
+        {!doc && <Spinner screen='docDetail' firstLoading />}
         {doc && <DocDetail
           doc={doc}
           onClose={this.onClose}

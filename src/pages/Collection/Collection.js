@@ -200,7 +200,8 @@ class Collection extends PureComponent {
         />
         {docs && <CollectionList docs={docs} />}
         {(docs === null || loading) && <Spinner
-          firstLoding={docs === null}
+          screen={'collection'}
+          firstLoading={docs === null}
         />}
       </div>
     );
