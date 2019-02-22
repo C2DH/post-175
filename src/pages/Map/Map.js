@@ -55,6 +55,7 @@ import { getQsSafeYear, makeUrlWithYear } from "../../utils";
 import TimelineNavigationMap from "../../components/TimelineNavigationMap";
 import MobileAlert from "../../components/MobileAlert";
 import MapTooltip from "../../components/MapTooltip";
+import Spinner from "../../components/Spinner";
 import SideMenu from "../../components/SideMenu";
 import { scaleLinear } from "d3-scale";
 import { Motion, TransitionMotion, spring, presets } from "react-motion";
@@ -376,6 +377,10 @@ class Map extends PureComponent {
 
     return (
       <div className="h-100 d-flex flex-column Map position-relative">
+        {(places === null || rasterLayers === null) && <Spinner
+          firstLoading
+          screen='map'
+        />}
         <MobileAlert />
         <SideMenu />
         <div className="flex-grow-0 flex-shrink-0 border-bottom title">
