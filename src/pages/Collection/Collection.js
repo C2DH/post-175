@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import memoize from "memoize-one";
 import qs from "query-string";
 import get from "lodash/get";
 import SideMenu from "../../components/SideMenu";
 import CollectionFilters from "../../components/Collection/CollectionFilters";
 import CollectionList from "../../components/Collection/CollectionList";
-import CollectionTimeBrush from "../../components/Collection/CollectionTimeBrush";
+import Spinner from "../../components/Spinner";
 import { COLLECTION_DATE_TYPES } from "../../consts";
 import {
   loadCollectionDocuments,
@@ -15,6 +14,7 @@ import {
   unloadCollectionFacets
 } from "../../state/actions";
 import {
+  isLoadingCollectionDocs,
   getCollectionDocuments,
   getCollectionsFacets,
   getCollectionsAllFacets,
@@ -168,7 +168,7 @@ class Collection extends PureComponent {
   };
 
   render() {
-    const { docs, facets, allFacets, location, count, allCount, dataTypeFacets, dataTypeAllFacets } = this.props;
+    const { docs, loading, facets, allFacets, location, count, allCount, dataTypeFacets, dataTypeAllFacets } = this.props;
     const queryParams = qs.parse(location.search);
     const {
       search,
@@ -199,6 +199,9 @@ class Collection extends PureComponent {
           dataTypeAllFacets={dataTypeAllFacets}
         />
         {docs && <CollectionList docs={docs} />}
+        {(docs === null || loading) && <Spinner
+          firstLoding={docs === null}
+        />}
       </div>
     );
   }
@@ -206,6 +209,7 @@ class Collection extends PureComponent {
 
 export default connect(
   state => ({
+    loading: isLoadingCollectionDocs(state),
     docs: getCollectionDocuments(state),
     facets: getCollectionsFacets(state),
     allFacets: getCollectionsAllFacets(state),

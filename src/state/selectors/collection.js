@@ -9,6 +9,8 @@ import { getSelectedLangCode } from './lang'
 import { translateDoc } from './common'
 import { getDocDetail } from './document'
 
+export const isLoadingCollectionDocs = state => state.collectionDocs.loading
+
 const getCollectionDocumentsRaw = createSelector(
   state => state.collectionDocs.ids,
   state => state.collectionDocs.data,
