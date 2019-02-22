@@ -38,6 +38,7 @@ import TimelineViz from "../../components/Timeline";
 import SideMenu from "../../components/SideMenu";
 import { TransitionMotion, Motion, spring } from "react-motion";
 import EventModal from "../../components/EventModal";
+import Spinner from "../../components/Spinner";
 import "./Timeline.scss";
 
 class Timeline extends PureComponent {
@@ -139,6 +140,7 @@ class Timeline extends PureComponent {
     } = this.props;
     return (
       <div className="h-100 d-flex flex-column Timeline position-relative">
+        {events === null && <Spinner firstLoading screen='timeline' />}
         <MobileAlert />
         <SideMenu />
         <div className="flex-grow-0 flex-shrink-0 border-bottom title">
