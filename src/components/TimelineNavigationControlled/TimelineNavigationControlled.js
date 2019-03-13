@@ -60,7 +60,7 @@ class TimelineCursor extends PureComponent {
 
 export class TimelineTicks extends PureComponent {
   render() {
-    const { ticks, scale, y } = this.props;
+    const { ticks, scale, y, onTickClick } = this.props;
     return (
       <svg className="w-100 flex-1">
         {ticks.map(tick => (
@@ -69,6 +69,7 @@ export class TimelineTicks extends PureComponent {
             x={scale(tick)}
             y={y}
             className="timeline-nav-tick fill-white"
+            onClick={onTickClick ? onTickClick(tick) : undefined}
           >
             {tick.getFullYear()}
           </text>

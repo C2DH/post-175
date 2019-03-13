@@ -45,7 +45,9 @@ class TimelineNavigationMap extends PureComponent {
                 </div>
               ))}
             </div>
-            <TimelineTicks ticks={ticks} y={height / 4} scale={scale} />
+            <TimelineTicks onTickClick={tick => () => {
+              setDateTimelineMap(tick)
+            }}ticks={ticks} y={height / 4} scale={scale} />
           </Fragment>
         )}
       </TimelineNavigationControlled>
