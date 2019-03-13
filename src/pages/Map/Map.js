@@ -71,6 +71,40 @@ const circleScale = scaleLinear()
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
 
+
+
+const makeClusterElement = (zoomToCluster) => {
+  const ClusterElement = ({ properties , style }) => {
+    const r = circleScale(properties.point_count_abbreviated);
+    return (
+      <svg width={r + 2} height={r + 2} onClick={() => {
+        zoomToCluster(properties.cluster_id)
+        
+        }}>
+        <circle
+          cx={r / 2}
+          cy={r / 2}
+          r={Math.floor(r / 2)}
+          fill={"rgba(216,216,216,0.13)"}
+          stroke="#979797"
+        />
+        <Text
+          x={r / 2}
+          y={r / 2}
+          fill="white"
+          textAnchor="middle"
+          verticalAnchor="middle"
+        >
+          {properties.point_count_abbreviated}
+        </Text>
+      </svg>
+    );
+  };
+
+  return ClusterElement
+
+}
+
 const ClusterElement = cluster => {
   const r = circleScale(cluster.properties.point_count_abbreviated);
   return (
@@ -346,6 +380,19 @@ class Map extends PureComponent {
     });
   });
 
+  zoomToCluster = (clusterId) => {
+    const cl = this.state.supercluster
+    const zoom = cl.getClusterExpansionZoom(clusterId)
+    const ch = cl.getChildren(clusterId)
+    const coords = ch[0].geometry.coordinates
+    this.updateViewport({
+      latitude: coords[1],
+      longitude: coords[0],
+      zoom: zoom+1,
+      transitionDuration: 500
+    });
+  }
+
   render() {
     const { width, height, viewport } = this.state;
     const {
@@ -476,7 +523,7 @@ class Map extends PureComponent {
                           extent={512}
                           nodeSize={64}
                           innerRef={ref => this.setState({ supercluster: ref })}
-                          element={ClusterElement}
+                          element={makeClusterElement(this.zoomToCluster)}
                         >
                           {places.map(place => {
                             let key = `place-${place.id}`
