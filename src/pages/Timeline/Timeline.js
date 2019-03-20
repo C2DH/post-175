@@ -235,7 +235,7 @@ class Timeline extends PureComponent {
           size={"lg"}
           className="page-modal"
         >
-          <ModalHeader toggle={this.toggle}>{t("help_geo").title}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>{t("help_time").title}</ModalHeader>
           <ModalBody>
             <ul>
               {t("help_time").list &&

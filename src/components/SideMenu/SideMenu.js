@@ -78,7 +78,7 @@ class SideMenu extends PureComponent {
           </div>
 
           <div className="side-menu-bottom">
-            <NavLink
+            {/*  <NavLink
               to={{
                 pathname: "/contact-us",
                 search: `?lang=${selectedLang.param}`
@@ -86,7 +86,7 @@ class SideMenu extends PureComponent {
               className="side-menu-link no-bordered"
             >
               <div className="link-label"> {t("menu_contact_us")}</div>
-            </NavLink>
+            </NavLink>*/}
             <NavLink
               to={{
                 pathname: "/terms-of-use",
