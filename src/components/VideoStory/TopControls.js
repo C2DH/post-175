@@ -40,6 +40,16 @@ export default memo(function TopControls({
           <i className="material-icons">play_arrow</i>
         )}
       </button>
+      <button
+        className="control-button btn btn-light rounded-0"
+        onClick={() => setVolume(volume === 0 ? 1 : 0)}
+      >
+        {volume === 0 ? (
+          <i className="material-icons">volume_off</i>
+        ) : (
+          <i className="material-icons">volume_up</i>
+        )}
+      </button>
       <div className="track-container">
         <div className="video-meta text-white">
           <div style={{ minWidth: 0 }}>
@@ -47,16 +57,6 @@ export default memo(function TopControls({
           </div>
           <div className="ml-2">
             ({playedMinutes}/{durationMinutes})
-          </div>
-          <div
-            className="d-flex audio ml-auto"
-            onClick={() => setVolume(volume === 0 ? 1 : 0)}
-          >
-            {volume === 0 ? (
-              <i className="material-icons">volume_off</i>
-            ) : (
-              <i className="material-icons">volume_up</i>
-            )}
           </div>
         </div>
         <div

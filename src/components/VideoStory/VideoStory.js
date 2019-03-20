@@ -17,7 +17,7 @@ class VideoStory extends Component {
     loadedSeconds: 0,
     playedSeconds: 0,
     played: 0,
-    volume: 0,
+    volume: 1,
     sideWidth: 300,
     playing: true,
     subtitles: []
@@ -26,7 +26,7 @@ class VideoStory extends Component {
   onPlayerReady = () => {
     // Nothing to do
     if (this.videoInit) {
-      return
+      return;
     }
     const video = this.player.getInternalPlayer();
     if (video) {
@@ -34,11 +34,11 @@ class VideoStory extends Component {
       // This means that the autoplay don't start the video
       // so set the state local state abut playing to false
       if (video.paused && this.state.playing) {
-        this.setState({ playing: false })
+        this.setState({ playing: false });
       }
       if (track) {
         // This is necessary because onPlayerReady can be called multiple times...
-        this.videoInit = true
+        this.videoInit = true;
         track.addEventListener("cuechange", this.setSubtitles);
       }
     }
@@ -67,9 +67,9 @@ class VideoStory extends Component {
       // and seek to the current seconds because when the player is
       // destroied the state abount video played is lost
       if (navigator.userAgent.toLowerCase().indexOf("firefox") !== -1) {
-        this.videoInit = false
-        this.player.seekTo(parseInt(this.state.playedSeconds))
-        this.setState({ subtitles: [] })
+        this.videoInit = false;
+        this.player.seekTo(parseInt(this.state.playedSeconds));
+        this.setState({ subtitles: [] });
       }
     }
   }
