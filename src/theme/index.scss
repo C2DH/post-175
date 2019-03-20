@@ -171,6 +171,17 @@ h6 {
 
 /* custom components styles */
 
+.page-modal {
+  .modal-content {
+    border-radius: 0px;
+  }
+  .modal-footer {
+    .btn {
+      border-radius: 0px;
+    }
+  }
+}
+
 .timeline-legend-intro {
   flex-grow: 1;
   overflow: auto;

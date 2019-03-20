@@ -98,7 +98,56 @@ export default {
     reset: "zurücksetzen",
     soon_online: "bald online",
     speaker: "Interviewpartner",
-    unknown: "unbekannte"
+    unknown: "unbekannte",
+    help_geo: {
+      title: "Die geographische Herangehenweise",
+      list: [
+        {
+          title: "Statistik",
+          paragraphs: [
+            "8 Parameter betreffend die luxemburgischen (Tele-)kommunikationsnetze.",
+            "Daten erhoben durch die Internationale Fernmeldeunion (Union Internationale des Télécommunications, UIT) für den Zeitraum von 1867 bis 1967",
+            "Quelle: https://www.itu.int/en/history/Pages/HistoricalStatistics.aspx"
+          ]
+        },
+        {
+          title: "carte interactive",
+          paragraphs: [
+            "Chronologische Entwicklung verschiedener (Tele-)kommunikationsnetze in Luxemburg",
+            "Die fehlenden Daten werden teilweise mit historischen Karten, die über die virtuelle Karte gelegt werden können, ausgeglichen"
+          ]
+        }
+      ],
+      navigation_title: "Navigationsmodi",
+      navigation_list: [
+        "Detailansicht für jedes Postamt, durch Klicken auf das entsprechende Symbol",
+        "Übersicht über die chronologische Entwicklung des Netzes durch Bewegen des Cursers am unteren Ende des Bildschirms"
+      ]
+    },
+    help_time: {
+      title: "Die chronologische Herangehensweise",
+      list: [
+        {
+          title: "Dargestellter Zeitraum: 1842-2017",
+          paragraphs: [
+            "Sieben Teilzeiträume, welche aufgrund wichtiger Entwicklungen im Post- und Telekommunikationssektor definiert wurden"
+          ]
+        },
+        {
+          title:
+            "Standarddarstellung: 16 Schlüsselmomente, die wichtige Entwicklungen",
+          paragraphs: [
+            "Möglichkeit 6 weitere Kategorien an Ereignissen oder alle erfassten Ereignisse anzeigen zu lassen, durch Klicken auf die entsprechenden Filter im oberen Bereich des Bildschirms"
+          ]
+        }
+      ],
+      navigation_title: "Navigationsmodi",
+      navigation_list: [
+        "Navigation innerhalb der Chronologie durch Bewegen des Cursors im Zeitstrahl unten auf der Seite",
+        "Navigation innerhalb der Ereignisse: Detailansicht jedes Ereignisses mit Archivdokumenten durch Klicken auf selbiges",
+        "Übergang von einer Detailansicht zur nächsten, ohne Rückkehr zur globalen Chronologie"
+      ]
+    }
   },
   fr: {
     // side menu
@@ -198,6 +247,54 @@ export default {
     reset: "reset",
     soon_online: "bientôt en ligne",
     speaker: "interviewé",
-    unknown: "inconnu"
+    unknown: "inconnu",
+    help_geo: {
+      title: "L’approche géographique",
+      list: [
+        {
+          title: "statistique",
+          paragraphs: [
+            "8 paramètres sur les réseaux de (télé)communications au Luxembourg.",
+            "Données recensées par l’Union Internationale des Télécommunications pour la période comprise entre 1867 et 1967.",
+            "Source: https://www.itu.int/en/history/Pages/HistoricalStatistics.aspx"
+          ]
+        },
+        {
+          title: "carte interactive",
+          paragraphs: [
+            "Évolution chronologique de différents réseaux de (télé)communications au Luxembourg.",
+            "Les données lacunaires sont comblées, en partie, par des cartes historiques, pouvant être placées au-dessus de la carte."
+          ]
+        }
+      ],
+      navigation_title: "Mode de navigation",
+      navigation_list: [
+        "Vu de détail pour chaque bureau postal en cliquant sur l’icône correspondante.",
+        "Aperçu de l’évolution chronologique en déplaçant le curseur en bas de page"
+      ]
+    },
+    help_time: {
+      title: "L’approche chronologique",
+      list: [
+        {
+          title: "Période couverte : 1842 – 2017",
+          paragraphs: [
+            "Sept sous-périodes définies en fonction des développements majeurs dans le domaine des postes et des télécommunications "
+          ]
+        },
+        {
+          title: "Présentation par défaut: 16 événements clé",
+          paragraphs: [
+            "Possibilité d’activer 6 autres catégories d’événements ou tous les événements répertoriés en utilisant les filtres en haut de page"
+          ]
+        }
+      ],
+      navigation_title: "Mode de navigation",
+      navigation_list: [
+        "Navigation dans la ligne du temps: déplacement du curseur dans la chronologie en bas de page",
+        "Navigation dans les événements: vue détaillée de chaque événement avec document(s) d’archives en y cliquant",
+        "Passage d’une vue détaillée à l’autre, sans retour à la ligne du temps globale"
+      ]
+    }
   }
 };

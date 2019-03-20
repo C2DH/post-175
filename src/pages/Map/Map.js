@@ -20,6 +20,7 @@ import MapGL, {
   Cluster,
   Source
 } from "@urbica/react-map-gl";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import Legend from "../../components/Legend";
 import TimeSeries from "../../components/TimeSeries";
@@ -71,16 +72,17 @@ const circleScale = scaleLinear()
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
 
-
-
-const makeClusterElement = (zoomToCluster) => {
-  const ClusterElement = ({ properties , style }) => {
+const makeClusterElement = zoomToCluster => {
+  const ClusterElement = ({ properties, style }) => {
     const r = circleScale(properties.point_count_abbreviated);
     return (
-      <svg width={r + 2} height={r + 2} onClick={() => {
-        zoomToCluster(properties.cluster_id)
-        
-        }}>
+      <svg
+        width={r + 2}
+        height={r + 2}
+        onClick={() => {
+          zoomToCluster(properties.cluster_id);
+        }}
+      >
         <circle
           cx={r / 2}
           cy={r / 2}
@@ -101,9 +103,8 @@ const makeClusterElement = (zoomToCluster) => {
     );
   };
 
-  return ClusterElement
-
-}
+  return ClusterElement;
+};
 
 const ClusterElement = cluster => {
   const r = circleScale(cluster.properties.point_count_abbreviated);
@@ -193,10 +194,24 @@ class Map extends PureComponent {
     supercluster: null,
     width: 0,
     height: 0,
-    opacity: 0.5
+    opacity: 0.5,
+    modal: true
+  };
+
+  toggle = () => {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   };
 
   componentDidMount() {
+    let visited = sessionStorage["mapAlreadyVisited"];
+    if (visited) {
+      this.setState({ modal: false });
+    } else {
+      sessionStorage["mapAlreadyVisited"] = true;
+      this.setState({ modal: true });
+    }
     this.props.loadTimeSeries();
     this.props.loadStory("map");
     this.props.loadPlaces({ detailed: true });
@@ -380,18 +395,18 @@ class Map extends PureComponent {
     });
   });
 
-  zoomToCluster = (clusterId) => {
-    const cl = this.state.supercluster
-    const zoom = cl.getClusterExpansionZoom(clusterId)
-    const ch = cl.getChildren(clusterId)
-    const coords = ch[0].geometry.coordinates
+  zoomToCluster = clusterId => {
+    const cl = this.state.supercluster;
+    const zoom = cl.getClusterExpansionZoom(clusterId);
+    const ch = cl.getChildren(clusterId);
+    const coords = ch[0].geometry.coordinates;
     this.updateViewport({
       latitude: coords[1],
       longitude: coords[0],
-      zoom: zoom+1,
+      zoom: zoom + 1,
       transitionDuration: 500
     });
-  }
+  };
 
   render() {
     const { width, height, viewport } = this.state;
@@ -424,10 +439,9 @@ class Map extends PureComponent {
 
     return (
       <div className="h-100 d-flex flex-column Map position-relative">
-        {(places === null || rasterLayers === null) && <Spinner
-          firstLoading
-          screen='map'
-        />}
+        {(places === null || rasterLayers === null) && (
+          <Spinner firstLoading screen="map" />
+        )}
         <MobileAlert />
         <SideMenu />
         <div className="flex-grow-0 flex-shrink-0 border-bottom title">
@@ -526,14 +540,17 @@ class Map extends PureComponent {
                           element={makeClusterElement(this.zoomToCluster)}
                         >
                           {places.map(place => {
-                            let key = `place-${place.id}`
+                            let key = `place-${place.id}`;
                             let fill = "white";
                             if (place.data.place_type === "office") {
                               fill = place.open ? "#13d436" : "#ED6347";
-                              key += `~${place.open ? 'open' : 'closed'}`
+                              key += `~${place.open ? "open" : "closed"}`;
                             }
-                            if (selectedPlace && selectedPlace.id === place.id) {
-                              key += ':selected'
+                            if (
+                              selectedPlace &&
+                              selectedPlace.id === place.id
+                            ) {
+                              key += ":selected";
                             }
                             return (
                               <Marker
@@ -617,6 +634,42 @@ class Map extends PureComponent {
             </div>
           </div>
         </div>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          size={"lg"}
+          className="page-modal"
+        >
+          <ModalHeader toggle={this.toggle}>{t("help_geo").title}</ModalHeader>
+          <ModalBody>
+            <ul>
+              {t("help_geo").list &&
+                t("help_geo").list.map(elm => {
+                  return (
+                    <li key={elm.title}>
+                      <strong>{elm.title}</strong>
+                      {elm.paragraphs.map((p, i) => {
+                        return (
+                          <p key={i} className="mb-1">
+                            {p}
+                          </p>
+                        );
+                      })}
+                    </li>
+                  );
+                })}
+            </ul>
+            <h5 className="mt-4">{t("help_geo").navigation_title}</h5>
+            {t("help_geo").navigation_list &&
+              t("help_geo").navigation_list.map((p, i) => {
+                return (
+                  <p key={i} className="mb-1">
+                    {p}
+                  </p>
+                );
+              })}
+          </ModalBody>
+        </Modal>
       </div>
     );
   }

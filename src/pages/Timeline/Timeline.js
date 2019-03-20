@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { uniq } from "lodash";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { localize } from "../../localize";
 import {
   loadEvents,
   unloadEvents,
@@ -42,7 +44,24 @@ import Spinner from "../../components/Spinner";
 import "./Timeline.scss";
 
 class Timeline extends PureComponent {
+  state = {
+    modal: true
+  };
+
+  toggle = () => {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  };
+
   componentDidMount() {
+    let visited = sessionStorage["timelineAlreadyVisited"];
+    if (visited) {
+      this.setState({ modal: false });
+    } else {
+      sessionStorage["timelineAlreadyVisited"] = true;
+      this.setState({ modal: true });
+    }
     this.props.loadEvents({ detailed: true });
     this.props.loadPeriods();
     this.props.loadStory("timeline");
@@ -112,7 +131,7 @@ class Timeline extends PureComponent {
     this.props.unloadTimeline();
     this.props.unloadStory();
     // Clear the event open as modal...
-    this.props.selectEvent(null)
+    this.props.selectEvent(null);
   }
 
   goNext = () => {
@@ -136,11 +155,12 @@ class Timeline extends PureComponent {
       nextEvent,
       prevEvent,
       clearSelectedEvent,
-      story
+      story,
+      t
     } = this.props;
     return (
       <div className="h-100 d-flex flex-column Timeline position-relative">
-        {events === null && <Spinner firstLoading screen='timeline' />}
+        {events === null && <Spinner firstLoading screen="timeline" />}
         <MobileAlert />
         <SideMenu />
         <div className="flex-grow-0 flex-shrink-0 border-bottom title">
@@ -157,12 +177,11 @@ class Timeline extends PureComponent {
           </div>
         </div>
         <div className="flex-shrink-1 flex-grow-1 d-flex">
-          {events &&
-            periods && (
-              <Motion defaultStyle={{ o: 0 }} style={{ o: spring(1) }}>
-                {({ o }) => <TimelineViz style={{ opacity: o }} />}
-              </Motion>
-            )}
+          {events && periods && (
+            <Motion defaultStyle={{ o: 0 }} style={{ o: spring(1) }}>
+              {({ o }) => <TimelineViz style={{ opacity: o }} />}
+            </Motion>
+          )}
         </div>
         {/* TODO: Move in another component perforamance issues  */}
         <TransitionMotion
@@ -210,6 +229,42 @@ class Timeline extends PureComponent {
             </div>
           )}
         </TransitionMotion>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          size={"lg"}
+          className="page-modal"
+        >
+          <ModalHeader toggle={this.toggle}>{t("help_geo").title}</ModalHeader>
+          <ModalBody>
+            <ul>
+              {t("help_time").list &&
+                t("help_time").list.map(elm => {
+                  return (
+                    <li key={elm.title}>
+                      <strong>{elm.title}</strong>
+                      {elm.paragraphs.map((p, i) => {
+                        return (
+                          <p key={i} className="mb-1">
+                            {p}
+                          </p>
+                        );
+                      })}
+                    </li>
+                  );
+                })}
+            </ul>
+            <h5 className="mt-4">{t("help_time").navigation_title}</h5>
+            {t("help_time").navigation_list &&
+              t("help_time").navigation_list.map((p, i) => {
+                return (
+                  <p key={i} className="mb-1">
+                    {p}
+                  </p>
+                );
+              })}
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
@@ -244,4 +299,4 @@ export default connect(
     setCategoriesTimeline,
     setMilestoneTimeline
   }
-)(Timeline);
+)(localize()(Timeline));
