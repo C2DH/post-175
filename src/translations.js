@@ -111,7 +111,7 @@ export default {
           ]
         },
         {
-          title: "carte interactive",
+          title: "ineraktive Karte",
           paragraphs: [
             "Chronologische Entwicklung verschiedener (Tele-)kommunikationsnetze in Luxemburg",
             "Die fehlenden Daten werden teilweise mit historischen Karten, die über die virtuelle Karte gelegt werden können, ausgeglichen"
