@@ -134,8 +134,7 @@ export default {
           ]
         },
         {
-          title:
-            "Standarddarstellung: 16 Schlüsselmomente, die wichtige Entwicklungen",
+          title: "Standarddarstellung: 16 Schlüsselmomente",
           paragraphs: [
             "Möglichkeit 6 weitere Kategorien an Ereignissen oder alle erfassten Ereignisse anzeigen zu lassen, durch Klicken auf die entsprechenden Filter im oberen Bereich des Bildschirms"
           ]
@@ -263,7 +262,7 @@ export default {
           title: "carte interactive",
           paragraphs: [
             "Évolution chronologique de différents réseaux de (télé)communications au Luxembourg.",
-            "Les données lacunaires sont comblées, en partie, par des cartes historiques, pouvant être placées au-dessus de la carte."
+            "Les données lacunaires sont comblées, en partie, par des cartes historiques, pouvant être placées au-dessus de la carte virtuelle."
           ]
         }
       ],
