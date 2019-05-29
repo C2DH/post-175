@@ -99,6 +99,8 @@ export default {
     soon_online: "bald online",
     speaker: "Interviewpartner",
     unknown: "unbekannte",
+    creator: "Schöpfer",
+    provenance: "Herkunft",
     help_geo: {
       title: "Die geographische Herangehenweise",
       list: [
@@ -247,6 +249,8 @@ export default {
     soon_online: "bientôt en ligne",
     speaker: "interviewé",
     unknown: "inconnu",
+    creator: "créateur",
+    provenance: "provenance",
     help_geo: {
       title: "L’approche géographique",
       list: [

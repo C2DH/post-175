@@ -65,6 +65,18 @@ const DocDetail = ({
                     />
                   </p>
                 </div>
+                {doc.data.creator && (
+                  <div className="p-3 w-100 border-bottom">
+                    <h6 className="detail-title">{t("creator")}</h6>
+                    <p>{doc.data.creator}</p>
+                  </div>
+                )}
+                {doc.data.provenance && (
+                  <div className="p-3 w-100 border-bottom">
+                    <h6 className="detail-title">{t("provenance")}</h6>
+                    <p className="text-break">{doc.data.provenance}</p>
+                  </div>
+                )}
                 {related.length > 0 && (
                   <div className="p-3 w-100">
                     <h6 className="detail-title">{t("related_documents")}</h6>
