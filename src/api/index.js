@@ -3,11 +3,18 @@ import request from "superagent";
 import keyBy from "lodash/keyBy";
 import get from "lodash/get";
 import { csvParse } from "d3-dsv";
+import queryString from "query-string";
+import md5 from "md5";
+
 const API_URL = "/api";
 
 // Extract only body from response, when other stuff like response
 // headers and so on are useless
 const extractBody = ({ body }) => body;
+
+const buildMillerMd5 = params => {
+  return { md5: md5(queryString.stringify(params, { sort: false })) };
+};
 
 const buildMillerParams = params => {
   let newParams = params;
@@ -20,13 +27,13 @@ const buildMillerParams = params => {
     newParams = { ...newParams, exclude: JSON.stringify(newParams.exclude) };
   }
   // console.log(params, newParams);
-  return newParams;
+  return { ...newParams, ...buildMillerMd5(newParams) };
 };
 
 export const searchSuggestion = term =>
   request
     .get(`${API_URL}/document/suggest/`)
-    .query({ q: term })
+    .query({ q: term, ...buildMillerMd5({ q: term }) })
     .then(({ body }) => body.results);
 
 export const getTimeSeries = () =>
@@ -52,7 +59,8 @@ export const getStory = idOrSlug =>
   request
     .get(`${API_URL}/story/${idOrSlug}/`)
     .query({
-      parser: "yaml"
+      parser: "yaml",
+      ...buildMillerMd5({ parser: "yaml" })
     })
     .then(extractBody);
 
@@ -63,6 +71,12 @@ export const getChapters = () =>
       limit: 1,
       filters: JSON.stringify({
         tags__slug: "theme"
+      }),
+      ...buildMillerMd5({
+        limit: 1,
+        filters: JSON.stringify({
+          tags__slug: "theme"
+        })
       })
     })
     .then(({ body }) => {
@@ -77,6 +91,13 @@ export const getChapters = () =>
           filters: JSON.stringify({
             status: "public",
             mentioned_to__id: theme.id
+          }),
+          ...buildMillerMd5({
+            limit: 10,
+            filters: JSON.stringify({
+              status: "public",
+              mentioned_to__id: theme.id
+            })
           })
         })
         .then(({ body }) => {
