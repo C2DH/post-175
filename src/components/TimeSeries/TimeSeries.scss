@@ -2,6 +2,10 @@
   overflow-y: auto;
   background-color: var(--dark-post);
 
+  .time-serie {
+    border-right: 1px solid #fff;
+  }
+
   .time-serie h6 {
     text-transform: uppercase;
     font-family: "IBM Plex Mono", monospace;
@@ -25,4 +29,22 @@
     font-size: 36px;
     flex: 0.33;
   }
+}
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {
+  .time-series-container {
+    height: 100%;
+  }
+  .time-series {
+    .time-serie {
+      border-right: none;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
 }

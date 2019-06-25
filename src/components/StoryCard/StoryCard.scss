@@ -1,8 +1,8 @@
 .story-card {
   height: 100%;
   min-height: 0px;
-  width: 430px;
-  min-width: 430px;
+  width: 65vw;
+  min-width: 65vw;
   color: white;
   border-right: 1px solid grey;
   padding: 0 15px;
@@ -35,3 +35,16 @@
   filter: grayscale(1);
   opacity: 0.6;
 }
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {
+  .story-card {
+    width: 430px;
+    min-width: 430px;
+  }
+}
+
+@media (min-width: 1200px) {}

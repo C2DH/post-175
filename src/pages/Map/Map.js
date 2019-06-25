@@ -168,7 +168,7 @@ const MapHeader = ({
         ))}
       </div>
       {showOpacity && (
-        <div className="map-opacity d-flex align-items-center text-white">
+        <div className="map-opacity d-none d-lg-flex align-items-center text-white">
           <span className="mr-3">{t("map_opacity")}</span>
           <input
             onChange={onOpacityChange}
@@ -479,7 +479,7 @@ class Map extends PureComponent {
           style={{ overflow: "auto" }}
         >
           <div className="container-fluid px-0">
-            <div className="row no-gutters h-100 position-relative">
+            <div className="row no-gutters h-100 position-relative flex-column flex-lg-row">
               <TimeSeries
                 t={t}
                 extent={extent}
@@ -488,7 +488,7 @@ class Map extends PureComponent {
                 series={timeSeriesByIndicator}
               />
               <div
-                className="col-md-3"
+                className="col-md-6 col-lg-5 col-xl-3"
                 style={{
                   position: "absolute",
                   left: 0,
@@ -503,7 +503,7 @@ class Map extends PureComponent {
                   onClose={this.closePlaceDetail}
                 />
               </div>
-              <div className="col-9">
+              <div className="col-lg-8 col-xl-9 flex-grow-1 flex-lg-grow-0">
                 <div
                   className="h-100 w-100"
                   style={{ overflow: "hidden" }}

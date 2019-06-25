@@ -30,12 +30,12 @@ class About extends PureComponent {
             </div>
           </div>
           <div className="row">
-            <div className="col-6">
+            <div className="col-8 col-lg-7 col-xl-6 order-1 order-lg-0">
               <div className="page-content">
                 {story && <ReactMarkdown source={story.data.abstract} />}
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-8 co-lg-5 col-xl-6 order-0 order-lg-1">
               <div className="page-content-org">
                 <h6>{t("partners")}</h6>
                 <div className="d-flex flex-wrap align-items-center">

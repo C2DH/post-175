@@ -44,7 +44,7 @@ class Home extends PureComponent {
 
     return (
       <div className="h-100 d-flex flex-column Home position-relative">
-        <div className="background-container">
+        <div className="background-container px-5 px-xl-0">
           <div className="container h-100">
             <div className="row h-100 cols-grid">
               <div className="col-3 border-right border-left border-light" />
@@ -54,7 +54,7 @@ class Home extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="flex-grow-0 flex-shrink-0">
+        <div className="flex-grow-0 flex-shrink-0 px-5 px-xl-0">
           <div className="container">
             <div className="row">
               <div className="col">
@@ -92,7 +92,7 @@ class Home extends PureComponent {
         <div className="my-3 flex-shrink-1 flex-grow-1 position-relative">
           {docs && <HomePics docs={docs} />}
         </div>
-        <div className="flex-grow-0 flex-shrink-0 bg-white position-relative">
+        <div className="flex-grow-0 flex-shrink-0 bg-white position-relative px-5 px-xl-0">
           <HomeMenu />
           <div className="container">
             <div className="row">

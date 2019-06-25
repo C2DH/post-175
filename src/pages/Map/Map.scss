@@ -6,6 +6,7 @@
   }
   .top-bar {
     height: 56px;
+    font-size: 0.85rem;
   }
   .filters-container,
   .navigation-container,
@@ -46,5 +47,19 @@
 
   .place-clickable {
     cursor: pointer;
+  }
+}
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {}
+
+@media (min-width: 1200px) {
+  .Map {
+    .top-bar {
+      font-size: 1rem;
+    }
   }
 }
