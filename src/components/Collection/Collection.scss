@@ -6,6 +6,9 @@
     z-index: 2;
     position: relative;
   }
+  small {
+    font-size: 75%;
+  }
 }
 
 .collection-filters.open {
@@ -95,7 +98,7 @@
 }
 
 .collection-time-brush {
-  height: 100%;
+  height: 10vh;
   svg {
     margin: 0;
     padding: 0;
@@ -185,5 +188,23 @@
     align-items: center;
     border-radius: 3px;
     background: grey;
+  }
+}
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {
+  .collection-time-brush {
+    height: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .CollectionFilters {
+    small {
+      font-size: 80%;
+    }
   }
 }

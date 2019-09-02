@@ -24,7 +24,7 @@ class TimelineFilters extends PureComponent {
 
     return (
       // TODO: custom css
-      <div className="d-flex justify-content-between TimelineFilters text-white">
+      <div className="d-flex flex-wrap flex-xl-nowrap justify-content-between TimelineFilters text-white">
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center">
             {Object.keys(EVENT_COLORS).map(name => (

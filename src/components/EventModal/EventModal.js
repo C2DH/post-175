@@ -22,7 +22,7 @@ const EventType = ({ event }) => {
 };
 
 const EventsControl = ({ hasPrev, hasNext, goNext, goPrev, t }) => (
-  <div className="w-100 d-flex flex-column">
+  <div className="w-100 d-flex flex-lg-column">
     <button
       className="btn d-flex w-100 align-items-center justify-content-center"
       onClick={goPrev}
@@ -78,9 +78,9 @@ class EventModal extends PureComponent {
     return (
       <div className="EventModal fixed-top fixed-bottom" style={style}>
         <div className="container h-100">
-          <div className="row h-100 no-gutters justify-content-center align-items-center">
+          <div className="row h-100 no-gutters justify-content-lg-center align-items-lg-center flex-column flex-lg-row">
             {displayDocs.length > 0 && (
-              <div className="col-7 h-100 flex-column d-flex doc-container">
+              <div className="col-lg-7 flex-column d-flex doc-container">
                 <div className="w-100 flex-1 p-5" style={{ minHeight: 0 }}>
                   <img
                     src={selectedDocument.data.resolutions.medium.url}
@@ -89,8 +89,8 @@ class EventModal extends PureComponent {
                     className="img-preview"
                   />
                 </div>
-                <div className="p-3 w-100 text-white d-flex align-items-center border-top border-light">
-                  <div className="px-3">
+                <div className="p-3 w-100 text-white d-flex align-items-center doc-container-info">
+                  <div className="px-3 d-none d-lg-block">
                     <p className="date text-white-50">
                       {get(selectedDocument, "data.year")}
                     </p>
@@ -98,7 +98,7 @@ class EventModal extends PureComponent {
                       {get(selectedDocument, "data.title")}
                     </p>
                   </div>
-                  <div className="px-3 align-self-end ml-auto">
+                  <div className="px-3 align-self-end mx-auto ml-lg-auto mr-lg-0">
                     <p>
                       <Link
                         className="collection-link"
@@ -116,13 +116,14 @@ class EventModal extends PureComponent {
             )}
 
             <div
-              className={classNames(`d-flex event-info`, {
-                "col-5": displayDocs.length > 0,
-                "col-6": displayDocs.length == 0,
-                "h-100": displayDocs.length > 0
+              className={classNames(`d-flex event-info flex-column flex-lg-row`, {
+                "col-lg-5": displayDocs.length > 0,
+                "col-lg-6": displayDocs.length == 0,
+                "height-100": displayDocs.length > 0
+                // "h-100": displayDocs.length > 0
               })}
             >
-              <div className="flex-grow-1 border-right event-info-container">
+              <div className="flex-grow-1 border-right event-info-container order-1 order-lg-0">
                 <div className="p-3 w-100 border-bottom">
                   <EventType event={event} />
                   <h4>{event.data.title}</h4>
@@ -154,10 +155,10 @@ class EventModal extends PureComponent {
                   </div>
                 )}
               </div>
-              <div className="action-bar flex-grow-0 flex-shrink-0">
+              <div className="action-bar flex-grow-lg-0 flex-shrink-lg-0 d-flex d-lg-block">
                 <button
                   onClick={onClose}
-                  className="btn d-flex w-100 align-items-center justify-content-center"
+                  className="btn d-none d-lg-flex w-100 align-items-center justify-content-center"
                 >
                   <i className="material-icons">close</i>
                 </button>

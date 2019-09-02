@@ -1,9 +1,9 @@
 .TimelineFilters {
-  height: 56px;
+  height: 110px;
 
   .category-filter {
     font-family: "IBM Plex Sans", sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     opacity: 0.4;
     transition: opacity 0.3s linear;
     cursor: pointer;
@@ -18,6 +18,22 @@
     font-size: 0.75rem;
 
     label {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {}
+
+@media (min-width: 1200px) {
+  .TimelineFilters {
+    height: 56px;
+
+    .category-filter {
       font-size: 0.75rem;
     }
   }

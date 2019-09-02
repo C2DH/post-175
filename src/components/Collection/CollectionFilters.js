@@ -104,7 +104,7 @@ class CollectionFilters extends PureComponent {
                   <small className="ml-2">{t("items_shown")}</small>
                 </div>
               </div>
-              <div className="col-auto">
+              <div className="col-5 col-lg-auto">
                 <div className="d-flex align-items-center">
                   <Search
                     placeholder={t("search")}
@@ -142,7 +142,7 @@ class CollectionFilters extends PureComponent {
         >
           <div className="container-fluid">
             <div className="row">
-              <div className="col-4">
+              <div className="col-12 col-lg-5 col-xl-4">
                 <h6 className="filter-sub-title mt-3">{t("filter_by_type")}</h6>
                 <div className="categories-radios d-flex flex-wrap my-3">
                   {COLLECTION_DATE_TYPES.map(name => (
@@ -171,7 +171,7 @@ class CollectionFilters extends PureComponent {
                   ))}
                 </div>
               </div>
-              <div className="col-8 d-flex flex-column">
+              <div className="col-12 col-lg-7 col-xl-8 d-flex flex-column">
                 <h6 className="filter-sub-title mt-3">{t("filter_by_year")}</h6>
                 {allFacets && (
                   <CollectionTimeBrush
