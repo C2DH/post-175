@@ -113,9 +113,12 @@ export default {
           ]
         },
         {
-          title: "ineraktive Karte",
+          title: "Interaktive Karte",
           paragraphs: [
             "Chronologische Entwicklung verschiedener (Tele-)kommunikationsnetze in Luxemburg",
+            "Postämter: 1842-2017",
+            "Telefonzentralen: Bestand des Netzes. Zwischen 1885 und 1896 (Erste Phase der Einführung des Telefonnetzes). Am 01.01.1963 (Abschluss der Automatisierung des Telefonnetzes). 31.12.1981. 10.08.1992 (Umwandlung der Post- und Telekommunikationsbehörde in das Post- und Telekommunikationsunternehmen",
+            "Telegrafenämter: 1862-1895",
             "Die fehlenden Daten werden teilweise mit historischen Karten, die über die virtuelle Karte gelegt werden können, ausgeglichen"
           ]
         }
@@ -266,7 +269,10 @@ export default {
           title: "carte interactive",
           paragraphs: [
             "Évolution chronologique de différents réseaux de (télé)communications au Luxembourg.",
-            "Les données lacunaires sont comblées, en partie, par des cartes historiques, pouvant être placées au-dessus de la carte virtuelle."
+            "Bureaux postaux : 1842-2017",
+            "Centraux téléphoniques : situation du réseau. Entre 1885 et 1896 (Première phase d’introduction du réseau téléphonique). 01.01.1963 (Parachèvement de l’automatisation du réseau téléphonique). 31.12.1981. 10.08.1992 (Transformation de l’Administration des PTT en Entreprise des Postes et Télécommunications)",
+            "Bureaux télégraphiques : 1862-1895",
+            "Les données lacunaires sont comblées, en partie, par des cartes historiques, pouvant être placées au-dessus de la carte virtuelle"
           ]
         }
       ],
