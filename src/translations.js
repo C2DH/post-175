@@ -14,7 +14,7 @@ export default {
       "Die Geschichte des Post und Telekommunikationsunternehmens des Großherzogtums seit 1842",
     // home page
     home_joerpost: "Joer Post",
-    home_title: "luxemburg verbinden",
+    home_title: "175 joer post",
     home_button1: "Entdecken Sie die Zeitleiste",
     home_button2: "Erkunden Sie die Karte",
     home_readmore: "Mehr",
@@ -165,7 +165,7 @@ export default {
       "Histoire de l’Entreprise des Postes et Télécommunications du Grand-Duché de Luxembourg depuis 1842.",
     // home page
     home_joerpost: "Joer Post",
-    home_title: "Connecter le Luxembourg",
+    home_title: "175 joer post",
     home_button1: "Découvrez la ligne du temps",
     home_button2: "Explorez la carte",
     home_readmore: "Lire plus",
