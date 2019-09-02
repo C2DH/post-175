@@ -43,7 +43,7 @@ class CollectionFilters extends PureComponent {
         searchText: newValue
       },
       () => {
-        // this.debouncedOnSearchChange(newValue);
+        //this.debouncedOnSearchChange(newValue);
       }
     );
   };
