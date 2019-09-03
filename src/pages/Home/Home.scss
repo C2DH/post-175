@@ -14,11 +14,14 @@
     font-size: 0.85rem;
   }
 
+  h1 {
+    font-size: 2rem;
+  }
+
   .section-container {
     border-top: 5px white solid;
-    padding: 15px 0px 15px 15px;
+    padding: 5px 0px 5px 15px;
     transition: border-top 0.3s linear;
-    min-height: 136px;
     display: flex;
     align-items: center;
   }
@@ -29,7 +32,7 @@
 
   .section-text {
     font-family: "IBM Plex Sans", sans-serif;
-    font-size: 1.4rem;
+    font-size: 1rem;
     transform: translateX(-24px);
     transition: transform 0.3s linear;
   }
@@ -59,4 +62,44 @@
   a:hover {
     text-decoration: none;
   }
+
+  .row-bottom-menu {
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .Home {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .row-bottom-menu {
+      overflow-x: hidden;
+      flex-wrap: wrap;
+    }
+
+    .section-container {
+      min-height: 136px;
+      padding: 15px 0px 5px 15px;
+    }
+
+    .section-text {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
 }

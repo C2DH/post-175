@@ -29,6 +29,7 @@
     "react-hammerjs": "^1.0.1",
     "react-map-gl": "^4.0.0",
     "react-markdown": "^4.0.6",
+    "react-media": "^1.9.2",
     "react-motion": "^0.5.2",
     "react-pdf": "^4.0.0",
     "react-player": "^1.7.0",

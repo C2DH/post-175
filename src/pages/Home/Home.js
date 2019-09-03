@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { localize } from "../../localize";
 import { Link } from "react-router-dom";
+import Media from "react-media";
 import HomePics from "../../components/HomePics";
 import HomeMenu from "../../components/HomeMenu";
 import classNames from "classnames";
@@ -54,12 +55,12 @@ class Home extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="flex-grow-0 flex-shrink-0 px-5 px-xl-0">
+        <div className="flex-grow-0 flex-shrink-0 px-0 px-md-5 px-xl-0 order-1 order-md-0">
           <div className="container">
             <div className="row">
               <div className="col">
-                <h1 className="text-white text-uppercase mt-3">
-                  {subititleForced &&
+                <h1 className="text-white text-uppercase mt-md-3 mt-0">
+                  {/*subititleForced &&
                     subititleForced.map((d, i) => {
                       if (i === 0) {
                         return (
@@ -70,10 +71,11 @@ class Home extends PureComponent {
                       } else {
                         return <span key={d}>{d} </span>;
                       }
-                    })}
+                    })*/}
+                  {story ? story.data.subtitle : ""}
                 </h1>
               </div>
-              <div className="col-3 text-white">
+              <div className="col-12 col-md-3 text-white">
                 <p className="mt-3 text-white-50 abstract">
                   {story ? story.data.abstract : ""}
                 </p>
@@ -89,14 +91,14 @@ class Home extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="my-3 flex-shrink-1 flex-grow-1 position-relative">
+        <div className="my-3 flex-shrink-1 flex-grow-1 position-relative order-0 order-md-1">
           {docs && <HomePics docs={docs} />}
         </div>
-        <div className="flex-grow-0 flex-shrink-0 bg-white position-relative px-5 px-xl-0">
+        <div className="flex-grow-0 flex-shrink-0 bg-white position-relative px-0 px-md-5 px-xl-0 order-2">
           <HomeMenu />
           <div className="container">
-            <div className="row">
-              <div className="col-3 border-right border-left p-0">
+            <div className="row row-bottom-menu">
+              <div className="col-auto col-md-3 border-right border-left p-0">
                 <div className="section-container">
                   <Link to={url("/timeline")}>
                     <span className="moving-container d-flex d-inline-flex justify-content-between align-items-center">
@@ -110,7 +112,7 @@ class Home extends PureComponent {
                   </Link>
                 </div>
               </div>
-              <div className="col-3 border-right p-0">
+              <div className="col-auto col-md-3 border-right p-0">
                 <div className="section-container">
                   <Link to={url("/collection")}>
                     <span className="moving-container d-flex d-inline-flex justify-content-between align-items-center">
@@ -124,7 +126,7 @@ class Home extends PureComponent {
                   </Link>
                 </div>
               </div>
-              <div className="col-3 border-right p-0">
+              <div className="col-auto col-md-3 border-right p-0">
                 <div className="section-container">
                   <Link to={url("/map")}>
                     <span className="moving-container d-flex d-inline-flex justify-content-between align-items-center">
@@ -138,7 +140,7 @@ class Home extends PureComponent {
                   </Link>
                 </div>
               </div>
-              <div className="col-3 border-right p-0">
+              <div className="col-auto col-md-3 border-right p-0">
                 <div className="section-container">
                   <Link to={url("/stories")}>
                     <span className="moving-container d-flex d-inline-flex justify-content-between align-items-center">
