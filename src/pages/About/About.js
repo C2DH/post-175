@@ -24,18 +24,18 @@ class About extends PureComponent {
         <div className="container">
           <div className="row">
             <div className="col">
-              <h1 className="my-4 text-uppercase">
+              <h1 className="my-3 my-md-4 text-uppercase">
                 {story ? story.data.title : ""}
               </h1>
             </div>
           </div>
           <div className="row">
-            <div className="col-8 col-lg-7 col-xl-6 order-1 order-lg-0">
+            <div className="col-12 col-md-7 col-xl-6 order-1 order-lg-0">
               <div className="page-content">
                 {story && <ReactMarkdown source={story.data.abstract} />}
               </div>
             </div>
-            <div className="col-8 co-lg-5 col-xl-6 order-0 order-lg-1">
+            <div className="col-12 co-md-5 col-xl-6 order-0 order-lg-1">
               <div className="page-content-org">
                 <h6>{t("partners")}</h6>
                 <div className="d-flex flex-wrap align-items-center">

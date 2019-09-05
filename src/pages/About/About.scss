@@ -1,6 +1,11 @@
 .About {
-  margin-left: 56px;
+  margin-left: 0px;
   overflow-y: auto;
+
+  h1 {
+    font-size: 1.5rem;
+    padding-left: 56px;
+  }
 
   .page-content a,
   .page-content a:hover {
@@ -25,4 +30,28 @@
     position: sticky;
     top: 1rem;
   }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .About {
+    margin-left: 56px;
+
+    h1 {
+      font-size: 2.5rem;
+      padding-left: 0;
+    }
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
 }

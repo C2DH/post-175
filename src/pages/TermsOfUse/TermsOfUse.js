@@ -24,13 +24,13 @@ class TermsOfUse extends PureComponent {
         <div className="container">
           <div className="row">
             <div className="col">
-              <h1 className="my-4 text-uppercase">
+              <h1 className="my-3 my-md-4 text-uppercase">
                 {story ? story.data.title : ""}
               </h1>
             </div>
           </div>
           <div className="row">
-            <div className="col-8">
+            <div className="col-12 col-md-8">
               <div className="page-content">
                 {story && <ReactMarkdown source={story.data.abstract} />}
               </div>
