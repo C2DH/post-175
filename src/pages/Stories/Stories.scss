@@ -1,10 +1,42 @@
 .Stories {
-  margin-left: 56px;
+  margin-left: 0px;
+
+  h2 {
+    font-size: 1.2rem;
+    padding-left: 45px;
+  }
 
   .row-top-bar {
-    background-color: var(--dark-post);
+    background-color: black;
   }
   .top-bar {
     height: 56px;
   }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .Stories {
+    margin-left: 56px;
+
+    .row-top-bar {
+      background-color: var(--dark-post);
+    }
+    h2 {
+      font-size: 2rem;
+      padding-left: 0px;
+    }
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
 }

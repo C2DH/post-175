@@ -1,8 +1,8 @@
 .story-card {
   height: 100%;
   min-height: 0px;
-  width: 65vw;
-  min-width: 65vw;
+  width: 90vw;
+  min-width: 90vw;
   color: white;
   border-right: 1px solid grey;
   padding: 0 15px;
@@ -20,13 +20,17 @@
     color: grey;
   }
   .image {
-    height: 300px;
+    height: 90vw;
     background-position: center;
     background-size: cover;
   }
   .title {
     font-weight: normal;
-    font-size: 2rem;
+    font-size: 1.2rem;
+  }
+
+  .description {
+    font-size: 0.75rem;
   }
 }
 
@@ -36,15 +40,30 @@
   opacity: 0.6;
 }
 
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+}
 
-@media (min-width: 768px) {}
-
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .story-card {
     width: 430px;
     min-width: 430px;
+
+    .image {
+      height: 300px;
+    }
+
+    .title {
+      font-size: 2rem;
+    }
+
+    .description {
+      font-size: 1rem;
+    }
   }
 }
 
-@media (min-width: 1200px) {}
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
