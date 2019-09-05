@@ -1,0 +1,15 @@
+.TimelineMobile {
+  .title {
+    background-color: black;
+    border-color: #000 !important;
+  }
+
+  .top-bar {
+    height: 56px;
+  }
+
+  .filters-container,
+  .navigation-container {
+    background-color: var(--dark-post);
+  }
+}

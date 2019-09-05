@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import { Route, Switch, withRouter } from "react-router-dom";
 import qs from "query-string";
 import { find, get } from "lodash";
+import Media from "react-media";
 import { getLangs } from "../../state/selectors";
 import { setLang } from "../../state/actions";
 import Home from "../../pages/Home";
 import Map from "../../pages/Map";
 import TimelinePage from "../../pages/Timeline";
+import TimelineMobilePage from "../../pages/TimelineMobile";
 import About from "../../pages/About";
 import TermsOfUse from "../../pages/TermsOfUse";
 import Collection from "../../pages/Collection";
@@ -65,19 +67,53 @@ class LangRoot extends PureComponent {
 
     return (
       <Fragment>
-        <Switch location={isModal ? this.previousLocation : location}>
-          <Route path="/" exact component={Home} />
-          <Route path="/map" exact component={Map} />
-          <Route path="/timeline" exact component={TimelinePage} />
-          <Route path="/about" exact component={About} />
-          <Route path="/terms-of-use" exact component={TermsOfUse} />
-          <Route path="/collection" exact component={Collection} />
-          <Route path="/stories" component={StoriesRoot} />
-          <Route path="/doc/:id" exact component={DocumentDetail} />
-        </Switch>
-        {isModal ? (
-          <Route path="/doc/:id" exact component={DocumentDetailModal} />
-        ) : null}
+        <Media query="(max-width: 767.98px)">
+          {matches =>
+            matches ? (
+              <Fragment>
+                <Switch location={isModal ? this.previousLocation : location}>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/map" exact component={Map} />
+                  <Route
+                    path="/timeline"
+                    exact
+                    component={TimelineMobilePage}
+                  />
+                  <Route path="/about" exact component={About} />
+                  <Route path="/terms-of-use" exact component={TermsOfUse} />
+                  <Route path="/collection" exact component={Collection} />
+                  <Route path="/stories" component={StoriesRoot} />
+                </Switch>
+                {isModal ? (
+                  <Route
+                    path="/doc/:id"
+                    exact
+                    component={DocumentDetailModal}
+                  />
+                ) : null}
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Switch location={isModal ? this.previousLocation : location}>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/map" exact component={Map} />
+                  <Route path="/timeline" exact component={TimelinePage} />
+                  <Route path="/about" exact component={About} />
+                  <Route path="/terms-of-use" exact component={TermsOfUse} />
+                  <Route path="/collection" exact component={Collection} />
+                  <Route path="/stories" component={StoriesRoot} />
+                </Switch>
+                {isModal ? (
+                  <Route
+                    path="/doc/:id"
+                    exact
+                    component={DocumentDetailModal}
+                  />
+                ) : null}
+              </Fragment>
+            )
+          }
+        </Media>
       </Fragment>
     );
   }

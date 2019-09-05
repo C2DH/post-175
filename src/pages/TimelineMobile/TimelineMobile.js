@@ -20,6 +20,7 @@ import {
 import {
   getStory,
   getEvents,
+  getFilteredEvents,
   getPeriods,
   getSelectedEvent,
   getTimelinePrevEvent,
@@ -36,21 +37,29 @@ import {
 import MobileAlert from "../../components/MobileAlert";
 import Period from "../../components/Period";
 import TimelineNavigation from "../../components/TimelineNavigation";
-import TimelineViz from "../../components/Timeline";
+import TimelineFiltersMobile from "../../components/TimelineFiltersMobile";
+import TimelineViz from "../../components/TimelineMobile";
 import SideMenu from "../../components/SideMenu";
 import { TransitionMotion, Motion, spring } from "react-motion";
 import EventModal from "../../components/EventModal";
 import Spinner from "../../components/Spinner";
-import "./Timeline.scss";
+import "./TimelineMobile.scss";
 
-class Timeline extends PureComponent {
+class TimelineMobile extends PureComponent {
   state = {
-    modal: true
+    modal: true,
+    filters: false
   };
 
   toggle = () => {
     this.setState(prevState => ({
       modal: !prevState.modal
+    }));
+  };
+
+  toggleFilter = () => {
+    this.setState(prevState => ({
+      filters: !prevState.filters
     }));
   };
 
@@ -159,7 +168,11 @@ class Timeline extends PureComponent {
       t
     } = this.props;
     return (
-      <div className="h-100 d-flex flex-column Timeline position-relative">
+      <div className="h-100 d-flex flex-column TimelineMobile position-relative">
+        <TimelineFiltersMobile
+          open={this.state.filters}
+          toggle={this.toggleFilter}
+        ></TimelineFiltersMobile>
         {events === null && <Spinner firstLoading screen="timeline" />}
         <SideMenu />
         <div className="flex-grow-0 flex-shrink-0 border-bottom title">
@@ -167,22 +180,26 @@ class Timeline extends PureComponent {
             <div className="row">
               <div className="col">
                 <div className="top-bar d-flex align-items-center">
-                  <h2 className="text-white m-0">
+                  <h4 className="text-white m-0 w-100 pl-5 text-truncate">
                     {story ? story.data.title : ""}
-                  </h2>
+                  </h4>
+                  <div className="d-flex">
+                    <i
+                      onClick={this.toggleFilter}
+                      className="material-icons text-white"
+                    >
+                      filter_list
+                    </i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className="flex-shrink-1 flex-grow-1 d-flex">
-          {events && periods && (
-            <Motion defaultStyle={{ o: 0 }} style={{ o: spring(1) }}>
-              {({ o }) => <TimelineViz style={{ opacity: o }} />}
-            </Motion>
-          )}
+          {events && <TimelineViz events={events} />}
         </div>
-        {/* TODO: Move in another component perforamance issues  */}
+
         <TransitionMotion
           defaultStyles={
             selectedEvent
@@ -228,6 +245,7 @@ class Timeline extends PureComponent {
             </div>
           )}
         </TransitionMotion>
+
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
@@ -270,7 +288,8 @@ class Timeline extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  events: getEvents(state),
+  //events: getEvents(state),
+  events: getFilteredEvents(state),
   periods: getPeriods(state),
   selectedEvent: getSelectedEvent(state),
   nextEvent: getTimelineNextEvent(state),
@@ -298,4 +317,4 @@ export default connect(
     setCategoriesTimeline,
     setMilestoneTimeline
   }
-)(localize()(Timeline));
+)(localize()(TimelineMobile));

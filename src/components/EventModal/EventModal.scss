@@ -1,5 +1,5 @@
 .EventModal {
-  padding: 50px 0px;
+  padding: 15px 0px;
   background-color: rgba(19, 19, 19, 0.9);
 
   .doc-container {
@@ -96,30 +96,41 @@
   }
 }
 
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+}
 
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+}
 
 @media (min-width: 992px) {
-  .doc-container {
-    &.height-100 {
+  .EventModal {
+    padding: 50px 0px;
+    .doc-container {
       height: 100%;
+      &.height-100 {
+        height: 100%;
+      }
+      .doc-container-info {
+        border-top: 1px solid #f8f9fa;
+      }
     }
-    .doc-container-info {
-      border-top: 1px solid #f8f9fa;
-    }
-  }
-  .event-info {
-    height: 100%;
-    .action-bar {
-      width: 56px;
-      button {
-        border-bottom: none;
-        border-right: none;
-        border-left: none;
+    .event-info {
+      height: 100%;
+      &.height-100 {
+        height: 100%;
+      }
+      .action-bar {
+        width: 56px;
+        button {
+          width: 100% !important;
+          border-bottom: none;
+          border-right: none;
+          border-left: none;
+        }
       }
     }
   }
 }
 
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+}

@@ -1,0 +1,83 @@
+.TimelineEvents {
+  .event-container {
+    height: 100%;
+    padding: 5px;
+  }
+
+  .timeline-event-date {
+    color: #828282;
+    text-anchor: start;
+    font-size: 0.875rem;
+  }
+
+  .timeline-event-title {
+    color: #fff;
+    font-size: 1.25rem;
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+    font-weight: 400;
+  }
+
+  .event-image {
+    max-height: calc(100vh - 290px);
+    max-width: 100%;
+    object-fit: contain;
+    object-position: 0 50%;
+  }
+
+  .slick-slider,
+  .slick-list,
+  .slick-track,
+  .slick-slide > div {
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .timeline-nav-tick {
+    font-size: 0.75rem;
+  }
+
+  .timeline-g-click {
+    cursor: pointer;
+  }
+
+  .timeline-g-click:hover .timeline-event-title {
+    text-decoration: underline;
+  }
+
+  .timeline-event-category {
+    text-anchor: start;
+    font-size: 0.875rem;
+  }
+
+  .back-arrow,
+  .forward-arrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    opacity: 1;
+    transition: opacity 0.35s ease-out;
+    pointer-events: none;
+    i {
+      color: white;
+      pointer-events: all;
+      cursor: pointer;
+    }
+  }
+
+  .back-arrow.arrow-disabled,
+  .forward-arrow.arrow-disabled {
+    opacity: 0;
+  }
+
+  .back-arrow {
+    left: -24px;
+  }
+  .forward-arrow {
+    right: -24px;
+  }
+}

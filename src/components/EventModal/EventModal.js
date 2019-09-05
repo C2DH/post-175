@@ -22,7 +22,7 @@ const EventType = ({ event }) => {
 };
 
 const EventsControl = ({ hasPrev, hasNext, goNext, goPrev, t }) => (
-  <div className="w-100 d-flex flex-lg-column">
+  <div className="w-100 d-flex flex-lg-column order-0 order-md-1">
     <button
       className="btn d-flex w-100 align-items-center justify-content-center"
       onClick={goPrev}
@@ -116,12 +116,15 @@ class EventModal extends PureComponent {
             )}
 
             <div
-              className={classNames(`d-flex event-info flex-column flex-lg-row`, {
-                "col-lg-5": displayDocs.length > 0,
-                "col-lg-6": displayDocs.length == 0,
-                "height-100": displayDocs.length > 0
-                // "h-100": displayDocs.length > 0
-              })}
+              className={classNames(
+                `d-flex event-info flex-column flex-lg-row`,
+                {
+                  "col-lg-5": displayDocs.length > 0,
+                  "col-lg-6": displayDocs.length === 0,
+                  "height-100": displayDocs.length > 0
+                  // "h-100": displayDocs.length > 0
+                }
+              )}
             >
               <div className="flex-grow-1 border-right event-info-container order-1 order-lg-0">
                 <div className="p-3 w-100 border-bottom">
@@ -158,7 +161,7 @@ class EventModal extends PureComponent {
               <div className="action-bar flex-grow-lg-0 flex-shrink-lg-0 d-flex d-lg-block">
                 <button
                   onClick={onClose}
-                  className="btn d-none d-lg-flex w-100 align-items-center justify-content-center"
+                  className="btn d-flex w-25 w-md-100 align-items-center justify-content-center order-1 order-md-0"
                 >
                   <i className="material-icons">close</i>
                 </button>

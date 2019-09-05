@@ -1,0 +1,26 @@
+.TimelineNavigationMobile {
+  color: white;
+
+  .decade {
+    padding: 20px 0px;
+    border-right: 1px rgba(255, 255, 255, 0.4) solid;
+    border-top: 1px rgba(255, 255, 255, 0.4) solid;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .decade.active {
+    background: white;
+    color: black;
+  }
+
+  .pointEvent {
+    position: absolute;
+    top: 6px;
+    left: 0;
+  }
+
+  .decadesContainer {
+    height: 65px;
+  }
+}

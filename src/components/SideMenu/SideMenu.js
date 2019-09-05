@@ -37,6 +37,7 @@ class SideMenu extends PureComponent {
           })}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
+          onClick={this.handleMouseLeave}
         >
           <div className="side-menu-top">
             <NavLink
@@ -121,7 +122,12 @@ class SideMenu extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="side-menu">
+        <div
+          className={classNames("side-menu", {
+            open: this.state.expanded
+          })}
+          onClick={this.handleMouseLeave}
+        >
           <div
             className="side-menu-top"
             onMouseEnter={this.handleMouseEnter}
@@ -210,6 +216,11 @@ class SideMenu extends PureComponent {
                 {lang.param}
               </div>
             ))}
+          </div>
+        </div>
+        <div className="openMobile d-block d-md-none">
+          <div className="button" onClick={this.handleMouseEnter}>
+            <i className="material-icons">menu</i>
           </div>
         </div>
       </React.Fragment>

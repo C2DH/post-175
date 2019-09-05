@@ -1,0 +1,41 @@
+.TimelineFiltersMobile {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateX(-100%);
+  background-color: var(--dark-post);
+  z-index: 3;
+  overflow-y: scroll;
+  transition: transform 0.3s ease-in-out;
+
+  &.open {
+    transform: translateX(0%);
+  }
+
+  .top-bar {
+    height: 56px;
+  }
+
+  .category-filter {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.8rem;
+    opacity: 0.4;
+    transition: opacity 0.3s linear;
+    cursor: pointer;
+  }
+
+  .category-filter.active {
+    opacity: 1;
+  }
+
+  .filter-switch {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.75rem;
+
+    label {
+      font-size: 0.75rem;
+    }
+  }
+}
