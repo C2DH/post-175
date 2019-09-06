@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import find from "lodash/find";
 import VideoStory from "../components/VideoStory";
+import VideoStoryMobile from "../components/VideoStoryMobile";
 import Spinner from "../components/Spinner";
+import Media from "react-media";
 import { loadStory, unloadStory } from "../state/actions";
 import {
   getVideoStory,
@@ -58,20 +60,33 @@ class Story extends Component {
     const { story, url, title, sideDocs, subtitlesFile } = this.props;
     return (
       <div className="h-100">
-        {story === null && <Spinner
-          screen='storyDetail'
-          firstLoading
-        />}
+        {story === null && <Spinner screen="storyDetail" firstLoading />}
         {story && (
-          <VideoStory
-            url={url}
-            subtitlesFile={subtitlesFile}
-            getSideDocAt={this.sideDocAt}
-            getSpeakerAt={this.speakerAt}
-            sideDocs={sideDocs}
-            title={title}
-            onBack={this.goBack}
-          />
+          <Media query="(max-width: 767.98px)">
+            {matches =>
+              matches ? (
+                <VideoStoryMobile
+                  url={url}
+                  subtitlesFile={subtitlesFile}
+                  getSideDocAt={this.sideDocAt}
+                  getSpeakerAt={this.speakerAt}
+                  sideDocs={sideDocs}
+                  title={title}
+                  onBack={this.goBack}
+                />
+              ) : (
+                <VideoStory
+                  url={url}
+                  subtitlesFile={subtitlesFile}
+                  getSideDocAt={this.sideDocAt}
+                  getSpeakerAt={this.speakerAt}
+                  sideDocs={sideDocs}
+                  title={title}
+                  onBack={this.goBack}
+                />
+              )
+            }
+          </Media>
         )}
       </div>
     );

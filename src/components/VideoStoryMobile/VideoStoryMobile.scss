@@ -1,0 +1,159 @@
+.video-story {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    padding-left: 56px;
+    font-weight: normal;
+    color: white;
+    font-size: 1.2rem;
+  }
+
+  .video-story-top {
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--dark-post);
+
+    .control-button {
+      background-color: #ffffff;
+      height: 56px;
+      width: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .video-story-track {
+    .track-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .video-meta {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 20px;
+      }
+
+      .audio {
+        cursor: pointer;
+      }
+
+      .track {
+        height: 30px;
+        background-color: #7b7b7b;
+        position: relative;
+        cursor: pointer;
+
+        .side-doc {
+          position: absolute;
+          top: 50%;
+          background: #f8c91c;
+          border: solid rgba(255, 255, 255, 0.5) 1px;
+          width: 10px;
+          height: 10px;
+          transform: translate(-50%, -5px);
+          border-radius: 9999px;
+        }
+
+        .side-doc-line {
+          position: absolute;
+          height: 100%;
+          background: #f8c91c;
+          width: 1px;
+        }
+
+        .progress {
+          background-color: var(--yellow-post);
+          opacity: 0.75;
+          position: absolute;
+          height: 100%;
+          border-radius: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+  .video-story-video {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+    .video-container {
+      height: 100%;
+      flex: 1;
+      overflow: hidden;
+      video {
+        object-fit: cover;
+      }
+    }
+  }
+
+  .side-document {
+    background: black;
+    position: relative;
+    height: 35vh;
+
+    .display-doc {
+      background: black;
+      height: 100%;
+      display: flex;
+      .title-doc {
+        h6 {
+          font-family: "IBM Plex Sans Condensed", sans-serif;
+          font-size: 1.25rem;
+          font-weight: 400;
+          margin-bottom: 0;
+        }
+        .doc-open {
+          text-transform: uppercase;
+          color: white;
+          text-decoration: none;
+          border-bottom: 1px solid var(--yellow-post);
+        }
+        .doc-open:hover {
+          text-decoration: none;
+        }
+      }
+      .doc-image {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+      .doc-video {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .doc-video video {
+        object-fit: contain;
+      }
+    }
+  }
+
+  .video-story-speaker {
+    min-height: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    .speaker {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 5px;
+      p,
+      h6 {
+        margin: 0;
+      }
+    }
+  }
+}
