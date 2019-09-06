@@ -21,9 +21,9 @@ import {
   getCollectionCount,
   getCollectionAllCount,
   getCollectionsDataTypeFacets,
-  getCollectionsDataTypeAllFacets,
+  getCollectionsDataTypeAllFacets
 } from "../../state/selectors";
-import "./CollectionPage.css";
+import "./CollectionPage.scss";
 
 const parseQsAsList = str => str.split(",").filter(Boolean);
 
@@ -168,7 +168,17 @@ class Collection extends PureComponent {
   };
 
   render() {
-    const { docs, loading, facets, allFacets, location, count, allCount, dataTypeFacets, dataTypeAllFacets } = this.props;
+    const {
+      docs,
+      loading,
+      facets,
+      allFacets,
+      location,
+      count,
+      allCount,
+      dataTypeFacets,
+      dataTypeAllFacets
+    } = this.props;
     const queryParams = qs.parse(location.search);
     const {
       search,
@@ -199,10 +209,9 @@ class Collection extends PureComponent {
           dataTypeAllFacets={dataTypeAllFacets}
         />
         {docs && <CollectionList docs={docs} />}
-        {(docs === null || loading) && <Spinner
-          screen={'collection'}
-          firstLoading={docs === null}
-        />}
+        {(docs === null || loading) && (
+          <Spinner screen={"collection"} firstLoading={docs === null} />
+        )}
       </div>
     );
   }
