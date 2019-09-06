@@ -30,7 +30,7 @@ const DocDetail = ({
 
   return (
     <div className="doc-detail d-flex w-100 h-100">
-      <div className="doc-detail-bar border-right">
+      <div className="doc-detail-bar border-right d-none d-md-flex">
         <div
           className="close-icon w-100 d-flex justify-content-center align-items-center"
           onClick={onClose}
@@ -42,15 +42,27 @@ const DocDetail = ({
       <div className="doc-detail-data">
         <div className="container-fluid h-100 px-0">
           <div className="row no-gutters h-100 flex-column flex-lg-row">
+            <div className="d-block d-md-none close-container">
+              <div
+                className="d-flex justify-content-center align-items-center text-white"
+                onClick={onClose}
+              >
+                <i className="ml-auto material-icons">close</i>
+              </div>
+            </div>
             <div className="doc-detail-info-container col-lg-4 d-flex order-1 order-lg-0">
               <div className="doc-detail-info w-100">
                 <div className="px-3 pt-3 pb-1 p-lg-3 w-100">
-                  <h6 className="detail-title d-none d-lg-block">{t("title")}</h6>
+                  <h6 className="detail-title d-none d-lg-block">
+                    {t("title")}
+                  </h6>
                   <h4 className="doc-title">{doc.data.title}</h4>
                 </div>
                 {doc.data.description && (
                   <div className="px-3 pt-1 pb-3 p-lg-3 w-100 border-bottom">
-                    <h6 className="detail-title d-none d-lg-block">{t("description")}</h6>
+                    <h6 className="detail-title d-none d-lg-block">
+                      {t("description")}
+                    </h6>
                     <p>{doc.data.description}</p>
                   </div>
                 )}

@@ -83,6 +83,7 @@ class LangRoot extends PureComponent {
                   <Route path="/terms-of-use" exact component={TermsOfUse} />
                   <Route path="/collection" exact component={Collection} />
                   <Route path="/stories" component={StoriesRoot} />
+                  <Route path="/doc/:id" exact component={DocumentDetail} />
                 </Switch>
                 {isModal ? (
                   <Route
@@ -102,6 +103,7 @@ class LangRoot extends PureComponent {
                   <Route path="/terms-of-use" exact component={TermsOfUse} />
                   <Route path="/collection" exact component={Collection} />
                   <Route path="/stories" component={StoriesRoot} />
+                  <Route path="/doc/:id" exact component={DocumentDetail} />
                 </Switch>
                 {isModal ? (
                   <Route
