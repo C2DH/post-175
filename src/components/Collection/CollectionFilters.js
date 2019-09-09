@@ -97,14 +97,16 @@ class CollectionFilters extends PureComponent {
             <div className="row top-bar border-bottom align-items-center">
               <div className="col-auto mr-auto">
                 <div className="text-white">
-                  <h2 className="m-0 d-inline-block">{t("menu_collection")}</h2>
-                  <small className="ml-2">
-                    {count} / {allCount}
+                  <h2 className="m-0 d-block d-md-inline-block pl-5 pl-md-0 pt-1 pt-md-0 title">
+                    {t("menu_collection")}
+                  </h2>
+                  <small className="ml-5 ml-md-2">
+                    {count}/{allCount}
                   </small>
                   <small className="ml-2">{t("items_shown")}</small>
                 </div>
               </div>
-              <div className="col-5 col-lg-auto">
+              <div className="col-5 col-lg-auto d-none d-md-block">
                 <div className="d-flex align-items-center">
                   <Search
                     placeholder={t("search")}
@@ -132,6 +134,17 @@ class CollectionFilters extends PureComponent {
                   </button>
                 </div>
               </div>
+              <div className="d-block d-md-none">
+                <button
+                  type="button"
+                  className="btn d-flex align-items-center justify-content-center bg-transparent text-white"
+                  onClick={this.toggleFiltersOpen}
+                >
+                  <i className="material-icons">
+                    {open ? "close" : "filter_list"}
+                  </i>
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -143,6 +156,23 @@ class CollectionFilters extends PureComponent {
           <div className="container-fluid">
             <div className="row">
               <div className="col-12 col-lg-5 col-xl-4">
+                <div className="mt-2 d-flex align-items-center w-100 d-md-none">
+                  <Search
+                    placeholder={t("search")}
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    searchSuggestions={this.debouncedSearchSuggestions}
+                    clearSuggestions={clearSuggestions}
+                    suggestions={suggestions}
+                    value={this.state.searchText}
+                    onChange={this.handleOnSearchChange}
+                  />
+                  <button
+                    type="submit"
+                    className="ml-2 btn d-flex align-items-center justify-content-center bg-transparent text-white"
+                  >
+                    <i className="material-icons">search</i>
+                  </button>
+                </div>
                 <h6 className="filter-sub-title mt-3">{t("filter_by_type")}</h6>
                 <div className="categories-radios d-flex flex-wrap my-3">
                   {COLLECTION_DATE_TYPES.map(name => (

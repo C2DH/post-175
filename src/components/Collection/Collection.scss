@@ -1,13 +1,18 @@
 .CollectionFilters {
   .top-bar {
     height: 56px;
-    background-color: var(--dark-post);
+    background-color: black;
     border-color: #000 !important;
     z-index: 2;
     position: relative;
   }
+
   small {
     font-size: 75%;
+  }
+
+  .title {
+    font-size: 1.5rem;
   }
 }
 
@@ -21,8 +26,11 @@
   left: 56px;
   top: 56px;
   right: 0;
+  left: 0;
+  bottom: 0;
   transform: translateY(-100%);
-  background-color: var(--dark-post);
+  background-color: black;
+  overflow-y: scroll;
   transition: transform 0.25s linear;
 
   .filter-sub-title {
@@ -42,7 +50,10 @@
   }
 
   .categories-radios .custom-checkbox {
-    flex-basis: 50%;
+    flex-basis: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid white;
   }
 
   .categories-radios
@@ -85,6 +96,7 @@
     justify-content: space-between;
     padding-top: 15px;
     color: white;
+    flex-direction: column;
   }
 }
 
@@ -230,6 +242,32 @@
 
   .collection-col.order-1 {
     border-right: 1px solid gray;
+  }
+
+  .CollectionFilters {
+    .top-bar {
+      background-color: var(--dark-post);
+    }
+    .title {
+      font-size: 2rem;
+    }
+  }
+
+  .collection-filters {
+    left: 56px;
+    bottom: unset;
+    background-color: var(--dark-post);
+
+    .categories-radios .custom-checkbox {
+      flex-basis: 50%;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      border: none;
+    }
+
+    .filter-brush-bottom {
+      flex-direction: row;
+    }
   }
 }
 

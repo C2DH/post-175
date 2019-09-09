@@ -207,7 +207,7 @@ export default class CollectionTimeBrush extends PureComponent {
     }
 
     return (
-      <div className="filter-brush-container pr-4 my-3 d-flex flex-column h-100">
+      <div className="filter-brush-container pr-md-4 pr-0 my-3 d-flex flex-column h-100">
         <div className="collection-time-brush" ref={r => (this.container = r)}>
           {width && (
             <svg style={{ height, width, overflow: "visible" }}>
@@ -241,7 +241,7 @@ export default class CollectionTimeBrush extends PureComponent {
           )}
         </div>
         <div className="filter-brush-bottom">
-          <div className="custom-control custom-checkbox">
+          <div className="custom-control custom-checkbox order-1 order-md-0 mt-2 mt-md-0">
             <input
               type="checkbox"
               className="custom-control-input"
@@ -254,7 +254,7 @@ export default class CollectionTimeBrush extends PureComponent {
               {t("uncertain_dates")}
             </label>
           </div>
-          <div>
+          <div className="order-0 order-md-1 d-flex justify-content-center">
             {startYear.getFullYear()}
             {" - "}
             {endYear.getFullYear()}
