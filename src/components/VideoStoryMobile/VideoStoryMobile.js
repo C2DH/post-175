@@ -149,7 +149,7 @@ class VideoStoryMobile extends Component {
         : undefined;
 
     return (
-      <div className="video-story">
+      <div className="video-story-mobile">
         <SideMenu></SideMenu>
         <div className="flex-grow-0 p-2">
           <h4 className="title">{title}</h4>
