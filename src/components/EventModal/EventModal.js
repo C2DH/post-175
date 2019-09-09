@@ -81,7 +81,10 @@ class EventModal extends PureComponent {
           <div className="row h-100 no-gutters justify-content-lg-center align-items-lg-center flex-column flex-lg-row">
             {displayDocs.length > 0 && (
               <div className="col-lg-7 flex-column d-flex doc-container">
-                <div className="w-100 flex-1 p-5" style={{ minHeight: 0 }}>
+                <div
+                  className="w-100 flex-1 p-1 p-md-5"
+                  style={{ minHeight: 0 }}
+                >
                   <img
                     src={selectedDocument.data.resolutions.medium.url}
                     width="100%"
@@ -89,7 +92,7 @@ class EventModal extends PureComponent {
                     className="img-preview"
                   />
                 </div>
-                <div className="p-3 w-100 text-white d-flex align-items-center doc-container-info">
+                <div className="p-1 p-md-3 w-100 text-white d-flex align-items-center doc-container-info">
                   <div className="px-3 d-none d-lg-block">
                     <p className="date text-white-50">
                       {get(selectedDocument, "data.year")}
