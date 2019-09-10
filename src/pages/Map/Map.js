@@ -70,7 +70,9 @@ const circleScale = scaleLinear()
   .domain([1, 184]);
 
 // TODO: Style that bitch
-const CurrentYear = ({ year }) => <h1 className="map-year">{year}</h1>;
+const CurrentYear = ({ year }) => (
+  <h1 className="map-year d-none d-md-block">{year}</h1>
+);
 
 const makeClusterElement = zoomToCluster => {
   const ClusterElement = ({ properties, style }) => {
@@ -145,14 +147,14 @@ const MapHeader = ({
   }));
   // .filter(({ count }) => count);
   return (
-    <div className="top-bar d-flex justify-content-between">
-      <div className="text-white d-flex align-items-center">
+    <div className="top-filters d-flex justify-content-between">
+      <div className="text-white d-flex align-items-start align-items-md-center flex-column flex-md-row w-100 pb-2 pb-md-0">
         {counts.map(({ label, count }) => (
           <div
             key={label}
             onClick={() => toggleSelectedPlace(label)}
             className={classNames(
-              "map-filters mr-4 d-flex align-items-center",
+              "map-filters mr-4 d-flex align-items-center py-2 py-md-0",
               {
                 active:
                   selectedPlaceTypes.indexOf(label) !== -1 ||
@@ -195,7 +197,8 @@ class Map extends PureComponent {
     width: 0,
     height: 0,
     opacity: 0.5,
-    modal: true
+    modal: true,
+    open: false
   };
 
   toggle = () => {
@@ -346,9 +349,7 @@ class Map extends PureComponent {
         id: l.id.toString(),
         type: "raster",
         tiles: [
-          `https://api.mapbox.com/v4/${
-            l.data.raster_layer
-          }/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`
+          `https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`
         ]
       })
     );
@@ -408,8 +409,13 @@ class Map extends PureComponent {
     });
   };
 
+  toggleFiltersOpen = () =>
+    this.setState(({ open }) => ({
+      open: !open
+    }));
+
   render() {
-    const { width, height, viewport } = this.state;
+    const { width, height, viewport, open } = this.state;
     const {
       placesInTime,
       overPlace,
@@ -442,7 +448,6 @@ class Map extends PureComponent {
         {(places === null || rasterLayers === null) && (
           <Spinner firstLoading screen="map" />
         )}
-        <MobileAlert />
         <SideMenu />
         <div className="flex-grow-0 flex-shrink-0 border-bottom title">
           <div className="container-fluid">
@@ -452,12 +457,28 @@ class Map extends PureComponent {
                   <h2 className="text-white m-0">
                     {story ? story.data.title : ""}
                   </h2>
+                  <button
+                    type="button"
+                    className="ml-auto btn d-flex d-md-none align-items-center justify-content-center bg-transparent text-white"
+                    onClick={this.toggleFiltersOpen}
+                  >
+                    <i className="material-icons">
+                      {open ? "close" : "filter_list"}
+                    </i>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex-grow-0 flex-shrink-0 border-bottom title">
+        <div
+          className={classNames(
+            "flex-grow-0 flex-shrink-0 border-bottom filters-container",
+            {
+              open: open
+            }
+          )}
+        >
           <div className="container-fluid">
             <div className="row">
               <div className="col">

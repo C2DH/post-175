@@ -1,14 +1,40 @@
 .Map {
-  margin-left: 56px;
+  margin-left: 0px;
   .title {
-    background-color: var(--dark-post);
-    border-color: #000 !important;
+    background-color: black;
+    border-color: black !important;
+    z-index: 889;
+    position: relative;
+    h2 {
+      font-size: 1.5rem;
+      padding-left: 56px;
+    }
   }
   .top-bar {
     height: 56px;
     font-size: 0.85rem;
   }
-  .filters-container,
+
+  .top-filters {
+    height: auto;
+    font-size: 0.85rem;
+  }
+
+  .filters-container {
+    position: absolute;
+    top: 56px;
+    z-index: 888;
+    width: 100%;
+    transform: translateY(-100%);
+    background-color: black;
+    border-color: black !important;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .filters-container.open {
+    transform: translateY(0%);
+  }
+
   .navigation-container,
   .timeline-container {
     background-color: var(--dark-post);
@@ -17,6 +43,8 @@
   .map-filters {
     font-family: "IBM Plex Sans", sans-serif;
     cursor: pointer;
+    border-bottom: 1px solid white;
+    width: 100%;
   }
 
   .map-opacity {
@@ -50,11 +78,40 @@
   }
 }
 
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+}
 
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+  .Map {
+    margin-left: 56px;
 
-@media (min-width: 992px) {}
+    .map-filters {
+      border-bottom: none;
+      width: auto;
+    }
+
+    .filters-container {
+      position: relative;
+      top: 0px;
+      transform: translateY(0%);
+      background-color: var(--dark-post);
+    }
+
+    .top-filters {
+      height: 56px;
+    }
+    .title {
+      background-color: var(--dark-post);
+      h2 {
+        font-size: 2rem;
+        padding-left: 0px;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+}
 
 @media (min-width: 1200px) {
   .Map {

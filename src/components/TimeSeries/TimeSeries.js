@@ -7,7 +7,7 @@ class TimeSerie extends PureComponent {
   render() {
     const { column, serie, year, extent, t } = this.props;
     return (
-      <div className="col-4 col-lg-12 p-3 text-white border-bottom border-light time-serie">
+      <div className="col-4 col-lg-12 p-3 text-white border-bottom border-light time-serie d-none d-md-block">
         <h6 className="text-white-50 mb-1">{t(`${column}-title`)}</h6>
         <p>{t(`${column}-desc`)}</p>
         <h4
