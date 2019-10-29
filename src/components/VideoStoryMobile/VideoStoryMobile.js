@@ -134,7 +134,7 @@ class VideoStoryMobile extends Component {
     const tracks = [];
     if (subtitlesFile) {
       tracks.push({
-        kind: "metadata",
+        kind: "subtitles",
         src: subtitlesFile,
         default: true
       });
