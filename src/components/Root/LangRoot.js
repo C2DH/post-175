@@ -16,6 +16,7 @@ import Collection from "../../pages/Collection";
 import DocumentDetail from "../../pages/DocumentDetail";
 import DocumentDetailModal from "../../pages/DocumentDetailModal";
 import StoriesRoot from "../../pages/StoriesRoot";
+import Cookie from "../Cookie";
 
 class LangRoot extends PureComponent {
   componentWillMount() {
@@ -66,7 +67,7 @@ class LangRoot extends PureComponent {
     );
 
     return (
-      <Fragment>
+      <Cookie>
         <Media query="(max-width: 767.98px)">
           {matches =>
             matches ? (
@@ -116,7 +117,7 @@ class LangRoot extends PureComponent {
             )
           }
         </Media>
-      </Fragment>
+      </Cookie>
     );
   }
 }

@@ -1,5 +1,8 @@
 export default {
   de: {
+    cookies:
+      "Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden.",
+    "got it": "Verstanden",
     // side menu
     menu_joerpost: "Joer Post",
     menu_home: "Startseite",
@@ -154,6 +157,9 @@ export default {
     }
   },
   fr: {
+    cookies:
+      "Nous utilisons des cookies afin d'améliorer le fonctionnement de notre site pour l'utilisateur. En continuant la navigation sur ce site, vous acceptez l'utilisation de ces cookies.",
+    "got it": "vu",
     // side menu
     menu_joerpost: "Joer Post",
     menu_home: "Page d’accueil",
