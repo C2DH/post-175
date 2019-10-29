@@ -1,0 +1,13 @@
+.TimelineNavigationMap {
+  .raster {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    z-index: 1;
+    background: var(--dark-post);
+  }
+
+  .raster:hover {
+    z-index: 2;
+  }
+}

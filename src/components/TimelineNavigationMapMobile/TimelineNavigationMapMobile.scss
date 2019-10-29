@@ -1,0 +1,34 @@
+.TimelineNavigationMapMobile {
+  color: white;
+
+  .raster {
+    background: var(--dark-post);
+    color: white !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 2px;
+    border-radius: 4px;
+  }
+
+  .year {
+    padding: 5px 0px;
+    border-right: 1px rgba(255, 255, 255, 0.4) solid;
+    border-top: 1px rgba(255, 255, 255, 0.4) solid;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .year.active {
+    background: white;
+    color: black;
+  }
+
+  .yearsContainer {
+    height: 65px;
+  }
+}

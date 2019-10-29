@@ -6,6 +6,7 @@ import mapboxgl from "mapbox-gl";
 import Immutable from "immutable";
 import memoize from "memoize-one";
 import qs from "query-string";
+import Media from "react-media";
 // import ReactMapGL, {
 //   NavigationControl,
 //   Marker,
@@ -54,6 +55,7 @@ import {
 } from "../../state/selectors";
 import { getQsSafeYear, makeUrlWithYear } from "../../utils";
 import TimelineNavigationMap from "../../components/TimelineNavigationMap";
+import TimelineNavigationMapMobile from "../../components/TimelineNavigationMapMobile";
 import MobileAlert from "../../components/MobileAlert";
 import MapTooltip from "../../components/MapTooltip";
 import Spinner from "../../components/Spinner";
@@ -349,7 +351,7 @@ class Map extends PureComponent {
         id: l.id.toString(),
         type: "raster",
         tiles: [
-          `https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg`
+          `https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiMTc1cG9zdCIsImEiOiJjam9md2dveWYwOHh4M3FwbnN0OHlhNTh3In0.zTSFenMa8A8m2lfQN9FWIQ`
         ]
       })
     );
@@ -444,213 +446,229 @@ class Map extends PureComponent {
     const places = this.getFilteredPlaces(placesInTime, selectedPlaceTypes);
 
     return (
-      <div className="h-100 d-flex flex-column Map position-relative">
-        {(places === null || rasterLayers === null) && (
-          <Spinner firstLoading screen="map" />
-        )}
-        <SideMenu />
-        <div className="flex-grow-0 flex-shrink-0 border-bottom title">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="top-bar d-flex align-items-center">
-                  <h2 className="text-white m-0">
-                    {story ? story.data.title : ""}
-                  </h2>
-                  <button
-                    type="button"
-                    className="ml-auto btn d-flex d-md-none align-items-center justify-content-center bg-transparent text-white"
-                    onClick={this.toggleFiltersOpen}
-                  >
-                    <i className="material-icons">
-                      {open ? "close" : "filter_list"}
-                    </i>
-                  </button>
+      <React.Fragment>
+        <div className="h-100 d-flex flex-column Map position-relative">
+          {(places === null || rasterLayers === null) && (
+            <Spinner firstLoading screen="map" />
+          )}
+          <SideMenu />
+          <div className="flex-grow-0 flex-shrink-0 border-bottom title">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col">
+                  <div className="top-bar d-flex align-items-center">
+                    <h2 className="text-white m-0">
+                      {story ? story.data.title : ""}
+                    </h2>
+                    <button
+                      type="button"
+                      className="ml-auto btn d-flex d-md-none align-items-center justify-content-center bg-transparent text-white"
+                      onClick={this.toggleFiltersOpen}
+                    >
+                      <i className="material-icons">
+                        {open ? "close" : "filter_list"}
+                      </i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className={classNames(
-            "flex-grow-0 flex-shrink-0 border-bottom filters-container",
-            {
-              open: open
-            }
-          )}
-        >
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <MapHeader
-                  t={t}
-                  showOpacity={mapboxRasters.length > 0}
-                  placeTypesCount={placeTypesCount}
-                  opacity={this.state.opacity}
-                  onOpacityChange={this.handleOnOpacityChange}
-                  selectedPlaceTypes={selectedPlaceTypes}
-                  toggleSelectedPlace={this.toggleSelectedPlace}
-                />
+          <div
+            className={classNames(
+              "flex-grow-0 flex-shrink-0 border-bottom filters-container",
+              {
+                open: open
+              }
+            )}
+          >
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col">
+                  <MapHeader
+                    t={t}
+                    showOpacity={mapboxRasters.length > 0}
+                    placeTypesCount={placeTypesCount}
+                    opacity={this.state.opacity}
+                    onOpacityChange={this.handleOnOpacityChange}
+                    selectedPlaceTypes={selectedPlaceTypes}
+                    toggleSelectedPlace={this.toggleSelectedPlace}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="flex-shrink-1 flex-grow-1 d-flex"
-          style={{ overflow: "auto" }}
-        >
-          <div className="container-fluid px-0">
-            <div className="row no-gutters h-100 position-relative flex-column flex-lg-row">
-              <TimeSeries
-                t={t}
-                extent={extent}
-                year={currentDate ? currentDate.getFullYear() : null}
-                columns={get(timeSeries, "columns", []).slice(1)}
-                series={timeSeriesByIndicator}
-              />
-              <div
-                className="col-md-6 col-lg-5 col-xl-3"
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  pointerEvents: selectedPlace ? undefined : "none"
-                }}
-              >
-                <Legend
-                  story={story}
-                  selectedPlace={selectedPlace}
-                  onClose={this.closePlaceDetail}
+          <div
+            className="flex-shrink-1 flex-grow-1 d-flex"
+            style={{ overflow: "auto" }}
+          >
+            <div className="container-fluid px-0">
+              <div className="row no-gutters h-100 position-relative flex-column flex-lg-row">
+                <TimeSeries
+                  t={t}
+                  extent={extent}
+                  year={currentDate ? currentDate.getFullYear() : null}
+                  columns={get(timeSeries, "columns", []).slice(1)}
+                  series={timeSeriesByIndicator}
                 />
-              </div>
-              <div className="col-lg-8 col-xl-9 flex-grow-1 flex-lg-grow-0">
                 <div
-                  className="h-100 w-100"
-                  style={{ overflow: "hidden" }}
-                  ref={node => (this.mapContainer = node)}
+                  className="col-md-6 col-lg-5 col-xl-3"
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    pointerEvents: selectedPlace ? undefined : "none"
+                  }}
                 >
-                  {width > 0 && (
-                    <MapGL
-                      {...viewport}
-                      style={{ width: "100%", height: "100%" }}
-                      maxZoom={16}
-                      minZoom={7.5}
-                      accessToken="pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg"
-                      mapStyle="mapbox://styles/giorgiouboldi/cjalcurkr00os2soczuclhjxl"
-                      height={height}
-                      width={width}
-                      onViewportChange={this.updateViewport}
-                      ref={r => {
-                        this.mapRef = r;
-                      }}
-                    >
-                      {/* <div style={{ position: "absolute", right: 5, top: 5 }}>
+                  <Legend
+                    story={story}
+                    selectedPlace={selectedPlace}
+                    onClose={this.closePlaceDetail}
+                  />
+                </div>
+                <div className="col-lg-8 col-xl-9 flex-grow-1 flex-lg-grow-0">
+                  <div
+                    className="h-100 w-100"
+                    style={{ overflow: "hidden" }}
+                    ref={node => (this.mapContainer = node)}
+                  >
+                    {width > 0 && (
+                      <MapGL
+                        {...viewport}
+                        style={{ width: "100%", height: "100%" }}
+                        maxZoom={16}
+                        minZoom={7.5}
+                        accessToken="pk.eyJ1IjoiMTc1cG9zdCIsImEiOiJjam9md2dveWYwOHh4M3FwbnN0OHlhNTh3In0.zTSFenMa8A8m2lfQN9FWIQ"
+                        mapStyle="mapbox://styles/175post/ck2abmbmf04391cn623ruh659"
+                        height={height}
+                        width={width}
+                        onViewportChange={this.updateViewport}
+                        ref={r => {
+                          this.mapRef = r;
+                        }}
+                      >
+                        {/* <div style={{ position: "absolute", right: 5, top: 5 }}>
                       <NavigationControl onViewportChange={this.updateViewport} />
                       </div> */}
-                      {currentDate && (
-                        <CurrentYear year={currentDate.getFullYear()} />
-                      )}
-                      {places && (
-                        <Cluster
-                          maxZoom={11}
-                          radius={40}
-                          extent={512}
-                          nodeSize={64}
-                          innerRef={ref => this.setState({ supercluster: ref })}
-                          element={makeClusterElement(this.zoomToCluster)}
-                        >
-                          {places.map(place => {
-                            let key = `place-${place.id}`;
-                            let fill = "white";
-                            if (place.data.place_type === "office") {
-                              fill = place.open ? "#13d436" : "#ED6347";
-                              key += `~${place.open ? "open" : "closed"}`;
+                        {currentDate && (
+                          <CurrentYear year={currentDate.getFullYear()} />
+                        )}
+                        {places && (
+                          <Cluster
+                            maxZoom={11}
+                            radius={40}
+                            extent={512}
+                            nodeSize={64}
+                            innerRef={ref =>
+                              this.setState({ supercluster: ref })
                             }
-                            if (
-                              selectedPlace &&
-                              selectedPlace.id === place.id
-                            ) {
-                              key += ":selected";
-                            }
-                            return (
-                              <Marker
-                                key={key}
-                                longitude={place.coordinates[0]}
-                                latitude={place.coordinates[1]}
-                                element={
-                                  <div onClick={() => this.selectPlace(place)}>
+                            element={makeClusterElement(this.zoomToCluster)}
+                          >
+                            {places.map(place => {
+                              let key = `place-${place.id}`;
+                              let fill = "white";
+                              if (place.data.place_type === "office") {
+                                fill = place.open ? "#13d436" : "#ED6347";
+                                key += `~${place.open ? "open" : "closed"}`;
+                              }
+                              if (
+                                selectedPlace &&
+                                selectedPlace.id === place.id
+                              ) {
+                                key += ":selected";
+                              }
+                              return (
+                                <Marker
+                                  key={key}
+                                  longitude={place.coordinates[0]}
+                                  latitude={place.coordinates[1]}
+                                  element={
                                     <div
-                                      onMouseEnter={() => setOverPlace(place)}
-                                      onMouseLeave={() => clearOverPlace()}
-                                      className={classNames(
-                                        "place-marker d-flex align-items-center justify-content-center",
-                                        {
-                                          "place-selected": selectedPlace
-                                            ? selectedPlace.id === place.id
-                                            : false,
-                                          "place-clickable":
-                                            place.data.place_type === "office"
-                                        }
-                                      )}
-                                      style={{ backgroundColor: fill }}
+                                      onClick={() => this.selectPlace(place)}
                                     >
-                                      <i className="material-icons">
-                                        {MAP_ICON[place.data.place_type]}
-                                      </i>
+                                      <div
+                                        onMouseEnter={() => setOverPlace(place)}
+                                        onMouseLeave={() => clearOverPlace()}
+                                        className={classNames(
+                                          "place-marker d-flex align-items-center justify-content-center",
+                                          {
+                                            "place-selected": selectedPlace
+                                              ? selectedPlace.id === place.id
+                                              : false,
+                                            "place-clickable":
+                                              place.data.place_type === "office"
+                                          }
+                                        )}
+                                        style={{ backgroundColor: fill }}
+                                      >
+                                        <i className="material-icons">
+                                          {MAP_ICON[place.data.place_type]}
+                                        </i>
+                                      </div>
                                     </div>
-                                  </div>
-                                }
-                              />
-                            );
-                          })}
-                        </Cluster>
-                      )}
+                                  }
+                                />
+                              );
+                            })}
+                          </Cluster>
+                        )}
 
-                      {overPlace && (
-                        <Popup
-                          latitude={overPlace.coordinates[1]}
-                          longitude={overPlace.coordinates[0]}
-                          tipSize={0}
-                          closeOnClick={false}
-                          closeButton={false}
-                          offset={[0, -10]}
-                          anchor="bottom"
-                          element={
-                            <MapTooltip t={this.props.t} place={overPlace} />
-                          }
-                        />
-                      )}
+                        {overPlace && (
+                          <Popup
+                            latitude={overPlace.coordinates[1]}
+                            longitude={overPlace.coordinates[0]}
+                            tipSize={0}
+                            closeOnClick={false}
+                            closeButton={false}
+                            offset={[0, -10]}
+                            anchor="bottom"
+                            element={
+                              <MapTooltip t={this.props.t} place={overPlace} />
+                            }
+                          />
+                        )}
 
-                      {mapboxSources.map(source => (
-                        <Source
-                          key={source.get("id")}
-                          id={source.get("id")}
-                          source={source}
-                        />
-                      ))}
-                      {mapboxRasters &&
-                        mapboxRasters.length > 0 &&
-                        mapboxRasters.map((rasterLayer, i) => (
-                          <Layer
-                            key={rasterLayer.get("id")}
-                            layer={rasterLayer}
+                        {mapboxSources.map(source => (
+                          <Source
+                            key={source.get("id")}
+                            id={source.get("id")}
+                            source={source}
                           />
                         ))}
-                    </MapGL>
-                  )}
+                        {mapboxRasters &&
+                          mapboxRasters.length > 0 &&
+                          mapboxRasters.map((rasterLayer, i) => (
+                            <Layer
+                              key={rasterLayer.get("id")}
+                              layer={rasterLayer}
+                            />
+                          ))}
+                      </MapGL>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex-grow-0 flex-shrink-0 border-top timeline-container">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                {places && (
-                  <TimelineNavigationMap rasterLayers={rasterLayers} />
-                )}
+          <div className="flex-grow-0 flex-shrink-0 border-top timeline-container">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col px-0 px-md-3">
+                  {places && (
+                    <Media query="(max-width: 767.98px)">
+                      {matches =>
+                        matches ? (
+                          <TimelineNavigationMapMobile
+                            rasterLayers={rasterLayers}
+                          />
+                        ) : (
+                          <TimelineNavigationMap rasterLayers={rasterLayers} />
+                        )
+                      }
+                    </Media>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -691,7 +709,7 @@ class Map extends PureComponent {
               })}
           </ModalBody>
         </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -41,7 +41,7 @@ class StaticPlaceMap extends PureComponent {
       <div className="w-100 p-0 cover legend-detail-image">
         <div style={{ position: "absolute", height: "100%", width: "100%" }}>
           <StaticMap
-            mapboxApiAccessToken="pk.eyJ1IjoiZ2lvcmdpb3Vib2xkaSIsImEiOiJjamI4NWd1ZWUwMDFqMndvMzk1ODU3NWE2In0.3bX3jRxCi0IaHbmQTkQfDg"
+            mapboxApiAccessToken="pk.eyJ1IjoiMTc1cG9zdCIsImEiOiJjam9md2dveWYwOHh4M3FwbnN0OHlhNTh3In0.zTSFenMa8A8m2lfQN9FWIQ"
             mapStyle="mapbox://styles/mapbox/satellite-v8"
             height={height}
             width={width}
@@ -118,7 +118,7 @@ class LegendDetail extends PureComponent {
         className="d-flex flex-column h-100 overflow-auto w-100 LegendDetail"
         style={{
           ...style,
-          zIndex: 2,
+          zIndex: 3,
           position: "absolute",
           top: 0,
           backgroundColor: "white"
