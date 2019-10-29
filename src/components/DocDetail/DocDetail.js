@@ -58,6 +58,18 @@ const DocDetail = ({
                   </h6>
                   <h4 className="doc-title">{doc.data.title}</h4>
                 </div>
+
+                {doc.type === "360viewer" && (
+                  <div className="d-block d-md-none p-3 w-100 border-bottom">
+                    <h6 className="detail-title">{t("external viewer")}</h6>
+                    <p>
+                      <a className="external-viewer" href={doc.url}>
+                        {t("link")}
+                      </a>
+                    </p>
+                  </div>
+                )}
+
                 {doc.data.description && (
                   <div className="px-3 pt-1 pb-3 p-lg-3 w-100 border-bottom">
                     <h6 className="detail-title d-none d-lg-block">

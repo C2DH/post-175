@@ -77,6 +77,7 @@ function DocMedia({ doc, lang }) {
         <iframe
           className="h-100 w-100 border-0 360viewer-iframe"
           src={doc.url}
+          title="360viewer"
         />
       </div>
     );
