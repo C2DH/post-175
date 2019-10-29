@@ -26,6 +26,7 @@
     "react-autosuggest": "^9.4.2",
     "react-dom": "^16.6.3",
     "react-draggable": "^3.0.5",
+    "react-ga": "^2.7.0",
     "react-hammerjs": "^1.0.1",
     "react-lines-ellipsis": "^0.14.1",
     "react-map-gl": "^4.0.0",
