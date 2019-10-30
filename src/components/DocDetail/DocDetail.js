@@ -61,7 +61,7 @@ const DocDetail = ({
 
                 {doc.type === "360viewer" && (
                   <div className="d-block d-md-none p-3 w-100 border-bottom">
-                    <h6 className="detail-title">{t("external viewer")}</h6>
+                    <h6 className="detail-title">{t("external_viewer")}</h6>
                     <p>
                       <a className="external-viewer" href={doc.url}>
                         {t("link")}

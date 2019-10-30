@@ -3,6 +3,8 @@ export default {
     cookies:
       "Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden.",
     "got it": "Verstanden",
+    external_viewer: "externer Viewer",
+    link: "Link",
     // side menu
     menu_joerpost: "Joer Post",
     menu_home: "Startseite",
@@ -160,6 +162,8 @@ export default {
     cookies:
       "Nous utilisons des cookies afin d'améliorer le fonctionnement de notre site pour l'utilisateur. En continuant la navigation sur ce site, vous acceptez l'utilisation de ces cookies.",
     "got it": "vu",
+    external_viewer: "viewer externe ",
+    link: "lien",
     // side menu
     menu_joerpost: "Joer Post",
     menu_home: "Page d’accueil",
