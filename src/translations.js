@@ -12,7 +12,7 @@ export default {
     menu_timeline: "Zeitleiste",
     menu_about: "Über die Ausstellung",
     menu_collection: "Sammlung",
-    menu_themes: "Thematische dossiers",
+    menu_themes: "Thematische Dossiers",
     menu_terms_of_use: "Nutzungsbedingungen",
     menu_contact_us: "Kontaktieren Sie Uns",
     menu_desc:
