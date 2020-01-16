@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { uniq } from "lodash";
+import { uniq, debounce, throttle } from "lodash";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { localize } from "../../localize";
 import {
@@ -54,6 +54,29 @@ class Timeline extends PureComponent {
     }));
   };
 
+  urlChange = nextProps => {
+    this.props.history.replace(
+      makeUrlWithYearAndFilters(
+        this.props.location,
+        nextProps.currentDate.getFullYear()
+      )
+    );
+  };
+
+  urlChangeComplete = nextProps => {
+    this.props.history.replace(
+      makeUrlWithYearAndFilters(
+        this.props.location,
+        nextProps.currentDate.getFullYear(),
+        nextProps.categories,
+        nextProps.milestone
+      )
+    );
+  };
+
+  handleUrlChangeComplete = throttle(this.urlChangeComplete, 1000);
+  handleUrlChange = throttle(this.urlChange, 1000);
+
   componentDidMount() {
     let visited = sessionStorage["timelineAlreadyVisited"];
     if (visited) {
@@ -98,12 +121,13 @@ class Timeline extends PureComponent {
       ) {
         this.props.setDateTimeline(new Date(`${year}`));
       } else {
-        this.props.history.replace(
-          makeUrlWithYearAndFilters(
-            this.props.location,
-            nextProps.currentDate.getFullYear()
-          )
-        );
+        // this.props.history.replace(
+        //   makeUrlWithYearAndFilters(
+        //     this.props.location,
+        //     nextProps.currentDate.getFullYear()
+        //   )
+        // );
+        this.handleUrlChange(nextProps);
       }
     } else if (
       (nextProps.currentDate &&
@@ -114,14 +138,16 @@ class Timeline extends PureComponent {
       this.props.categories !== nextProps.categories ||
       this.props.milestone !== nextProps.milestone
     ) {
-      this.props.history.replace(
-        makeUrlWithYearAndFilters(
-          this.props.location,
-          nextProps.currentDate.getFullYear(),
-          nextProps.categories,
-          nextProps.milestone
-        )
-      );
+      // this.props.history.replace(
+      //   makeUrlWithYearAndFilters(
+      //     this.props.location,
+      //     nextProps.currentDate.getFullYear(),
+      //     nextProps.categories,
+      //     nextProps.milestone
+      //   )
+      // );
+
+      this.handleUrlChangeComplete(nextProps);
     }
   }
 

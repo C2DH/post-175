@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { localize } from "../../localize";
-import get from "lodash/get";
+import { throttle, get } from "lodash";
 import mapboxgl from "mapbox-gl";
 import Immutable from "immutable";
 import memoize from "memoize-one";
@@ -209,6 +209,14 @@ class Map extends PureComponent {
     }));
   };
 
+  urlChange = nextProps => {
+    this.props.history.replace(
+      makeUrlWithYear(this.props.location, nextProps.currentDate.getFullYear())
+    );
+  };
+
+  handleUrlChange = throttle(this.urlChange, 1000);
+
   componentDidMount() {
     let visited = sessionStorage["mapAlreadyVisited"];
     if (visited) {
@@ -241,12 +249,13 @@ class Map extends PureComponent {
       ) {
         this.props.setDateTimelineMap(new Date(`${year}`));
       } else {
-        this.props.history.replace(
-          makeUrlWithYear(
-            this.props.location,
-            nextProps.currentDate.getFullYear()
-          )
-        );
+        // this.props.history.replace(
+        //   makeUrlWithYear(
+        //     this.props.location,
+        //     nextProps.currentDate.getFullYear()
+        //   )
+        // );
+        this.handleUrlChange(nextProps);
       }
     } else if (
       nextProps.currentDate &&
@@ -256,12 +265,13 @@ class Map extends PureComponent {
       this.props.currentDateRaw
     ) {
       // Set new year in querystring when date change
-      this.props.history.replace(
-        makeUrlWithYear(
-          this.props.location,
-          nextProps.currentDate.getFullYear()
-        )
-      );
+      // this.props.history.replace(
+      //   makeUrlWithYear(
+      //     this.props.location,
+      //     nextProps.currentDate.getFullYear()
+      //   )
+      // );
+      this.handleUrlChange(nextProps);
     }
   }
 
