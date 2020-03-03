@@ -64,14 +64,16 @@ class Timeline extends PureComponent {
   };
 
   urlChangeComplete = nextProps => {
-    this.props.history.replace(
-      makeUrlWithYearAndFilters(
-        this.props.location,
-        nextProps.currentDate.getFullYear(),
-        nextProps.categories,
-        nextProps.milestone
-      )
-    );
+    if (nextProps.currentDate) {
+      this.props.history.replace(
+        makeUrlWithYearAndFilters(
+          this.props.location,
+          nextProps.currentDate.getFullYear(),
+          nextProps.categories,
+          nextProps.milestone
+        )
+      );
+    }
   };
 
   handleUrlChangeComplete = throttle(this.urlChangeComplete, 1000);
