@@ -537,7 +537,7 @@ class Map extends PureComponent {
                     onClose={this.closePlaceDetail}
                   />
                 </div>
-                <div className="col-lg-8 col-xl-9 flex-grow-1 flex-lg-grow-0">
+                <div className="col-lg-8 col-xl-9 flex-grow-1 flex-lg-grow-0 h-100">
                   <div
                     className="h-100 w-100"
                     style={{ overflow: "hidden" }}
