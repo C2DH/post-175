@@ -156,7 +156,9 @@ export default {
         "Navigation innerhalb der Ereignisse: Detailansicht jedes Ereignisses mit Archivdokumenten durch Klicken auf selbiges",
         "Übergang von einer Detailansicht zur nächsten, ohne Rückkehr zur globalen Chronologie"
       ]
-    }
+    },
+    ie:
+      "Für eine bessere Nutzererfahrung, rufen Sie die Seite bitte in einem der folgenden Browser auf : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge."
   },
   fr: {
     cookies:
@@ -314,6 +316,8 @@ export default {
         "Navigation dans les événements: vue détaillée de chaque événement avec document(s) d’archives en y cliquant",
         "Passage d’une vue détaillée à l’autre, sans retour à la ligne du temps globale"
       ]
-    }
+    },
+    ie:
+      "Pour une meilleure expérience, veuillez consulter le site dans un des navigateurs suivants : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge."
   }
 };

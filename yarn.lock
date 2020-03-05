@@ -8978,6 +8978,13 @@ react-autowhatever@^10.1.2:
     react-themeable "^1.1.0"
     section-iterator "^2.0.0"
 
+react-browser-detection@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-browser-detection/-/react-browser-detection-1.2.1.tgz#7cafa3f7e2772394101a3b14b114b6fe7c6124fc"
+  integrity sha512-ku57WQN/NprjxvDjPQuZwmtgWqr77Wq0LM7B0Kn6irVfQFwz/X9qnBNXNQJFiKWCcECPioKDNBSo6MZMNtszYw==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-cookie-banner@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-cookie-banner/-/react-cookie-banner-4.0.0.tgz#b16ed0c6e8fb93af81f6928e2d7f94894ae43eeb"
