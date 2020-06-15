@@ -108,6 +108,7 @@ export default {
     provenance: "Herkunft",
     "no documents found": "keine Dokumente gefunden",
     "reset filters or change query": "Filter zurücksetzen oder Anfrage ändern",
+    info: "Informationen",
     help_geo: {
       title: "Die geographische Herangehenweise",
       list: [
@@ -271,6 +272,7 @@ export default {
     "no documents found": "aucun document trouvé",
     "reset filters or change query":
       "remettre les filtres à zéro ou changer la requête",
+    info: "infos",
     help_geo: {
       title: "L’approche géographique",
       list: [
