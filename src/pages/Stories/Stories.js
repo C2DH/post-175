@@ -19,10 +19,7 @@ class Stories extends Component {
     const { chapters, t } = this.props;
     return (
       <div className="h-100 Stories">
-        {chapters === null && <Spinner
-          firstLoading
-          screen='stories'
-        />}
+        {chapters === null && <Spinner firstLoading screen="stories" />}
         <SideMenu />
         <div className="container-fluid h-100 d-flex flex-column">
           <div className="row row-top-bar">
@@ -33,7 +30,7 @@ class Stories extends Component {
             </div>
           </div>
           <div className="row h-100 " style={{ overflow: "auto" }}>
-            <div className="d-flex h-100">
+            <div className="d-flex flex-column flex-md-row h-100">
               {chapters &&
                 chapters.map((chapter, i) => (
                   <StoryCard
@@ -59,10 +56,10 @@ class Stories extends Component {
 }
 
 export default connect(
-  state => ({
-    chapters: getChapters(state)
+  (state) => ({
+    chapters: getChapters(state),
   }),
   {
-    loadChapters
+    loadChapters,
   }
 )(localize()(Stories));
