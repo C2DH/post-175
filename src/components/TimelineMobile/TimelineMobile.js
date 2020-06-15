@@ -14,13 +14,13 @@ import "./TimelineMobile.scss";
 
 const EVENT_RADIUS = 8;
 
-const SlickArrow = props => {
+const SlickArrow = (props) => {
   const { onClick, type, className } = props;
   const disabled = className.match(/slick-disabled/) ? true : false;
   return (
     <div
       className={classNames(`${type}-arrow`, {
-        "arrow-disabled": disabled
+        "arrow-disabled": disabled,
       })}
     >
       <i className="material-icons" onClick={onClick}>{`arrow_${type}`}</i>
@@ -30,16 +30,16 @@ const SlickArrow = props => {
 
 class TimelineMobile extends PureComponent {
   state = {
-    sliderIndex: 0
+    sliderIndex: 0,
   };
 
-  beforeChange = index => {
+  beforeChange = (index) => {
     this.setState({ sliderIndex: index });
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.currentDate.getTime() !== this.props.currentDate.getTime()) {
-      const bisecDate = bisector(d => d.startDate).right;
+      const bisecDate = bisector((d) => d.startDate).right;
       const bisectIndex =
         bisecDate(this.props.events, this.props.currentDate) - 1;
       if (bisectIndex !== this.state.sliderIndex) {
@@ -62,7 +62,7 @@ class TimelineMobile extends PureComponent {
       prevArrow: <SlickArrow type={"back"} />,
       afterChange: () =>
         setDateTimeline(events[this.state.sliderIndex].startDate),
-      beforeChange: (current, next) => this.setState({ sliderIndex: next })
+      beforeChange: (current, next) => this.setState({ sliderIndex: next }),
     };
 
     return (
@@ -70,8 +70,8 @@ class TimelineMobile extends PureComponent {
         <div className="align-self-stretch flex-1 w-100 TimelineEvents">
           <div className="px-4 h-100" style={{ paddingBottom: 25 }}>
             {events.length > 0 && (
-              <Slider ref={slider => (this.slider = slider)} {...settings}>
-                {events.map(event => {
+              <Slider ref={(slider) => (this.slider = slider)} {...settings}>
+                {events.map((event) => {
                   return (
                     <div key={event.id} className="event-container">
                       <div className="d-flex flex-column justify-content-center h-100">
@@ -83,6 +83,7 @@ class TimelineMobile extends PureComponent {
 
                         {event.documents.length > 0 && (
                           <img
+                            onClick={() => selectEvent(event)}
                             src={event.documents[0].data.resolutions.medium.url}
                             alt={event.documents[0].data.title}
                             className="pl-4 mb-1 event-image"
@@ -92,7 +93,7 @@ class TimelineMobile extends PureComponent {
                         <div className="flex-grow-0">
                           <p
                             style={{
-                              color: getEventColor(event)
+                              color: getEventColor(event),
                             }}
                             className="mb-1 d-flex"
                           >
@@ -152,14 +153,11 @@ class TimelineMobile extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  currentDate: getTimelineCurrentDate(state)
+const mapStateToProps = (state) => ({
+  currentDate: getTimelineCurrentDate(state),
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    setDateTimeline,
-    selectEvent
-  }
-)(TimelineMobile);
+export default connect(mapStateToProps, {
+  setDateTimeline,
+  selectEvent,
+})(TimelineMobile);
