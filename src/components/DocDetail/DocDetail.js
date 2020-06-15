@@ -5,7 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import {
   getLangs,
   getSelectedLang,
-  getMakeLangUrl
+  getMakeLangUrl,
 } from "../../state/selectors";
 import DocMedia from "./DocMedia";
 import HomeMenu from "../HomeMenu";
@@ -22,9 +22,9 @@ const DocDetail = ({
   url,
   location,
   history,
-  t
+  t,
 }) => {
-  const related = doc.documents.filter(d =>
+  const related = doc.documents.filter((d) =>
     COLLECTION_DATE_TYPES.includes(d.data.type)
   );
 
@@ -37,7 +37,7 @@ const DocDetail = ({
         >
           <i className="material-icons">subdirectory_arrow_right</i>
         </div>
-        <HomeMenu className="position-relative" />
+        <HomeMenu className="position-relative d-none d-md-block" />
       </div>
       <div className="doc-detail-data">
         <div className="container-fluid h-100 px-0">
@@ -138,9 +138,9 @@ const DocDetail = ({
 };
 
 export default withRouter(
-  connect(state => ({
+  connect((state) => ({
     url: getMakeLangUrl(state),
     langs: getLangs(state),
-    selectedLang: getSelectedLang(state)
+    selectedLang: getSelectedLang(state),
   }))(localize()(DocDetail))
 );
