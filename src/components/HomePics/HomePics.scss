@@ -1,23 +1,19 @@
-.CollectionPage {
-  margin-left: 0px;
-
-  .no-results {
-    height: calc(100% - 56px);
-    padding-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.pic-content {
+  background-size: cover;
 }
 
+.pic-content.selected {
+  background-size: contain;
+}
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
 }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-  .CollectionPage {
-    margin-left: 56px;
+  .pic-content,
+  .pic-content.selected {
+    background-size: cover;
   }
 }
 

@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import qs from "query-string";
 import { find, get } from "lodash";
 import Media from "react-media";
+import BrowserDetection from "react-browser-detection";
 import { getLangs } from "../../state/selectors";
 import { setLang } from "../../state/actions";
 import Home from "../../pages/Home";
@@ -17,6 +18,11 @@ import DocumentDetail from "../../pages/DocumentDetail";
 import DocumentDetailModal from "../../pages/DocumentDetailModal";
 import StoriesRoot from "../../pages/StoriesRoot";
 import Cookie from "../Cookie";
+import IeWarning from "../IeWarning";
+
+const browserHandler = {
+  ie: () => <IeWarning></IeWarning>
+};
 
 class LangRoot extends PureComponent {
   componentWillMount() {
@@ -117,6 +123,7 @@ class LangRoot extends PureComponent {
             )
           }
         </Media>
+        <BrowserDetection>{browserHandler}</BrowserDetection>
       </Cookie>
     );
   }

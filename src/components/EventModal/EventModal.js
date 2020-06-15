@@ -129,7 +129,7 @@ class EventModal extends PureComponent {
                 }
               )}
             >
-              <div className="flex-grow-1 border-right event-info-container order-1 order-lg-0">
+              <div className="flex-grow-1 flex-shrink-1 border-right event-info-container order-1 order-lg-0">
                 <div className="p-3 w-100 border-bottom">
                   <EventType event={event} />
                   <h4>{event.data.title}</h4>
@@ -161,7 +161,7 @@ class EventModal extends PureComponent {
                   </div>
                 )}
               </div>
-              <div className="action-bar flex-grow-lg-0 flex-shrink-lg-0 d-flex d-lg-block">
+              <div className="action-bar flex-grow-0 flex-shrink-0 d-flex d-lg-block">
                 <button
                   onClick={onClose}
                   className="btn d-flex w-25 w-md-100 align-items-center justify-content-center order-1 order-md-0"

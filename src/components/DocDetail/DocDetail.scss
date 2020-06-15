@@ -78,7 +78,7 @@
   }
 
   .doc-media-container {
-    min-height: 50%;
+    height: 50%;
   }
 
   .360viewer-iframe {
@@ -116,7 +116,7 @@
       filter: grayscale(0);
     }
     .doc-media-container {
-      min-height: auto;
+      min-height: 100%;
     }
   }
 }

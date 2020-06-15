@@ -102,7 +102,7 @@ h6 {
 }
 
 .pointer:hover {
-  stroke: #212529;
+  stroke: white;
   stroke-width: 2px;
 }
 
@@ -172,6 +172,11 @@ h6 {
 /* custom components styles */
 
 .page-modal {
+  .modal-title {
+    width: 100%;
+    text-align: center;
+    opacity: 0.5;
+  }
   .modal-content {
     border-radius: 0px;
   }

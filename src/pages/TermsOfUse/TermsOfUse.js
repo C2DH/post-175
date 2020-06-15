@@ -32,7 +32,12 @@ class TermsOfUse extends PureComponent {
           <div className="row">
             <div className="col-12 col-md-8">
               <div className="page-content">
-                {story && <ReactMarkdown source={story.data.abstract} />}
+                {story && (
+                  <ReactMarkdown
+                    linkTarget="_blank"
+                    source={story.data.abstract}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -42,16 +47,13 @@ class TermsOfUse extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  story: getStory(state)
+const mapStateToProps = (state) => ({
+  story: getStory(state),
 });
 
 export default localize()(
-  connect(
-    mapStateToProps,
-    {
-      loadStory,
-      unloadStory
-    }
-  )(TermsOfUse)
+  connect(mapStateToProps, {
+    loadStory,
+    unloadStory,
+  })(TermsOfUse)
 );

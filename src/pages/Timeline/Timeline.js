@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { uniq } from "lodash";
+import { uniq, debounce, throttle } from "lodash";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { localize } from "../../localize";
 import {
@@ -15,7 +15,7 @@ import {
   loadStory,
   unloadStory,
   setCategoriesTimeline,
-  setMilestoneTimeline
+  setMilestoneTimeline,
 } from "../../state/actions";
 import {
   getStory,
@@ -25,13 +25,13 @@ import {
   getTimelinePrevEvent,
   getTimelineNextEvent,
   getEventsExtent,
-  getTimelineCurrentDate
+  getTimelineCurrentDate,
 } from "../../state/selectors";
 import {
   getQsSafeYear,
   makeUrlWithYearAndFilters,
   getQsSafeCategories,
-  getQsSafeMilestone
+  getQsSafeMilestone,
 } from "../../utils";
 import MobileAlert from "../../components/MobileAlert";
 import Period from "../../components/Period";
@@ -45,14 +45,39 @@ import "./Timeline.scss";
 
 class Timeline extends PureComponent {
   state = {
-    modal: true
+    modal: true,
   };
 
   toggle = () => {
-    this.setState(prevState => ({
-      modal: !prevState.modal
+    this.setState((prevState) => ({
+      modal: !prevState.modal,
     }));
   };
+
+  urlChange = (nextProps) => {
+    this.props.history.replace(
+      makeUrlWithYearAndFilters(
+        this.props.location,
+        nextProps.currentDate.getFullYear()
+      )
+    );
+  };
+
+  urlChangeComplete = (nextProps) => {
+    if (nextProps.currentDate) {
+      this.props.history.replace(
+        makeUrlWithYearAndFilters(
+          this.props.location,
+          nextProps.currentDate.getFullYear(),
+          nextProps.categories,
+          nextProps.milestone
+        )
+      );
+    }
+  };
+
+  handleUrlChangeComplete = throttle(this.urlChangeComplete, 1000);
+  handleUrlChange = throttle(this.urlChange, 1000);
 
   componentDidMount() {
     let visited = sessionStorage["timelineAlreadyVisited"];
@@ -86,8 +111,8 @@ class Timeline extends PureComponent {
       if (milestone) {
         year = Math.min(
           ...nextProps.events
-            .filter(event => event.data.key_event)
-            .map(e => e.startDate.getFullYear())
+            .filter((event) => event.data.key_event)
+            .map((e) => e.startDate.getFullYear())
         );
       }
       const { extent } = nextProps;
@@ -98,12 +123,13 @@ class Timeline extends PureComponent {
       ) {
         this.props.setDateTimeline(new Date(`${year}`));
       } else {
-        this.props.history.replace(
-          makeUrlWithYearAndFilters(
-            this.props.location,
-            nextProps.currentDate.getFullYear()
-          )
-        );
+        // this.props.history.replace(
+        //   makeUrlWithYearAndFilters(
+        //     this.props.location,
+        //     nextProps.currentDate.getFullYear()
+        //   )
+        // );
+        this.handleUrlChange(nextProps);
       }
     } else if (
       (nextProps.currentDate &&
@@ -114,14 +140,16 @@ class Timeline extends PureComponent {
       this.props.categories !== nextProps.categories ||
       this.props.milestone !== nextProps.milestone
     ) {
-      this.props.history.replace(
-        makeUrlWithYearAndFilters(
-          this.props.location,
-          nextProps.currentDate.getFullYear(),
-          nextProps.categories,
-          nextProps.milestone
-        )
-      );
+      // this.props.history.replace(
+      //   makeUrlWithYearAndFilters(
+      //     this.props.location,
+      //     nextProps.currentDate.getFullYear(),
+      //     nextProps.categories,
+      //     nextProps.milestone
+      //   )
+      // );
+
+      this.handleUrlChangeComplete(nextProps);
     }
   }
 
@@ -156,7 +184,7 @@ class Timeline extends PureComponent {
       prevEvent,
       clearSelectedEvent,
       story,
-      t
+      t,
     } = this.props;
     return (
       <div className="h-100 d-flex flex-column Timeline position-relative">
@@ -190,8 +218,8 @@ class Timeline extends PureComponent {
                   {
                     key: "eventModal",
                     data: { selectedEvent, nextEvent, prevEvent },
-                    style: { o: 0 }
-                  }
+                    style: { o: 0 },
+                  },
                 ]
               : []
           }
@@ -201,17 +229,17 @@ class Timeline extends PureComponent {
                   {
                     key: "eventModal",
                     data: { selectedEvent, nextEvent, prevEvent },
-                    style: { o: spring(1) }
-                  }
+                    style: { o: spring(1) },
+                  },
                 ]
               : []
           }
           willLeave={() => ({ o: spring(0) })}
           willEnter={() => ({ o: 0 })}
         >
-          {interpolatedStyles => (
+          {(interpolatedStyles) => (
             <div>
-              {interpolatedStyles.map(config => {
+              {interpolatedStyles.map((config) => {
                 return (
                   <EventModal
                     style={{ opacity: config.style.o }}
@@ -234,11 +262,12 @@ class Timeline extends PureComponent {
           size={"lg"}
           className="page-modal"
         >
-          <ModalHeader toggle={this.toggle}>{t("help_time").title}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>{t("info")}</ModalHeader>
           <ModalBody>
+            <h5>{t("help_time").title}</h5>
             <ul>
               {t("help_time").list &&
-                t("help_time").list.map(elm => {
+                t("help_time").list.map((elm) => {
                   return (
                     <li key={elm.title}>
                       <strong>{elm.title}</strong>
@@ -269,7 +298,7 @@ class Timeline extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   events: getEvents(state),
   periods: getPeriods(state),
   selectedEvent: getSelectedEvent(state),
@@ -280,22 +309,19 @@ const mapStateToProps = state => ({
   currentDateRaw: state.timeline.currentDate,
   categories: state.timeline.categories,
   milestone: state.timeline.milestone,
-  story: getStory(state)
+  story: getStory(state),
 });
-export default connect(
-  mapStateToProps,
-  {
-    loadEvents,
-    unloadEvents,
-    loadPeriods,
-    unloadPeriods,
-    unloadTimeline,
-    setDateTimeline,
-    clearSelectedEvent,
-    selectEvent,
-    loadStory,
-    unloadStory,
-    setCategoriesTimeline,
-    setMilestoneTimeline
-  }
-)(localize()(Timeline));
+export default connect(mapStateToProps, {
+  loadEvents,
+  unloadEvents,
+  loadPeriods,
+  unloadPeriods,
+  unloadTimeline,
+  setDateTimeline,
+  clearSelectedEvent,
+  selectEvent,
+  loadStory,
+  unloadStory,
+  setCategoriesTimeline,
+  setMilestoneTimeline,
+})(localize()(Timeline));

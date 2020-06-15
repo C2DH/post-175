@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { localize } from "../../localize";
-import get from "lodash/get";
+import { throttle, get } from "lodash";
 import mapboxgl from "mapbox-gl";
 import Immutable from "immutable";
 import memoize from "memoize-one";
@@ -19,7 +19,7 @@ import MapGL, {
   Popup,
   Layer,
   Cluster,
-  Source
+  Source,
 } from "@urbica/react-map-gl";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
@@ -39,7 +39,7 @@ import {
   loadTimeSeries,
   unloadTimeSeries,
   loadRasterLayers,
-  unloadRasterLayers
+  unloadRasterLayers,
 } from "../../state/actions";
 import {
   getPlacesInDate,
@@ -51,7 +51,7 @@ import {
   getTimeSeries,
   getTimeSeriesByIndicator,
   getRasterLayers,
-  getPlaceTypesCount
+  getPlaceTypesCount,
 } from "../../state/selectors";
 import { getQsSafeYear, makeUrlWithYear } from "../../utils";
 import TimelineNavigationMap from "../../components/TimelineNavigationMap";
@@ -67,16 +67,14 @@ import classNames from "classnames";
 import { MAP_ICON } from "../../consts";
 import "./Map.scss";
 
-const circleScale = scaleLinear()
-  .range([30, 100])
-  .domain([1, 184]);
+const circleScale = scaleLinear().range([30, 100]).domain([1, 184]);
 
 // TODO: Style that bitch
 const CurrentYear = ({ year }) => (
   <h1 className="map-year d-none d-md-block">{year}</h1>
 );
 
-const makeClusterElement = zoomToCluster => {
+const makeClusterElement = (zoomToCluster) => {
   const ClusterElement = ({ properties, style }) => {
     const r = circleScale(properties.point_count_abbreviated);
     return (
@@ -110,7 +108,7 @@ const makeClusterElement = zoomToCluster => {
   return ClusterElement;
 };
 
-const ClusterElement = cluster => {
+const ClusterElement = (cluster) => {
   const r = circleScale(cluster.properties.point_count_abbreviated);
   return (
     <svg width={r + 2} height={r + 2}>
@@ -141,11 +139,11 @@ const MapHeader = ({
   onOpacityChange,
   showOpacity,
   selectedPlaceTypes,
-  toggleSelectedPlace
+  toggleSelectedPlace,
 }) => {
-  const counts = ["office", "central", "telegraph"].map(type => ({
+  const counts = ["office", "central", "telegraph"].map((type) => ({
     label: type,
-    count: placeTypesCount[type] || 0
+    count: placeTypesCount[type] || 0,
   }));
   // .filter(({ count }) => count);
   return (
@@ -160,7 +158,7 @@ const MapHeader = ({
               {
                 active:
                   selectedPlaceTypes.indexOf(label) !== -1 ||
-                  !selectedPlaceTypes.length
+                  !selectedPlaceTypes.length,
               }
             )}
           >
@@ -193,21 +191,29 @@ class Map extends PureComponent {
     viewport: {
       longitude: 6.087,
       latitude: 49.667,
-      zoom: 8
+      zoom: 8,
     },
     supercluster: null,
     width: 0,
     height: 0,
     opacity: 0.5,
     modal: true,
-    open: false
+    open: false,
   };
 
   toggle = () => {
-    this.setState(prevState => ({
-      modal: !prevState.modal
+    this.setState((prevState) => ({
+      modal: !prevState.modal,
     }));
   };
+
+  urlChange = (nextProps) => {
+    this.props.history.replace(
+      makeUrlWithYear(this.props.location, nextProps.currentDate.getFullYear())
+    );
+  };
+
+  handleUrlChange = throttle(this.urlChange, 1000);
 
   componentDidMount() {
     let visited = sessionStorage["mapAlreadyVisited"];
@@ -241,12 +247,13 @@ class Map extends PureComponent {
       ) {
         this.props.setDateTimelineMap(new Date(`${year}`));
       } else {
-        this.props.history.replace(
-          makeUrlWithYear(
-            this.props.location,
-            nextProps.currentDate.getFullYear()
-          )
-        );
+        // this.props.history.replace(
+        //   makeUrlWithYear(
+        //     this.props.location,
+        //     nextProps.currentDate.getFullYear()
+        //   )
+        // );
+        this.handleUrlChange(nextProps);
       }
     } else if (
       nextProps.currentDate &&
@@ -256,12 +263,13 @@ class Map extends PureComponent {
       this.props.currentDateRaw
     ) {
       // Set new year in querystring when date change
-      this.props.history.replace(
-        makeUrlWithYear(
-          this.props.location,
-          nextProps.currentDate.getFullYear()
-        )
-      );
+      // this.props.history.replace(
+      //   makeUrlWithYear(
+      //     this.props.location,
+      //     nextProps.currentDate.getFullYear()
+      //   )
+      // );
+      this.handleUrlChange(nextProps);
     }
   }
 
@@ -286,16 +294,16 @@ class Map extends PureComponent {
     window.removeEventListener("resize", this.setMapSize);
   }
 
-  handleOnOpacityChange = e => this.setState({ opacity: e.target.value });
+  handleOnOpacityChange = (e) => this.setState({ opacity: e.target.value });
 
   setMapSize = () => {
     this.setState({
       width: this.mapContainer.offsetWidth,
-      height: this.mapContainer.offsetHeight
+      height: this.mapContainer.offsetHeight,
     });
   };
 
-  selectPlace = place => {
+  selectPlace = (place) => {
     if (place.data.place_type === "office") {
       this.props.setSelectedPlace(place);
       this.updateViewport({
@@ -303,7 +311,7 @@ class Map extends PureComponent {
         longitude: place.coordinates[0],
         zoom: 14,
         // transitionInterpolator: new FlyToInterpolator(),
-        transitionDuration: 1000
+        transitionDuration: 1000,
       });
     }
   };
@@ -313,12 +321,12 @@ class Map extends PureComponent {
     this.updateViewport({ zoom: 11 });
   };
 
-  updateViewport = viewport => {
+  updateViewport = (viewport) => {
     this.setState({
       viewport: {
         ...this.state.viewport,
-        ...viewport
-      }
+        ...viewport,
+      },
     });
   };
 
@@ -328,8 +336,8 @@ class Map extends PureComponent {
     }
 
     return rasterLayers
-      .filter(layer => new Date(layer.data.start_date).getFullYear() === year)
-      .map(l =>
+      .filter((layer) => new Date(layer.data.start_date).getFullYear() === year)
+      .map((l) =>
         Immutable.fromJS({
           id: l.id.toString(),
           type: "raster",
@@ -337,22 +345,22 @@ class Map extends PureComponent {
           paint: { "raster-opacity": +opacity },
           layout: { visibility: "visible" },
           minzoom: 0,
-          maxzoom: 22
+          maxzoom: 22,
         })
       );
   });
 
-  getSources = memoize(rasterLayers => {
+  getSources = memoize((rasterLayers) => {
     if (!rasterLayers) {
       return [];
     }
-    return rasterLayers.map(l =>
+    return rasterLayers.map((l) =>
       Immutable.fromJS({
         id: l.id.toString(),
         type: "raster",
         tiles: [
-          `https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiMTc1cG9zdCIsImEiOiJjam9md2dveWYwOHh4M3FwbnN0OHlhNTh3In0.zTSFenMa8A8m2lfQN9FWIQ`
-        ]
+          `https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiMTc1cG9zdCIsImEiOiJjam9md2dveWYwOHh4M3FwbnN0OHlhNTh3In0.zTSFenMa8A8m2lfQN9FWIQ`,
+        ],
       })
     );
   });
@@ -363,24 +371,24 @@ class Map extends PureComponent {
       .filter(Boolean);
   };
 
-  toggleSelectedPlace = place => {
+  toggleSelectedPlace = (place) => {
     const { location } = this.props;
     const places = this.getSelectedPlaces();
     let newPlaces;
     if (places.indexOf(place) === -1) {
       newPlaces = places.concat(place);
     } else {
-      newPlaces = places.filter(p => p !== place);
+      newPlaces = places.filter((p) => p !== place);
     }
 
     const qsAsObject = qs.parse(location.search);
     const newQs = qs.stringify(
       {
         ...qsAsObject,
-        places: newPlaces.join(",")
+        places: newPlaces.join(","),
       },
       {
-        encode: false
+        encode: false,
       }
     );
     this.props.history.replace(`${location.pathname}?${newQs}`);
@@ -393,12 +401,12 @@ class Map extends PureComponent {
     if (placeTypes.length === 0) {
       return places;
     }
-    return places.filter(place => {
+    return places.filter((place) => {
       return placeTypes.indexOf(place.data.place_type) !== -1;
     });
   });
 
-  zoomToCluster = clusterId => {
+  zoomToCluster = (clusterId) => {
     const cl = this.state.supercluster;
     const zoom = cl.getClusterExpansionZoom(clusterId);
     const ch = cl.getChildren(clusterId);
@@ -407,13 +415,13 @@ class Map extends PureComponent {
       latitude: coords[1],
       longitude: coords[0],
       zoom: zoom + 1,
-      transitionDuration: 500
+      transitionDuration: 500,
     });
   };
 
   toggleFiltersOpen = () =>
     this.setState(({ open }) => ({
-      open: !open
+      open: !open,
     }));
 
   render() {
@@ -433,7 +441,7 @@ class Map extends PureComponent {
       extent,
       rasterLayers,
       placeTypesCount,
-      t
+      t,
     } = this.props;
 
     const mapboxSources = this.getSources(rasterLayers);
@@ -478,7 +486,7 @@ class Map extends PureComponent {
             className={classNames(
               "flex-grow-0 flex-shrink-0 border-bottom filters-container",
               {
-                open: open
+                open: open,
               }
             )}
           >
@@ -518,7 +526,7 @@ class Map extends PureComponent {
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    pointerEvents: selectedPlace ? undefined : "none"
+                    pointerEvents: selectedPlace ? undefined : "none",
                   }}
                 >
                   <Legend
@@ -527,11 +535,11 @@ class Map extends PureComponent {
                     onClose={this.closePlaceDetail}
                   />
                 </div>
-                <div className="col-lg-8 col-xl-9 flex-grow-1 flex-lg-grow-0">
+                <div className="col-lg-8 col-xl-9 flex-grow-1 flex-lg-grow-0 h-100">
                   <div
                     className="h-100 w-100"
                     style={{ overflow: "hidden" }}
-                    ref={node => (this.mapContainer = node)}
+                    ref={(node) => (this.mapContainer = node)}
                   >
                     {width > 0 && (
                       <MapGL
@@ -544,7 +552,7 @@ class Map extends PureComponent {
                         height={height}
                         width={width}
                         onViewportChange={this.updateViewport}
-                        ref={r => {
+                        ref={(r) => {
                           this.mapRef = r;
                         }}
                       >
@@ -560,12 +568,12 @@ class Map extends PureComponent {
                             radius={40}
                             extent={512}
                             nodeSize={64}
-                            innerRef={ref =>
+                            innerRef={(ref) =>
                               this.setState({ supercluster: ref })
                             }
                             element={makeClusterElement(this.zoomToCluster)}
                           >
-                            {places.map(place => {
+                            {places.map((place) => {
                               let key = `place-${place.id}`;
                               let fill = "white";
                               if (place.data.place_type === "office") {
@@ -597,7 +605,8 @@ class Map extends PureComponent {
                                               ? selectedPlace.id === place.id
                                               : false,
                                             "place-clickable":
-                                              place.data.place_type === "office"
+                                              place.data.place_type ===
+                                              "office",
                                           }
                                         )}
                                         style={{ backgroundColor: fill }}
@@ -629,7 +638,7 @@ class Map extends PureComponent {
                           />
                         )}
 
-                        {mapboxSources.map(source => (
+                        {mapboxSources.map((source) => (
                           <Source
                             key={source.get("id")}
                             id={source.get("id")}
@@ -657,7 +666,7 @@ class Map extends PureComponent {
                 <div className="col px-0 px-md-3">
                   {places && (
                     <Media query="(max-width: 767.98px)">
-                      {matches =>
+                      {(matches) =>
                         matches ? (
                           <TimelineNavigationMapMobile
                             rasterLayers={rasterLayers}
@@ -679,11 +688,12 @@ class Map extends PureComponent {
           size={"lg"}
           className="page-modal"
         >
-          <ModalHeader toggle={this.toggle}>{t("help_geo").title}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>{t("info")}</ModalHeader>
           <ModalBody>
+            <h5>{t("help_geo").title}</h5>
             <ul>
               {t("help_geo").list &&
-                t("help_geo").list.map(elm => {
+                t("help_geo").list.map((elm) => {
                   return (
                     <li key={elm.title}>
                       <strong>{elm.title}</strong>
@@ -714,7 +724,7 @@ class Map extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   story: getStory(state),
   placesInTime: getPlacesInDate(state),
   placeTypesCount: getPlaceTypesCount(state),
@@ -725,24 +735,21 @@ const mapStateToProps = state => ({
   extent: getPlacesExtent(state),
   timeSeries: getTimeSeries(state),
   timeSeriesByIndicator: getTimeSeriesByIndicator(state),
-  rasterLayers: getRasterLayers(state)
+  rasterLayers: getRasterLayers(state),
 });
-export default connect(
-  mapStateToProps,
-  {
-    loadTimeSeries,
-    unloadTimeSeries,
-    loadPlaces,
-    unloadPlaces,
-    unloadMap,
-    setSelectedPlace,
-    clearSelectedPlace,
-    setOverPlace,
-    clearOverPlace,
-    loadStory,
-    unloadStory,
-    setDateTimelineMap,
-    loadRasterLayers,
-    unloadRasterLayers
-  }
-)(localize()(Map));
+export default connect(mapStateToProps, {
+  loadTimeSeries,
+  unloadTimeSeries,
+  loadPlaces,
+  unloadPlaces,
+  unloadMap,
+  setSelectedPlace,
+  clearSelectedPlace,
+  setOverPlace,
+  clearOverPlace,
+  loadStory,
+  unloadStory,
+  setDateTimelineMap,
+  loadRasterLayers,
+  unloadRasterLayers,
+})(localize()(Map));

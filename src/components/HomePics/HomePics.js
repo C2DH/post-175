@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import { StaggeredMotion, Motion, spring } from "react-motion";
 import { scaleLinear } from "d3-scale";
 import memoize from "memoize-one";
+import classNames from "classnames";
+import "./HomePics.scss";
 
 const NUM_PICS = 50;
 const MAX_DELTA = 170;
@@ -18,7 +20,7 @@ class HomePicture extends React.PureComponent {
       selected,
       text,
       index,
-      percentHeight
+      percentHeight,
     } = this.props;
     return (
       <div
@@ -26,39 +28,43 @@ class HomePicture extends React.PureComponent {
           borderRight: selected ? 0 : `${parseInt(width / 10)}px solid black`,
           borderLeft: selected ? 0 : `${parseInt(width / 10)}px solid black`,
           position: "absolute",
-          backgroundSize: "cover",
+          //backgroundSize: `${selected ? "contain" : "cover"}`,
           backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
           backgroundImage: `url(${image})`,
           top: selected ? 0 : `${(100 - percentHeight) / 2}%`,
           height: selected ? "100%" : `${percentHeight}%`,
           left,
-          width
+          width,
         }}
+        className={classNames("pic-content", {
+          selected: selected,
+        })}
       >
-        {selected &&
-          width > MAX_DELTA / 2 && (
-            <Motion defaultStyle={{ y: 700 }} style={{ y: spring(0) }}>
-              {({ y }) => (
+        {selected && width > MAX_DELTA / 2 && (
+          <Motion defaultStyle={{ y: 700 }} style={{ y: spring(0) }}>
+            {({ y }) => (
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  overflow: "hidden",
+                  pointerEvents: "none",
+                }}
+                className="d-none d-md-block"
+              >
                 <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    right: 0,
-                    left: 0,
-                    overflow: "hidden",
-                    pointerEvents: "none"
-                  }}
+                  style={{ transform: `translateY(${y}px)` }}
+                  className="w-100 bg-black text-white d-flex flex-row justify-content-between"
                 >
-                  <div
-                    style={{ transform: `translateY(${y}px)` }}
-                    className="w-100 bg-black text-white d-flex flex-row justify-content-between"
-                  >
-                    <div className="font-12 m-3">{text}</div>
-                  </div>
+                  <div className="font-12 m-3">{text}</div>
                 </div>
-              )}
-            </Motion>
-          )}
+              </div>
+            )}
+          </Motion>
+        )}
       </div>
     );
   }
@@ -70,18 +76,18 @@ export default class HomePics extends React.PureComponent {
     this.state = {
       selectedIndex: null,
       positions: [],
-      initialPositions: props.docs.map(_ => [0, 0]),
-      width: 0
+      initialPositions: props.docs.map((_) => [0, 0]),
+      width: 0,
     };
   }
 
   componentDidMount() {
-    this.calculatePosition()
-    window.addEventListener('resize', this.calculatePosition)
+    this.calculatePosition();
+    window.addEventListener("resize", this.calculatePosition);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.calculatePosition)
+    window.removeEventListener("resize", this.calculatePosition);
   }
 
   calculatePosition = () => {
@@ -93,19 +99,19 @@ export default class HomePics extends React.PureComponent {
       return [pos, pos + itemWidth];
     });
     this.setState({ width, positions, initialPositions: positions });
-  }
+  };
 
-  getColor = i => {
+  getColor = (i) => {
     const itemWidth = Math.round(255.0 / NUM_PICS);
     const col = itemWidth * i;
     return `rgb(${col}, ${col}, ${col})`;
   };
 
-  getImage = i => {
+  getImage = (i) => {
     return `url(https://picsum.photos/200/700/?random&ts=${i})`;
   };
 
-  handleMouseMove = e => {
+  handleMouseMove = (e) => {
     const { width, initialPositions } = this.state;
     const itemWidth = width / NUM_PICS;
     const numLeft = Math.round(e.clientX / itemWidth);
@@ -149,34 +155,34 @@ export default class HomePics extends React.PureComponent {
       return newPos;
     });
 
-    const selectedIndex = findIndex(initialPositions, pos => {
+    const selectedIndex = findIndex(initialPositions, (pos) => {
       return e.clientX >= pos[0] && e.clientX <= pos[1];
     });
 
     this.setState({ positions: newPositions, selectedIndex });
   };
 
-  handleMouseLeave = e => {
+  handleMouseLeave = (e) => {
     this.setState({
       x: null,
       positions: this.state.initialPositions,
-      selectedIndex: null
+      selectedIndex: null,
     });
   };
 
-  randomicHeights = memoize(n => {
+  randomicHeights = memoize((n) => {
     const MIN = 30;
     const scale = scaleLinear()
       .domain([0, n - 1])
       .range([0, 4 * Math.PI]);
 
-    const randomic = range(n).map(i => {
+    const randomic = range(n).map((i) => {
       let noise = Math.floor(Math.random() * 20) - 10;
       return noise + 20 + parseInt(Math.abs(Math.sin(scale(i)) * 60));
     });
     const swapper = sampleSize(range(n - 1), 10);
     // console.log('Un', [...randomic])
-    swapper.forEach(swap => {
+    swapper.forEach((swap) => {
       // console.log("S", swap)
       const appo = randomic[swap];
       randomic[swap] = randomic[swap + 1];
@@ -193,18 +199,18 @@ export default class HomePics extends React.PureComponent {
 
     return (
       <StaggeredMotion
-        defaultStyles={initialPositions.map(pos => ({
+        defaultStyles={initialPositions.map((pos) => ({
           left: pos[0],
-          width: pos[1] - pos[0]
+          width: pos[1] - pos[0],
         }))}
         styles={() =>
-          positions.map(pos => ({
+          positions.map((pos) => ({
             left: spring(pos[0]),
-            width: spring(pos[1] - pos[0])
+            width: spring(pos[1] - pos[0]),
           }))
         }
       >
-        {styles => (
+        {(styles) => (
           <div
             id="pics-container"
             className="w-100 h-100"

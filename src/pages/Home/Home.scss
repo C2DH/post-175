@@ -20,7 +20,7 @@
 
   .section-container {
     border-top: 5px white solid;
-    padding: 5px 0px 5px 15px;
+    padding: 22px 0 23px 22px;
     transition: border-top 0.3s linear;
     display: flex;
     align-items: center;
@@ -66,6 +66,7 @@
   .row-bottom-menu {
     overflow-x: scroll;
     flex-wrap: nowrap;
+    padding-left: 56px;
   }
 }
 
@@ -83,6 +84,7 @@
     .row-bottom-menu {
       overflow-x: hidden;
       flex-wrap: wrap;
+      padding-left: 0;
     }
 
     .section-container {

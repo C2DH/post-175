@@ -61,10 +61,12 @@ class TimelineNavigationMobile extends PureComponent {
 
     return (
       <div className="TimelineNavigationMobile">
-        <TimelinePeriodsMobile
-          periods={periods}
-          currentDate={currentDate}
-        ></TimelinePeriodsMobile>
+        {periods && (
+          <TimelinePeriodsMobile
+            periods={periods}
+            currentDate={currentDate}
+          ></TimelinePeriodsMobile>
+        )}
         <div className="d-flex flex-nowrap overflow-auto position-relative decadesContainer">
           {decades.map((decade, i) => {
             return (

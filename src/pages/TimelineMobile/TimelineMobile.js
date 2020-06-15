@@ -123,14 +123,16 @@ class TimelineMobile extends PureComponent {
       this.props.categories !== nextProps.categories ||
       this.props.milestone !== nextProps.milestone
     ) {
-      this.props.history.replace(
-        makeUrlWithYearAndFilters(
-          this.props.location,
-          nextProps.currentDate.getFullYear(),
-          nextProps.categories,
-          nextProps.milestone
-        )
-      );
+      if (nextProps.currentDate) {
+        this.props.history.replace(
+          makeUrlWithYearAndFilters(
+            this.props.location,
+            nextProps.currentDate.getFullYear(),
+            nextProps.categories,
+            nextProps.milestone
+          )
+        );
+      }
     }
   }
 

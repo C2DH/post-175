@@ -11,7 +11,7 @@ import {
   loadCollectionDocuments,
   unloadCollectionDocuments,
   loadCollectionFacets,
-  unloadCollectionFacets
+  unloadCollectionFacets,
 } from "../../state/actions";
 import {
   isLoadingCollectionDocs,
@@ -21,11 +21,12 @@ import {
   getCollectionCount,
   getCollectionAllCount,
   getCollectionsDataTypeFacets,
-  getCollectionsDataTypeAllFacets
+  getCollectionsDataTypeAllFacets,
 } from "../../state/selectors";
+import { localize } from "../../localize";
 import "./CollectionPage.scss";
 
-const parseQsAsList = str => str.split(",").filter(Boolean);
+const parseQsAsList = (str) => str.split(",").filter(Boolean);
 
 class Collection extends PureComponent {
   componentDidMount() {
@@ -33,8 +34,8 @@ class Collection extends PureComponent {
     this.loadDocs(this.parseQueryParams(queryParams));
     this.props.loadCollectionFacets({
       filters: {
-        data__type__in: COLLECTION_DATE_TYPES
-      }
+        data__type__in: COLLECTION_DATE_TYPES,
+      },
     });
   }
 
@@ -64,7 +65,7 @@ class Collection extends PureComponent {
     let exclude = {};
     if (!includeUncertain) {
       exclude = {
-        data__year__iexact: "uncertain"
+        data__year__iexact: "uncertain",
       };
     }
     this.props.loadCollectionDocuments({
@@ -72,22 +73,20 @@ class Collection extends PureComponent {
       exclude,
       filters: {
         data__type__in:
-          categories.length > 0 ? categories : COLLECTION_DATE_TYPES
+          categories.length > 0 ? categories : COLLECTION_DATE_TYPES,
       },
-      q: search
+      q: search,
     });
   };
 
-  parseQueryParams = queryParams => {
+  parseQueryParams = (queryParams) => {
     const search = get(queryParams, "search", "");
     const categories = parseQsAsList(get(queryParams, "categories", ""));
     const includeUncertain = +get(queryParams, "uncertain", "1") ? true : false;
-    let overlaps = get(queryParams, "overlaps", "")
-      .split(",")
-      .filter(Boolean);
+    let overlaps = get(queryParams, "overlaps", "").split(",").filter(Boolean);
     overlaps = [
       isNaN(overlaps[0]) ? null : new Date(`${overlaps[0]}-01-01`),
-      isNaN(overlaps[1]) ? null : new Date(`${overlaps[1]}-12-31`)
+      isNaN(overlaps[1]) ? null : new Date(`${overlaps[1]}-12-31`),
     ];
 
     return { search, categories, overlaps, includeUncertain };
@@ -101,16 +100,16 @@ class Collection extends PureComponent {
       `${location.pathname}?${qs.stringify(
         {
           ...queryParams,
-          overlaps: `${startYear.getFullYear()},${endYear.getFullYear()}`
+          overlaps: `${startYear.getFullYear()},${endYear.getFullYear()}`,
         },
         {
-          encode: false
+          encode: false,
         }
       )}`
     );
   };
 
-  handleOnSearchChange = search => {
+  handleOnSearchChange = (search) => {
     const { location } = this.props;
     const queryParams = qs.parse(location.search);
 
@@ -118,32 +117,32 @@ class Collection extends PureComponent {
       `${location.pathname}?${qs.stringify(
         {
           ...queryParams,
-          search
+          search,
         },
         {
-          encode: false
+          encode: false,
         }
       )}`
     );
   };
 
-  handleToggleCategory = category => {
+  handleToggleCategory = (category) => {
     const { location } = this.props;
     const queryParams = qs.parse(location.search);
     const oldCategories = parseQsAsList(get(queryParams, "categories", ""));
     const categories =
       oldCategories.indexOf(category) === -1
         ? oldCategories.concat(category)
-        : oldCategories.filter(cat => cat !== category);
+        : oldCategories.filter((cat) => cat !== category);
 
     this.props.history.push(
       `${location.pathname}?${qs.stringify(
         {
           ...queryParams,
-          categories: categories.join(",")
+          categories: categories.join(","),
         },
         {
-          encode: false
+          encode: false,
         }
       )}`
     );
@@ -158,10 +157,10 @@ class Collection extends PureComponent {
       `${location.pathname}?${qs.stringify(
         {
           ...queryParams,
-          uncertain
+          uncertain,
         },
         {
-          encode: false
+          encode: false,
         }
       )}`
     );
@@ -177,14 +176,15 @@ class Collection extends PureComponent {
       count,
       allCount,
       dataTypeFacets,
-      dataTypeAllFacets
+      dataTypeAllFacets,
+      t,
     } = this.props;
     const queryParams = qs.parse(location.search);
     const {
       search,
       categories,
       overlaps,
-      includeUncertain
+      includeUncertain,
     } = this.parseQueryParams(queryParams);
 
     return (
@@ -208,7 +208,15 @@ class Collection extends PureComponent {
           dataTypeFacets={dataTypeFacets}
           dataTypeAllFacets={dataTypeAllFacets}
         />
-        {docs && <CollectionList docs={docs} />}
+        {docs && docs.length > 0 && <CollectionList docs={docs} />}
+        {docs && docs.length === 0 && (
+          <div className="no-results text-white p-2">
+            <div className="text-center">
+              <h4>{t("no documents found")}</h4>
+              <p>{t("reset filters or change query")}</p>
+            </div>
+          </div>
+        )}
         {(docs === null || loading) && (
           <Spinner screen={"collection"} firstLoading={docs === null} />
         )}
@@ -217,21 +225,23 @@ class Collection extends PureComponent {
   }
 }
 
-export default connect(
-  state => ({
-    loading: isLoadingCollectionDocs(state),
-    docs: getCollectionDocuments(state),
-    facets: getCollectionsFacets(state),
-    allFacets: getCollectionsAllFacets(state),
-    dataTypeFacets: getCollectionsDataTypeFacets(state),
-    dataTypeAllFacets: getCollectionsDataTypeAllFacets(state),
-    count: getCollectionCount(state),
-    allCount: getCollectionAllCount(state)
-  }),
-  {
-    loadCollectionDocuments,
-    unloadCollectionDocuments,
-    loadCollectionFacets,
-    unloadCollectionFacets
-  }
-)(Collection);
+export default localize()(
+  connect(
+    (state) => ({
+      loading: isLoadingCollectionDocs(state),
+      docs: getCollectionDocuments(state),
+      facets: getCollectionsFacets(state),
+      allFacets: getCollectionsAllFacets(state),
+      dataTypeFacets: getCollectionsDataTypeFacets(state),
+      dataTypeAllFacets: getCollectionsDataTypeAllFacets(state),
+      count: getCollectionCount(state),
+      allCount: getCollectionAllCount(state),
+    }),
+    {
+      loadCollectionDocuments,
+      unloadCollectionDocuments,
+      loadCollectionFacets,
+      unloadCollectionFacets,
+    }
+  )(Collection)
+);
