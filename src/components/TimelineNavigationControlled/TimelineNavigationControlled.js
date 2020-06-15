@@ -33,7 +33,7 @@ class TimelineCursor extends PureComponent {
       <Motion
         defaultStyle={{ x: x }}
         style={{
-          x: spring(x, { precision: 0.01, stiffness: 580, damping: 40 })
+          x: spring(x, { precision: 0.01, stiffness: 580, damping: 40 }),
         }}
       >
         {({ x }) => (
@@ -63,7 +63,7 @@ export class TimelineTicks extends PureComponent {
     const { ticks, scale, y, onTickClick } = this.props;
     return (
       <svg className="w-100 flex-1">
-        {ticks.map(tick => (
+        {ticks.map((tick) => (
           <text
             key={tick}
             x={scale(tick)}
@@ -84,7 +84,7 @@ export class TimelineEvents extends PureComponent {
     const { events, scale, cy, onClick } = this.props;
     return (
       <svg className="w-100 flex-1">
-        {events.map(event => (
+        {events.map((event) => (
           <circle
             className="pointer"
             onClick={() => onClick(event)}
@@ -92,7 +92,7 @@ export class TimelineEvents extends PureComponent {
             key={event.id}
             cx={scale(event.startDate)}
             r={5}
-            cy={cy}
+            cy={cy - 3}
           />
         ))}
       </svg>
@@ -108,12 +108,12 @@ const getScale = defaultMemoize((extent, width, padding) => {
   return scale;
 });
 
-const getTicks = defaultMemoize(scale => scale.ticks(timeYear.every(10)));
+const getTicks = defaultMemoize((scale) => scale.ticks(timeYear.every(10)));
 
 class TimelineNavigationControlled extends PureComponent {
   state = {
     width: 0,
-    height: 0
+    height: 0,
   };
 
   componentDidMount() {
@@ -145,7 +145,7 @@ class TimelineNavigationControlled extends PureComponent {
       onDateChange,
       cursorRadius,
       renderTop,
-      bottomHeight
+      bottomHeight,
     } = this.props;
 
     const scale = getScale(extent, width, padding);
@@ -165,7 +165,7 @@ class TimelineNavigationControlled extends PureComponent {
           {children && children({ scale, ticks, width, height: bottomHeight })}
         </div>
 
-        <div className="position-absolute w-100" style={{ bottom: 28 }}>
+        <div className="position-absolute w-100" style={{ bottom: 27 }}>
           <div
             className="bg-black"
             style={{
@@ -174,7 +174,7 @@ class TimelineNavigationControlled extends PureComponent {
               top: (cursorRadius / 4) * 3,
               height: cursorRadius / 2,
               left: scale(extent[0]),
-              width: scale(extent[1]) - scale(extent[0])
+              width: scale(extent[1]) - scale(extent[0]),
             }}
           />
           <TimelineCursor
@@ -195,7 +195,7 @@ TimelineNavigationControlled.defaultProps = {
   padding: NAVIGATION_PADDING,
   cursorRadius: CURSOR_RADIUS,
   // The height of black timeline section \w events and ticks...
-  bottomHeight: BOTTOM_HEIGHT
+  bottomHeight: BOTTOM_HEIGHT,
 };
 
 export default TimelineNavigationControlled;
