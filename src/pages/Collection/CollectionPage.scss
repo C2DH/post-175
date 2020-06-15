@@ -1,5 +1,13 @@
 .CollectionPage {
   margin-left: 0px;
+
+  .no-results {
+    height: calc(100% - 56px);
+    padding-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 // Small devices (landscape phones, 576px and up)
