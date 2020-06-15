@@ -32,7 +32,12 @@ class About extends PureComponent {
           <div className="row">
             <div className="col-12 col-md-7 col-xl-6 order-1 order-lg-0">
               <div className="page-content">
-                {story && <ReactMarkdown source={story.data.abstract} />}
+                {story && (
+                  <ReactMarkdown
+                    linkTarget="_blank"
+                    source={story.data.abstract}
+                  />
+                )}
               </div>
             </div>
             <div className="col-12 co-md-5 col-xl-6 order-0 order-lg-1">
@@ -64,16 +69,13 @@ class About extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  story: getStory(state)
+const mapStateToProps = (state) => ({
+  story: getStory(state),
 });
 
 export default localize()(
-  connect(
-    mapStateToProps,
-    {
-      loadStory,
-      unloadStory
-    }
-  )(About)
+  connect(mapStateToProps, {
+    loadStory,
+    unloadStory,
+  })(About)
 );
