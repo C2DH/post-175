@@ -104,7 +104,7 @@ export default {
     soon_online: "bald online",
     speaker: "Interviewpartner",
     unknown: "unbekannte",
-    creator: "Schöpfer",
+    creator: "Urheber",
     provenance: "Herkunft",
     help_geo: {
       title: "Die geographische Herangehenweise",
@@ -114,8 +114,8 @@ export default {
           paragraphs: [
             "8 Parameter betreffend die luxemburgischen (Tele-)kommunikationsnetze.",
             "Daten erhoben durch die Internationale Fernmeldeunion (Union Internationale des Télécommunications, UIT) für den Zeitraum von 1867 bis 1967",
-            "Quelle: https://www.itu.int/en/history/Pages/HistoricalStatistics.aspx"
-          ]
+            "Quelle: https://www.itu.int/en/history/Pages/HistoricalStatistics.aspx",
+          ],
         },
         {
           title: "Interaktive Karte",
@@ -124,15 +124,15 @@ export default {
             "Postämter: 1842-2017",
             "Telefonzentralen: Bestand des Netzes. Zwischen 1885 und 1896 (Erste Phase der Einführung des Telefonnetzes). Am 01.01.1963 (Abschluss der Automatisierung des Telefonnetzes). 31.12.1981. 10.08.1992 (Umwandlung der Post- und Telekommunikationsbehörde in das Post- und Telekommunikationsunternehmen",
             "Telegrafenämter: 1862-1895",
-            "Die fehlenden Daten werden teilweise mit historischen Karten, die über die virtuelle Karte gelegt werden können, ausgeglichen"
-          ]
-        }
+            "Die fehlenden Daten werden teilweise mit historischen Karten, die über die virtuelle Karte gelegt werden können, ausgeglichen",
+          ],
+        },
       ],
       navigation_title: "Navigationsmodi",
       navigation_list: [
         "Detailansicht für jedes Postamt, durch Klicken auf das entsprechende Symbol",
-        "Übersicht über die chronologische Entwicklung des Netzes durch Bewegen des Cursers am unteren Ende des Bildschirms"
-      ]
+        "Übersicht über die chronologische Entwicklung des Netzes durch Bewegen des Cursers am unteren Ende des Bildschirms",
+      ],
     },
     help_time: {
       title: "Die chronologische Herangehensweise",
@@ -140,25 +140,25 @@ export default {
         {
           title: "Dargestellter Zeitraum: 1842-2017",
           paragraphs: [
-            "Sieben Teilzeiträume, welche aufgrund wichtiger Entwicklungen im Post- und Telekommunikationssektor definiert wurden"
-          ]
+            "Sieben Teilzeiträume, welche aufgrund wichtiger Entwicklungen im Post- und Telekommunikationssektor definiert wurden",
+          ],
         },
         {
           title: "Standarddarstellung: 16 Schlüsselmomente",
           paragraphs: [
-            "Möglichkeit 6 weitere Kategorien an Ereignissen oder alle erfassten Ereignisse anzeigen zu lassen, durch Klicken auf die entsprechenden Filter im oberen Bereich des Bildschirms"
-          ]
-        }
+            "Möglichkeit 6 weitere Kategorien an Ereignissen oder alle erfassten Ereignisse anzeigen zu lassen, durch Klicken auf die entsprechenden Filter im oberen Bereich des Bildschirms",
+          ],
+        },
       ],
       navigation_title: "Navigationsmodi",
       navigation_list: [
         "Navigation innerhalb der Chronologie durch Bewegen des Cursors im Zeitstrahl unten auf der Seite",
         "Navigation innerhalb der Ereignisse: Detailansicht jedes Ereignisses mit Archivdokumenten durch Klicken auf selbiges",
-        "Übergang von einer Detailansicht zur nächsten, ohne Rückkehr zur globalen Chronologie"
-      ]
+        "Übergang von einer Detailansicht zur nächsten, ohne Rückkehr zur globalen Chronologie",
+      ],
     },
     ie:
-      "Für eine bessere Nutzererfahrung, rufen Sie die Seite bitte in einem der folgenden Browser auf : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge."
+      "Für eine bessere Nutzererfahrung, rufen Sie die Seite bitte in einem der folgenden Browser auf : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge.",
   },
   fr: {
     cookies:
@@ -274,8 +274,8 @@ export default {
           paragraphs: [
             "8 paramètres sur les réseaux de (télé)communications au Luxembourg.",
             "Données recensées par l’Union Internationale des Télécommunications pour la période comprise entre 1867 et 1967.",
-            "Source: https://www.itu.int/en/history/Pages/HistoricalStatistics.aspx"
-          ]
+            "Source: https://www.itu.int/en/history/Pages/HistoricalStatistics.aspx",
+          ],
         },
         {
           title: "carte interactive",
@@ -284,15 +284,15 @@ export default {
             "Bureaux postaux : 1842-2017",
             "Centraux téléphoniques : situation du réseau. Entre 1885 et 1896 (Première phase d’introduction du réseau téléphonique). 01.01.1963 (Parachèvement de l’automatisation du réseau téléphonique). 31.12.1981. 10.08.1992 (Transformation de l’Administration des PTT en Entreprise des Postes et Télécommunications)",
             "Bureaux télégraphiques : 1862-1895",
-            "Les données lacunaires sont comblées, en partie, par des cartes historiques, pouvant être placées au-dessus de la carte virtuelle"
-          ]
-        }
+            "Les données lacunaires sont comblées, en partie, par des cartes historiques, pouvant être placées au-dessus de la carte virtuelle",
+          ],
+        },
       ],
       navigation_title: "Mode de navigation",
       navigation_list: [
         "Vu de détail pour chaque bureau postal en cliquant sur l’icône correspondante.",
-        "Aperçu de l’évolution chronologique en déplaçant le curseur en bas de page"
-      ]
+        "Aperçu de l’évolution chronologique en déplaçant le curseur en bas de page",
+      ],
     },
     help_time: {
       title: "L’approche chronologique",
@@ -300,24 +300,24 @@ export default {
         {
           title: "Période couverte : 1842 – 2017",
           paragraphs: [
-            "Sept sous-périodes définies en fonction des développements majeurs dans le domaine des postes et des télécommunications "
-          ]
+            "Sept sous-périodes définies en fonction des développements majeurs dans le domaine des postes et des télécommunications ",
+          ],
         },
         {
           title: "Présentation par défaut: 16 événements clé",
           paragraphs: [
-            "Possibilité d’activer 6 autres catégories d’événements ou tous les événements répertoriés en utilisant les filtres en haut de page"
-          ]
-        }
+            "Possibilité d’activer 6 autres catégories d’événements ou tous les événements répertoriés en utilisant les filtres en haut de page",
+          ],
+        },
       ],
       navigation_title: "Mode de navigation",
       navigation_list: [
         "Navigation dans la ligne du temps: déplacement du curseur dans la chronologie en bas de page",
         "Navigation dans les événements: vue détaillée de chaque événement avec document(s) d’archives en y cliquant",
-        "Passage d’une vue détaillée à l’autre, sans retour à la ligne du temps globale"
-      ]
+        "Passage d’une vue détaillée à l’autre, sans retour à la ligne du temps globale",
+      ],
     },
     ie:
-      "Pour une meilleure expérience, veuillez consulter le site dans un des navigateurs suivants : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge."
-  }
+      "Pour une meilleure expérience, veuillez consulter le site dans un des navigateurs suivants : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge.",
+  },
 };
