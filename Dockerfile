@@ -1,5 +1,8 @@
 FROM node:12-alpine as post-175-builder
 
+ARG GIT_BRANCH
+ARG GIT_REVISION
+
 WORKDIR /post-175
 
 COPY package.json .
@@ -13,7 +16,9 @@ COPY src ./src
 ENV NODE_ENV production
 ENV NODE_OPTIONS --max_old_space_size=4096
 
-RUN free -m
+ENV REACT_APP_POST_175_GIT_BRANCH=${GIT_BRANCH}
+ENV REACT_APP_POST_175_GIT_REVISION=${GIT_REVISION}
+
 RUN npm run build
 
 FROM busybox

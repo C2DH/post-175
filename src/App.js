@@ -20,6 +20,12 @@ if (process.env.REACT_APP_GA_CODE) {
   });
 }
 
+console.info(
+  'POST-175 version:',
+  process.env.REACT_APP_POST_175_GIT_BRANCH,
+  process.env.REACT_APP_POST_175_GIT_REVISION
+)
+
 const App = () => (
   <Provider store={store}>
     <I18n translations={translations} initialLang="fr">
