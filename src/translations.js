@@ -160,8 +160,13 @@ export default {
         "Übergang von einer Detailansicht zur nächsten, ohne Rückkehr zur globalen Chronologie",
       ],
     },
-    ie:
-      "Für eine bessere Nutzererfahrung, rufen Sie die Seite bitte in einem der folgenden Browser auf : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge.",
+    ie: {
+      paragraphs: [
+        "„Um Ihren virtuellen Besuch der Ausstellung „175 Joer POST“ zu starten, bitten wir Sie ausschließlich folgende Browser zu benutzen: Firefox, Edge, Chrome oder Safari“.",
+        "Danke im Voraus für Ihr Verständnis und vor allem… viel Spaß bei der Entdeckungstour!",
+        "POST Luxembourg",
+      ],
+    },
   },
   fr: {
     cookies:
@@ -324,7 +329,12 @@ export default {
         "Passage d’une vue détaillée à l’autre, sans retour à la ligne du temps globale",
       ],
     },
-    ie:
-      "Pour une meilleure expérience, veuillez consulter le site dans un des navigateurs suivants : Google Chrome, Mozilla Firefox, Safari, Microsoft Edge.",
+    ie: {
+      paragraphs: [
+        "« Pour accéder à la visite virtuelle de l'exposition \"175 Joer POST\", nous vous invitons à utiliser exclusivement les navigateurs suivants : Firefox, Edge, Chrome ou Safari ».",
+        "Merci par avance pour votre compréhension et surtout... bonne exploration!",
+        "POST Luxembourg",
+      ],
+    },
   },
 };

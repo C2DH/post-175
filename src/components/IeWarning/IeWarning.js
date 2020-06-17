@@ -12,9 +12,13 @@ class IeWarning extends PureComponent {
           <p className="text-center">
             <i className="material-icons">warning</i>
           </p>
-          <p>
-            <b>{t("ie")}</b>
-          </p>
+          <div>{t("ie").paragraphs &&
+            t("ie").paragraphs.map((p) => {
+              return (
+                <p>{p}</p>
+              )
+            })
+          }</div>
         </div>
       </div>
     );
