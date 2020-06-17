@@ -108,7 +108,12 @@ const DocDetail = ({
                       {related &&
                         related.map((relatedDoc, i) => (
                           <div key={relatedDoc.id} className="square">
-                            <Link to={`/doc/${relatedDoc.id}`}>
+                            <Link
+                              to={{
+                                pathname: `/doc/${relatedDoc.id}`,
+                                search: `?lang=${selectedLang.param}`,
+                              }}
+                            >
                               {relatedDoc.data.resolutions ? (
                                 <img
                                   src={relatedDoc.data.resolutions.low.url}

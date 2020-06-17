@@ -4,15 +4,21 @@ import { Link } from "react-router-dom";
 import MagikDotDotDot from "../MagikDotDotDot";
 import CollectionImage from "./CollectionImage";
 import { localize } from "../../localize";
+import { connect } from "react-redux";
+import { getSelectedLang } from "../../state/selectors";
 import "./Collection.scss";
 import { TYPE_ICON } from "../../consts";
 
 class CollectionItem extends PureComponent {
   render() {
-    const { doc, t } = this.props;
+    const { doc, t, selectedLang } = this.props;
     return (
       <Link
-        to={{ pathname: `/doc/${doc.id}`, state: { modal: true } }}
+        to={{
+          pathname: `/doc/${doc.id}`,
+          search: `?lang=${selectedLang.param}`,
+          state: { modal: true },
+        }}
         className="d-flex w-100"
       >
         <div className="collection-item d-flex flex-column justify-content-between w-100 text-white">
@@ -30,7 +36,7 @@ class CollectionItem extends PureComponent {
           </div>
           <div
             className={classNames("item-image-box flex-grow-1", {
-              "item-image-large": doc.large
+              "item-image-large": doc.large,
             })}
           >
             <CollectionImage doc={doc} />
@@ -41,4 +47,8 @@ class CollectionItem extends PureComponent {
   }
 }
 
-export default localize()(CollectionItem);
+export default localize()(
+  connect((state) => ({
+    selectedLang: getSelectedLang(state),
+  }))(CollectionItem)
+);

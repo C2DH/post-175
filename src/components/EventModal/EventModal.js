@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { getEventColor } from "../../utils";
 import { localize } from "../../localize";
 import ZoomAndPanMedia from "../ZoomAndPanMedia";
+import { connect } from "react-redux";
+import { getSelectedLang } from "../../state/selectors";
 import "./EventModal.scss";
 import classNames from "classnames";
 
@@ -42,7 +44,7 @@ const EventsControl = ({ hasPrev, hasNext, goNext, goPrev, t }) => (
 
 class EventModal extends PureComponent {
   state = {
-    selectedDocument: null
+    selectedDocument: null,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -51,7 +53,7 @@ class EventModal extends PureComponent {
     }
   }
 
-  handleSelectDocument = selectedDocument => () => {
+  handleSelectDocument = (selectedDocument) => () => {
     this.setState({ selectedDocument });
   };
 
@@ -64,12 +66,13 @@ class EventModal extends PureComponent {
       goNext,
       goPrev,
       style,
-      t
+      t,
+      selectedLang,
     } = this.props;
 
     // Take only docs \w resolution
     const displayDocs = get(event, "documents", []).filter(
-      d => d.data.resolutions
+      (d) => d.data.resolutions
     );
     const selectedDocument = this.state.selectedDocument
       ? this.state.selectedDocument
@@ -107,7 +110,8 @@ class EventModal extends PureComponent {
                         className="collection-link"
                         to={{
                           pathname: `/doc/${selectedDocument.id}`,
-                          state: { modal: true }
+                          search: `?lang=${selectedLang.param}`,
+                          state: { modal: true },
                         }}
                       >
                         {t("open")}
@@ -124,7 +128,7 @@ class EventModal extends PureComponent {
                 {
                   "col-lg-5": displayDocs.length > 0,
                   "col-lg-6": displayDocs.length === 0,
-                  "height-100": displayDocs.length > 0
+                  "height-100": displayDocs.length > 0,
                   // "h-100": displayDocs.length > 0
                 }
               )}
@@ -147,7 +151,7 @@ class EventModal extends PureComponent {
                           <div
                             key={doc.id}
                             className={classNames(`square`, {
-                              selected: doc.id === selectedDocument.id
+                              selected: doc.id === selectedDocument.id,
                             })}
                           >
                             <img
@@ -183,4 +187,8 @@ class EventModal extends PureComponent {
   }
 }
 
-export default localize()(EventModal);
+export default localize()(
+  connect((state) => ({
+    selectedLang: getSelectedLang(state),
+  }))(EventModal)
+);

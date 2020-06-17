@@ -9,7 +9,8 @@ export default memo(function SideDocument({
   width,
   doc,
   stopPlaying,
-  t
+  t,
+  selectedLang,
 }) {
   return (
     <div className="side-document" style={{ width }}>
@@ -34,7 +35,8 @@ export default memo(function SideDocument({
                 onClick={stopPlaying}
                 to={{
                   pathname: `/doc/${doc.document_id}`,
-                  state: { modal: true }
+                  search: `?lang=${selectedLang.param}`,
+                  state: { modal: true },
                 }}
               >
                 {t("open")}

@@ -4,7 +4,12 @@ import LinesEllipsis from "react-lines-ellipsis";
 import DocDate from "../DocDate";
 import SideDocumentMedia from "./SideDocumentMedia";
 
-export default memo(function SideDocument({ doc, stopPlaying, t }) {
+export default memo(function SideDocument({
+  doc,
+  stopPlaying,
+  t,
+  selectedLang,
+}) {
   return (
     <div className="side-document">
       {doc && (
@@ -39,7 +44,8 @@ export default memo(function SideDocument({ doc, stopPlaying, t }) {
                 onClick={stopPlaying}
                 to={{
                   pathname: `/doc/${doc.document_id}`,
-                  state: { modal: true }
+                  search: `?lang=${selectedLang.param}`,
+                  state: { modal: true },
                 }}
               >
                 {t("open")}

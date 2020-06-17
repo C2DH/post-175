@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getSelectedLang } from "../../state/selectors";
 import ReactPlayer from "react-player";
 import SideMenu from "../SideMenu";
 import HomeMenu from "../HomeMenu";
@@ -21,7 +23,7 @@ class VideoStoryMobile extends Component {
     volume: 1,
     sideWidth: 300,
     playing: true,
-    subtitles: []
+    subtitles: [],
   };
 
   onPlayerReady = () => {
@@ -76,31 +78,31 @@ class VideoStoryMobile extends Component {
     }
   }
 
-  setSubtitles = e => {
-    const subtitles = Array.from(e.target.activeCues).map(cue => cue.text);
+  setSubtitles = (e) => {
+    const subtitles = Array.from(e.target.activeCues).map((cue) => cue.text);
     this.setState({ subtitles });
   };
 
-  onProgress = progressState => {
+  onProgress = (progressState) => {
     this.setState(progressState);
   };
 
-  onDuration = durationSeconds => {
+  onDuration = (durationSeconds) => {
     this.setState({ durationSeconds });
   };
 
-  onSeek = percent => {
+  onSeek = (percent) => {
     this.player.seekTo(percent);
     // this.setState({played: percent})
   };
 
   handleSideDocDrag = (e, data) => {
-    return this.setState(prevState => ({
-      sideWidth: Math.max(prevState.sideWidth + -data.x, MIN_SIDE_WIDTH)
+    return this.setState((prevState) => ({
+      sideWidth: Math.max(prevState.sideWidth + -data.x, MIN_SIDE_WIDTH),
     }));
   };
 
-  setVolume = volume => this.setState({ volume });
+  setVolume = (volume) => this.setState({ volume });
 
   togglePlaying = () => this.setState({ playing: !this.state.playing });
 
@@ -117,7 +119,8 @@ class VideoStoryMobile extends Component {
       title,
       subtitlesFile,
       onBack,
-      t
+      t,
+      selectedLang,
     } = this.props;
     const {
       durationSeconds,
@@ -126,7 +129,7 @@ class VideoStoryMobile extends Component {
       sideWidth,
       playing,
       subtitles,
-      volume
+      volume,
     } = this.state;
     const speaker = getSpeakerAt(playedSeconds);
     const sideDoc = getSideDocAt(playedSeconds);
@@ -136,7 +139,7 @@ class VideoStoryMobile extends Component {
       tracks.push({
         kind: "subtitles",
         src: subtitlesFile,
-        default: true
+        default: true,
       });
     }
     // XXX HACK XXX
@@ -159,7 +162,7 @@ class VideoStoryMobile extends Component {
           <div className="video-container">
             <ReactPlayer
               key={playerKey}
-              ref={r => (this.player = r)}
+              ref={(r) => (this.player = r)}
               onClick={this.togglePlaying}
               onReady={this.onPlayerReady}
               onDuration={this.onDuration}
@@ -171,7 +174,7 @@ class VideoStoryMobile extends Component {
               progressInterval={500}
               url={url}
               config={{
-                file: { tracks }
+                file: { tracks },
               }}
             />
           </div>
@@ -196,10 +199,19 @@ class VideoStoryMobile extends Component {
           <Speaker doc={speaker} t={t} />
         </div>
 
-        <SideDocument doc={sideDoc} stopPlaying={this.stopPlaying} t={t} />
+        <SideDocument
+          doc={sideDoc}
+          stopPlaying={this.stopPlaying}
+          t={t}
+          selectedLang={selectedLang}
+        />
       </div>
     );
   }
 }
 
-export default localize()(VideoStoryMobile);
+export default localize()(
+  connect((state) => ({
+    selectedLang: getSelectedLang(state),
+  }))(VideoStoryMobile)
+);
