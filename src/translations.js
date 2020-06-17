@@ -162,7 +162,7 @@ export default {
     },
     ie: {
       paragraphs: [
-        "„Um Ihren virtuellen Besuch der Ausstellung „175 Joer POST“ zu starten, bitten wir Sie ausschließlich folgende Browser zu benutzen: Firefox, Edge, Chrome oder Safari“.",
+        "Um Ihren virtuellen Besuch der Ausstellung „175 Joer POST“ zu starten, bitten wir Sie ausschließlich folgende Browser zu benutzen: Firefox, Edge, Chrome oder Safari.",
         "Danke im Voraus für Ihr Verständnis und vor allem… viel Spaß bei der Entdeckungstour!",
         "POST Luxembourg",
       ],
@@ -331,7 +331,7 @@ export default {
     },
     ie: {
       paragraphs: [
-        "« Pour accéder à la visite virtuelle de l'exposition \"175 Joer POST\", nous vous invitons à utiliser exclusivement les navigateurs suivants : Firefox, Edge, Chrome ou Safari ».",
+        "Pour accéder à la visite virtuelle de l'exposition \"175 Joer POST\", nous vous invitons à utiliser exclusivement les navigateurs suivants : Firefox, Edge, Chrome ou Safari.",
         "Merci par avance pour votre compréhension et surtout... bonne exploration!",
         "POST Luxembourg",
       ],
