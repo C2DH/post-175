@@ -16,7 +16,7 @@ export default {
     menu_terms_of_use: "Nutzungsbedingungen",
     menu_contact_us: "Kontaktieren Sie Uns",
     menu_desc:
-      "Die Geschichte des Post und Telekommunikationsunternehmens des Großherzogtums seit 1842",
+      "Die Geschichte des Post- und Telekommunikationsunternehmens des Großherzogtums seit 1842",
     // home page
     home_joerpost: "Joer Post",
     home_title: "175 joer post",
@@ -72,7 +72,7 @@ export default {
     // timeline page - legend
     event: "Ereignis",
     infrastructure: "Infrastruktur",
-    "legislation and events": "Gesetzgebung und ereignis",
+    "legislation and events": "Gesetzgebung und Ereignis",
     legislation: "Gesetzgebung",
     service: "Dienstleistungen",
     cooperation: "Internationale Zusammenarbeit",
