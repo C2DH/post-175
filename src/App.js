@@ -18,6 +18,10 @@ if (process.env.REACT_APP_GA_CODE) {
   history.listen((location, action) => {
     ReactGA.pageview(location.pathname + location.search);
   });
+  console.info(
+    'POST-175 GA enabled:',
+    process.env.REACT_APP_GA_CODE
+  )
 }
 
 console.info(
