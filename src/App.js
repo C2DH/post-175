@@ -22,6 +22,8 @@ if (process.env.REACT_APP_GA_CODE) {
     'POST-175 GA enabled:',
     process.env.REACT_APP_GA_CODE
   )
+} else {
+  console.info('POST-175 GA disabled by config.')
 }
 
 console.info(
