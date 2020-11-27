@@ -2,7 +2,8 @@ export default {
   de: {
     cookies:
       "Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden.",
-    "got it": "Verstanden",
+    accept: "Ich stimme zu",
+    not_accept: "Ich stimme nicht zu",
     external_viewer: "externer Viewer",
     link: "Link",
     // side menu
@@ -171,7 +172,8 @@ export default {
   fr: {
     cookies:
       "Nous utilisons des cookies afin d'améliorer le fonctionnement de notre site pour l'utilisateur. En continuant la navigation sur ce site, vous acceptez l'utilisation de ces cookies.",
-    "got it": "vu",
+    accept: "J'accepte",
+    not_accept: "Je n'accepte pas",
     external_viewer: "viewer externe ",
     link: "lien",
     // side menu

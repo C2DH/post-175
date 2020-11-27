@@ -17,7 +17,7 @@ import Collection from "../../pages/Collection";
 import DocumentDetail from "../../pages/DocumentDetail";
 import DocumentDetailModal from "../../pages/DocumentDetailModal";
 import StoriesRoot from "../../pages/StoriesRoot";
-import Cookie from "../Cookie";
+import CookieBanner from "../CookieBanner";
 import IeWarning from "../IeWarning";
 
 const browserHandler = {
@@ -64,7 +64,7 @@ class LangRoot extends PureComponent {
   };
 
   render() {
-    const { lang, location } = this.props;
+    const { lang, location, history } = this.props;
 
     const isModal = !!(
       location.state &&
@@ -73,7 +73,7 @@ class LangRoot extends PureComponent {
     );
 
     return (
-      <Cookie>
+      <Fragment>
         <Media query="(max-width: 767.98px)">
           {matches =>
             matches ? (
@@ -124,7 +124,8 @@ class LangRoot extends PureComponent {
           }
         </Media>
         <BrowserDetection>{browserHandler}</BrowserDetection>
-      </Cookie>
+        <CookieBanner history={history} />
+      </Fragment>
     );
   }
 }
