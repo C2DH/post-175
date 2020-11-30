@@ -1,8 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from "react-redux";
+import { withRouter, NavLink } from "react-router-dom";
 import { Container, Row, Col } from 'reactstrap';
 import { withCookies } from 'react-cookie';
 import ReactGA from "react-ga";
 import { localize } from "../../localize";
+import { getSelectedLang } from "../../state/selectors";
 
 import './CookieBanner.scss';
 
@@ -52,7 +55,7 @@ class CookieBanner extends PureComponent {
 
   render() {
 
-    const { t, cookies } = this.props;
+    const { t, cookies, selectedLang } = this.props;
 
     return (
       <Fragment>
@@ -61,9 +64,18 @@ class CookieBanner extends PureComponent {
             <Row className="align-items-center">
               <Col className='message'>
                 {t("cookies")}
+                <NavLink
+                  to={{
+                    pathname: "/terms-of-use",
+                    search: `?lang=${selectedLang.param}`
+                  }}
+                  className="d-block"
+                >
+                  {t("read_more")}
+                </NavLink>
               </Col>
               <Col md="auto" className="mt-2 mt-md-0">
-                <a className="not-accept" onClick={() => this.setCookie('deny')}>
+                <a href="" className="not-accept link-label" onClick={() => this.setCookie('deny')}>
                   {t("not_accept")}
                 </a>
                 <button onClick={this.accept}>
@@ -78,4 +90,8 @@ class CookieBanner extends PureComponent {
   }
 }
 
-export default localize()(withCookies(CookieBanner));
+const mapStateToProps = state => ({
+  selectedLang: getSelectedLang(state)
+});
+
+export default localize()(withRouter(withCookies(connect(mapStateToProps)(CookieBanner))));

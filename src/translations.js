@@ -1,7 +1,8 @@
 export default {
   de: {
     cookies:
-      "Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden.",
+      "Unsere Website verwendet Google Analytics für die Messung der Besucherströme zur Verbesserung der Website. Sie können zustimmen oder ablehnen, indem Sie auf den entsprechenden Link klicken:",
+    read_more: "Weitere Infos",
     accept: "Ich stimme zu",
     not_accept: "Ich stimme nicht zu",
     external_viewer: "externer Viewer",
@@ -171,7 +172,8 @@ export default {
   },
   fr: {
     cookies:
-      "Nous utilisons des cookies afin d'améliorer le fonctionnement de notre site pour l'utilisateur. En continuant la navigation sur ce site, vous acceptez l'utilisation de ces cookies.",
+      "Notre site web utilise Google Analytics pour effectuer des mesures d'audience afin d'améliorer le site. Vous pouvez accepter ou refuser en cliquant sur:",
+    read_more: "En savoir plus",
     accept: "J'accepte",
     not_accept: "Je n'accepte pas",
     external_viewer: "viewer externe ",
