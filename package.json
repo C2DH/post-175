@@ -14,7 +14,7 @@
     "d3-time": "^1.0.10",
     "hoist-non-react-statics": "^3.0.1",
     "immutable": "4.0.0-rc.9",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mapbox-gl": "^0.51.0",
     "md5": "^2.2.1",
     "memoize-one": "^4.0.2",
