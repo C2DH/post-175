@@ -1,7 +1,9 @@
 export default {
   de: {
     cookies:
-      "Unsere Website verwendet Google Analytics für die Messung der Besucherströme zur Verbesserung der Website. Sie können zustimmen oder ablehnen, indem Sie auf den entsprechenden Link klicken:",
+      "Um Ihr Nutzererlebnis zu verbessern, verwenden wir Cookies, die die einwandfreie Funktion unserer Website gewährleisten und uns ermöglichen, sowie unseren Datenverkehr zu analysieren.",
+    ga_consent:
+      "Ich bin damit einverstanden, Analysedaten zu senden",
     read_more: "Weitere Infos",
     accept: "Ich stimme zu",
     not_accept: "Ich stimme nicht zu",
@@ -172,7 +174,9 @@ export default {
   },
   fr: {
     cookies:
-      "Notre site web utilise Google Analytics pour effectuer des mesures d'audience afin d'améliorer le site. Vous pouvez accepter ou refuser en cliquant sur:",
+      "Dans le but d’améliorer votre expérience utilisateur sur notre site, nous utilisons des cookies pour nous assurer de son bon fonctionnement et afin d’analyser notre trafic.",
+    ga_consent:
+      "J'accepte l'envoi de données analytiques",
     read_more: "En savoir plus",
     accept: "J'accepte",
     not_accept: "Je n'accepte pas",

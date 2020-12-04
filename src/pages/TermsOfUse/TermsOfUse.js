@@ -1,11 +1,20 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { connect } from "react-redux";
 import ReactMarkdown from "react-markdown";
+import ShortCodes from "remark-shortcodes";
 import { localize } from "../../localize";
 import { loadStory, unloadStory } from "../../state/actions";
 import { getStory } from "../../state/selectors";
 import SideMenu from "../../components/SideMenu";
+import { GAOptInOut } from "../../components/CookieBanner";
 import "./TermsOfUse.scss";
+
+
+const GAOptInOutRenderer = ({ identifier }) => (
+	<Fragment>
+		{identifier === 'GAOptInOut' && <GAOptInOut />}
+	</Fragment>
+)
 
 class TermsOfUse extends PureComponent {
   componentDidMount() {
@@ -34,8 +43,10 @@ class TermsOfUse extends PureComponent {
               <div className="page-content">
                 {story && (
                   <ReactMarkdown
-                    linkTarget="_blank"
-                    source={story.data.abstract}
+                    linkTarget	= "_blank"
+                    plugins			= {[ShortCodes]}
+                    source			= {story.data.abstract}
+                    renderers		= {{shortcode: GAOptInOutRenderer}}
                   />
                 )}
               </div>

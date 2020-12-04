@@ -50,6 +50,7 @@
     "redux": "^4.0.0",
     "redux-i18n": "^1.5.13",
     "redux-saga": "^0.16.0",
+    "remark-shortcodes": "^0.3.1",
     "reselect": "^3.0.1",
     "slick-carousel": "^1.8.1",
     "superagent": "3.8.3",

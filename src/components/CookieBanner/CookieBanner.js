@@ -3,13 +3,19 @@ import { connect } from "react-redux";
 import { withRouter, NavLink } from "react-router-dom";
 import { Container, Row, Col } from 'reactstrap';
 import { withCookies } from 'react-cookie';
-import ReactGA from "react-ga";
+import ReactGA, { ga } from "react-ga";
 import { localize } from "../../localize";
 import { getSelectedLang } from "../../state/selectors";
+import { setCookie, getBooleanCookie } from "../../utils";
+import GAOptInOut, { GA_CONSENT_COOKIE } from './GAOptInOut';
 
 import './CookieBanner.scss';
 
+
+const ACCEPT_COOKIE = 'accepts-cookies';
 class CookieBanner extends PureComponent {
+
+  ga
 
   initGA() {
     const { history } = this.props;
@@ -18,7 +24,7 @@ class CookieBanner extends PureComponent {
     if (process.env.REACT_APP_GA_CODE) {
       ReactGA.initialize(process.env.REACT_APP_GA_CODE, {
         gaOptions: {
-          cookieFlags: 'secure'
+          cookieFlags: 'samesite=lax'
         }
       });
       ReactGA.pageview(history.location.pathname + history.location.search);
@@ -35,22 +41,17 @@ class CookieBanner extends PureComponent {
     }
   }
 
-  setCookie(status) {
-    this.props.cookies.set('cookieconsent', status , {
-      path: '/',
-      expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
-      sameSite: 'Lax'
-    });
-  }
+  accept = () =>
+    setCookie(this.props.cookies, ACCEPT_COOKIE, true);
 
-  accept = () => {
-    this.setCookie('accept');
-    this.initGA();
-  }
+  componentDidUpdate(prevProps) {
 
-  componentDidMount() {
-    if(this.props.cookies.get('cookieconsent') === 'accept')
+    const { cookies } = this.props;
+    const gaConsent   = getBooleanCookie(cookies, ACCEPT_COOKIE) && getBooleanCookie(cookies, GA_CONSENT_COOKIE, true);
+
+    if(!ga() && gaConsent)
       this.initGA();
+    window[`ga-disable-${process.env.REACT_APP_GA_CODE}`] = !gaConsent;
   }
 
   render() {
@@ -59,7 +60,7 @@ class CookieBanner extends PureComponent {
 
     return (
       <Fragment>
-        {!cookies.get('cookieconsent') &&
+        {!cookies.get(ACCEPT_COOKIE) &&
           <Container fluid className="CookieBanner">
             <Row className="align-items-center">
               <Col className='message'>
@@ -69,15 +70,13 @@ class CookieBanner extends PureComponent {
                     pathname: "/terms-of-use",
                     search: `?lang=${selectedLang.param}`
                   }}
-                  className="d-block"
+                  className="ml-2 text-nowrap"
                 >
                   {t("read_more")}
                 </NavLink>
+                <GAOptInOut />
               </Col>
               <Col md="auto" className="mt-2 mt-md-0">
-                <a href="" className="not-accept link-label" onClick={() => this.setCookie('deny')}>
-                  {t("not_accept")}
-                </a>
                 <button onClick={this.accept}>
                   {t("accept")}
                 </button>
