@@ -1,6 +1,6 @@
-import qs from 'query-string'
-import get from 'lodash/get'
-import { EVENT_COLORS } from './consts'
+import qs from 'query-string';
+import { get, isNil, isEmpty } from 'lodash';
+import { EVENT_COLORS } from './consts';
 
 export const getEventColor = event => {
   const color = EVENT_COLORS[event.data.category]
@@ -47,4 +47,23 @@ export const makeUrlWithYearAndFilters = (location, year, categories = [], miles
     encode: false,
   })
   return `${location.pathname}?${newQs}`
+}
+
+//  Set one year cookie
+export const setCookie = (cookies, name, value) => {
+  cookies.set(name, value, {
+    path: '/',
+    expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
+    sameSite: 'Lax'
+  });
+}
+
+export const getBooleanCookie = (cookies, name, defaultValue = false) => {
+
+  const value = cookies.get(name);
+  
+  if(isNil(value) || isEmpty(value))
+    return defaultValue;
+  else
+    return value === 'true'
 }

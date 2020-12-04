@@ -1,8 +1,12 @@
 export default {
   de: {
     cookies:
-      "Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden.",
-    "got it": "Verstanden",
+      "Um Ihr Nutzererlebnis zu verbessern, verwenden wir Cookies, die die einwandfreie Funktion unserer Website gewährleisten und uns ermöglichen, sowie unseren Datenverkehr zu analysieren.",
+    ga_consent:
+      "Ich bin damit einverstanden, Analysedaten zu senden",
+    read_more: "Weitere Infos",
+    accept: "Ich stimme zu",
+    not_accept: "Ich stimme nicht zu",
     external_viewer: "externer Viewer",
     link: "Link",
     // side menu
@@ -170,8 +174,12 @@ export default {
   },
   fr: {
     cookies:
-      "Nous utilisons des cookies afin d'améliorer le fonctionnement de notre site pour l'utilisateur. En continuant la navigation sur ce site, vous acceptez l'utilisation de ces cookies.",
-    "got it": "vu",
+      "Dans le but d’améliorer votre expérience utilisateur sur notre site, nous utilisons des cookies pour nous assurer de son bon fonctionnement et afin d’analyser notre trafic.",
+    ga_consent:
+      "J'accepte l'envoi de données analytiques",
+    read_more: "En savoir plus",
+    accept: "J'accepte",
+    not_accept: "Je n'accepte pas",
     external_viewer: "viewer externe ",
     link: "lien",
     // side menu
