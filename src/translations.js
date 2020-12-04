@@ -1,10 +1,10 @@
 export default {
   de: {
     cookies:
-      "Um Ihr Nutzererlebnis zu verbessern, verwenden wir Cookies, die die einwandfreie Funktion unserer Website gewährleisten und uns ermöglichen, sowie unseren Datenverkehr zu analysieren.",
+      "Um Ihr Nutzererlebnis zu verbessern verwenden wir Cookies welche die einwandfreie Funktion unserer Website gewährleisten und es uns ermöglichen unseren Datenverkehr zu analysieren.",
     ga_consent:
-      "Ich bin damit einverstanden, Analysedaten zu senden",
-    read_more: "Weitere Infos",
+      "Ich bin damit einverstanden Analysedaten zu senden",
+    read_more: "Weitere Informationen",
     accept: "Ich stimme zu",
     not_accept: "Ich stimme nicht zu",
     external_viewer: "externer Viewer",
