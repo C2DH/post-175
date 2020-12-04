@@ -11,8 +11,9 @@ const history = createBrowserHistory();
 
 console.info(
   'POST-175 version:',
-  process.env.REACT_APP_POST_175_GIT_BRANCH,
-  process.env.REACT_APP_POST_175_GIT_REVISION
+  process.env.REACT_APP_GIT_TAG,
+  process.env.REACT_APP_GIT_BRANCH,
+  process.env.REACT_APP_GIT_REVISION
 )
 
 const App = () => (
