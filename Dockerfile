@@ -1,4 +1,4 @@
-FROM node:12-alpine as post-175-builder
+FROM node:13.12-alpine as post-175-builder
 
 ARG GIT_TAG
 ARG GIT_BRANCH
