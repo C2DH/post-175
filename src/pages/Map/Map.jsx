@@ -355,7 +355,7 @@ class Map extends PureComponent {
         id: l.id.toString(),
         type: 'raster',
         tiles: [
-          `https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiMTc1cG9zdCIsImEiOiJjam9md2dveWYwOHh4M3FwbnN0OHlhNTh3In0.zTSFenMa8A8m2lfQN9FWIQ`,
+          `https://api.mapbox.com/v4/${l.data.raster_layer}/{z}/{x}/{y}@2x.png?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`,
         ],
       }),
     )
