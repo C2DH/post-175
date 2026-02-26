@@ -1,18 +1,18 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
-import qs from "query-string";
-import get from "lodash/get";
-import SideMenu from "../../components/SideMenu";
-import CollectionFilters from "../../components/Collection/CollectionFilters";
-import CollectionList from "../../components/Collection/CollectionList";
-import Spinner from "../../components/Spinner";
-import { COLLECTION_DATE_TYPES } from "../../consts";
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import qs from 'query-string'
+import get from 'lodash/get'
+import SideMenu from '../../components/SideMenu'
+import CollectionFilters from '../../components/Collection/CollectionFilters'
+import CollectionList from '../../components/Collection/CollectionList'
+import Spinner from '../../components/Spinner'
+import { COLLECTION_DATE_TYPES } from '../../consts'
 import {
   loadCollectionDocuments,
   unloadCollectionDocuments,
   loadCollectionFacets,
   unloadCollectionFacets,
-} from "../../state/actions";
+} from '../../state/actions'
 import {
   isLoadingCollectionDocs,
   getCollectionDocuments,
@@ -22,51 +22,52 @@ import {
   getCollectionAllCount,
   getCollectionsDataTypeFacets,
   getCollectionsDataTypeAllFacets,
-} from "../../state/selectors";
-import { localize } from "../../localize";
-import "./CollectionPage.scss";
+} from '../../state/selectors'
+import { localize } from '../../localize'
+import withRouter from '../../router/withRouter'
+import './CollectionPage.scss'
 
-const parseQsAsList = (str) => str.split(",").filter(Boolean);
+const parseQsAsList = (str) => str.split(',').filter(Boolean)
 
 class Collection extends PureComponent {
   componentDidMount() {
-    const queryParams = qs.parse(this.props.location.search);
-    this.loadDocs(this.parseQueryParams(queryParams));
+    const queryParams = qs.parse(this.props.location.search)
+    this.loadDocs(this.parseQueryParams(queryParams))
     this.props.loadCollectionFacets({
       filters: {
         data__type__in: COLLECTION_DATE_TYPES,
       },
-    });
+    })
   }
 
   componentDidUpdate(prevProps) {
-    const prevQueryParams = qs.parse(prevProps.location.search);
-    const queryParams = qs.parse(this.props.location.search);
+    const prevQueryParams = qs.parse(prevProps.location.search)
+    const queryParams = qs.parse(this.props.location.search)
     if (
       prevQueryParams.search !== queryParams.search ||
       prevQueryParams.categories !== queryParams.categories ||
       prevQueryParams.overlaps !== queryParams.overlaps ||
       prevQueryParams.uncertain !== queryParams.uncertain
     ) {
-      this.loadDocs(this.parseQueryParams(queryParams));
+      this.loadDocs(this.parseQueryParams(queryParams))
     }
   }
 
   componentWillUnmount() {
-    this.props.unloadCollectionDocuments();
-    this.props.unloadCollectionFacets();
+    this.props.unloadCollectionDocuments()
+    this.props.unloadCollectionFacets()
   }
 
   loadDocs = ({ categories, search, overlaps, includeUncertain }) => {
-    let overlapsQuery;
+    let overlapsQuery
     if (overlaps && overlaps[0] && overlaps[1]) {
-      overlapsQuery = `${overlaps[0].getFullYear()}-01-01,${overlaps[1].getFullYear()}-12-31`;
+      overlapsQuery = `${overlaps[0].getFullYear()}-01-01,${overlaps[1].getFullYear()}-12-31`
     }
-    let exclude = {};
+    let exclude = {}
     if (!includeUncertain) {
       exclude = {
-        data__year__iexact: "uncertain",
-      };
+        data__year__iexact: 'uncertain',
+      }
     }
     this.props.loadCollectionDocuments({
       overlaps: overlapsQuery,
@@ -76,25 +77,25 @@ class Collection extends PureComponent {
           categories.length > 0 ? categories : COLLECTION_DATE_TYPES,
       },
       q: search,
-    });
-  };
+    })
+  }
 
   parseQueryParams = (queryParams) => {
-    const search = get(queryParams, "search", "");
-    const categories = parseQsAsList(get(queryParams, "categories", ""));
-    const includeUncertain = +get(queryParams, "uncertain", "1") ? true : false;
-    let overlaps = get(queryParams, "overlaps", "").split(",").filter(Boolean);
+    const search = get(queryParams, 'search', '')
+    const categories = parseQsAsList(get(queryParams, 'categories', ''))
+    const includeUncertain = +get(queryParams, 'uncertain', '1') ? true : false
+    let overlaps = get(queryParams, 'overlaps', '').split(',').filter(Boolean)
     overlaps = [
       isNaN(overlaps[0]) ? null : new Date(`${overlaps[0]}-01-01`),
       isNaN(overlaps[1]) ? null : new Date(`${overlaps[1]}-12-31`),
-    ];
+    ]
 
-    return { search, categories, overlaps, includeUncertain };
-  };
+    return { search, categories, overlaps, includeUncertain }
+  }
 
   handleOnOverlapsChange = (startYear, endYear) => {
-    const { location } = this.props;
-    const queryParams = qs.parse(location.search);
+    const { location } = this.props
+    const queryParams = qs.parse(location.search)
 
     this.props.history.push(
       `${location.pathname}?${qs.stringify(
@@ -104,14 +105,14 @@ class Collection extends PureComponent {
         },
         {
           encode: false,
-        }
-      )}`
-    );
-  };
+        },
+      )}`,
+    )
+  }
 
   handleOnSearchChange = (search) => {
-    const { location } = this.props;
-    const queryParams = qs.parse(location.search);
+    const { location } = this.props
+    const queryParams = qs.parse(location.search)
 
     this.props.history.push(
       `${location.pathname}?${qs.stringify(
@@ -121,37 +122,37 @@ class Collection extends PureComponent {
         },
         {
           encode: false,
-        }
-      )}`
-    );
-  };
+        },
+      )}`,
+    )
+  }
 
   handleToggleCategory = (category) => {
-    const { location } = this.props;
-    const queryParams = qs.parse(location.search);
-    const oldCategories = parseQsAsList(get(queryParams, "categories", ""));
+    const { location } = this.props
+    const queryParams = qs.parse(location.search)
+    const oldCategories = parseQsAsList(get(queryParams, 'categories', ''))
     const categories =
       oldCategories.indexOf(category) === -1
         ? oldCategories.concat(category)
-        : oldCategories.filter((cat) => cat !== category);
+        : oldCategories.filter((cat) => cat !== category)
 
     this.props.history.push(
       `${location.pathname}?${qs.stringify(
         {
           ...queryParams,
-          categories: categories.join(","),
+          categories: categories.join(','),
         },
         {
           encode: false,
-        }
-      )}`
-    );
-  };
+        },
+      )}`,
+    )
+  }
 
   handleToggleUncertain = () => {
-    const { location } = this.props;
-    const queryParams = qs.parse(location.search);
-    const uncertain = +get(queryParams, "uncertain", "1") ? "0" : "1";
+    const { location } = this.props
+    const queryParams = qs.parse(location.search)
+    const uncertain = +get(queryParams, 'uncertain', '1') ? '0' : '1'
 
     this.props.history.push(
       `${location.pathname}?${qs.stringify(
@@ -161,10 +162,10 @@ class Collection extends PureComponent {
         },
         {
           encode: false,
-        }
-      )}`
-    );
-  };
+        },
+      )}`,
+    )
+  }
 
   render() {
     const {
@@ -178,17 +179,13 @@ class Collection extends PureComponent {
       dataTypeFacets,
       dataTypeAllFacets,
       t,
-    } = this.props;
-    const queryParams = qs.parse(location.search);
-    const {
-      search,
-      categories,
-      overlaps,
-      includeUncertain,
-    } = this.parseQueryParams(queryParams);
+    } = this.props
+    const queryParams = qs.parse(location.search)
+    const { search, categories, overlaps, includeUncertain } =
+      this.parseQueryParams(queryParams)
 
     return (
-      <div className="h-100 CollectionPage">
+      <div className='h-100 CollectionPage'>
         <SideMenu />
         <CollectionFilters
           locationKey={location.key}
@@ -210,38 +207,40 @@ class Collection extends PureComponent {
         />
         {docs && docs.length > 0 && <CollectionList docs={docs} />}
         {docs && docs.length === 0 && (
-          <div className="no-results text-white p-2">
-            <div className="text-center">
-              <h4>{t("no documents found")}</h4>
-              <p>{t("reset filters or change query")}</p>
+          <div className='no-results text-white p-2'>
+            <div className='text-center'>
+              <h4>{t('no documents found')}</h4>
+              <p>{t('reset filters or change query')}</p>
             </div>
           </div>
         )}
         {(docs === null || loading) && (
-          <Spinner screen={"collection"} firstLoading={docs === null} />
+          <Spinner screen={'collection'} firstLoading={docs === null} />
         )}
       </div>
-    );
+    )
   }
 }
 
-export default localize()(
-  connect(
-    (state) => ({
-      loading: isLoadingCollectionDocs(state),
-      docs: getCollectionDocuments(state),
-      facets: getCollectionsFacets(state),
-      allFacets: getCollectionsAllFacets(state),
-      dataTypeFacets: getCollectionsDataTypeFacets(state),
-      dataTypeAllFacets: getCollectionsDataTypeAllFacets(state),
-      count: getCollectionCount(state),
-      allCount: getCollectionAllCount(state),
-    }),
-    {
-      loadCollectionDocuments,
-      unloadCollectionDocuments,
-      loadCollectionFacets,
-      unloadCollectionFacets,
-    }
-  )(Collection)
-);
+export default withRouter(
+  localize()(
+    connect(
+      (state) => ({
+        loading: isLoadingCollectionDocs(state),
+        docs: getCollectionDocuments(state),
+        facets: getCollectionsFacets(state),
+        allFacets: getCollectionsAllFacets(state),
+        dataTypeFacets: getCollectionsDataTypeFacets(state),
+        dataTypeAllFacets: getCollectionsDataTypeAllFacets(state),
+        count: getCollectionCount(state),
+        allCount: getCollectionAllCount(state),
+      }),
+      {
+        loadCollectionDocuments,
+        unloadCollectionDocuments,
+        loadCollectionFacets,
+        unloadCollectionFacets,
+      },
+    )(Collection),
+  ),
+)
