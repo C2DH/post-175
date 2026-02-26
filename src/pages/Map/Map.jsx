@@ -543,7 +543,7 @@ class Map extends PureComponent {
                         style={{ width: '100%', height: '100%' }}
                         maxZoom={16}
                         minZoom={7.5}
-                        accessToken='pk.eyJ1IjoiMTc1cG9zdCIsImEiOiJjam9md2dveWYwOHh4M3FwbnN0OHlhNTh3In0.zTSFenMa8A8m2lfQN9FWIQ'
+                        accessToken={import.meta.env.VITE_MAPBOX_TOKEN}
                         mapStyle='mapbox://styles/175post/ck2abmbmf04391cn623ruh659'
                         height={height}
                         width={width}
