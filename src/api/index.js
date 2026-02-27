@@ -7,10 +7,42 @@ import queryString from "query-string";
 import md5 from "md5";
 
 const API_URL = "/api";
+// Legacy host that used to prefix media URLs returned by the API.
+// The domain no longer exists, so we strip it to keep local `/media/...` paths.
+const LEGACY_MEDIA_HOST_REGEX = /^https?:\/\/luxptt\.dhlab\.lu(?=\/|$)/i;
+// Only normalize known media-related fields to avoid altering unrelated URLs.
+const MEDIA_URL_FIELDS = new Set(["url", "attachment", "src", "vtt"]);
+
+const stripLegacyMediaHost = value => {
+  if (typeof value !== "string") {
+    return value;
+  }
+  return value.replace(LEGACY_MEDIA_HOST_REGEX, "");
+};
+
+const normalizeLegacyMediaUrls = value => {
+  // Walk through arrays/objects recursively because media URLs can be nested.
+  if (Array.isArray(value)) {
+    return value.map(normalizeLegacyMediaUrls);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.keys(value).reduce((acc, key) => {
+      const fieldValue = value[key];
+      acc[key] = MEDIA_URL_FIELDS.has(key)
+        ? stripLegacyMediaHost(fieldValue)
+        : normalizeLegacyMediaUrls(fieldValue);
+      return acc;
+    }, {});
+  }
+
+  return value;
+};
 
 // Extract only body from response, when other stuff like response
 // headers and so on are useless
-const extractBody = ({ body }) => body;
+// Also normalize legacy media URLs once, centrally, for all API consumers.
+const extractBody = ({ body }) => normalizeLegacyMediaUrls(body);
 
 const buildMillerMd5 = params => {
   return { md5: md5(queryString.stringify(params, { sort: false })) };
