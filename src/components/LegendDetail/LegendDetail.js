@@ -172,7 +172,6 @@ class LegendDetail extends PureComponent {
                 position: "absolute",
                 bottom: 0,
                 right: 0,
-                right: 0,
                 overflow: "hidden",
                 zIndex: 99
               }}

@@ -45,18 +45,18 @@ class About extends PureComponent {
                 <h6>{t("partners")}</h6>
                 <div className="d-flex flex-wrap align-items-center">
                   <div className="col-4">
-                    <a href="https://uni.lu" target="_blank">
-                      <img className="img-fluid" src="/img/unilu.jpg" />
+                    <a href="https://uni.lu" target="_blank" rel="noreferrer noopener">
+                      <img className="img-fluid" src="/img/unilu.jpg" alt="Université du Luxembourg" />
                     </a>
                   </div>
                   <div className="col-4">
-                    <a href="https://www.c2dh.uni.lu/" target="_blank">
-                      <img className="img-fluid" src="/img/c2dh.jpg" />
+                    <a href="https://www.c2dh.uni.lu/" target="_blank" rel="noreferrer noopener">
+                      <img className="img-fluid" src="/img/c2dh.jpg" alt="C2DH" />
                     </a>
                   </div>
                   <div className="col-4">
-                    <a href="https://www.post.lu/" target="_blank">
-                      <img className="img-fluid" src="/img/post.png" />
+                    <a href="https://www.post.lu/" target="_blank" rel="noreferrer noopener">
+                      <img className="img-fluid" src="/img/post.png" alt="POST Luxembourg" />
                     </a>
                   </div>
                 </div>
